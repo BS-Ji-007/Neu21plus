@@ -28,6 +28,7 @@
             "environment": "client"
         }
     ],
+    "accessWidener": "neu21plus.accesswidener",
     "depends": {
         "fabricloader": ">=0.19.2",
         "minecraft": "~26.1.2",
