@@ -1,5 +1,6 @@
 package io.github.legentpc.neu21plus.client;
 
+import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
 import io.github.legentpc.neu21plus.client.listener.ChatListener;
 import io.github.legentpc.neu21plus.client.listener.WorldListener;
@@ -26,6 +27,8 @@ public class Neu21PlusClientMod implements ClientModInitializer {
     private final ClientEventHandler eventHandler = new ClientEventHandler();
     private final ChatListener chatListener = new ChatListener();
     private final WorldListener worldListener = new WorldListener();
+
+    private boolean repoLoadTriggered = false;
 
     @Override
     public void onInitializeClient() {
@@ -82,6 +85,11 @@ public class Neu21PlusClientMod implements ClientModInitializer {
 
     private void registerEventListeners() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (!repoLoadTriggered && client.player != null) {
+                repoLoadTriggered = true;
+                Neu21PlusMod.getInstance().onClientReady();
+            }
+
             eventHandler.onClientTick(client);
 
             if (keybindToggleOverlay.wasPressed()) {

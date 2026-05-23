@@ -46,4 +46,10 @@ public class Neu21PlusMod implements ModInitializer {
 
         LOGGER.info("Neu21+ initialized on Minecraft 26.1 Fabric");
     }
+
+    public void onClientReady() {
+        if (manager != null) {
+            manager.loadRepo();
+        }
+    }
 }

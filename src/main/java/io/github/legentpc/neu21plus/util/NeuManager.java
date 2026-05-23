@@ -3,6 +3,9 @@ package io.github.legentpc.neu21plus.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import io.github.legentpc.neu21plus.itemrepo.Constants;
+import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
+import io.github.legentpc.neu21plus.itemrepo.RepoManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +29,24 @@ public class NeuManager {
 
     private final File repoLocation;
 
+    private boolean repoLoaded = false;
+
     public NeuManager(File configLocation) {
         this.configLocation = configLocation;
         this.repoLocation = new File(configLocation, "repo");
         if (!repoLocation.exists()) {
             repoLocation.mkdirs();
         }
+    }
+
+    public void loadRepo() {
+        if (repoLoaded) return;
+
+        ItemRepo.getInstance().load();
+        Constants.getInstance().load();
+        repoLoaded = true;
+
+        RepoManager.getInstance().checkForUpdates();
     }
 
     public JsonObject readJsonFromFile(File file) {
@@ -70,5 +85,9 @@ public class NeuManager {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public boolean isRepoLoaded() {
+        return repoLoaded;
     }
 }
