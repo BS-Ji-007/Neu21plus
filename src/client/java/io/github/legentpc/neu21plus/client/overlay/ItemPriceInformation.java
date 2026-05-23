@@ -1,6 +1,7 @@
 package io.github.legentpc.neu21plus.client.overlay;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.api.APIManager;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.util.TextUtils;
@@ -110,8 +111,19 @@ public class ItemPriceInformation {
             data.npcSellPrice = itemJson.get("npc_sell").getAsDouble();
         }
 
-        if (itemJson.has("crafttext") && !itemJson.get("crafttext").getAsString().isEmpty()) {
-            data.craftCost = -1;
+        APIManager apiManager = APIManager.getInstance();
+
+        APIManager.BazaarData bazaar = apiManager.getBazaarData(internalName);
+        if (bazaar != null) {
+            data.bazaarBuy = bazaar.buyPrice;
+            data.bazaarSell = bazaar.sellPrice;
+        }
+
+        data.binPrice = apiManager.getLowestBin(internalName);
+
+        double craftCost = apiManager.getCraftCost(internalName);
+        if (craftCost > 0) {
+            data.craftCost = craftCost;
         }
 
         return data;

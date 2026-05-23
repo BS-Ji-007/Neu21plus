@@ -1,14 +1,10 @@
 package io.github.legentpc.neu21plus.client.overlay;
 
-import io.github.legentpc.neu21plus.Neu21PlusMod;
-import io.github.legentpc.neu21plus.config.NeuConfig;
-import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
-import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
+import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +45,7 @@ public class OverlayRenderer {
 
         ScreenEvents.afterRender(screen).register((s, drawContext, mouseX, mouseY, tickDelta) -> {
             overlay.render(drawContext, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight());
+            NotificationSystem.getInstance().render(drawContext, client.getWindow().getScaledWidth());
         });
 
         ScreenMouseEvents.beforeMouseClick(screen).register((s, mouseX, mouseY, button) -> {

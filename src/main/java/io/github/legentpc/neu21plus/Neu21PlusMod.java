@@ -1,5 +1,7 @@
 package io.github.legentpc.neu21plus;
 
+import io.github.legentpc.neu21plus.api.APIManager;
+import io.github.legentpc.neu21plus.api.PriceDataFetcher;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.util.NeuManager;
 import net.fabricmc.api.ModInitializer;
@@ -50,6 +52,11 @@ public class Neu21PlusMod implements ModInitializer {
     public void onClientReady() {
         if (manager != null) {
             manager.loadRepo();
+        }
+
+        if (config != null && config.general.apiKey != null && !config.general.apiKey.isEmpty()) {
+            APIManager.getInstance().setApiKey(config.general.apiKey);
+            PriceDataFetcher.getInstance().start();
         }
     }
 }

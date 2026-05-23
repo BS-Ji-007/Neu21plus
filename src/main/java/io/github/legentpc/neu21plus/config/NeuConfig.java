@@ -57,6 +57,12 @@ public class NeuConfig extends Config {
                 desc = "Show item rarity colors in the tooltip")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
         public boolean showItemRarity = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Hypixel API Key",
+                desc = "Your Hypixel API key for price data (/api new)")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorTextbox
+        public String apiKey = "";
     }
 
     public static class OverlayCategory {
