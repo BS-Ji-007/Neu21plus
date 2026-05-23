@@ -1,7 +1,8 @@
 package io.github.legentpc.neu21plus.client;
 
-import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
+import io.github.legentpc.neu21plus.client.listener.ChatListener;
+import io.github.legentpc.neu21plus.client.listener.WorldListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -23,11 +24,14 @@ public class Neu21PlusClientMod implements ClientModInitializer {
     private static KeyBinding keybindNextRecipe;
 
     private final ClientEventHandler eventHandler = new ClientEventHandler();
+    private final ChatListener chatListener = new ChatListener();
+    private final WorldListener worldListener = new WorldListener();
 
     @Override
     public void onInitializeClient() {
         registerKeyBindings();
         registerEventListeners();
+        registerFabricListeners();
 
         LOGGER.info("Neu21+ client initialized on Minecraft 26.1 Fabric");
     }
@@ -99,6 +103,11 @@ public class Neu21PlusClientMod implements ClientModInitializer {
                 eventHandler.onNextRecipe();
             }
         });
+    }
+
+    private void registerFabricListeners() {
+        chatListener.register();
+        worldListener.register();
     }
 
     public static KeyBinding getKeybindToggleOverlay() {
