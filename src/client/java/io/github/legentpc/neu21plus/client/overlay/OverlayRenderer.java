@@ -1,5 +1,6 @@
 package io.github.legentpc.neu21plus.client.overlay;
 
+import io.github.legentpc.neu21plus.client.gui.GuiItemRecipe;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
@@ -32,7 +33,11 @@ public class OverlayRenderer {
 
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof HandledScreen) {
-                registerForScreen(screen, client);
+                registerForHandledScreen(screen, client);
+            }
+
+            if (screen instanceof GuiItemRecipe) {
+                registerForRecipeScreen(screen, client);
             }
         });
 
@@ -40,7 +45,7 @@ public class OverlayRenderer {
         LOGGER.info("Overlay renderer registered");
     }
 
-    private void registerForScreen(net.minecraft.client.gui.screen.Screen screen, MinecraftClient client) {
+    private void registerForHandledScreen(net.minecraft.client.gui.screen.Screen screen, MinecraftClient client) {
         NEUOverlay overlay = NEUOverlay.getInstance();
 
         ScreenEvents.afterRender(screen).register((s, drawContext, mouseX, mouseY, tickDelta) -> {
@@ -62,6 +67,12 @@ public class OverlayRenderer {
 
         ScreenKeyboardEvents.beforeKeyPress(screen).register((s, key, scancode, modifiers) -> {
             overlay.onKeyPress(key, scancode, modifiers);
+        });
+    }
+
+    private void registerForRecipeScreen(net.minecraft.client.gui.screen.Screen screen, MinecraftClient client) {
+        ScreenEvents.afterRender(screen).register((s, drawContext, mouseX, mouseY, tickDelta) -> {
+            NotificationSystem.getInstance().render(drawContext, client.getWindow().getScaledWidth());
         });
     }
 }

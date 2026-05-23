@@ -1,9 +1,11 @@
 package io.github.legentpc.neu21plus.client.overlay;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.gui.GuiItemRecipe;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
+import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.MinecraftClient;
@@ -285,30 +287,20 @@ public class NEUOverlay {
     }
 
     public void viewRecipe() {
-        if (!overlayEnabled) return;
         MinecraftClient client = MinecraftClient.getInstance();
         String hovered = getHoveredItemId(client);
         if (hovered != null) {
-            selectedItem = hovered;
             recipeHistory.push(hovered, true);
-            if (!overlayEnabled) {
-                overlayEnabled = true;
-                performSearch();
-            }
+            client.setScreen(new GuiItemRecipe(hovered, false, client.currentScreen));
         }
     }
 
     public void viewUsages() {
-        if (!overlayEnabled) return;
         MinecraftClient client = MinecraftClient.getInstance();
         String hovered = getHoveredItemId(client);
         if (hovered != null) {
-            selectedItem = hovered;
             recipeHistory.push(hovered, false);
-            if (!overlayEnabled) {
-                overlayEnabled = true;
-                performSearch();
-            }
+            client.setScreen(new GuiItemRecipe(hovered, true, client.currentScreen));
         }
     }
 
