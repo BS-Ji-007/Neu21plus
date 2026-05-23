@@ -7,13 +7,14 @@ import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.recipe.RecipeType;
 import io.github.legentpc.neu21plus.util.NeuManager;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.LoreComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemLore;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -340,8 +341,8 @@ public class ItemRepo {
             itemId = itemId.substring(10);
         }
 
-        Identifier identifier = Identifier.of("minecraft", itemId);
-        var item = Registries.ITEM.get(identifier);
+        Identifier identifier = Identifier.fromNamespaceAndPath("minecraft", itemId);
+        var item = BuiltInRegistries.ITEM.getValue(identifier);
         if (item == null) {
             return null;
         }
@@ -350,23 +351,23 @@ public class ItemRepo {
 
         if (json.has("displayname")) {
             String displayName = json.get("displayname").getAsString();
-            Text nameText = Text.literal(displayName);
-            stack.set(DataComponentTypes.CUSTOM_NAME, nameText);
+            Component nameText = Component.literal(displayName);
+            stack.set(DataComponents.CUSTOM_NAME, nameText);
         }
 
         if (json.has("lore")) {
             JsonArray loreArray = json.getAsJsonArray("lore");
-            List<Text> loreLines = new ArrayList<>();
+            List<Component> loreLines = new ArrayList<>();
             for (JsonElement elem : loreArray) {
-                loreLines.add(Text.literal(elem.getAsString()));
+                loreLines.add(Component.literal(elem.getAsString()));
             }
-            stack.set(DataComponentTypes.LORE, new LoreComponent(loreLines));
+            stack.set(DataComponents.LORE, new ItemLore(loreLines));
         }
 
         if (json.has("damage")) {
             int damage = json.get("damage").getAsInt();
             if (damage > 0) {
-                stack.set(DataComponentTypes.DAMAGE, damage);
+                stack.set(DataComponents.DAMAGE, damage);
             }
         }
 
@@ -383,13 +384,13 @@ public class ItemRepo {
 
     private void applyNbtToStack(ItemStack stack, String nbtString) {
         try {
-            NbtCompound nbt = net.minecraft.nbt.StringNbtReader.parse(nbtString);
-            NbtCompound extraAttributes = nbt.getCompoundOrEmpty("ExtraAttributes");
+            CompoundTag nbt = TagParser.parseCompoundFully(nbtString);
+            CompoundTag extraAttributes = nbt.getCompoundOrEmpty("ExtraAttributes");
             if (!extraAttributes.isEmpty()) {
-                String skyblockId = extraAttributes.getString("id");
+                String skyblockId = extraAttributes.getStringOr("id", "");
                 if (skyblockId != null && !skyblockId.isEmpty()) {
-                    stack.set(DataComponentTypes.CUSTOM_NAME,
-                            Text.literal(stack.getName().getString()));
+                    stack.set(DataComponents.CUSTOM_NAME,
+                            Component.literal(stack.getHoverName().getString()));
                 }
             }
         } catch (Exception e) {

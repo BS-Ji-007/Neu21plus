@@ -1,9 +1,9 @@
 package io.github.legentpc.neu21plus.itemrepo;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,14 +54,14 @@ public class ItemResolutionQuery {
 
     @Nullable
     private String resolveFromNbt(@NotNull ItemStack stack) {
-        NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
-        if (nbtComponent == null) return null;
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+        if (customData == null) return null;
 
-        NbtCompound nbt = nbtComponent.copyNbt();
-        NbtCompound extraAttributes = nbt.getCompoundOrEmpty("ExtraAttributes");
+        CompoundTag nbt = customData.copyTag();
+        CompoundTag extraAttributes = nbt.getCompoundOrEmpty("ExtraAttributes");
         if (extraAttributes.isEmpty()) return null;
 
-        String skyblockId = extraAttributes.getString("id");
+        String skyblockId = extraAttributes.getStringOr("id", "");
         if (skyblockId != null && !skyblockId.isEmpty()) {
             ItemRepo repo = ItemRepo.getInstance();
             if (repo.hasItem(skyblockId)) {
@@ -74,7 +74,7 @@ public class ItemResolutionQuery {
 
     @Nullable
     private String resolveFromDisplayName(@NotNull ItemStack stack) {
-        String displayName = stack.getName().getString();
+        String displayName = stack.getHoverName().getString();
         if (displayName == null || displayName.isEmpty()) {
             return null;
         }

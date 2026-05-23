@@ -1,13 +1,14 @@
 package io.github.legentpc.neu21plus.client.listener;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class ChatListener {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> onWorldLeave());
     }
 
-    private boolean onReceiveGameMessage(Text message, boolean overlay) {
+    private boolean onReceiveGameMessage(Component message, boolean overlay) {
         if (overlay) return true;
 
         SBInfo sbInfo = SBInfo.getInstance();
@@ -47,10 +48,12 @@ public class ChatListener {
             LOGGER.debug("Slayer detected: {} LVL {}", slayerType, slayerLevel);
         }
 
+        DungeonFeatures.getInstance().onChatMessage(message);
+
         return true;
     }
 
-    private Text modifyGameMessage(Text message, boolean overlay) {
+    private Component modifyGameMessage(Component message, boolean overlay) {
         if (overlay) return message;
 
         NeuConfig config = Neu21PlusMod.getInstance().getConfig();
@@ -71,5 +74,6 @@ public class ChatListener {
 
     private void onWorldLeave() {
         LOGGER.info("World left");
+        DungeonFeatures.getInstance().reset();
     }
 }

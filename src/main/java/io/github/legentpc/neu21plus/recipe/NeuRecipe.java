@@ -2,7 +2,7 @@ package io.github.legentpc.neu21plus.recipe;
 
 import com.google.gson.JsonObject;
 import io.github.legentpc.neu21plus.itemrepo.Ingredient;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

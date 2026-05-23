@@ -3,9 +3,10 @@ package io.github.legentpc.neu21plus.recipe;
 import com.google.gson.JsonObject;
 import io.github.legentpc.neu21plus.itemrepo.Ingredient;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -111,7 +112,7 @@ public class CraftingRecipe implements NeuRecipe {
             ItemStack stack = repo.createItemStack(ing.getInternalItemId());
             if (stack == null) {
                 stack = new ItemStack(Items.BARRIER);
-                stack.setCustomName(Text.literal("\u00a7c" + ing.getInternalItemId()));
+                stack.set(DataComponents.CUSTOM_NAME, Component.literal("\u00a7c" + ing.getInternalItemId()));
             }
             if (ing.getCount() > 1) {
                 stack.setCount(ing.getCount());
@@ -122,7 +123,7 @@ public class CraftingRecipe implements NeuRecipe {
         ItemStack outputStack = repo.createItemStack(outputItemId);
         if (outputStack == null) {
             outputStack = new ItemStack(Items.BARRIER);
-            outputStack.setCustomName(Text.literal("\u00a7c" + outputItemId));
+            outputStack.set(DataComponents.CUSTOM_NAME, Component.literal("\u00a7c" + outputItemId));
         }
         if (output.getCount() > 1) {
             outputStack.setCount(output.getCount());

@@ -1,17 +1,16 @@
 package io.github.legentpc.neu21plus.client.gui;
 
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
-import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
 import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.recipe.RecipeSlot;
 import io.github.legentpc.neu21plus.recipe.RecipeType;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -52,7 +51,7 @@ public class GuiItemRecipe extends Screen {
     private final Screen parentScreen;
 
     public GuiItemRecipe(@NotNull String itemId, boolean showUsages, @Nullable Screen parentScreen) {
-        super(Text.literal("NEU Recipe"));
+        super(Component.literal("NEU Recipe"));
         this.itemId = itemId;
         this.showUsages = showUsages;
         this.parentScreen = parentScreen;
@@ -114,8 +113,8 @@ public class GuiItemRecipe extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        this.renderBackground(context, mouseX, mouseY, deltaTicks);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+        this.extractBackground(context, mouseX, mouseY, deltaTicks);
 
         drawMainBackground(context);
 
@@ -130,12 +129,12 @@ public class GuiItemRecipe extends Screen {
         drawTooltip(context, mouseX, mouseY);
     }
 
-    private void drawMainBackground(DrawContext context) {
+    private void drawMainBackground(GuiGraphicsExtractor context) {
         context.fill(guiLeft, guiTop, guiLeft + GUI_WIDTH, guiTop + GUI_HEIGHT, 0xC0000000);
-        context.drawBorder(guiLeft, guiTop, GUI_WIDTH, GUI_HEIGHT, 0xFF555555);
+        context.outline(guiLeft, guiTop, GUI_WIDTH, GUI_HEIGHT, 0xFF555555);
     }
 
-    private void drawTitle(DrawContext context) {
+    private void drawTitle(GuiGraphicsExtractor context) {
         ItemRepo repo = ItemRepo.getInstance();
         String displayName = repo.getDisplayName(itemId);
         String cleanName = displayName != null ? stripColor(displayName) : itemId;
@@ -143,12 +142,12 @@ public class GuiItemRecipe extends Screen {
         String title = showUsages ? "\u00a79Usages: " : "\u00a7aRecipe: ";
         title += "\u00a7f" + cleanName;
 
-        context.drawText(textRenderer, title,
-                guiLeft + GUI_WIDTH / 2 - textRenderer.getWidth(stripColor(title)) / 2,
+        context.text(font, title,
+                guiLeft + GUI_WIDTH / 2 - font.width(stripColor(title)) / 2,
                 guiTop + 4, 0xFFFFFF, true);
     }
 
-    private void drawTabs(DrawContext context, int mouseX, int mouseY) {
+    private void drawTabs(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         int tabIndex = 0;
         for (RecipeType type : recipesByType.keySet()) {
             int tabX = guiLeft - TAB_WIDTH - TAB_SPACING;
@@ -162,19 +161,19 @@ public class GuiItemRecipe extends Screen {
             int borderColor = isSelected ? 0xFFAAAAAA : 0xFF555555;
 
             context.fill(tabX, tabY, tabX + TAB_WIDTH, tabY + TAB_HEIGHT, bgColor);
-            context.drawBorder(tabX, tabY, TAB_WIDTH, TAB_HEIGHT, borderColor);
+            context.outline(tabX, tabY, TAB_WIDTH, TAB_HEIGHT, borderColor);
 
             String label = type.getLabel().substring(0, Math.min(3, type.getLabel().length()));
             int textColor = isSelected ? 0xFFFFAA00 : 0xFFAAAAAA;
-            context.drawText(textRenderer, label,
-                    tabX + TAB_WIDTH / 2 - textRenderer.getWidth(label) / 2,
-                    tabY + TAB_HEIGHT / 2 - textRenderer.fontHeight / 2, textColor, false);
+            context.text(font, label,
+                    tabX + TAB_WIDTH / 2 - font.width(label) / 2,
+                    tabY + TAB_HEIGHT / 2 - font.lineHeight / 2, textColor, false);
 
             List<NeuRecipe> typeRecipes = recipesByType.get(type);
             if (typeRecipes != null && typeRecipes.size() > 1) {
                 String count = String.valueOf(typeRecipes.size());
-                context.drawText(textRenderer, count,
-                        tabX + TAB_WIDTH - textRenderer.getWidth(count) - 2,
+                context.text(font, count,
+                        tabX + TAB_WIDTH - font.width(count) - 2,
                         tabY + 2, 0xFF888888, false);
             }
 
@@ -182,10 +181,10 @@ public class GuiItemRecipe extends Screen {
         }
     }
 
-    private void drawRecipeContent(DrawContext context, int mouseX, int mouseY) {
+    private void drawRecipeContent(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         List<NeuRecipe> typeRecipes = recipesByType.get(selectedType);
         if (typeRecipes == null || typeRecipes.isEmpty()) {
-            context.drawText(textRenderer, "\u00a77No recipes available",
+            context.text(font, "\u00a77No recipes available",
                     guiLeft + 20, guiTop + 50, 0xAAAAAA, false);
             return;
         }
@@ -197,7 +196,7 @@ public class GuiItemRecipe extends Screen {
         NeuRecipe currentRecipe = typeRecipes.get(currentPage);
 
         String typeName = "\u00a77" + selectedType.getLabel();
-        context.drawText(textRenderer, typeName, guiLeft + 8, guiTop + 18, 0xAAAAAA, false);
+        context.text(font, typeName, guiLeft + 8, guiTop + 18, 0xAAAAAA, false);
 
         hoveredSlot = null;
         hoveredStack = null;
@@ -208,16 +207,16 @@ public class GuiItemRecipe extends Screen {
             int slotY = guiTop + slot.getY();
 
             context.fill(slotX - 1, slotY - 1, slotX + 17, slotY + 17, 0xFF333333);
-            context.drawBorder(slotX - 1, slotY - 1, 18, 18, 0xFF666666);
+            context.outline(slotX - 1, slotY - 1, 18, 18, 0xFF666666);
 
             ItemStack stack = slot.getStack();
             if (stack != null && !stack.isEmpty()) {
-                context.drawItem(stack, slotX, slotY);
+                context.item(stack, slotX, slotY);
 
                 if (slot.getCount() > 1) {
                     String countText = String.valueOf(slot.getCount());
-                    context.drawText(textRenderer, countText,
-                            slotX + 16 - textRenderer.getWidth(countText),
+                    context.text(font, countText,
+                            slotX + 16 - font.width(countText),
                             slotY + 8, 0xFFFFFF, true);
                 }
 
@@ -233,11 +232,11 @@ public class GuiItemRecipe extends Screen {
             io.github.legentpc.neu21plus.recipe.ForgeRecipe forgeRecipe =
                     (io.github.legentpc.neu21plus.recipe.ForgeRecipe) currentRecipe;
             if (forgeRecipe.getDuration() != null) {
-                context.drawText(textRenderer, "\u00a77Duration: " + forgeRecipe.getDuration(),
+                context.text(font, "\u00a77Duration: " + forgeRecipe.getDuration(),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 40, 0xAAAAAA, false);
             }
             if (forgeRecipe.getHotmLevel() > 0) {
-                context.drawText(textRenderer, "\u00a77HOTM Level: " + forgeRecipe.getHotmLevel(),
+                context.text(font, "\u00a77HOTM Level: " + forgeRecipe.getHotmLevel(),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 28, 0xAAAAAA, false);
             }
         }
@@ -246,38 +245,42 @@ public class GuiItemRecipe extends Screen {
             io.github.legentpc.neu21plus.recipe.MobLootRecipe mobRecipe =
                     (io.github.legentpc.neu21plus.recipe.MobLootRecipe) currentRecipe;
             if (mobRecipe.getMobName() != null) {
-                context.drawText(textRenderer, "\u00a77Mob: " + stripColor(mobRecipe.getMobName()),
+                context.text(font, "\u00a77Mob: " + stripColor(mobRecipe.getMobName()),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 52, 0xAAAAAA, false);
             }
             if (mobRecipe.getCoins() > 0) {
-                context.drawText(textRenderer, "\u00a76Coins: " + mobRecipe.getCoins(),
+                context.text(font, "\u00a76Coins: " + mobRecipe.getCoins(),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 40, 0xFFAA00, false);
             }
             if (mobRecipe.getCombatXp() > 0) {
-                context.drawText(textRenderer, "\u00a7bCombat XP: " + mobRecipe.getCombatXp(),
+                context.text(font, "\u00a7bCombat XP: " + mobRecipe.getCombatXp(),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 28, 0x55FFFF, false);
             }
         }
     }
 
-    private void drawPageNavigation(DrawContext context) {
+    private void drawPageNavigation(GuiGraphicsExtractor context) {
         if (totalPages <= 1) return;
 
         String pageText = "\u00a77< \u00a7f" + (currentPage + 1) + "/" + totalPages + " \u00a77>";
-        context.drawText(textRenderer, pageText,
-                guiLeft + GUI_WIDTH / 2 - textRenderer.getWidth(stripColor(pageText)) / 2,
+        context.text(font, pageText,
+                guiLeft + GUI_WIDTH / 2 - font.width(stripColor(pageText)) / 2,
                 guiTop + GUI_HEIGHT - 14, 0xAAAAAA, false);
     }
 
-    private void drawTooltip(DrawContext context, int mouseX, int mouseY) {
+    private void drawTooltip(GuiGraphicsExtractor context, int mouseX, int mouseY) {
         if (hoveredStack != null) {
-            List<Text> tooltip = getTooltipFromItem(MinecraftClient.getInstance(), hoveredStack);
-            context.drawTooltip(textRenderer, tooltip, mouseX, mouseY);
+            List<Component> tooltip = getTooltipFromItem(Minecraft.getInstance(), hoveredStack);
+            context.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
         }
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean containerInteract) {
+        double mouseX = event.x();
+        double mouseY = event.y();
+        int button = event.button();
+
         int tabIndex = 0;
         for (RecipeType type : recipesByType.keySet()) {
             int tabX = guiLeft - TAB_WIDTH - TAB_SPACING;
@@ -296,7 +299,7 @@ public class GuiItemRecipe extends Screen {
         if (hoveredSlot != null && button == 0) {
             String clickedItemId = hoveredSlot.getInternalItemId();
             if (clickedItemId != null && !clickedItemId.isEmpty() && !clickedItemId.equals(itemId)) {
-                MinecraftClient client = MinecraftClient.getInstance();
+                Minecraft client = Minecraft.getInstance();
                 client.setScreen(new GuiItemRecipe(clickedItemId, false, this.parentScreen));
                 return true;
             }
@@ -318,13 +321,15 @@ public class GuiItemRecipe extends Screen {
             }
         }
 
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(event, containerInteract);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
+        int keyCode = event.key();
+
         if (keyCode == org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE) {
-            close();
+            onClose();
             return true;
         }
 
@@ -342,7 +347,7 @@ public class GuiItemRecipe extends Screen {
             if (hoveredSlot != null) {
                 String clickedItemId = hoveredSlot.getInternalItemId();
                 if (clickedItemId != null && !clickedItemId.isEmpty()) {
-                    MinecraftClient client = MinecraftClient.getInstance();
+                    Minecraft client = Minecraft.getInstance();
                     client.setScreen(new GuiItemRecipe(clickedItemId, false, this.parentScreen));
                     return true;
                 }
@@ -353,14 +358,14 @@ public class GuiItemRecipe extends Screen {
             if (hoveredSlot != null) {
                 String clickedItemId = hoveredSlot.getInternalItemId();
                 if (clickedItemId != null && !clickedItemId.isEmpty()) {
-                    MinecraftClient client = MinecraftClient.getInstance();
+                    Minecraft client = Minecraft.getInstance();
                     client.setScreen(new GuiItemRecipe(clickedItemId, true, this.parentScreen));
                     return true;
                 }
             }
         }
 
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
@@ -390,8 +395,8 @@ public class GuiItemRecipe extends Screen {
     }
 
     @Override
-    public void close() {
-        MinecraftClient client = MinecraftClient.getInstance();
+    public void onClose() {
+        Minecraft client = Minecraft.getInstance();
         if (parentScreen != null) {
             client.setScreen(parentScreen);
         } else {
@@ -400,7 +405,7 @@ public class GuiItemRecipe extends Screen {
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 

@@ -5,9 +5,9 @@ import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class TooltipModifier {
     public void register() {
         if (registered) return;
 
-        ItemTooltipCallback.EVENT.register((stack, tooltipContext, lines, tooltipType) -> {
+        ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipFlag, lines) -> {
             modifyTooltip(stack, lines);
         });
 
@@ -42,7 +42,7 @@ public class TooltipModifier {
         LOGGER.info("Tooltip modifier registered");
     }
 
-    private void modifyTooltip(ItemStack stack, List<Text> lines) {
+    private void modifyTooltip(ItemStack stack, List<Component> lines) {
         NeuConfig config = Neu21PlusMod.getInstance().getConfig();
         if (config == null) return;
 
@@ -59,13 +59,13 @@ public class TooltipModifier {
             addRarityTooltip(internalName, lines);
         }
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        boolean shiftHeld = client.options.sneakKey.isPressed();
+        Minecraft client = Minecraft.getInstance();
+        boolean shiftHeld = client.options.keyShift.isDown();
 
         ItemPriceInformation.getInstance().addToTooltip(internalName, lines, shiftHeld);
     }
 
-    private void addRarityTooltip(String internalName, List<Text> lines) {
+    private void addRarityTooltip(String internalName, List<Component> lines) {
         ItemRepo repo = ItemRepo.getInstance();
         var itemJson = repo.getItemJson(internalName);
         if (itemJson == null || !itemJson.has("lore")) return;

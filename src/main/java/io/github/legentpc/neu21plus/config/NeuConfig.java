@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.config;
 
 import io.github.notenoughupdates.moulconfig.Config;
 import io.github.notenoughupdates.moulconfig.annotations.Category;
+import io.github.notenoughupdates.moulconfig.common.text.StructuredText;
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig;
 
 import java.io.File;
@@ -26,8 +27,8 @@ public class NeuConfig extends Config {
     public MiscCategory misc = new MiscCategory();
 
     @Override
-    public String getTitle() {
-        return "\u00a7bNeu21+ Config";
+    public StructuredText getTitle() {
+        return StructuredText.of("\u00a7bNeu21+ Config");
     }
 
     public static ManagedConfig<NeuConfig> create(File configFile) {
@@ -61,7 +62,7 @@ public class NeuConfig extends Config {
         @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
                 name = "Hypixel API Key",
                 desc = "Your Hypixel API key for price data (/api new)")
-        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorTextbox
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorText
         public String apiKey = "";
     }
 
@@ -102,10 +103,47 @@ public class NeuConfig extends Config {
         public boolean dungeonMap = true;
 
         @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Map Scale",
+                desc = "Scale of the dungeon map")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorSlider(
+                minValue = 0.5f, maxValue = 2.0f, minStep = 0.1f)
+        public float dungeonMapScale = 1.0f;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
                 name = "Dungeon Win Message",
                 desc = "Show custom dungeon win message")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
         public boolean dungeonWinMessage = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Puzzle Solver",
+                desc = "Show puzzle solutions in dungeons")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean puzzleSolver = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Blaze Solver Overlay",
+                desc = "Show blaze puzzle markers on screen")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean blazeOverlay = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Score Calculation",
+                desc = "Show live dungeon score and grade estimate")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean scoreDisplay = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Secret Tracker",
+                desc = "Track found and remaining secrets in dungeon")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean secretTracker = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Death Counter",
+                desc = "Show death counter in dungeon overlay")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean deathCounter = true;
     }
 
     public static class MiscCategory {

@@ -1,7 +1,10 @@
 package io.github.legentpc.neu21plus.util;
 
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Style;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -83,19 +86,15 @@ public class TextUtils {
         };
     }
 
-    public static Text createClickableText(String text, String command) {
-        return Text.literal(text).styled(style -> style.withClickEvent(
-                new net.minecraft.text.ClickEvent(
-                        net.minecraft.text.ClickEvent.Action.RUN_COMMAND, command
-                )
+    public static Component createClickableText(String text, String command) {
+        return Component.literal(text).withStyle(style -> style.withClickEvent(
+                new ClickEvent.RunCommand(command)
         ));
     }
 
-    public static Text createUrlText(String text, String url) {
-        return Text.literal(text).styled(style -> style.withClickEvent(
-                new net.minecraft.text.ClickEvent(
-                        net.minecraft.text.ClickEvent.Action.OPEN_URL, url
-                )
+    public static Component createUrlText(String text, String url) {
+        return Component.literal(text).withStyle(style -> style.withClickEvent(
+                new ClickEvent.OpenUrl(URI.create(url))
         ));
     }
 }

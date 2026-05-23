@@ -8,12 +8,12 @@ import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
 import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import io.github.legentpc.neu21plus.util.TextUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -64,10 +64,10 @@ public class NEUOverlay {
         infoPaneOffsetFactor.tick();
     }
 
-    public void render(DrawContext context, int screenWidth, int screenHeight) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.currentScreen == null) return;
-        if (!(client.currentScreen instanceof HandledScreen)) return;
+    public void render(GuiGraphicsExtractor context, int screenWidth, int screenHeight) {
+        Minecraft client = Minecraft.getInstance();
+        if (client.screen == null) return;
+        if (!(client.screen instanceof AbstractContainerScreen)) return;
 
         NeuConfig config = Neu21PlusMod.getInstance().getConfig();
         if (config == null || !config.overlay.showOverlay) return;
@@ -102,24 +102,24 @@ public class NEUOverlay {
         }
     }
 
-    private void drawItemPane(DrawContext context, int x, int y, int screenWidth, int screenHeight, MinecraftClient client) {
+    private void drawItemPane(GuiGraphicsExtractor context, int x, int y, int screenWidth, int screenHeight, Minecraft client) {
         int paneHeight = screenHeight;
 
         context.fill(x, y, x + PANE_WIDTH, y + paneHeight, 0xC0000000);
 
-        context.drawBorder(x, y, PANE_WIDTH, paneHeight, 0xFF555555);
+        context.outline(x, y, PANE_WIDTH, paneHeight, 0xFF555555);
 
-        context.drawText(client.textRenderer, "\u00a7bNEU Items", x + 4, y + 4, 0xFFFFFF, true);
+        context.text(client.font, "\u00a7bNEU Items", x + 4, y + 4, 0xFFFFFF, true);
 
         String query = searchText;
         if (query.isEmpty() && !searchFocused) {
-            context.drawText(client.textRenderer, "\u00a77Search...", x + 4, y + SEARCH_BAR_HEIGHT + 6, 0xAAAAAA, false);
+            context.text(client.font, "\u00a77Search...", x + 4, y + SEARCH_BAR_HEIGHT + 6, 0xAAAAAA, false);
         } else if (!query.isEmpty()) {
-            context.drawText(client.textRenderer, "\u00a7f" + query, x + 4, y + SEARCH_BAR_HEIGHT + 6, 0xFFFFFF, false);
+            context.text(client.font, "\u00a7f" + query, x + 4, y + SEARCH_BAR_HEIGHT + 6, 0xFFFFFF, false);
         }
 
         if (searchResults.isEmpty() && !query.isEmpty()) {
-            context.drawText(client.textRenderer, "\u00a77No results", x + 4, y + SEARCH_BAR_HEIGHT + 24, 0xAAAAAA, false);
+            context.text(client.font, "\u00a77No results", x + 4, y + SEARCH_BAR_HEIGHT + 24, 0xAAAAAA, false);
             return;
         }
 
@@ -140,8 +140,8 @@ public class NEUOverlay {
             int itemX = x + 4 + col * (ITEM_SIZE + ITEM_PADDING);
             int itemY = startY + row * (ITEM_SIZE + ITEM_PADDING);
 
-            int mouseX = (int) client.mouse.getX() / client.options.getGuiScale().getValue();
-            int mouseY = (int) client.mouse.getY() / client.options.getGuiScale().getValue();
+            int mouseX = (int) client.mouseHandler.xpos() / client.getWindow().getGuiScale();
+            int mouseY = (int) client.mouseHandler.ypos() / client.getWindow().getGuiScale();
 
             if (mouseX >= itemX && mouseX < itemX + ITEM_SIZE && mouseY >= itemY && mouseY < itemY + ITEM_SIZE) {
                 context.fill(itemX - 1, itemY - 1, itemX + ITEM_SIZE + 1, itemY + ITEM_SIZE + 1, 0x40FFFFFF);
@@ -150,22 +150,22 @@ public class NEUOverlay {
 
             ItemStack stack = ItemRepo.getInstance().createItemStack(itemId);
             if (stack != null) {
-                context.drawItem(stack, itemX, itemY);
+                context.item(stack, itemX, itemY);
             }
         }
 
         int totalPages = Math.max(1, (searchResults.size() + ITEMS_PER_ROW * ITEMS_VISIBLE_ROWS - 1) / (ITEMS_PER_ROW * ITEMS_VISIBLE_ROWS));
         int currentPage = scrollOffset + 1;
         String pageText = currentPage + "/" + totalPages;
-        context.drawText(client.textRenderer, pageText, x + PANE_WIDTH / 2 - client.textRenderer.getWidth(pageText) / 2,
+        context.text(client.font, pageText, x + PANE_WIDTH / 2 - client.font.width(pageText) / 2,
                 y + paneHeight - 14, 0xAAAAAA, false);
     }
 
-    private void drawInfoPane(DrawContext context, int x, int y, int screenWidth, int screenHeight, MinecraftClient client) {
+    private void drawInfoPane(GuiGraphicsExtractor context, int x, int y, int screenWidth, int screenHeight, Minecraft client) {
         int paneHeight = screenHeight;
 
         context.fill(x, y, x + PANE_WIDTH, y + paneHeight, 0xC0000000);
-        context.drawBorder(x, y, PANE_WIDTH, paneHeight, 0xFF555555);
+        context.outline(x, y, PANE_WIDTH, paneHeight, 0xFF555555);
 
         if (selectedItem == null) return;
 
@@ -173,11 +173,11 @@ public class NEUOverlay {
         String displayName = repo.getDisplayName(selectedItem);
         String cleanName = displayName != null ? TextUtils.stripColorCodes(displayName) : selectedItem;
 
-        context.drawText(client.textRenderer, "\u00a7b" + cleanName, x + 4, y + 4, 0xFFFFFF, true);
+        context.text(client.font, "\u00a7b" + cleanName, x + 4, y + 4, 0xFFFFFF, true);
 
         ItemStack stack = repo.createItemStack(selectedItem);
         if (stack != null) {
-            context.drawItem(stack, x + 4, y + 20);
+            context.item(stack, x + 4, y + 20);
         }
 
         List<NeuRecipe> recipes = repo.getRecipesFor(selectedItem);
@@ -185,43 +185,43 @@ public class NEUOverlay {
 
         int infoY = y + 42;
         if (!recipes.isEmpty()) {
-            context.drawText(client.textRenderer, "\u00a7aRecipes: " + recipes.size(), x + 4, infoY, 0xFFFFFF, false);
+            context.text(client.font, "\u00a7aRecipes: " + recipes.size(), x + 4, infoY, 0xFFFFFF, false);
             infoY += 12;
         }
         if (!usages.isEmpty()) {
-            context.drawText(client.textRenderer, "\u00a79Usages: " + usages.size(), x + 4, infoY, 0xFFFFFF, false);
+            context.text(client.font, "\u00a79Usages: " + usages.size(), x + 4, infoY, 0xFFFFFF, false);
             infoY += 12;
         }
 
         var itemJson = repo.getItemJson(selectedItem);
         if (itemJson != null && itemJson.has("clickcommand")) {
             String clickCommand = itemJson.get("clickcommand").getAsString();
-            context.drawText(client.textRenderer, "\u00a77Click: " + clickCommand, x + 4, infoY, 0xAAAAAA, false);
+            context.text(client.font, "\u00a77Click: " + clickCommand, x + 4, infoY, 0xAAAAAA, false);
             infoY += 12;
         }
 
         if (recipeHistory.canGoBack()) {
-            context.drawText(client.textRenderer, "\u00a77[\u00a7e\u00a7l\u2190\u00a77] Back", x + 4, y + paneHeight - 28, 0xAAAAAA, false);
+            context.text(client.font, "\u00a77[\u00a7e\u00a7l\u2190\u00a77] Back", x + 4, y + paneHeight - 28, 0xAAAAAA, false);
         }
         if (recipeHistory.canGoForward()) {
-            context.drawText(client.textRenderer, "\u00a77[\u00a7e\u00a7l\u2192\u00a77] Forward", x + 4, y + paneHeight - 14, 0xAAAAAA, false);
+            context.text(client.font, "\u00a77[\u00a7e\u00a7l\u2192\u00a77] Forward", x + 4, y + paneHeight - 14, 0xAAAAAA, false);
         }
     }
 
-    private void drawSearchBar(DrawContext context, int paneX, MinecraftClient client) {
+    private void drawSearchBar(GuiGraphicsExtractor context, int paneX, Minecraft client) {
         int barX = paneX + 2;
         int barY = SEARCH_BAR_HEIGHT + 2;
         int barWidth = PANE_WIDTH - 4;
 
         context.fill(barX, barY, barX + barWidth, barY + 12, 0xFF000000);
-        context.drawBorder(barX, barY, barWidth, 12, 0xFF555555);
+        context.outline(barX, barY, barWidth, 12, 0xFF555555);
     }
 
     public boolean onMouseClick(double mouseX, double mouseY, int button) {
         if (!overlayEnabled) return false;
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (!(client.currentScreen instanceof HandledScreen)) return false;
+        Minecraft client = Minecraft.getInstance();
+        if (!(client.screen instanceof AbstractContainerScreen)) return false;
 
         if (hoveredItemId != null) {
             if (button == 0) {
@@ -287,20 +287,20 @@ public class NEUOverlay {
     }
 
     public void viewRecipe() {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         String hovered = getHoveredItemId(client);
         if (hovered != null) {
             recipeHistory.push(hovered, true);
-            client.setScreen(new GuiItemRecipe(hovered, false, client.currentScreen));
+            client.setScreen(new GuiItemRecipe(hovered, false, client.screen));
         }
     }
 
     public void viewUsages() {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         String hovered = getHoveredItemId(client);
         if (hovered != null) {
             recipeHistory.push(hovered, false);
-            client.setScreen(new GuiItemRecipe(hovered, true, client.currentScreen));
+            client.setScreen(new GuiItemRecipe(hovered, true, client.screen));
         }
     }
 
@@ -319,17 +319,13 @@ public class NEUOverlay {
     }
 
     @Nullable
-    private String getHoveredItemId(@NotNull MinecraftClient client) {
+    private String getHoveredItemId(@NotNull Minecraft client) {
         if (hoveredItemId != null) return hoveredItemId;
 
-        if (client.currentScreen instanceof HandledScreen<?> handledScreen) {
-            var handler = handledScreen.getScreenHandler();
-            var hoveredSlot = handledScreen.getSlotAt(
-                    client.mouse.getX() / client.options.getGuiScale().getValue(),
-                    client.mouse.getY() / client.options.getGuiScale().getValue()
-            );
-            if (hoveredSlot != null && hoveredSlot.hasStack()) {
-                ItemStack stack = hoveredSlot.getStack();
+        if (client.screen instanceof AbstractContainerScreen<?> handledScreen) {
+            var hoveredSlot = handledScreen.hoveredSlot;
+            if (hoveredSlot != null && hoveredSlot.hasItem()) {
+                ItemStack stack = hoveredSlot.getItem();
                 String resolved = new ItemResolutionQuery().withItemStack(stack).resolve();
                 if (resolved != null) return resolved;
             }

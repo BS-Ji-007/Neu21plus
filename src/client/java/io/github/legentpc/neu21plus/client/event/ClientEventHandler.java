@@ -3,7 +3,7 @@ package io.github.legentpc.neu21plus.client.event;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.overlay.CraftingOverlay;
 import io.github.legentpc.neu21plus.client.overlay.NEUOverlay;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ public class ClientEventHandler {
 
     private int tickCount = 0;
 
-    public void onClientTick(MinecraftClient client) {
+    public void onClientTick(Minecraft client) {
         tickCount++;
 
         NEUOverlay overlay = NEUOverlay.getInstance();

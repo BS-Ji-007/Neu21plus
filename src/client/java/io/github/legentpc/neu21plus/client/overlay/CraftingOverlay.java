@@ -9,12 +9,12 @@ import io.github.legentpc.neu21plus.recipe.CraftingRecipe;
 import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.recipe.RecipeSlot;
 import io.github.legentpc.neu21plus.util.TextUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,17 +40,17 @@ public class CraftingOverlay {
     private CraftingOverlay() {
     }
 
-    public void render(DrawContext context, int guiLeft, int guiTop) {
+    public void render(GuiGraphicsExtractor context, int guiLeft, int guiTop) {
         if (currentCraftingItem == null || currentRecipe == null) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         ItemRepo repo = ItemRepo.getInstance();
         if (!repo.isLoaded()) return;
 
         String extraText = currentRecipe.getExtraText();
         if (extraText != null && !extraText.isEmpty()) {
             String cleaned = TextUtils.stripColorCodes(extraText);
-            context.drawText(client.textRenderer, "\u00a77" + cleaned,
+            context.text(client.font, "\u00a77" + cleaned,
                     guiLeft + 8, guiTop - 12, 0xAAAAAA, false);
         }
 
@@ -70,12 +70,12 @@ public class CraftingOverlay {
             int color = hasItem ? 0x4000FF00 : 0x40FF0000;
             context.fill(slotX, slotY, slotX + 16, slotY + 16, color);
 
-            context.drawItem(stack, slotX, slotY);
+            context.item(stack, slotX, slotY);
 
             if (ing.getCount() > 1) {
                 String countText = "\u00a7f" + ing.getCount();
-                context.drawText(client.textRenderer, countText,
-                        slotX + 16 - client.textRenderer.getWidth(countText),
+                context.text(client.font, countText,
+                        slotX + 16 - client.font.width(countText),
                         slotY + 8, 0xFFFFFF, true);
             }
         }
@@ -92,12 +92,12 @@ public class CraftingOverlay {
     }
 
     private boolean playerHasItem(String internalItemId, int count) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null) return false;
 
         int found = 0;
-        for (int i = 0; i < client.player.getInventory().size(); i++) {
-            ItemStack stack = client.player.getInventory().getStack(i);
+        for (int i = 0; i < client.player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = client.player.getInventory().getItem(i);
             if (stack.isEmpty()) continue;
 
             String resolved = new ItemResolutionQuery().withItemStack(stack).resolve();

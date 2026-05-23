@@ -1,14 +1,14 @@
 package io.github.legentpc.neu21plus.skyblock;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.util.NeuManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.scoreboard.ScoreboardPlayerScore;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.scores.DisplaySlot;
+import net.minecraft.world.scores.Objective;
+import net.minecraft.world.scores.PlayerScoreEntry;
+import net.minecraft.world.scores.Scoreboard;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +54,9 @@ public class SBInfo {
     public long joinedWorld = -1;
     private JsonObject locraw = null;
     public boolean isInDungeon = false;
+    private String dungeonFloor = "";
+
+    private static final Pattern DUNGEON_MODE_PATTERN = Pattern.compile("(?:master_mode|dungeon|catacombs)_?(?:floor_)?([A-Z0-9]+)?");
 
     private Map<String, Gamemode> gamemodes = new HashMap<>();
     private boolean areGamemodesLoaded = false;
@@ -109,7 +112,7 @@ public class SBInfo {
         }
     }
 
-    public void onChatMessage(Text message) {
+    public void onChatMessage(Component message) {
         String unformatted = message.getString();
         Matcher matcher = JSON_BRACKET_PATTERN.matcher(unformatted);
         if (matcher.find()) {
@@ -132,25 +135,23 @@ public class SBInfo {
         tickCount++;
         if (tickCount % 10 != 0) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.world == null || client.player == null) return;
+        Minecraft client = Minecraft.getInstance();
+        if (client.level == null || client.player == null) return;
 
         updateScoreboardInfo(client);
     }
 
-    private void updateScoreboardInfo(MinecraftClient client) {
+    private void updateScoreboardInfo(Minecraft client) {
         try {
-            Scoreboard scoreboard = client.world.getScoreboard();
-            ScoreboardObjective objective = scoreboard.getObjectiveForSlot(1);
+            Scoreboard scoreboard = client.level.getScoreboard();
+            Objective objective = scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR);
             if (objective == null) return;
 
-            List<ScoreboardPlayerScore> scores = scoreboard.getAllPlayerScores(objective)
-                    .stream()
-                    .sorted(java.util.Comparator.comparingInt(ScoreboardPlayerScore::getScore).reversed())
-                    .toList();
+            List<PlayerScoreEntry> scores = new ArrayList<>(scoreboard.listPlayerScores(objective));
+            scores.sort(java.util.Comparator.<PlayerScoreEntry>comparingInt(PlayerScoreEntry::value).reversed());
 
-            for (ScoreboardPlayerScore score : scores) {
-                String line = score.getPlayerName();
+            for (PlayerScoreEntry entry : scores) {
+                String line = entry.display() != null ? entry.display().getString() : entry.owner();
                 String cleaned = stripColorCodes(line).trim();
                 parseScoreboardLine(cleaned);
             }
@@ -211,6 +212,30 @@ public class SBInfo {
     public void setMode(String location) {
         location = location == null ? null : location.intern();
         this.mode = location;
+        updateDungeonState();
+    }
+
+    private void updateDungeonState() {
+        if (mode == null) {
+            isInDungeon = false;
+            dungeonFloor = "";
+            return;
+        }
+
+        Matcher matcher = DUNGEON_MODE_PATTERN.matcher(mode);
+        if (matcher.find()) {
+            isInDungeon = true;
+            dungeonFloor = matcher.group(1) != null ? matcher.group(1) : "";
+        } else if (mode.contains("dungeon") || mode.contains("catacombs") || mode.equals("master_mode")) {
+            isInDungeon = true;
+        } else {
+            isInDungeon = false;
+            dungeonFloor = "";
+        }
+    }
+
+    public String getDungeonFloor() {
+        return dungeonFloor;
     }
 
     @NotNull
@@ -280,6 +305,6 @@ public class SBInfo {
     }
 
     private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-or]", "").replaceAll("§[0-9a-fk-or]", "");
+        return text.replaceAll("\u00a7[0-9a-fk-or]", "").replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
     }
 }

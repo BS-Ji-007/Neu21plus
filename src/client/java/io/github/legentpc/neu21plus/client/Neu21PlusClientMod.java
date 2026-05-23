@@ -1,6 +1,7 @@
 package io.github.legentpc.neu21plus.client;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
 import io.github.legentpc.neu21plus.client.listener.ChatListener;
 import io.github.legentpc.neu21plus.client.listener.WorldListener;
@@ -11,9 +12,10 @@ import io.github.legentpc.neu21plus.client.overlay.TooltipModifier;
 import io.github.legentpc.neu21plus.command.NeuCommand;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +24,12 @@ public class Neu21PlusClientMod implements ClientModInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("neu21plus-client");
 
-    private static KeyBinding keybindToggleOverlay;
-    private static KeyBinding keybindViewRecipe;
-    private static KeyBinding keybindViewUsages;
-    private static KeyBinding keybindFavourite;
-    private static KeyBinding keybindPreviousRecipe;
-    private static KeyBinding keybindNextRecipe;
+    private static KeyMapping keybindToggleOverlay;
+    private static KeyMapping keybindViewRecipe;
+    private static KeyMapping keybindViewUsages;
+    private static KeyMapping keybindFavourite;
+    private static KeyMapping keybindPreviousRecipe;
+    private static KeyMapping keybindNextRecipe;
 
     private final ClientEventHandler eventHandler = new ClientEventHandler();
     private final ChatListener chatListener = new ChatListener();
@@ -46,46 +48,46 @@ public class Neu21PlusClientMod implements ClientModInitializer {
     }
 
     private void registerKeyBindings() {
-        keybindToggleOverlay = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindToggleOverlay = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.toggle_overlay",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
 
-        keybindViewRecipe = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindViewRecipe = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.view_recipe",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_R,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
 
-        keybindViewUsages = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindViewUsages = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.view_usages",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_U,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
 
-        keybindFavourite = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindFavourite = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.favourite",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_F,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
 
-        keybindPreviousRecipe = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindPreviousRecipe = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.previous_recipe",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_LEFT_BRACKET,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
 
-        keybindNextRecipe = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keybindNextRecipe = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.neu21plus.next_recipe",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_BRACKET,
-                "category.neu21plus"
+                new KeyMapping.Category(Identifier.fromNamespaceAndPath("neu21plus", "neu21plus"))
         ));
     }
 
@@ -98,23 +100,24 @@ public class Neu21PlusClientMod implements ClientModInitializer {
 
             eventHandler.onClientTick(client);
             NotificationSystem.getInstance().tick();
+            DungeonFeatures.getInstance().tick();
 
-            if (keybindToggleOverlay.wasPressed()) {
+            if (keybindToggleOverlay.consumeClick()) {
                 eventHandler.onToggleOverlay();
             }
-            if (keybindViewRecipe.wasPressed()) {
+            if (keybindViewRecipe.consumeClick()) {
                 eventHandler.onViewRecipe();
             }
-            if (keybindViewUsages.wasPressed()) {
+            if (keybindViewUsages.consumeClick()) {
                 eventHandler.onViewUsages();
             }
-            if (keybindFavourite.wasPressed()) {
+            if (keybindFavourite.consumeClick()) {
                 eventHandler.onFavourite();
             }
-            if (keybindPreviousRecipe.wasPressed()) {
+            if (keybindPreviousRecipe.consumeClick()) {
                 eventHandler.onPreviousRecipe();
             }
-            if (keybindNextRecipe.wasPressed()) {
+            if (keybindNextRecipe.consumeClick()) {
                 eventHandler.onNextRecipe();
             }
         });
@@ -132,27 +135,27 @@ public class Neu21PlusClientMod implements ClientModInitializer {
         NeuCommand.register();
     }
 
-    public static KeyBinding getKeybindToggleOverlay() {
+    public static KeyMapping getKeybindToggleOverlay() {
         return keybindToggleOverlay;
     }
 
-    public static KeyBinding getKeybindViewRecipe() {
+    public static KeyMapping getKeybindViewRecipe() {
         return keybindViewRecipe;
     }
 
-    public static KeyBinding getKeybindViewUsages() {
+    public static KeyMapping getKeybindViewUsages() {
         return keybindViewUsages;
     }
 
-    public static KeyBinding getKeybindFavourite() {
+    public static KeyMapping getKeybindFavourite() {
         return keybindFavourite;
     }
 
-    public static KeyBinding getKeybindPreviousRecipe() {
+    public static KeyMapping getKeybindPreviousRecipe() {
         return keybindPreviousRecipe;
     }
 
-    public static KeyBinding getKeybindNextRecipe() {
+    public static KeyMapping getKeybindNextRecipe() {
         return keybindNextRecipe;
     }
 }

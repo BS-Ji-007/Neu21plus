@@ -4,6 +4,7 @@ import io.github.legentpc.neu21plus.api.APIManager;
 import io.github.legentpc.neu21plus.api.PriceDataFetcher;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.util.NeuManager;
+import io.github.notenoughupdates.moulconfig.managed.ManagedConfig;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ public class Neu21PlusMod implements ModInitializer {
     private NeuManager manager;
 
     private NeuConfig config;
+
+    private static ManagedConfig<NeuConfig> managedConfig;
 
     public static Neu21PlusMod getInstance() {
         return instance;
@@ -43,7 +46,8 @@ public class Neu21PlusMod implements ModInitializer {
             configDir.mkdirs();
         }
 
-        config = NeuConfig.create(new File(configDir, "config.json"));
+        managedConfig = NeuConfig.create(new File(configDir, "config.json"));
+        config = managedConfig.getInstance();
         manager = new NeuManager(configDir);
 
         LOGGER.info("Neu21+ initialized on Minecraft 26.1 Fabric");

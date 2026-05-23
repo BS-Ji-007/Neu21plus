@@ -5,9 +5,9 @@ import io.github.legentpc.neu21plus.api.APIManager;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.util.TextUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +30,7 @@ public class ItemPriceInformation {
     private ItemPriceInformation() {
     }
 
-    public void addToTooltip(@NotNull String internalName, @NotNull List<Text> lines, boolean showStackPrice) {
+    public void addToTooltip(@NotNull String internalName, @NotNull List<Component> lines, boolean showStackPrice) {
         NeuConfig config = Neu21PlusMod.getInstance().getConfig();
         if (config == null) return;
 
@@ -50,36 +50,36 @@ public class ItemPriceInformation {
             if (showStackPrice && price.npcSellPrice > 1) {
                 sellText += " \u00a77(\u00a7a" + TextUtils.formatNumber(price.npcSellPrice * 64) + "\u00a77)";
             }
-            lines.add(Text.literal(sellText));
+            lines.add(Component.literal(sellText));
             addedLine = true;
         }
 
         if (price.binPrice > 0) {
             String binText = "\u00a76BIN: \u00a7a" + TextUtils.formatNumber(price.binPrice) + " coins";
-            lines.add(Text.literal(binText));
+            lines.add(Component.literal(binText));
             addedLine = true;
         }
 
         if (price.bazaarBuy > 0) {
             String bazaarText = "\u00a76Bazaar Buy: \u00a7a" + TextUtils.formatNumber(price.bazaarBuy) + " coins";
-            lines.add(Text.literal(bazaarText));
+            lines.add(Component.literal(bazaarText));
             addedLine = true;
         }
 
         if (price.bazaarSell > 0) {
             String bazaarText = "\u00a76Bazaar Sell: \u00a7a" + TextUtils.formatNumber(price.bazaarSell) + " coins";
-            lines.add(Text.literal(bazaarText));
+            lines.add(Component.literal(bazaarText));
             addedLine = true;
         }
 
         if (price.craftCost > 0) {
             String craftText = "\u00a76Craft Cost: \u00a7c" + TextUtils.formatNumber(price.craftCost) + " coins";
-            lines.add(Text.literal(craftText));
+            lines.add(Component.literal(craftText));
             addedLine = true;
         }
 
         if (addedLine) {
-            lines.add(Text.literal(""));
+            lines.add(Component.literal(""));
         }
     }
 

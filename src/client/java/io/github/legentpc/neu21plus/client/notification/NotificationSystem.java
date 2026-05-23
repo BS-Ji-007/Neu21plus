@@ -2,11 +2,11 @@ package io.github.legentpc.neu21plus.client.notification;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -59,10 +59,10 @@ public class NotificationSystem {
         activeNotifications.removeIf(n -> now - n.timestamp > NOTIFICATION_DURATION);
     }
 
-    public void render(DrawContext context, int screenWidth) {
+    public void render(GuiGraphicsExtractor context, int screenWidth) {
         if (activeNotifications.isEmpty()) return;
 
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         long now = System.currentTimeMillis();
 
         int y = 4;
@@ -81,7 +81,7 @@ public class NotificationSystem {
             if (alpha <= 0) continue;
 
             String text = notification.message;
-            int textWidth = client.textRenderer.getWidth(text);
+            int textWidth = client.font.width(text);
             int boxWidth = textWidth + 16;
             int boxX = screenWidth - boxWidth - 4;
 
@@ -89,10 +89,10 @@ public class NotificationSystem {
             int borderColor = getBorderColorForType(notification.type, alpha);
 
             context.fill(boxX - 2, y - 2, boxX + boxWidth + 2, y + NOTIFICATION_HEIGHT + 2, bgColor);
-            context.drawBorder(boxX - 2, y - 2, boxWidth + 4, NOTIFICATION_HEIGHT + 4, borderColor);
+            context.outline(boxX - 2, y - 2, boxWidth + 4, NOTIFICATION_HEIGHT + 4, borderColor);
 
             int textColor = (int) (alpha * 255) << 24 | 0xFFFFFF;
-            context.drawText(client.textRenderer, text, boxX + 6, y + 8 - client.textRenderer.fontHeight / 2, textColor, true);
+            context.text(client.font, text, boxX + 6, y + 8 - client.font.lineHeight / 2, textColor, true);
 
             y += NOTIFICATION_HEIGHT + NOTIFICATION_PADDING;
         }
@@ -121,14 +121,14 @@ public class NotificationSystem {
     }
 
     private void playNotificationSound(@Nullable NotificationType type) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null) return;
 
         SoundEvent sound = switch (type != null ? type : NotificationType.INFO) {
-            case INFO -> SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP;
-            case SUCCESS -> SoundEvents.ENTITY_PLAYER_LEVELUP;
-            case WARNING -> SoundEvents.BLOCK_NOTE_BLOCK_PLING.value();
-            case ERROR -> SoundEvents.ENTITY_VILLAGER_NO;
+            case INFO -> SoundEvents.EXPERIENCE_ORB_PICKUP;
+            case SUCCESS -> SoundEvents.PLAYER_LEVELUP;
+            case WARNING -> SoundEvents.NOTE_BLOCK_PLING.value();
+            case ERROR -> SoundEvents.VILLAGER_NO;
         };
 
         client.player.playSound(sound, 0.5f, 1.0f);

@@ -5,9 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.legentpc.neu21plus.itemrepo.Ingredient;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -93,7 +94,7 @@ public class MobLootRecipe implements NeuRecipe {
             ItemStack stack = repo.createItemStack(drop.itemId);
             if (stack == null) {
                 stack = new ItemStack(Items.BARRIER);
-                stack.setCustomName(Text.literal("\u00a7c" + drop.itemId));
+                stack.set(DataComponents.CUSTOM_NAME, Component.literal("\u00a7c" + drop.itemId));
             }
             if (drop.count > 1) {
                 stack.setCount(drop.count);

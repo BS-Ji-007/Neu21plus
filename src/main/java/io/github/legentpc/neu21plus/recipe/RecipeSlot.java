@@ -1,6 +1,6 @@
 package io.github.legentpc.neu21plus.recipe;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
