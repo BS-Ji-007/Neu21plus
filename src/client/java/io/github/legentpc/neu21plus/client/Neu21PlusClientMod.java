@@ -4,6 +4,8 @@ import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
 import io.github.legentpc.neu21plus.client.listener.ChatListener;
 import io.github.legentpc.neu21plus.client.listener.WorldListener;
+import io.github.legentpc.neu21plus.client.overlay.OverlayRenderer;
+import io.github.legentpc.neu21plus.client.overlay.TooltipModifier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -116,6 +118,9 @@ public class Neu21PlusClientMod implements ClientModInitializer {
     private void registerFabricListeners() {
         chatListener.register();
         worldListener.register();
+
+        OverlayRenderer.getInstance().register();
+        TooltipModifier.getInstance().register();
     }
 
     public static KeyBinding getKeybindToggleOverlay() {

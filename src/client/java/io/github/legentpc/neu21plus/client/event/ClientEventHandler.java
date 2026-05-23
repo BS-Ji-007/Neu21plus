@@ -1,6 +1,8 @@
 package io.github.legentpc.neu21plus.client.event;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.overlay.CraftingOverlay;
+import io.github.legentpc.neu21plus.client.overlay.NEUOverlay;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,29 +15,32 @@ public class ClientEventHandler {
 
     public void onClientTick(MinecraftClient client) {
         tickCount++;
+
+        NEUOverlay overlay = NEUOverlay.getInstance();
+        overlay.tick();
     }
 
     public void onToggleOverlay() {
-        LOGGER.debug("Toggle overlay pressed");
+        NEUOverlay.getInstance().toggleOverlay();
     }
 
     public void onViewRecipe() {
-        LOGGER.debug("View recipe pressed");
+        NEUOverlay.getInstance().viewRecipe();
     }
 
     public void onViewUsages() {
-        LOGGER.debug("View usages pressed");
+        NEUOverlay.getInstance().viewUsages();
     }
 
     public void onFavourite() {
-        LOGGER.debug("Favourite pressed");
+        NEUOverlay.getInstance().toggleFavourite();
     }
 
     public void onPreviousRecipe() {
-        LOGGER.debug("Previous recipe pressed");
+        NEUOverlay.getInstance().navigatePrevious();
     }
 
     public void onNextRecipe() {
-        LOGGER.debug("Next recipe pressed");
+        NEUOverlay.getInstance().navigateNext();
     }
 }
