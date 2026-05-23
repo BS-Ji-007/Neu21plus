@@ -1,32 +1,27 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
+# Gradle
+.gradle/
+build/
+out/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
 .classpath
 .project
 
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea/*
-!.idea/codeStyles
-!.idea/copyright
+# Fabric
+run/
+runs/
 
-# gradle
-build
-gradle.properties
-.gradle
+# OS
+.DS_Store
+Thumbs.db
 
-# other
-eclipse
-run
-.vscode
-infer-out/
-ciwork/
-.DS_STORE
-*.asc
-secrets/*
-
+# Misc
+*.log
+*.jar
+!gradle/wrapper/gradle-wrapper.jar

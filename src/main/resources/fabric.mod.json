@@ -1,10 +1,37 @@
 {
-  "id": "notenoughupdates",
-  "version": "${version}",
-  "schemaVersion": 1,
-  "entrypoints": {
-    "main": [
-      "io.github.moulberry.notenoughupdates.envcheck.FabricEntrypoint"
-    ]
-  }
+    "schemaVersion": 1,
+    "id": "neu21plus",
+    "version": "${version}",
+    "name": "Neu21+",
+    "description": "NotEnoughUpdates ported to Minecraft 26.1 Fabric",
+    "authors": [
+        "BS-Ji-007"
+    ],
+    "contact": {
+        "sources": "https://github.com/BS-Ji-007/Neu21plus"
+    },
+    "license": "LGPL-3.0",
+    "icon": "assets/neu21plus/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "io.github.legentpc.neu21plus.Neu21PlusMod"
+        ],
+        "client": [
+            "io.github.legentpc.neu21plus.client.Neu21PlusClientMod"
+        ]
+    },
+    "mixins": [
+        "neu21plus.mixins.json",
+        {
+            "config": "neu21plus.client.mixins.json",
+            "environment": "client"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.2",
+        "minecraft": "~26.1.2",
+        "java": ">=25",
+        "fabric-api": "*"
+    }
 }
