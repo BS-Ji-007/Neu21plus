@@ -1,0 +1,29 @@
+# Code Owners for Neu21Plus
+# These reviewers will be automatically requested for PRs that modify these files
+
+# Build system
+/build.gradle     @BS-Ji-007
+/gradle.properties @BS-Ji-007
+/settings.gradle  @BS-Ji-007
+
+# Core mod files
+/src/main/java/io/github/legentpc/neu21plus/Neu21PlusMod.java @BS-Ji-007
+/src/main/java/io/github/legentpc/neu21plus/client/Neu21PlusClientMod.java @BS-Ji-007
+/src/main/java/io/github/legentpc/neu21plus/config/ @BS-Ji-007
+
+# API layer
+/src/main/java/io/github/legentpc/neu21plus/api/ @BS-Ji-007
+
+# Item repository system
+/src/main/java/io/github/legentpc/neu21plus/itemrepo/ @BS-Ji-007
+/src/main/java/io/github/legentpc/neu21plus/recipe/ @BS-Ji-007
+
+# Profile viewer
+/src/main/java/io/github/legentpc/neu21plus/client/profileviewer/ @BS-Ji-007
+
+# GitHub workflows
+/.github/workflows/ @BS-Ji-007
+
+# Documentation
+/README.md         @BS-Ji-007
+/CONTRIBUTING.md   @BS-Ji-007

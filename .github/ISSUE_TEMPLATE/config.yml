@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Neu21Plus Support
+    url: https://github.com/BS-Ji-007/Neu21plus/discussions
+    about: "Please ask for support in GitHub Discussions."
+  - name: Original NEU Discord
+    url: https://discord.gg/moulberry
+    about: "For questions about the original NotEnoughUpdates mod (1.8.9 Forge), join Moulberry's Discord."

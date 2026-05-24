@@ -1,0 +1,68 @@
+# Auto-label configuration for PRs
+# Maps labels to file glob patterns
+
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "build.gradle"
+          - "gradle.properties"
+          - "settings.gradle"
+          - "gradle/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+core:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/Neu21PlusMod.java"
+          - "src/main/java/io/github/legentpc/neu21plus/client/Neu21PlusClientMod.java"
+          - "src/main/java/io/github/legentpc/neu21plus/config/**"
+
+api:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/api/**"
+
+item-repo:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/itemrepo/**"
+          - "src/main/java/io/github/legentpc/neu21plus/recipe/**"
+
+dungeon:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/client/dungeon/**"
+
+mining:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/client/mining/**"
+
+profile-viewer:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/client/profileviewer/**"
+
+overlay:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/main/java/io/github/legentpc/neu21plus/client/overlay/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "README.md"
+          - "CONTRIBUTING.md"
+          - "FAQ.md"
+          - ".github/SECURITY.md"
+          - ".github/SUPPORT.md"
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "gradle.properties"
+          - "build.gradle"
