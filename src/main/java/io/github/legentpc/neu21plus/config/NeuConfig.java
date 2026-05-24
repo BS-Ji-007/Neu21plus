@@ -40,6 +40,18 @@ public class NeuConfig extends Config {
         return managedConfig;
     }
 
+    public static void save() {
+        if (managedConfig != null) {
+            managedConfig.saveToFile();
+        }
+    }
+
+    public static void reload() {
+        if (managedConfig != null) {
+            managedConfig.reloadFromFile();
+        }
+    }
+
     public void openConfigGui() {
         if (managedConfig != null) {
             managedConfig.openConfigGui();
@@ -49,7 +61,7 @@ public class NeuConfig extends Config {
     public static class GeneralCategory {
         @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
                 name = "Auto Update Repository",
-                desc = "Automatically update the item repository on startup")
+                desc = "Automatically update the item repository from GitHub on startup")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
         public boolean autoUpdateRepo = true;
 
@@ -64,6 +76,18 @@ public class NeuConfig extends Config {
                 desc = "Your Hypixel API key for price data (/api new)")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorText
         public String apiKey = "";
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Repository Source",
+                desc = "GitHub repo for item data (owner/repo format)")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorText
+        public String repoSource = "NotEnoughUpdates/NotEnoughUpdates-repo";
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Repository Branch",
+                desc = "Branch to download from the repository")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorText
+        public String repoBranch = "master";
     }
 
     public static class OverlayCategory {

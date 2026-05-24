@@ -5,6 +5,7 @@ import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.util.NeuManager;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +25,8 @@ public class RepoManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RepoManager.class);
 
-    private static final String REPO_OWNER = "NotEnoughUpdates";
-    private static final String REPO_NAME = "NotEnoughUpdates-REPO";
-    private static final String REPO_BRANCH = "master";
-
-    private static final String COMMITS_API = "https://api.github.com/repos/" + REPO_OWNER + "/" + REPO_NAME + "/commits/" + REPO_BRANCH;
-    private static final String ZIP_URL = "https://github.com/" + REPO_OWNER + "/" + REPO_NAME + "/archive/refs/heads/" + REPO_BRANCH + ".zip";
+    private static final String DEFAULT_REPO_SOURCE = "NotEnoughUpdates/NotEnoughUpdates-repo";
+    private static final String DEFAULT_REPO_BRANCH = "master";
 
     private static final RepoManager INSTANCE = new RepoManager();
 
@@ -41,6 +38,30 @@ public class RepoManager {
     private boolean updating = false;
 
     private RepoManager() {
+    }
+
+    private String getRepoSource() {
+        NeuConfig config = Neu21PlusMod.getInstance().getConfig();
+        if (config != null && config.general.repoSource != null && !config.general.repoSource.isEmpty()) {
+            return config.general.repoSource;
+        }
+        return DEFAULT_REPO_SOURCE;
+    }
+
+    private String getRepoBranch() {
+        NeuConfig config = Neu21PlusMod.getInstance().getConfig();
+        if (config != null && config.general.repoBranch != null && !config.general.repoBranch.isEmpty()) {
+            return config.general.repoBranch;
+        }
+        return DEFAULT_REPO_BRANCH;
+    }
+
+    private String getCommitsApiUrl() {
+        return "https://api.github.com/repos/" + getRepoSource() + "/commits/" + getRepoBranch();
+    }
+
+    private String getZipUrl() {
+        return "https://github.com/" + getRepoSource() + "/archive/refs/heads/" + getRepoBranch() + ".zip";
     }
 
     public void checkForUpdates() {
@@ -60,8 +81,19 @@ public class RepoManager {
             return;
         }
 
-        LOGGER.info("Repository update available: {} -> {}", currentCommit, latestCommit);
+        LOGGER.info("Repository update available: {} -> {}",
+                currentCommit != null ? currentCommit.substring(0, 7) : "none",
+                latestCommit.substring(0, 7));
         downloadAndUpdate(latestCommit);
+    }
+
+    public void forceUpdate() {
+        String latestCommit = fetchLatestCommit();
+        if (latestCommit != null) {
+            downloadAndUpdate(latestCommit);
+        } else {
+            LOGGER.warn("Failed to fetch latest commit for force update");
+        }
     }
 
     private void loadCurrentCommit() {
@@ -86,6 +118,9 @@ public class RepoManager {
             File commitFile = new File(manager.getRepoLocation(), "currentCommit.json");
             JsonObject obj = new JsonObject();
             obj.addProperty("sha", sha);
+            obj.addProperty("timestamp", System.currentTimeMillis());
+            obj.addProperty("source", getRepoSource());
+            obj.addProperty("branch", getRepoBranch());
             manager.writeJsonToFile(commitFile, obj);
             currentCommit = sha;
         } catch (Exception e) {
@@ -93,17 +128,26 @@ public class RepoManager {
         }
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     private String fetchLatestCommit() {
         try {
-            HttpURLConnection connection = (HttpURLConnection) URI.create(COMMITS_API).toURL().openConnection();
+            String apiUrl = getCommitsApiUrl();
+            LOGGER.debug("Fetching latest commit from: {}", apiUrl);
+
+            HttpURLConnection connection = (HttpURLConnection) URI.create(apiUrl).toURL().openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "Neu21Plus");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+
+            if (connection.getResponseCode() == 403) {
+                LOGGER.warn("GitHub API rate limit exceeded, will use local cache");
+                return null;
+            }
 
             if (connection.getResponseCode() != 200) {
-                LOGGER.warn("GitHub API returned status: {}", connection.getResponseCode());
+                LOGGER.warn("GitHub API returned status: {} for {}", connection.getResponseCode(), apiUrl);
                 return null;
             }
 
@@ -130,11 +174,14 @@ public class RepoManager {
             NeuManager manager = Neu21PlusMod.getInstance().getManager();
             File repoDir = manager.getRepoLocation();
 
-            LOGGER.info("Downloading repository from GitHub...");
-            HttpURLConnection connection = (HttpURLConnection) URI.create(ZIP_URL).toURL().openConnection();
+            String zipUrl = getZipUrl();
+            LOGGER.info("Downloading repository from {}...", zipUrl);
+
+            HttpURLConnection connection = (HttpURLConnection) URI.create(zipUrl).toURL().openConnection();
             connection.setRequestProperty("User-Agent", "Neu21Plus");
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(30000);
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(60000);
+            connection.setInstanceFollowRedirects(true);
 
             if (connection.getResponseCode() != 200) {
                 LOGGER.warn("Failed to download repo ZIP, status: {}", connection.getResponseCode());
@@ -143,7 +190,8 @@ public class RepoManager {
 
             Path tempZip = Files.createTempFile("neu21plus-repo", ".zip");
             try {
-                Files.copy(connection.getInputStream(), tempZip, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                long bytesCopied = Files.copy(connection.getInputStream(), tempZip, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                LOGGER.info("Downloaded repo ZIP: {} bytes", bytesCopied);
 
                 extractRepo(tempZip, repoDir);
                 saveCurrentCommit(latestCommit);
@@ -151,7 +199,8 @@ public class RepoManager {
                 ItemRepo.getInstance().reload();
                 Constants.getInstance().reload();
 
-                LOGGER.info("Repository updated to commit: {}", latestCommit.substring(0, 7));
+                LOGGER.info("Repository updated to commit: {} from {}/{}",
+                        latestCommit.substring(0, 7), getRepoSource(), getRepoBranch());
             } finally {
                 Files.deleteIfExists(tempZip);
             }
@@ -165,6 +214,7 @@ public class RepoManager {
     private void extractRepo(@NotNull Path zipPath, @NotNull File repoDir) throws Exception {
         try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(zipPath))) {
             ZipEntry entry;
+            int filesExtracted = 0;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.isDirectory()) continue;
 
@@ -175,23 +225,27 @@ public class RepoManager {
                     name = name.substring(slashIndex + 1);
                 }
 
-                if (name.startsWith("items/") || name.startsWith("constants/")) {
-                    File outFile = new File(repoDir, name);
-                    File parentDir = outFile.getParentFile();
-                    if (parentDir != null && !parentDir.exists()) {
-                        parentDir.mkdirs();
-                    }
+                if (name.isEmpty()) continue;
 
-                    try (FileOutputStream fos = new FileOutputStream(outFile)) {
-                        byte[] buffer = new byte[8192];
-                        int len;
-                        while ((len = zis.read(buffer)) > 0) {
-                            fos.write(buffer, 0, len);
-                        }
+                File outFile = new File(repoDir, name);
+                File parentDir = outFile.getParentFile();
+                if (parentDir != null && !parentDir.exists()) {
+                    parentDir.mkdirs();
+                }
+
+                try (FileOutputStream fos = new FileOutputStream(outFile)) {
+                    byte[] buffer = new byte[8192];
+                    int len;
+                    while ((len = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
                     }
                 }
+
+                filesExtracted++;
                 zis.closeEntry();
             }
+
+            LOGGER.info("Extracted {} files from repository ZIP", filesExtracted);
         }
     }
 
@@ -199,8 +253,12 @@ public class RepoManager {
         return updating;
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     public String getCurrentCommit() {
         return currentCommit;
+    }
+
+    public String getConfiguredRepoSource() {
+        return getRepoSource();
     }
 }

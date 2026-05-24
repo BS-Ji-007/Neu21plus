@@ -7,6 +7,7 @@ import io.github.legentpc.neu21plus.client.overlay.NEUOverlay;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.Constants;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
+import io.github.legentpc.neu21plus.itemrepo.RepoManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.commands.CommandBuildContext;
@@ -32,7 +33,11 @@ public class NeuCommand {
                 .then(ClientCommands.literal("help")
                         .executes(NeuCommand::executeHelp))
                 .then(ClientCommands.literal("config")
-                        .executes(NeuCommand::executeConfig))
+                        .executes(NeuCommand::executeConfig)
+                        .then(ClientCommands.literal("save")
+                                .executes(NeuCommand::executeConfigSave))
+                        .then(ClientCommands.literal("reload")
+                                .executes(NeuCommand::executeConfigReload)))
                 .then(ClientCommands.literal("overlay")
                         .executes(NeuCommand::executeOverlay))
                 .then(ClientCommands.literal("repo")
@@ -40,6 +45,8 @@ public class NeuCommand {
                                 .executes(NeuCommand::executeRepoReload))
                         .then(ClientCommands.literal("update")
                                 .executes(NeuCommand::executeRepoUpdate))
+                        .then(ClientCommands.literal("forceupdate")
+                                .executes(NeuCommand::executeRepoForceUpdate))
                         .then(ClientCommands.literal("info")
                                 .executes(NeuCommand::executeRepoInfo)))
                 .then(ClientCommands.literal("reload")
@@ -47,6 +54,8 @@ public class NeuCommand {
                 .then(ClientCommands.literal("search")
                         .then(ClientCommands.argument("query", StringArgumentType.greedyString())
                                 .executes(NeuCommand::executeSearch)))
+                .then(ClientCommands.literal("save")
+                        .executes(NeuCommand::executeConfigSave))
         );
     }
 
@@ -55,12 +64,16 @@ public class NeuCommand {
         source.sendFeedback(Component.literal("\u00a7bNeu21+ Commands:"));
         source.sendFeedback(Component.literal("\u00a77/neu help \u00a7f- Show this help"));
         source.sendFeedback(Component.literal("\u00a77/neu config \u00a7f- Open config GUI"));
+        source.sendFeedback(Component.literal("\u00a77/neu config save \u00a7f- Save config to file"));
+        source.sendFeedback(Component.literal("\u00a77/neu config reload \u00a7f- Reload config from file"));
         source.sendFeedback(Component.literal("\u00a77/neu overlay \u00a7f- Toggle item overlay"));
         source.sendFeedback(Component.literal("\u00a77/neu repo reload \u00a7f- Reload item repository"));
-        source.sendFeedback(Component.literal("\u00a77/neu repo update \u00a7f- Force update from GitHub"));
+        source.sendFeedback(Component.literal("\u00a77/neu repo update \u00a7f- Check for repo updates"));
+        source.sendFeedback(Component.literal("\u00a77/neu repo forceupdate \u00a7f- Force download latest repo"));
         source.sendFeedback(Component.literal("\u00a77/neu repo info \u00a7f- Show repository info"));
         source.sendFeedback(Component.literal("\u00a77/neu reload \u00a7f- Full mod reload"));
         source.sendFeedback(Component.literal("\u00a77/neu search <query> \u00a7f- Search items"));
+        source.sendFeedback(Component.literal("\u00a77/neu save \u00a7f- Save config now"));
         return 1;
     }
 
@@ -75,6 +88,18 @@ public class NeuCommand {
         return 1;
     }
 
+    private static int executeConfigSave(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
+        Neu21PlusMod.saveConfig();
+        context.getSource().sendFeedback(Component.literal("\u00a7aNeu21+ config saved to file!"));
+        return 1;
+    }
+
+    private static int executeConfigReload(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
+        Neu21PlusMod.reloadConfig();
+        context.getSource().sendFeedback(Component.literal("\u00a7aNeu21+ config reloaded from file!"));
+        return 1;
+    }
+
     private static int executeOverlay(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
         NEUOverlay.getInstance().toggleOverlay();
         boolean enabled = NEUOverlay.getInstance().isOverlayEnabled();
@@ -83,7 +108,7 @@ public class NeuCommand {
     }
 
     private static int executeRepoReload(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
-        context.getSource().sendFeedback(Component.literal("\u00a7eReloading repository..."));
+        context.getSource().sendFeedback(Component.literal("\u00a7eReloading repository from disk..."));
         ItemRepo.getInstance().reload();
         Constants.getInstance().reload();
         context.getSource().sendFeedback(Component.literal("\u00a7aRepository reloaded! Items: " + ItemRepo.getInstance().getItemCount()));
@@ -91,14 +116,26 @@ public class NeuCommand {
     }
 
     private static int executeRepoUpdate(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
-        context.getSource().sendFeedback(Component.literal("\u00a7eForcing repository update from GitHub..."));
-        io.github.legentpc.neu21plus.itemrepo.RepoManager.getInstance().checkForUpdates();
+        context.getSource().sendFeedback(Component.literal("\u00a7eChecking for repository updates..."));
+        String source = RepoManager.getInstance().getConfiguredRepoSource();
+        context.getSource().sendFeedback(Component.literal("\u00a77Source: " + source));
+        RepoManager.getInstance().checkForUpdates();
         context.getSource().sendFeedback(Component.literal("\u00a7aUpdate check initiated"));
+        return 1;
+    }
+
+    private static int executeRepoForceUpdate(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
+        context.getSource().sendFeedback(Component.literal("\u00a7eForce downloading latest repository..."));
+        String source = RepoManager.getInstance().getConfiguredRepoSource();
+        context.getSource().sendFeedback(Component.literal("\u00a77Source: " + source));
+        RepoManager.getInstance().forceUpdate();
+        context.getSource().sendFeedback(Component.literal("\u00a7aForce update initiated"));
         return 1;
     }
 
     private static int executeRepoInfo(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
         ItemRepo repo = ItemRepo.getInstance();
+        RepoManager repoManager = RepoManager.getInstance();
         var source = context.getSource();
 
         source.sendFeedback(Component.literal("\u00a7bRepository Info:"));
@@ -106,13 +143,22 @@ public class NeuCommand {
         source.sendFeedback(Component.literal("\u00a77  Recipes: \u00a7f" + repo.getRecipeCount()));
         source.sendFeedback(Component.literal("\u00a77  Loaded: \u00a7f" + repo.isLoaded()));
 
-        String commit = io.github.legentpc.neu21plus.itemrepo.RepoManager.getInstance().getCurrentCommit();
+        String commit = repoManager.getCurrentCommit();
         source.sendFeedback(Component.literal("\u00a77  Commit: \u00a7f" + (commit != null ? commit.substring(0, 7) : "unknown")));
+        source.sendFeedback(Component.literal("\u00a77  Source: \u00a7f" + repoManager.getConfiguredRepoSource()));
+        source.sendFeedback(Component.literal("\u00a77  Updating: \u00a7f" + repoManager.isUpdating()));
+
+        NeuConfig config = Neu21PlusMod.getInstance().getConfig();
+        if (config != null) {
+            source.sendFeedback(Component.literal("\u00a77  Branch: \u00a7f" + config.general.repoBranch));
+            source.sendFeedback(Component.literal("\u00a77  Auto Update: \u00a7f" + config.general.autoUpdateRepo));
+        }
         return 1;
     }
 
     private static int executeReload(CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
         context.getSource().sendFeedback(Component.literal("\u00a7eReloading Neu21+..."));
+        Neu21PlusMod.reloadConfig();
         ItemRepo.getInstance().reload();
         Constants.getInstance().reload();
         context.getSource().sendFeedback(Component.literal("\u00a7aNeu21+ reloaded! Items: " + ItemRepo.getInstance().getItemCount()));
