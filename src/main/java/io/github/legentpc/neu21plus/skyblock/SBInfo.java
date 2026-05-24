@@ -66,6 +66,11 @@ public class SBInfo {
     public String currentlyOpenChestName = "";
     public String lastOpenChestName = "";
 
+    @Nullable
+    public String getOpenChestName() {
+        return currentlyOpenChestName;
+    }
+
     public enum Gamemode {
         NORMAL("", ""),
         IRONMAN("Ironman", "\u26b2"),

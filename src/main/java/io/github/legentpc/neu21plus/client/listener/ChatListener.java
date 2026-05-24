@@ -1,9 +1,14 @@
 package io.github.legentpc.neu21plus.client.listener;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.actionbar.ActionBarDisplay;
+import io.github.legentpc.neu21plus.client.bazaar.BazaarHelper;
+import io.github.legentpc.neu21plus.client.collection.CollectionDisplay;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
+import io.github.legentpc.neu21plus.client.fairysoul.FairySouls;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
+import io.github.legentpc.neu21plus.client.storage.StorageViewer;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -36,7 +41,10 @@ public class ChatListener {
     }
 
     private boolean onReceiveGameMessage(Component message, boolean overlay) {
-        if (overlay) return true;
+        if (overlay) {
+            ActionBarDisplay.getInstance().onActionBar(message);
+            return true;
+        }
 
         SBInfo sbInfo = SBInfo.getInstance();
         sbInfo.onChatMessage(message);
@@ -53,6 +61,10 @@ public class ChatListener {
         DungeonFeatures.getInstance().onChatMessage(message);
         MiningFeatures.getInstance().onChatMessage(message);
         MiscFeatures.getInstance().onChatMessage(message);
+        StorageViewer.getInstance().onChatMessage(message);
+        BazaarHelper.getInstance().onChatMessage(message);
+        CollectionDisplay.getInstance().onChatMessage(message);
+        FairySouls.getInstance().onChatMessage(message);
 
         return true;
     }
@@ -81,5 +93,10 @@ public class ChatListener {
         DungeonFeatures.getInstance().reset();
         MiningFeatures.getInstance().reset();
         MiscFeatures.getInstance().reset();
+        StorageViewer.getInstance().reset();
+        BazaarHelper.getInstance().reset();
+        CollectionDisplay.getInstance().reset();
+        FairySouls.getInstance().reset();
+        ActionBarDisplay.getInstance().reset();
     }
 }

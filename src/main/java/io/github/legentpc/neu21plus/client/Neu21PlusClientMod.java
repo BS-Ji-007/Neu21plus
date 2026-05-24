@@ -1,7 +1,11 @@
 package io.github.legentpc.neu21plus.client;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.accessory.AccessoryHelper;
+import io.github.legentpc.neu21plus.client.bazaar.BazaarHelper;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
+import io.github.legentpc.neu21plus.client.fairysoul.FairySouls;
+import io.github.legentpc.neu21plus.client.mayor.MayorDisplay;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
@@ -11,6 +15,7 @@ import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import io.github.legentpc.neu21plus.client.overlay.NEUOverlay;
 import io.github.legentpc.neu21plus.client.overlay.OverlayRenderer;
 import io.github.legentpc.neu21plus.client.overlay.TooltipModifier;
+import io.github.legentpc.neu21plus.client.storage.StorageViewer;
 import io.github.legentpc.neu21plus.command.NeuCommand;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -105,6 +110,10 @@ public class Neu21PlusClientMod implements ClientModInitializer {
             DungeonFeatures.getInstance().tick();
             MiningFeatures.getInstance().tick();
             MiscFeatures.getInstance().tick();
+            StorageViewer.getInstance().tick();
+            BazaarHelper.getInstance().tick();
+            FairySouls.getInstance().tick();
+            MayorDisplay.getInstance().tick();
 
             if (keybindToggleOverlay.consumeClick()) {
                 eventHandler.onToggleOverlay();

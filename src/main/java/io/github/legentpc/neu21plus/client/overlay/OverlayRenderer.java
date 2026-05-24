@@ -1,18 +1,26 @@
 package io.github.legentpc.neu21plus.client.overlay;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.client.accessory.AccessoryHelper;
+import io.github.legentpc.neu21plus.client.bazaar.BazaarHelper;
+import io.github.legentpc.neu21plus.client.collection.CollectionDisplay;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonMap;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonWinMessage;
 import io.github.legentpc.neu21plus.client.dungeon.PuzzleSolver;
+import io.github.legentpc.neu21plus.client.fairysoul.FairySouls;
+import io.github.legentpc.neu21plus.client.mayor.MayorDisplay;
 import io.github.legentpc.neu21plus.client.mining.DrillFuelBar;
 import io.github.legentpc.neu21plus.client.mining.MetalDetectorSolver;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.client.mining.MiningOverlay;
 import io.github.legentpc.neu21plus.client.mining.FossilSolver;
 import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
+import io.github.legentpc.neu21plus.client.actionbar.ActionBarDisplay;
 import io.github.legentpc.neu21plus.client.gui.GuiItemRecipe;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
+import io.github.legentpc.neu21plus.client.storage.StorageViewer;
+import io.github.legentpc.neu21plus.client.tab.TabOverlay;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
@@ -21,8 +29,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,19 +66,23 @@ public class OverlayRenderer {
             }
         });
 
-        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-            // HUD rendering is now registered via HudElementRegistry below
-        });
-
-        // Register HUD element using the new API (replaces HudRenderCallback)
         HudElementRegistry.attachElementAfter(
                 VanillaHudElements.MISC_OVERLAYS,
-                Identifier.fromNamespaceAndPath("neu21plus", "dungeon_overlay"),
+                Identifier.fromNamespaceAndPath("neu21plus", "all_overlays"),
                 (drawContext, deltaTracker) -> {
                     Minecraft client = Minecraft.getInstance();
                     renderDungeonOverlays(drawContext, client);
                     renderMiningOverlays(drawContext, client);
                     renderMiscOverlays(drawContext, client);
+                    renderMayorOverlay(drawContext, client);
+                    renderFairySoulWaypoints(drawContext, client, deltaTracker.getGameTimeDeltaPartialTick(true));
+                    renderFairySoulTracker(drawContext, client);
+                    renderStorageOverlay(drawContext, client);
+                    renderAccessoryOverlay(drawContext, client);
+                    renderBazaarOverlay(drawContext, client);
+                    renderCollectionOverlay(drawContext, client);
+                    renderActionBarOverlay(drawContext, client);
+                    renderTabOverlay(drawContext, client);
                 }
         );
 
@@ -89,12 +99,19 @@ public class OverlayRenderer {
             renderDungeonOverlays(drawContext, client);
             renderMiningOverlays(drawContext, client);
             renderMiscOverlays(drawContext, client);
+            renderMayorOverlay(drawContext, client);
+            renderStorageOverlay(drawContext, client);
+            renderAccessoryOverlay(drawContext, client);
+            renderBazaarOverlay(drawContext, client);
+            renderCollectionOverlay(drawContext, client);
+            renderActionBarOverlay(drawContext, client);
         });
 
         ScreenMouseEvents.beforeMouseClick(screen).register((s, event) -> {
             if (overlay.onMouseClick(event.x(), event.y(), event.button())) {
                 return;
             }
+            io.github.legentpc.neu21plus.client.buttons.InventoryButtons.getInstance().onMouseClick(event.x(), event.y(), event.button());
         });
 
         ScreenMouseEvents.beforeMouseScroll(screen).register((s, mouseX, mouseY, horizontalAmount, verticalAmount) -> {
@@ -209,5 +226,65 @@ public class OverlayRenderer {
         int screenHeight = client.getWindow().getGuiScaledHeight();
 
         MiscFeatures.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderMayorOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        MayorDisplay.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderFairySoulWaypoints(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client, float partialTicks) {
+        FairySouls.getInstance().renderWaypoints(drawContext, partialTicks);
+    }
+
+    private void renderFairySoulTracker(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        FairySouls.getInstance().renderTracker(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderStorageOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        StorageViewer.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderAccessoryOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        AccessoryHelper.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderBazaarOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        BazaarHelper.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderCollectionOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        CollectionDisplay.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderActionBarOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        ActionBarDisplay.getInstance().render(drawContext, screenWidth, screenHeight);
+    }
+
+    private void renderTabOverlay(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        TabOverlay.getInstance().render(drawContext, screenWidth, screenHeight);
     }
 }
