@@ -170,5 +170,41 @@ public class NeuConfig extends Config {
                 desc = "Play sound for notifications")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
         public boolean notificationSound = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Slayer Tracker",
+                desc = "Show slayer boss kill count, RNG meter, and boss status overlay")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean slayerTracker = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Farming Overlay",
+                desc = "Show farming XP, pest counter, and contest info in garden")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean farmingOverlay = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Pet Display",
+                desc = "Show active pet level, XP progress, and held item info")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean petDisplay = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Auction Helper",
+                desc = "Highlight underpriced BIN auctions in Auction House")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean auctionHelper = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Wardrobe Stats",
+                desc = "Show armor set stat comparison in Wardrobe menu")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean wardrobeStats = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Cookie Buff Timer",
+                desc = "Show cookie buff and god potion status overlay")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean cookieBuffTimer = true;
     }
 }

@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
+import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
 import io.github.legentpc.neu21plus.client.event.ClientEventHandler;
 import io.github.legentpc.neu21plus.client.listener.ChatListener;
 import io.github.legentpc.neu21plus.client.listener.WorldListener;
@@ -103,6 +104,7 @@ public class Neu21PlusClientMod implements ClientModInitializer {
             NotificationSystem.getInstance().tick();
             DungeonFeatures.getInstance().tick();
             MiningFeatures.getInstance().tick();
+            MiscFeatures.getInstance().tick();
 
             if (keybindToggleOverlay.consumeClick()) {
                 eventHandler.onToggleOverlay();

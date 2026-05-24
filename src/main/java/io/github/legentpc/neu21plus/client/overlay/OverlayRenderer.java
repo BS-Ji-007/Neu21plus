@@ -10,6 +10,7 @@ import io.github.legentpc.neu21plus.client.mining.MetalDetectorSolver;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.client.mining.MiningOverlay;
 import io.github.legentpc.neu21plus.client.mining.FossilSolver;
+import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
 import io.github.legentpc.neu21plus.client.gui.GuiItemRecipe;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import io.github.legentpc.neu21plus.config.NeuConfig;
@@ -71,6 +72,7 @@ public class OverlayRenderer {
                     Minecraft client = Minecraft.getInstance();
                     renderDungeonOverlays(drawContext, client);
                     renderMiningOverlays(drawContext, client);
+                    renderMiscOverlays(drawContext, client);
                 }
         );
 
@@ -86,6 +88,7 @@ public class OverlayRenderer {
             NotificationSystem.getInstance().render(drawContext, client.getWindow().getGuiScaledWidth());
             renderDungeonOverlays(drawContext, client);
             renderMiningOverlays(drawContext, client);
+            renderMiscOverlays(drawContext, client);
         });
 
         ScreenMouseEvents.beforeMouseClick(screen).register((s, event) -> {
@@ -110,6 +113,7 @@ public class OverlayRenderer {
             NotificationSystem.getInstance().render(drawContext, client.getWindow().getGuiScaledWidth());
             renderDungeonOverlays(drawContext, client);
             renderMiningOverlays(drawContext, client);
+            renderMiscOverlays(drawContext, client);
         });
     }
 
@@ -198,5 +202,12 @@ public class OverlayRenderer {
         if (config.mining.fossilSolver) {
             FossilSolver.getInstance().render(drawContext, screenWidth, screenHeight);
         }
+    }
+
+    private void renderMiscOverlays(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        MiscFeatures.getInstance().render(drawContext, screenWidth, screenHeight);
     }
 }
