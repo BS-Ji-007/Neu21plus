@@ -1,0 +1,41 @@
+name: Remove merge-needed label
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-mergeability:
+    name: Check merge conflicts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for merge conflicts
+        run: |
+          echo "Checking merge compatibility for PR #${{ github.event.pull_request.number }}"
+          if git merge-tree \
+            "$(git merge-base ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})" \
+            ${{ github.event.pull_request.head.sha }} \
+            ${{ github.event.pull_request.base.sha }} | grep -q "^<<<<<<<\|changed in both"; then
+            echo "This PR has merge conflicts."
+            gh api -X POST \
+              --input '{"labels":["needs-merge"]}' \
+              "/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels" || true
+          else
+            echo "This PR is clean, no merge conflicts."
+            gh api -X DELETE \
+              "/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/needs-merge" || true
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

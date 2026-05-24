@@ -1,0 +1,9 @@
+# Banned imports for Neu21+
+# Format: <directory without src/main/java prefix> <illegal import pattern>
+# Lines starting with # are comments. Empty lines are ignored.
+
+io/github/legentpc/neu21plus scala.
+io/github/legentpc/neu21plus org.bukkit.
+io/github/legentpc/neu21plus org.spigotmc.
+io/github/legentpc/neu21plus net.minecraft.server.
+io/github/legentpc/neu21plus cpw.mods.
