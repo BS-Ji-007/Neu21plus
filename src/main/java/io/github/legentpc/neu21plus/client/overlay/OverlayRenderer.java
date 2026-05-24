@@ -5,6 +5,11 @@ import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonMap;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonWinMessage;
 import io.github.legentpc.neu21plus.client.dungeon.PuzzleSolver;
+import io.github.legentpc.neu21plus.client.mining.DrillFuelBar;
+import io.github.legentpc.neu21plus.client.mining.MetalDetectorSolver;
+import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
+import io.github.legentpc.neu21plus.client.mining.MiningOverlay;
+import io.github.legentpc.neu21plus.client.mining.FossilSolver;
 import io.github.legentpc.neu21plus.client.gui.GuiItemRecipe;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import io.github.legentpc.neu21plus.config.NeuConfig;
@@ -65,6 +70,7 @@ public class OverlayRenderer {
                 (drawContext, deltaTracker) -> {
                     Minecraft client = Minecraft.getInstance();
                     renderDungeonOverlays(drawContext, client);
+                    renderMiningOverlays(drawContext, client);
                 }
         );
 
@@ -79,6 +85,7 @@ public class OverlayRenderer {
             overlay.render(drawContext, client.getWindow().getGuiScaledWidth(), client.getWindow().getGuiScaledHeight());
             NotificationSystem.getInstance().render(drawContext, client.getWindow().getGuiScaledWidth());
             renderDungeonOverlays(drawContext, client);
+            renderMiningOverlays(drawContext, client);
         });
 
         ScreenMouseEvents.beforeMouseClick(screen).register((s, event) -> {
@@ -102,6 +109,7 @@ public class OverlayRenderer {
         ScreenEvents.afterExtract(screen).register((s, drawContext, mouseX, mouseY, tickDelta) -> {
             NotificationSystem.getInstance().render(drawContext, client.getWindow().getGuiScaledWidth());
             renderDungeonOverlays(drawContext, client);
+            renderMiningOverlays(drawContext, client);
         });
     }
 
@@ -162,6 +170,33 @@ public class OverlayRenderer {
         if (score.getDeathCount() > 0) {
             String deathText = "Deaths: " + score.getDeathCount();
             drawContext.text(client.font, deathText, x, y + (client.font.lineHeight + 1) * 3, 0xFFFF5555, true);
+        }
+    }
+
+    private void renderMiningOverlays(net.minecraft.client.gui.GuiGraphicsExtractor drawContext, Minecraft client) {
+        NeuConfig config = Neu21PlusMod.getInstance().getConfig();
+        if (config == null) return;
+
+        MiningFeatures miningFeatures = MiningFeatures.getInstance();
+        if (!miningFeatures.isInMiningArea()) return;
+
+        int screenWidth = client.getWindow().getGuiScaledWidth();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
+
+        if (config.mining.drillFuelBar) {
+            DrillFuelBar.getInstance().render(drawContext, screenWidth, screenHeight);
+        }
+
+        if (config.mining.metalDetectorSolver) {
+            MetalDetectorSolver.getInstance().render(drawContext, screenWidth, screenHeight);
+        }
+
+        if (config.mining.miningOverlay) {
+            MiningOverlay.getInstance().render(drawContext, screenWidth, screenHeight);
+        }
+
+        if (config.mining.fossilSolver) {
+            FossilSolver.getInstance().render(drawContext, screenWidth, screenHeight);
         }
     }
 }

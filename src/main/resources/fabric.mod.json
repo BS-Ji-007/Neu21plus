@@ -22,11 +22,7 @@
         ]
     },
     "mixins": [
-        "neu21plus.mixins.json",
-        {
-            "config": "neu21plus.client.mixins.json",
-            "environment": "client"
-        }
+        "neu21plus.mixins.json"
     ],
     "accessWidener": "neu21plus.accesswidener",
     "depends": {

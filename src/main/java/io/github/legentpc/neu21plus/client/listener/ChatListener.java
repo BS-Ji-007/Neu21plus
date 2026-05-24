@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.listener;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.dungeon.DungeonFeatures;
+import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -49,6 +50,7 @@ public class ChatListener {
         }
 
         DungeonFeatures.getInstance().onChatMessage(message);
+        MiningFeatures.getInstance().onChatMessage(message);
 
         return true;
     }
@@ -75,5 +77,6 @@ public class ChatListener {
     private void onWorldLeave() {
         LOGGER.info("World left");
         DungeonFeatures.getInstance().reset();
+        MiningFeatures.getInstance().reset();
     }
 }

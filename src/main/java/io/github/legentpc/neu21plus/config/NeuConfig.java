@@ -93,6 +93,18 @@ public class NeuConfig extends Config {
                 desc = "Show metal detector solver in Crystal Hollows")
         @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
         public boolean metalDetectorSolver = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Mining Overlay",
+                desc = "Show mining info overlay with powder and commissions")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean miningOverlay = true;
+
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigOption(
+                name = "Fossil Solver",
+                desc = "Show fossil puzzle solver grid in Dwarven Mines")
+        @io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
+        public boolean fossilSolver = true;
     }
 
     public static class DungeonsCategory {
