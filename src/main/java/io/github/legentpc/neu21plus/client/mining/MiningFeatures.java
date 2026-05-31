@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.mining;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
@@ -114,7 +115,7 @@ public class MiningFeatures {
         if (!isInMiningArea()) return;
 
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher commissionMatcher = COMMISSION_COMPLETE_PATTERN.matcher(cleaned);
         if (commissionMatcher.find()) {
@@ -123,11 +124,9 @@ public class MiningFeatures {
 
         Matcher powderMatcher = POWDER_FOUND_PATTERN.matcher(cleaned);
         if (powderMatcher.find()) {
-            try {
-                String amountStr = powderMatcher.group(1).replace(",", "").replace(".", "");
-                int amount = Integer.parseInt(amountStr);
+            int amount = TextUtils.parseIntSafe(powderMatcher.group(1).replace(".", ""), 0);
+            if (amount > 0) {
                 onPowderFound(amount, cleaned);
-            } catch (NumberFormatException ignored) {
             }
         }
 
@@ -235,7 +234,4 @@ public class MiningFeatures {
         return System.currentTimeMillis() - lastPickaxeAbilityTime;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.misc;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.Item;
@@ -104,29 +105,26 @@ public class PetInfo {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher levelMatcher = PET_LEVEL_PATTERN.matcher(cleaned);
         if (levelMatcher.find()) {
-            try {
-                activePetLevel = Integer.parseInt(levelMatcher.group(1));
+            int parsedLevel = TextUtils.parseIntSafe(levelMatcher.group(1), -1);
+            if (parsedLevel >= 0) {
+                activePetLevel = parsedLevel;
                 activePetName = levelMatcher.group(2).trim();
                 petActive = true;
                 LOGGER.debug("Pet detected: LVL {} {}", activePetLevel, activePetName);
-            } catch (NumberFormatException ignored) {
             }
             return;
         }
 
         Matcher xpMatcher = PET_XP_PATTERN.matcher(cleaned);
         if (xpMatcher.find()) {
-            try {
-                String currentStr = xpMatcher.group(1).replace(",", "").replace(".", "");
-                String maxStr = xpMatcher.group("max").replace(",", "").replace(".", "");
-                currentXp = Double.parseDouble(currentStr);
-                maxXp = Double.parseDouble(maxStr);
-            } catch (NumberFormatException ignored) {
-            }
+            String currentStr = xpMatcher.group(1).replace(",", "").replace(".", "");
+            String maxStr = xpMatcher.group("max").replace(",", "").replace(".", "");
+            currentXp = TextUtils.parseDoubleSafe(currentStr, currentXp);
+            maxXp = TextUtils.parseDoubleSafe(maxStr, maxXp);
             return;
         }
 
@@ -139,17 +137,18 @@ public class PetInfo {
     public void parsePetFromTooltip(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return;
 
-        String displayName = stripColorCodes(stack.getDisplayName().getString()).trim();
+        String displayName = TextUtils.stripColorCodes(stack.getDisplayName().getString()).trim();
 
         Matcher levelMatcher = PET_LEVEL_PATTERN.matcher(displayName);
         if (levelMatcher.find()) {
-            try {
-                activePetLevel = Integer.parseInt(levelMatcher.group(1));
+            int parsedLevel = TextUtils.parseIntSafe(levelMatcher.group(1), -1);
+            if (parsedLevel >= 0) {
+                activePetLevel = parsedLevel;
                 activePetName = levelMatcher.group(2).trim();
                 petActive = true;
 
                 for (Component line : stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL)) {
-                    String lineText = stripColorCodes(line.getString()).trim();
+                    String lineText = TextUtils.stripColorCodes(line.getString()).trim();
 
                     if (lineText.contains("COMMON") || lineText.contains("UNCOMMON")
                             || lineText.contains("RARE") || lineText.contains("EPIC")
@@ -162,7 +161,6 @@ public class PetInfo {
                         }
                     }
                 }
-            } catch (NumberFormatException ignored) {
             }
         }
     }
@@ -249,7 +247,4 @@ public class PetInfo {
         return heldItem;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

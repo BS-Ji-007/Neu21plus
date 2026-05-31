@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.actionbar;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -43,28 +44,19 @@ public class ActionBarDisplay {
 
         Matcher healthMatcher = HEALTH_PATTERN.matcher(text);
         if (healthMatcher.find()) {
-            try {
-                currentHealth = Integer.parseInt(healthMatcher.group(1));
-                maxHealth = Integer.parseInt(healthMatcher.group(2));
-            } catch (NumberFormatException ignored) {
-            }
+            currentHealth = TextUtils.parseIntSafe(healthMatcher.group(1), currentHealth);
+            maxHealth = TextUtils.parseIntSafe(healthMatcher.group(2), maxHealth);
         }
 
         Matcher defenseMatcher = DEFENSE_PATTERN.matcher(text);
         if (defenseMatcher.find()) {
-            try {
-                defense = Integer.parseInt(defenseMatcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
+            defense = TextUtils.parseIntSafe(defenseMatcher.group(1), defense);
         }
 
         Matcher manaMatcher = MANA_PATTERN.matcher(text);
         if (manaMatcher.find()) {
-            try {
-                currentMana = Integer.parseInt(manaMatcher.group(1));
-                maxMana = Integer.parseInt(manaMatcher.group(2));
-            } catch (NumberFormatException ignored) {
-            }
+            currentMana = TextUtils.parseIntSafe(manaMatcher.group(1), currentMana);
+            maxMana = TextUtils.parseIntSafe(manaMatcher.group(2), maxMana);
         }
     }
 

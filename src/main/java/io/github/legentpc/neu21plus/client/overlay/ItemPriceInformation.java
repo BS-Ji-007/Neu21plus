@@ -25,7 +25,7 @@ public class ItemPriceInformation {
 
     private final Map<String, PriceData> priceCache = new HashMap<>();
     private long lastCacheUpdate = 0;
-    private static final long CACHE_DURATION = 60000;
+    private static final long CACHE_DURATION = 60_000;
 
     private ItemPriceInformation() {
     }
@@ -132,6 +132,7 @@ public class ItemPriceInformation {
     private void updateCacheIfNeeded() {
         long now = System.currentTimeMillis();
         if (now - lastCacheUpdate > CACHE_DURATION) {
+            priceCache.clear();
             lastCacheUpdate = now;
         }
     }

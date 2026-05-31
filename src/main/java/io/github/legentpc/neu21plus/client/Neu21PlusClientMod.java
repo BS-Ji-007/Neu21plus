@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 public class Neu21PlusClientMod implements ClientModInitializer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("neu21plus-client");
+    private static final Logger LOGGER = LoggerFactory.getLogger(Neu21PlusClientMod.class);
 
     private static KeyMapping keybindToggleOverlay;
     private static KeyMapping keybindViewRecipe;

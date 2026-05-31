@@ -20,7 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class NEUOverlay {
 
@@ -33,13 +35,10 @@ public class NEUOverlay {
     private static final int ITEMS_PER_ROW = 5;
     private static final int ITEMS_VISIBLE_ROWS = 8;
 
-    private static NEUOverlay instance;
+    private static final NEUOverlay INSTANCE = new NEUOverlay();
 
     public static NEUOverlay getInstance() {
-        if (instance == null) {
-            instance = new NEUOverlay();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     private final LerpingFloat itemPaneOffsetFactor = new LerpingFloat(0, 0.15f);
@@ -53,6 +52,8 @@ public class NEUOverlay {
     private List<String> searchResults = new ArrayList<>();
     private String hoveredItemId = null;
     private String selectedItem = null;
+
+    private final Set<String> favourites = new HashSet<>();
 
     private final RecipeHistory recipeHistory = new RecipeHistory();
 
@@ -334,6 +335,16 @@ public class NEUOverlay {
     }
 
     public void toggleFavourite() {
+        if (selectedItem == null) return;
+        if (favourites.contains(selectedItem)) {
+            favourites.remove(selectedItem);
+        } else {
+            favourites.add(selectedItem);
+        }
+    }
+
+    public boolean isFavourite(String itemId) {
+        return favourites.contains(itemId);
     }
 
     public boolean isOverlayEnabled() {

@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.dungeon;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public class DungeonFeatures {
         if (!isInDungeon()) return;
 
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher startMatcher = DUNGEON_START_PATTERN.matcher(cleaned);
         if (startMatcher.find()) {
@@ -205,7 +206,4 @@ public class DungeonFeatures {
         return winMessage;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

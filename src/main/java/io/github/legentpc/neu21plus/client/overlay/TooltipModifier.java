@@ -4,6 +4,7 @@ import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
@@ -17,13 +18,10 @@ public class TooltipModifier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TooltipModifier.class);
 
-    private static TooltipModifier instance;
+    private static final TooltipModifier INSTANCE = new TooltipModifier();
 
     public static TooltipModifier getInstance() {
-        if (instance == null) {
-            instance = new TooltipModifier();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     private boolean registered = false;
@@ -75,9 +73,11 @@ public class TooltipModifier {
 
         for (int i = loreArray.size() - 1; i >= 0; i--) {
             String loreLine = loreArray.get(i).getAsString();
-            String cleaned = loreLine.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "").trim();
+            String cleaned = TextUtils.stripColorCodes(loreLine).trim();
             String rarity = extractRarity(cleaned);
             if (rarity != null) {
+                String color = TextUtils.getRarityColor(rarity);
+                lines.add(Component.literal(color + rarity));
                 return;
             }
         }

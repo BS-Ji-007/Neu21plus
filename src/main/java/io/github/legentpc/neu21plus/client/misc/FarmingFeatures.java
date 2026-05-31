@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.misc;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -138,16 +139,11 @@ public class FarmingFeatures {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher xpMatcher = FARMING_XP_PATTERN.matcher(cleaned);
         if (xpMatcher.find()) {
-            try {
-                String amountStr = xpMatcher.group(1).replace(",", "");
-                int amount = Integer.parseInt(amountStr);
-                totalFarmingXp += amount;
-            } catch (NumberFormatException ignored) {
-            }
+            totalFarmingXp += TextUtils.parseIntSafe(xpMatcher.group(1), 0);
         }
 
         Matcher pestMatcher = PEST_PATTERN.matcher(cleaned);
@@ -159,11 +155,8 @@ public class FarmingFeatures {
 
         Matcher contestMatcher = CONTEST_PATTERN.matcher(cleaned);
         if (contestMatcher.find()) {
-            try {
-                contestStartMinutes = Integer.parseInt(contestMatcher.group(1));
-                LOGGER.debug("Farming contest starts in {} minutes", contestStartMinutes);
-            } catch (NumberFormatException ignored) {
-            }
+            contestStartMinutes = TextUtils.parseIntSafe(contestMatcher.group(1), contestStartMinutes);
+            LOGGER.debug("Farming contest starts in {} minutes", contestStartMinutes);
         }
 
         Matcher cropMatcher = CONTEST_CROP_PATTERN.matcher(cleaned);
@@ -176,11 +169,8 @@ public class FarmingFeatures {
             String raw = cleaned;
             for (CropType crop : CropType.values()) {
                 if (raw.contains(crop.getName())) {
-                    try {
-                        int level = Integer.parseInt(milestoneMatcher.group(1));
-                        cropMilestones.put(crop, level);
-                    } catch (NumberFormatException ignored) {
-                    }
+                    int level = TextUtils.parseIntSafe(milestoneMatcher.group(1), 0);
+                    cropMilestones.put(crop, level);
                     break;
                 }
             }
@@ -196,7 +186,7 @@ public class FarmingFeatures {
 
         context.text(client.font, "\u00a7aFarming", x, y, 0xFF55FF55, true);
 
-        String xpText = "XP: " + formatNumber(totalFarmingXp);
+        String xpText = "XP: " + TextUtils.formatNumber(totalFarmingXp);
         context.text(client.font, xpText, x, y + client.font.lineHeight + 2, 0xFFAAAAAA, true);
 
         if (pestsDetected > 0) {
@@ -254,16 +244,4 @@ public class FarmingFeatures {
         return cropMilestones.getOrDefault(crop, 0);
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
-
-    private String formatNumber(int number) {
-        if (number >= 1_000_000) {
-            return String.format("%.1fM", number / 1_000_000.0);
-        } else if (number >= 1_000) {
-            return String.format("%.1fK", number / 1_000.0);
-        }
-        return String.valueOf(number);
-    }
 }

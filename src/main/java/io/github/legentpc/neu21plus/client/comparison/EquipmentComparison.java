@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.comparison;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -64,11 +65,8 @@ public class EquipmentComparison {
                 String after = text.substring(idx + stat.length()).trim();
                 Matcher numMatcher = Pattern.compile("([+-]?\\d+)").matcher(after);
                 if (numMatcher.find()) {
-                    try {
-                        int value = Integer.parseInt(numMatcher.group(1));
-                        stats.merge(stat, value, Integer::sum);
-                    } catch (NumberFormatException ignored) {
-                    }
+                    int value = TextUtils.parseIntSafe(numMatcher.group(1), 0);
+                    stats.merge(stat, value, Integer::sum);
                 }
             }
         }

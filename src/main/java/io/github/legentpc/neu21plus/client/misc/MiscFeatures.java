@@ -4,6 +4,7 @@ import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -86,14 +87,11 @@ public class MiscFeatures {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher levelMatcher = SKYBLOCK_LEVEL_PATTERN.matcher(cleaned);
         if (levelMatcher.find()) {
-            try {
-                skyblockLevel = Integer.parseInt(levelMatcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
+            skyblockLevel = TextUtils.parseIntSafe(levelMatcher.group(1), skyblockLevel);
         }
 
         if (MAGICAL_SOUP_PATTERN.matcher(cleaned).find() || BOOSTER_PATTERN.matcher(cleaned).find()) {
@@ -245,7 +243,4 @@ public class MiscFeatures {
         return 0;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

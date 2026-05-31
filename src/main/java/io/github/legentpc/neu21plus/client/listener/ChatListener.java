@@ -9,7 +9,6 @@ import io.github.legentpc.neu21plus.client.fairysoul.FairySouls;
 import io.github.legentpc.neu21plus.client.mining.MiningFeatures;
 import io.github.legentpc.neu21plus.client.misc.MiscFeatures;
 import io.github.legentpc.neu21plus.client.storage.StorageViewer;
-import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
@@ -34,7 +33,6 @@ public class ChatListener {
 
     public void register() {
         ClientReceiveMessageEvents.ALLOW_GAME.register(this::onReceiveGameMessage);
-        ClientReceiveMessageEvents.MODIFY_GAME.register(this::modifyGameMessage);
         ClientSendMessageEvents.ALLOW_CHAT.register(this::onSendChat);
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> onWorldJoin());
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> onWorldLeave());
@@ -67,15 +65,6 @@ public class ChatListener {
         FairySouls.getInstance().onChatMessage(message);
 
         return true;
-    }
-
-    private Component modifyGameMessage(Component message, boolean overlay) {
-        if (overlay) return message;
-
-        NeuConfig config = Neu21PlusMod.getInstance().getConfig();
-        if (config == null) return message;
-
-        return message;
     }
 
     private boolean onSendChat(String message) {

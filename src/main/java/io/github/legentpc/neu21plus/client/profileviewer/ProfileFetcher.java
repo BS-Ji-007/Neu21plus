@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.api.APIManager;
 import io.github.legentpc.neu21plus.util.NeuManager;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import io.github.legentpc.neu21plus.client.notification.NotificationSystem;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -152,7 +153,7 @@ public class ProfileFetcher {
                     for (String skill : skillNames) {
                         String key = "skyblock_" + skill;
                         if (achievements.has(key)) {
-                            profile.getSkills().put(capitalize(skill), achievements.get(key).getAsInt());
+                            profile.getSkills().put(TextUtils.capitalize(skill), achievements.get(key).getAsInt());
                         }
                     }
                 }
@@ -249,7 +250,7 @@ public class ProfileFetcher {
 
         for (String key : statKeys) {
             if (memberData.has(key)) {
-                profile.getStats().put(capitalize(key.replace("_", " ")), memberData.get(key).getAsDouble());
+                profile.getStats().put(TextUtils.capitalize(key.replace("_", " ")), memberData.get(key).getAsDouble());
             }
         }
     }
@@ -295,7 +296,7 @@ public class ProfileFetcher {
 
                 String type = petObj.has("type") ? petObj.get("type").getAsString() : "Unknown";
                 pet.setInternalName(type);
-                pet.setName(formatPetName(type));
+                pet.setName(TextUtils.capitalize(type));
 
                 profile.getPets().add(pet);
             }
@@ -397,27 +398,6 @@ public class ProfileFetcher {
             level += (int) (remaining / 5000);
         }
         return level;
-    }
-
-    private String capitalize(String str) {
-        if (str == null || str.isEmpty()) return str;
-        String[] words = str.split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (String word : words) {
-            if (!sb.isEmpty()) sb.append(" ");
-            sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1).toLowerCase());
-        }
-        return sb.toString();
-    }
-
-    private String formatPetName(String type) {
-        String[] parts = type.split("_");
-        StringBuilder sb = new StringBuilder();
-        for (String part : parts) {
-            if (!sb.isEmpty()) sb.append(" ");
-            sb.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1).toLowerCase());
-        }
-        return sb.toString();
     }
 
     public void clearCache() {

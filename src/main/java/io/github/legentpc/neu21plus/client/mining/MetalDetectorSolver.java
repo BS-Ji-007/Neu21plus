@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.mining;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -206,7 +207,7 @@ public class MetalDetectorSolver {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher detectorMatcher = METAL_DETECTOR_PATTERN.matcher(cleaned);
         if (detectorMatcher.find()) {
@@ -221,14 +222,11 @@ public class MetalDetectorSolver {
 
         Matcher chestLocMatcher = CHEST_LOCATION_PATTERN.matcher(cleaned);
         if (chestLocMatcher.find() && active) {
-            try {
-                targetX = Double.parseDouble(chestLocMatcher.group(1));
-                targetY = Double.parseDouble(chestLocMatcher.group(2));
-                targetZ = Double.parseDouble(chestLocMatcher.group(3));
-                hasTarget = true;
-                LOGGER.info("Metal detector target set from chat: {}, {}, {}", targetX, targetY, targetZ);
-            } catch (NumberFormatException ignored) {
-            }
+            targetX = TextUtils.parseDoubleSafe(chestLocMatcher.group(1), targetX);
+            targetY = TextUtils.parseDoubleSafe(chestLocMatcher.group(2), targetY);
+            targetZ = TextUtils.parseDoubleSafe(chestLocMatcher.group(3), targetZ);
+            hasTarget = true;
+            LOGGER.info("Metal detector target set from chat: {}, {}, {}", targetX, targetY, targetZ);
         }
     }
 
@@ -350,7 +348,4 @@ public class MetalDetectorSolver {
         return lastDirection;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

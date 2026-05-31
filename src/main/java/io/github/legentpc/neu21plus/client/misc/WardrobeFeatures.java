@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.misc;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -104,15 +105,14 @@ public class WardrobeFeatures {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher slotMatcher = WARDROBE_SLOT_PATTERN.matcher(cleaned);
         if (slotMatcher.find()) {
-            try {
-                int slot = Integer.parseInt(slotMatcher.group(1));
+            int slot = TextUtils.parseIntSafe(slotMatcher.group(1), -1);
+            if (slot != -1) {
                 activeSet = slot;
                 LOGGER.debug("Active wardrobe slot: {}", slot);
-            } catch (NumberFormatException ignored) {
             }
         }
     }
@@ -120,11 +120,11 @@ public class WardrobeFeatures {
     public void parseWardrobeSlot(ItemStack stack, int slotNumber) {
         if (stack == null || stack.isEmpty()) return;
 
-        String name = stripColorCodes(stack.getDisplayName().getString()).trim();
+        String name = TextUtils.stripColorCodes(stack.getDisplayName().getString()).trim();
         ArmorSet set = new ArmorSet(name, slotNumber);
 
         for (Component line : stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL)) {
-            String lineText = stripColorCodes(line.getString()).trim();
+            String lineText = TextUtils.stripColorCodes(line.getString()).trim();
 
             Matcher healthMatcher = HEALTH_PATTERN.matcher(lineText);
             if (healthMatcher.find()) {
@@ -208,7 +208,4 @@ public class WardrobeFeatures {
         return currentArmor;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

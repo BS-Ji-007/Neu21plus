@@ -201,7 +201,7 @@ public class GuiProfileViewer extends Screen {
             rowY += font.lineHeight + 2;
             for (ProfileData.InventoryItem item : armor) {
                 if (item.getInternalName() == null || item.getInternalName().isEmpty()) continue;
-                String name = item.getDisplayName() != null ? stripFormatting(item.getDisplayName()) : item.getInternalName();
+                String name = item.getDisplayName() != null ? TextUtils.stripColorCodes(item.getDisplayName()) : item.getInternalName();
                 String rarity = item.getRarity() != null ? " \u00a78[" + item.getRarity() + "]" : "";
                 context.text(font, "\u00a7f- " + name + rarity, x + 8, rowY, TEXT_COLOR, false);
                 rowY += font.lineHeight + 1;
@@ -214,7 +214,7 @@ public class GuiProfileViewer extends Screen {
             rowY += font.lineHeight + 2;
             for (ProfileData.InventoryItem item : accessories) {
                 if (item.getInternalName() == null || item.getInternalName().isEmpty()) continue;
-                String name = item.getDisplayName() != null ? stripFormatting(item.getDisplayName()) : item.getInternalName();
+                String name = item.getDisplayName() != null ? TextUtils.stripColorCodes(item.getDisplayName()) : item.getInternalName();
                 context.text(font, "\u00a7f- " + name, x + 8, rowY, TEXT_COLOR, false);
                 rowY += font.lineHeight + 1;
             }
@@ -238,7 +238,7 @@ public class GuiProfileViewer extends Screen {
         rowY += font.lineHeight + 4;
 
         for (ProfileData.PetData pet : pets) {
-            String rarityColor = getRarityColor(pet.getRarity());
+            String rarityColor = TextUtils.getRarityColor(pet.getRarity());
             String text = rarityColor + pet.getName() + " \u00a77Lvl " + pet.getLevel();
             if (pet.getHeldItem() != null) {
                 text += " \u00a78[" + pet.getHeldItem() + "]";
@@ -263,7 +263,7 @@ public class GuiProfileViewer extends Screen {
         sorted.sort((a, b) -> Long.compare(b.getValue(), a.getValue()));
 
         for (Map.Entry<String, Long> entry : sorted) {
-            String text = "\u00a7f" + formatCollectionName(entry.getKey()) + ": \u00a77" + NUMBER_FORMAT.format(entry.getValue());
+            String text = "\u00a7f" + TextUtils.capitalize(entry.getKey()) + ": \u00a77" + NUMBER_FORMAT.format(entry.getValue());
             context.text(font, text, x + 4, rowY, TEXT_COLOR, false);
             rowY += font.lineHeight + 1;
         }
@@ -318,30 +318,4 @@ public class GuiProfileViewer extends Screen {
         return false;
     }
 
-    private String stripFormatting(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
-
-    private String getRarityColor(String rarity) {
-        if (rarity == null) return "\u00a7f";
-        return switch (rarity.toUpperCase()) {
-            case "COMMON" -> "\u00a7f";
-            case "UNCOMMON" -> "\u00a7a";
-            case "RARE" -> "\u00a79";
-            case "EPIC" -> "\u00a75";
-            case "LEGENDARY" -> "\u00a76";
-            case "MYTHIC" -> "\u00a7d";
-            default -> "\u00a7f";
-        };
-    }
-
-    private String formatCollectionName(String key) {
-        String[] parts = key.split("_");
-        StringBuilder sb = new StringBuilder();
-        for (String part : parts) {
-            if (!sb.isEmpty()) sb.append(" ");
-            sb.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1).toLowerCase());
-        }
-        return sb.toString();
-    }
 }

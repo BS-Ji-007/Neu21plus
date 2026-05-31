@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
+import io.github.legentpc.neu21plus.itemrepo.Ingredient;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.util.NeuManager;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +38,9 @@ public class APIManager {
     private final Map<String, AuctionData> auctionCache = new HashMap<>();
     private long lastBazaarUpdate = 0;
     private long lastAuctionUpdate = 0;
-    private static final long CACHE_DURATION = 60000;
+    private static final long CACHE_DURATION = 60_000;
+    private static final int CONNECT_TIMEOUT = 5_000;
+    private static final int READ_TIMEOUT = 10_000;
 
     private String apiKey = null;
 
@@ -96,11 +99,7 @@ public class APIManager {
 
     @Nullable
     public BazaarData getBazaarData(@NotNull String internalName) {
-        BazaarData cached = bazaarCache.get(internalName);
-        if (cached != null) return cached;
-
-        String bazaarId = internalName;
-        return bazaarCache.get(bazaarId);
+        return bazaarCache.get(internalName);
     }
 
     public double getLowestBin(@NotNull String internalName) {
@@ -147,8 +146,8 @@ public class APIManager {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("API-Key", apiKey);
             connection.setRequestProperty("User-Agent", "Neu21Plus");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(CONNECT_TIMEOUT);
+            connection.setReadTimeout(READ_TIMEOUT);
 
             if (connection.getResponseCode() != 200) {
                 LOGGER.debug("API returned status {} for {}", connection.getResponseCode(), endpoint);
@@ -191,7 +190,4 @@ public class APIManager {
         public double secondLowestBin = 0;
     }
 
-    private static class Ingredient {
-        public static final String SKYBLOCK_COIN = "SKYBLOCK_COIN";
-    }
 }

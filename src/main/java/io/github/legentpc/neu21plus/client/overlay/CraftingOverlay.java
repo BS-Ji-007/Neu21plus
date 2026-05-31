@@ -25,13 +25,10 @@ public class CraftingOverlay {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CraftingOverlay.class);
 
-    private static CraftingOverlay instance;
+    private static final CraftingOverlay INSTANCE = new CraftingOverlay();
 
     public static CraftingOverlay getInstance() {
-        if (instance == null) {
-            instance = new CraftingOverlay();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     private String currentCraftingItem = null;

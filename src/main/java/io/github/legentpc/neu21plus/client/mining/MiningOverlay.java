@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.mining;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.scores.DisplaySlot;
@@ -135,7 +136,7 @@ public class MiningOverlay {
 
             for (PlayerScoreEntry entry : scores) {
                 String line = entry.display() != null ? entry.display().getString() : entry.owner();
-                String cleaned = stripColorCodes(line).trim();
+                String cleaned = TextUtils.stripColorCodes(line).trim();
 
                 Matcher mithrilMatcher = MITHRIL_POWDER_PATTERN.matcher(cleaned);
                 if (mithrilMatcher.find()) {
@@ -157,10 +158,7 @@ public class MiningOverlay {
 
                 Matcher hotmMatcher = HOTM_LEVEL_PATTERN.matcher(cleaned);
                 if (hotmMatcher.find()) {
-                    try {
-                        hotmLevel = Integer.parseInt(hotmMatcher.group(1));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    hotmLevel = TextUtils.parseIntSafe(hotmMatcher.group(1), hotmLevel);
                     continue;
                 }
 
@@ -197,11 +195,11 @@ public class MiningOverlay {
             java.util.regex.Pattern progressPattern = java.util.regex.Pattern.compile("(\\d+)%");
             Matcher progressMatcher = progressPattern.matcher(cleanLine);
             if (progressMatcher.find()) {
-                try {
-                    int progress = Integer.parseInt(progressMatcher.group(1));
+                int progress = TextUtils.parseIntSafe(progressMatcher.group(1), -1);
+                if (progress >= 0) {
                     slot.setProgress(progress);
                     slot.setState(progress >= 100 ? CommissionState.COMPLETED : CommissionState.IN_PROGRESS);
-                } catch (NumberFormatException ignored) {
+                } else {
                     slot.setState(CommissionState.NOT_STARTED);
                 }
             } else {
@@ -278,25 +276,25 @@ public class MiningOverlay {
         lines.add(new OverlayLine("\u00a7bMining Info", 0xFF55FFFF));
 
         if (mithrilPowder > 0 || mithrilPowderDelta > 0) {
-            String mithrilText = "\u00a77Mithril: \u00a7a" + formatNumber(mithrilPowder);
+            String mithrilText = "\u00a77Mithril: \u00a7a" + TextUtils.formatNumber(mithrilPowder);
             if (mithrilPowderDelta > 0) {
-                mithrilText += " \u00a7e(+" + formatNumber(mithrilPowderDelta) + ")";
+                mithrilText += " \u00a7e(+" + TextUtils.formatNumber(mithrilPowderDelta) + ")";
             }
             lines.add(new OverlayLine(mithrilText, 0xFF55FF55));
         }
 
         if (gemstonePowder > 0 || gemstonePowderDelta > 0) {
-            String gemstoneText = "\u00a77Gemstone: \u00a7d" + formatNumber(gemstonePowder);
+            String gemstoneText = "\u00a77Gemstone: \u00a7d" + TextUtils.formatNumber(gemstonePowder);
             if (gemstonePowderDelta > 0) {
-                gemstoneText += " \u00a7e(+" + formatNumber(gemstonePowderDelta) + ")";
+                gemstoneText += " \u00a7e(+" + TextUtils.formatNumber(gemstonePowderDelta) + ")";
             }
             lines.add(new OverlayLine(gemstoneText, 0xFF55FFFF));
         }
 
         if (glacitePowder > 0 || glacitePowderDelta > 0) {
-            String glaciteText = "\u00a77Glacite: \u00a7b" + formatNumber(glacitePowder);
+            String glaciteText = "\u00a77Glacite: \u00a7b" + TextUtils.formatNumber(glacitePowder);
             if (glacitePowderDelta > 0) {
-                glaciteText += " \u00a7e(+" + formatNumber(glacitePowderDelta) + ")";
+                glaciteText += " \u00a7e(+" + TextUtils.formatNumber(glacitePowderDelta) + ")";
             }
             lines.add(new OverlayLine(glaciteText, 0xFF55FFFF));
         }
@@ -336,15 +334,6 @@ public class MiningOverlay {
         return name;
     }
 
-    private String formatNumber(int number) {
-        if (number >= 1_000_000) {
-            return String.format("%.1fM", number / 1_000_000.0);
-        } else if (number >= 1_000) {
-            return String.format("%.1fK", number / 1_000.0);
-        }
-        return String.valueOf(number);
-    }
-
     public void reset() {
         mithrilPowder = 0;
         gemstonePowder = 0;
@@ -382,10 +371,6 @@ public class MiningOverlay {
     public CommissionSlot getCommission(int index) {
         if (index < 0 || index >= commissions.length) return null;
         return commissions[index];
-    }
-
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
     }
 
     private record OverlayLine(String text, int color) {

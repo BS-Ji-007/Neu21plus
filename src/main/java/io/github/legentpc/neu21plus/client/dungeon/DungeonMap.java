@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.dungeon;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.PlayerInfo;
@@ -109,7 +110,7 @@ public class DungeonMap {
 
             for (PlayerScoreEntry score : scores) {
                 String line = score.display() != null ? score.display().getString() : score.owner();
-                String cleaned = stripColorCodes(line).trim();
+                String cleaned = TextUtils.stripColorCodes(line).trim();
                 parseScoreboardLine(cleaned);
             }
         } catch (Exception e) {
@@ -127,39 +128,27 @@ public class DungeonMap {
 
         Matcher scoreMatcher = SCORE_PATTERN.matcher(line);
         if (scoreMatcher.find()) {
-            try {
-                currentScore = Integer.parseInt(scoreMatcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
+            currentScore = TextUtils.parseIntSafe(scoreMatcher.group(1), currentScore);
         }
 
         Matcher clearedMatcher = CLEARED_PATTERN.matcher(line);
         if (clearedMatcher.find()) {
-            try {
-                clearedPercentage = Integer.parseInt(clearedMatcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
+            clearedPercentage = TextUtils.parseIntSafe(clearedMatcher.group(1), clearedPercentage);
         }
 
         if (line.contains("Secrets")) {
             String[] parts = line.split("/");
             if (parts.length == 2) {
-                try {
-                    foundSecrets = Integer.parseInt(parts[0].replaceAll("\\D", ""));
-                    totalSecrets = Integer.parseInt(parts[1].replaceAll("\\D", ""));
-                } catch (NumberFormatException ignored) {
-                }
+                foundSecrets = TextUtils.parseIntSafe(parts[0].replaceAll("\\D", ""), foundSecrets);
+                totalSecrets = TextUtils.parseIntSafe(parts[1].replaceAll("\\D", ""), totalSecrets);
             }
         }
 
         if (line.contains("Kills")) {
             String[] parts = line.split("/");
             if (parts.length == 2) {
-                try {
-                    totalKills = Integer.parseInt(parts[0].replaceAll("\\D", ""));
-                    requiredKills = Integer.parseInt(parts[1].replaceAll("\\D", ""));
-                } catch (NumberFormatException ignored) {
-                }
+                totalKills = TextUtils.parseIntSafe(parts[0].replaceAll("\\D", ""), totalKills);
+                requiredKills = TextUtils.parseIntSafe(parts[1].replaceAll("\\D", ""), requiredKills);
             }
         }
     }
@@ -172,7 +161,7 @@ public class DungeonMap {
                 if (displayName == null) continue;
 
                 String name = displayName.getString();
-                String cleaned = stripColorCodes(name).trim();
+                String cleaned = TextUtils.stripColorCodes(name).trim();
                 parseTabListEntry(cleaned);
             }
         } catch (Exception e) {
@@ -356,7 +345,4 @@ public class DungeonMap {
         return end - dungeonStartTime;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

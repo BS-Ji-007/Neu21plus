@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -157,7 +158,7 @@ public class SBInfo {
 
             for (PlayerScoreEntry entry : scores) {
                 String line = entry.display() != null ? entry.display().getString() : entry.owner();
-                String cleaned = stripColorCodes(line).trim();
+                String cleaned = TextUtils.stripColorCodes(line).trim();
                 parseScoreboardLine(cleaned);
             }
         } catch (Exception e) {
@@ -309,7 +310,4 @@ public class SBInfo {
         return locraw;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-or]", "").replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

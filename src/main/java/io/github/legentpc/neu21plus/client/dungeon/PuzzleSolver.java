@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.dungeon;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.entity.Entity;
@@ -69,13 +70,13 @@ public class PuzzleSolver {
 
     public void parseChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
         detectPuzzleType(cleaned);
     }
 
     public void parseChestTitle(String title) {
         if (title == null) return;
-        String cleaned = stripColorCodes(title).trim();
+        String cleaned = TextUtils.stripColorCodes(title).trim();
 
         if (cleaned.contains("Trivia")) {
             activePuzzle = PuzzleType.TRIVIA;
@@ -159,18 +160,15 @@ public class PuzzleSolver {
             if (entity instanceof ArmorStand armorStand) {
                 Component customName = armorStand.getCustomName();
                 if (customName != null) {
-                    String name = stripColorCodes(customName.getString()).trim();
-                    try {
-                        int health = Integer.parseInt(name.replaceAll("[^0-9]", ""));
-                        blazeEntries.add(new BlazeEntry(
-                                armorStand.getId(),
-                                health,
-                                (float) armorStand.getX(),
-                                (float) armorStand.getY(),
-                                (float) armorStand.getZ()
-                        ));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    String name = TextUtils.stripColorCodes(customName.getString()).trim();
+                    int health = TextUtils.parseIntSafe(name.replaceAll("[^0-9]", ""), 0);
+                    blazeEntries.add(new BlazeEntry(
+                            armorStand.getId(),
+                            health,
+                            (float) armorStand.getX(),
+                            (float) armorStand.getY(),
+                            (float) armorStand.getZ()
+                    ));
                 }
             }
         }
@@ -272,10 +270,6 @@ public class PuzzleSolver {
 
     public int getBlazeTargetIndex() {
         return blazeTargetIndex;
-    }
-
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
     }
 
     public enum PuzzleType {

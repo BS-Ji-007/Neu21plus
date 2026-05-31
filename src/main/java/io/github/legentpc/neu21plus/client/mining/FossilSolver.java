@@ -2,6 +2,7 @@ package io.github.legentpc.neu21plus.client.mining;
 
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -114,7 +115,7 @@ public class FossilSolver {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher startMatcher = FOSSIL_START_PATTERN.matcher(cleaned);
         if (startMatcher.find()) {
@@ -144,12 +145,9 @@ public class FossilSolver {
 
         Matcher digMatcher = FOSSIL_DIG_PATTERN.matcher(cleaned);
         if (digMatcher.find()) {
-            try {
-                int row = Integer.parseInt(digMatcher.group(1));
-                int col = Integer.parseInt(digMatcher.group(2));
-                onDigAttempt(row, col);
-            } catch (NumberFormatException ignored) {
-            }
+            int row = TextUtils.parseIntSafe(digMatcher.group(1), 0);
+            int col = TextUtils.parseIntSafe(digMatcher.group(2), 0);
+            onDigAttempt(row, col);
             return;
         }
 
@@ -350,7 +348,4 @@ public class FossilSolver {
         return GRID_SIZE;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

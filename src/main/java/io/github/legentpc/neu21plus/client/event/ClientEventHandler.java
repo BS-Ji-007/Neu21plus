@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class ClientEventHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("neu21plus-events");
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientEventHandler.class);
 
     private int tickCount = 0;
 

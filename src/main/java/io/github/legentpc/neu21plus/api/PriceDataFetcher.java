@@ -18,7 +18,7 @@ public class PriceDataFetcher {
     private Thread fetcherThread;
     private volatile boolean running = false;
     private long lastFetchTime = 0;
-    private static final long FETCH_INTERVAL = 60000;
+    private static final long FETCH_INTERVAL = 60_000;
 
     private PriceDataFetcher() {
     }

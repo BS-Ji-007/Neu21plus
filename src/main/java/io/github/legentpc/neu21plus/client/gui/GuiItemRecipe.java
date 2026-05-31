@@ -4,6 +4,7 @@ import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.recipe.NeuRecipe;
 import io.github.legentpc.neu21plus.recipe.RecipeSlot;
 import io.github.legentpc.neu21plus.recipe.RecipeType;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
@@ -137,13 +138,13 @@ public class GuiItemRecipe extends Screen {
     private void drawTitle(GuiGraphicsExtractor context) {
         ItemRepo repo = ItemRepo.getInstance();
         String displayName = repo.getDisplayName(itemId);
-        String cleanName = displayName != null ? stripColor(displayName) : itemId;
+        String cleanName = displayName != null ? TextUtils.stripColorCodes(displayName) : itemId;
 
         String title = showUsages ? "\u00a79Usages: " : "\u00a7aRecipe: ";
         title += "\u00a7f" + cleanName;
 
         context.text(font, title,
-                guiLeft + GUI_WIDTH / 2 - font.width(stripColor(title)) / 2,
+                guiLeft + GUI_WIDTH / 2 - font.width(TextUtils.stripColorCodes(title)) / 2,
                 guiTop + 4, 0xFFFFFF, true);
     }
 
@@ -245,7 +246,7 @@ public class GuiItemRecipe extends Screen {
             io.github.legentpc.neu21plus.recipe.MobLootRecipe mobRecipe =
                     (io.github.legentpc.neu21plus.recipe.MobLootRecipe) currentRecipe;
             if (mobRecipe.getMobName() != null) {
-                context.text(font, "\u00a77Mob: " + stripColor(mobRecipe.getMobName()),
+                context.text(font, "\u00a77Mob: " + TextUtils.stripColorCodes(mobRecipe.getMobName()),
                         guiLeft + 8, guiTop + GUI_HEIGHT - 52, 0xAAAAAA, false);
             }
             if (mobRecipe.getCoins() > 0) {
@@ -264,7 +265,7 @@ public class GuiItemRecipe extends Screen {
 
         String pageText = "\u00a77< \u00a7f" + (currentPage + 1) + "/" + totalPages + " \u00a77>";
         context.text(font, pageText,
-                guiLeft + GUI_WIDTH / 2 - font.width(stripColor(pageText)) / 2,
+                guiLeft + GUI_WIDTH / 2 - font.width(TextUtils.stripColorCodes(pageText)) / 2,
                 guiTop + GUI_HEIGHT - 14, 0xAAAAAA, false);
     }
 
@@ -407,11 +408,6 @@ public class GuiItemRecipe extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
-    }
-
-    private String stripColor(String text) {
-        if (text == null) return "";
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
     }
 
     @NotNull

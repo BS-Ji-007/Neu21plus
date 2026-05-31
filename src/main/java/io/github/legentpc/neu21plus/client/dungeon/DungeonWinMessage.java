@@ -109,21 +109,15 @@ public class DungeonWinMessage {
     private void parseAdditionalInfo(String text) {
         Matcher timeMatcher = TIME_PATTERN.matcher(text);
         if (timeMatcher.find()) {
-            try {
-                int minutes = timeMatcher.group(1) != null && !timeMatcher.group(1).isEmpty() ? Integer.parseInt(timeMatcher.group(1)) : 0;
-                int seconds = Integer.parseInt(timeMatcher.group(2));
-                completionTime = (minutes * 60 + seconds) * 1000L;
-            } catch (NumberFormatException ignored) {
-            }
+            int minutes = timeMatcher.group(1) != null && !timeMatcher.group(1).isEmpty() ? TextUtils.parseIntSafe(timeMatcher.group(1), 0) : 0;
+            int seconds = TextUtils.parseIntSafe(timeMatcher.group(2), 0);
+            completionTime = (minutes * 60 + seconds) * 1000L;
         }
 
         Matcher scoreMatcher = SCORE_FINAL_PATTERN.matcher(text);
         if (scoreMatcher.find()) {
-            try {
-                finalScore = Integer.parseInt(scoreMatcher.group(1));
-                finalGrade = DungeonScore.ScoreGrade.fromScore(finalScore);
-            } catch (NumberFormatException ignored) {
-            }
+            finalScore = TextUtils.parseIntSafe(scoreMatcher.group(1), finalScore);
+            finalGrade = DungeonScore.ScoreGrade.fromScore(finalScore);
         }
 
         Matcher withMatcher = WITH_PATTERN.matcher(text);

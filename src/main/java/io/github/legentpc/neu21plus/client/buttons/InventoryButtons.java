@@ -32,7 +32,7 @@ public class InventoryButtons {
     private void initDefaultButtons() {
         buttons.add(new InventoryButton("Storage", "storage", 0xFF5555FF, 0));
         buttons.add(new InventoryButton("Craft", "craft", 0xFF55FF55, 1));
-        buttons.add(new InventoryButton("Wardrbe", "wardrobe", 0xFF5555FF, 2));
+        buttons.add(new InventoryButton("Wardrobe", "wardrobe", 0xFF5555FF, 2));
         buttons.add(new InventoryButton("Pets", "pets", 0xFFFFAA00, 3));
         buttons.add(new InventoryButton("SBMenu", "sbmenu", 0xFF55FFFF, 4));
         buttons.add(new InventoryButton("AH", "ah", 0xFFFF5555, 5));

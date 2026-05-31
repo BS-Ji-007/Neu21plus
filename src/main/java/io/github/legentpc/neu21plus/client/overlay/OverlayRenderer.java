@@ -39,13 +39,10 @@ public class OverlayRenderer {
 
     private static final int DUNGEON_MAP_SIZE = 80;
 
-    private static OverlayRenderer instance;
+    private static final OverlayRenderer INSTANCE = new OverlayRenderer();
 
     public static OverlayRenderer getInstance() {
-        if (instance == null) {
-            instance = new OverlayRenderer();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     private boolean registered = false;

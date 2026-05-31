@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.mining;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
@@ -76,7 +77,7 @@ public class DrillFuelBar {
     private boolean isDrillItem(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
 
-        String itemName = stripColorCodes(stack.getHoverName().getString()).toLowerCase();
+        String itemName = TextUtils.stripColorCodes(stack.getHoverName().getString()).toLowerCase();
         return itemName.contains("drill")
                 || itemName.contains("pickonimbus")
                 || itemName.contains("gemstone gauntlet")
@@ -122,32 +123,26 @@ public class DrillFuelBar {
         boolean foundFuel = false;
 
         for (net.minecraft.network.chat.Component line : lore) {
-            String lineText = stripColorCodes(line.getString()).trim();
+            String lineText = TextUtils.stripColorCodes(line.getString()).trim();
 
             Matcher fuelMatcher = FUEL_PATTERN.matcher(lineText);
             if (fuelMatcher.find()) {
-                try {
-                    fuelCurrent = Integer.parseInt(fuelMatcher.group(1).replace(",", ""));
-                    fuelMax = Integer.parseInt(fuelMatcher.group(2).replace(",", ""));
-                    if (fuelMax > 0) {
-                        fuelPercent = (int) ((fuelCurrent * 100L) / fuelMax);
-                    }
-                    foundFuel = true;
-                    lastFuelUpdate = System.currentTimeMillis();
-                } catch (NumberFormatException ignored) {
+                fuelCurrent = TextUtils.parseIntSafe(fuelMatcher.group(1), fuelCurrent);
+                fuelMax = TextUtils.parseIntSafe(fuelMatcher.group(2), fuelMax);
+                if (fuelMax > 0) {
+                    fuelPercent = (int) ((fuelCurrent * 100L) / fuelMax);
                 }
+                foundFuel = true;
+                lastFuelUpdate = System.currentTimeMillis();
                 break;
             }
 
             Matcher percentMatcher = FUEL_PERCENT_PATTERN.matcher(lineText);
             if (percentMatcher.find()) {
-                try {
-                    fuelPercent = Integer.parseInt(percentMatcher.group(1));
-                    fuelCurrent = (fuelPercent * fuelMax) / 100;
-                    foundFuel = true;
-                    lastFuelUpdate = System.currentTimeMillis();
-                } catch (NumberFormatException ignored) {
-                }
+                fuelPercent = TextUtils.parseIntSafe(percentMatcher.group(1), fuelPercent);
+                fuelCurrent = (fuelPercent * fuelMax) / 100;
+                foundFuel = true;
+                lastFuelUpdate = System.currentTimeMillis();
                 break;
             }
         }
@@ -158,24 +153,23 @@ public class DrillFuelBar {
     }
 
     private void tryFuelFromDataComponents(ItemStack stack) {
-        if (stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA) != null) {
-            var customData = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-            if (customData != null) {
-                try {
-                    var tag = customData.copyTag();
-                    if (tag.contains("drill_fuel")) {
-                        fuelCurrent = tag.getIntOr("drill_fuel", 0);
-                        if (tag.contains("drill_fuel_max")) {
-                            fuelMax = tag.getIntOr("drill_fuel_max", 3000);
-                        }
-                        if (fuelMax > 0) {
-                            fuelPercent = (int) ((fuelCurrent * 100L) / fuelMax);
-                        }
-                        lastFuelUpdate = System.currentTimeMillis();
-                    }
-                } catch (Exception ignored) {
+        var customData = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (customData == null) return;
+
+        try {
+            var tag = customData.copyTag();
+            if (tag.contains("drill_fuel")) {
+                fuelCurrent = tag.getIntOr("drill_fuel", 0);
+                if (tag.contains("drill_fuel_max")) {
+                    fuelMax = tag.getIntOr("drill_fuel_max", 3000);
                 }
+                if (fuelMax > 0) {
+                    fuelPercent = (int) ((fuelCurrent * 100L) / fuelMax);
+                }
+                lastFuelUpdate = System.currentTimeMillis();
             }
+        } catch (Exception e) {
+            LOGGER.debug("Failed to read drill fuel from data components", e);
         }
     }
 
@@ -295,7 +289,4 @@ public class DrillFuelBar {
         return fuelMax;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

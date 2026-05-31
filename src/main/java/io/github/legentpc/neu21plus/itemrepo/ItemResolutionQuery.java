@@ -1,5 +1,6 @@
 package io.github.legentpc.neu21plus.itemrepo;
 
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -53,6 +54,11 @@ public class ItemResolutionQuery {
     }
 
     @Nullable
+    public static String resolve(@Nullable ItemStack stack) {
+        return new ItemResolutionQuery().withItemStack(stack).resolve();
+    }
+
+    @Nullable
     private String resolveFromNbt(@NotNull ItemStack stack) {
         CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) return null;
@@ -79,12 +85,12 @@ public class ItemResolutionQuery {
             return null;
         }
 
-        String cleaned = displayName.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "").trim();
+        String cleaned = TextUtils.stripColorCodes(displayName).trim();
         if (cleaned.isEmpty()) return null;
 
         ItemRepo repo = ItemRepo.getInstance();
         for (Map.Entry<String, String> entry : repo.getDisplayNames()) {
-            String itemName = entry.getValue().replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "").trim();
+            String itemName = TextUtils.stripColorCodes(entry.getValue()).trim();
             if (itemName.equalsIgnoreCase(cleaned)) {
                 return entry.getKey();
             }

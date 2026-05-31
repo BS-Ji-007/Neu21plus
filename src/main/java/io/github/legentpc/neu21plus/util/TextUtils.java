@@ -71,6 +71,20 @@ public class TextUtils {
         return String.format("%,d", number);
     }
 
+    public static String capitalize(String text) {
+        if (text == null || text.isEmpty()) return text;
+        String[] words = text.toLowerCase().split("_");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            if (i > 0) sb.append(" ");
+            if (!words[i].isEmpty()) {
+                sb.append(Character.toUpperCase(words[i].charAt(0)));
+                if (words[i].length() > 1) sb.append(words[i].substring(1));
+            }
+        }
+        return sb.toString();
+    }
+
     public static String getRarityColor(String rarity) {
         if (rarity == null) return "\u00a7f";
         return switch (rarity.toUpperCase()) {
@@ -84,6 +98,30 @@ public class TextUtils {
             case "DIVINE" -> "\u00a7b";
             default -> "\u00a7f";
         };
+    }
+
+    public static int parseIntSafe(String text, int defaultValue) {
+        try {
+            return Integer.parseInt(text.replace(",", "").trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    public static double parseDoubleSafe(String text, double defaultValue) {
+        try {
+            return Double.parseDouble(text.replace(",", "").trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseLongSafe(String text, long defaultValue) {
+        try {
+            return Long.parseLong(text.replace(",", "").trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     public static Component createClickableText(String text, String command) {

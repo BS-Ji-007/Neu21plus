@@ -29,7 +29,8 @@ public interface NeuRecipe {
     default ItemStack getOutputItemStack() {
         List<Ingredient> outputs = getOutputs();
         if (outputs.isEmpty()) return null;
-        return null;
+        Ingredient first = outputs.get(0);
+        return io.github.legentpc.neu21plus.itemrepo.ItemRepo.getInstance().createItemStack(first.getInternalItemId());
     }
 
     @NotNull

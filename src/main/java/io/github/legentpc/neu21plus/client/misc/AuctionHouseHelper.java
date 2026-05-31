@@ -6,6 +6,7 @@ import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.itemrepo.ItemRepo;
 import io.github.legentpc.neu21plus.itemrepo.ItemResolutionQuery;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -124,7 +125,7 @@ public class AuctionHouseHelper {
             if (!slot.hasItem()) continue;
 
             ItemStack stack = slot.getItem();
-            String displayName = stripColorCodes(stack.getDisplayName().getString()).trim();
+            String displayName = TextUtils.stripColorCodes(stack.getDisplayName().getString()).trim();
             String internalName = new ItemResolutionQuery().withItemStack(stack).resolve();
 
             if (internalName == null || internalName.isEmpty()) continue;
@@ -163,7 +164,7 @@ public class AuctionHouseHelper {
 
     private double parsePriceFromLore(ItemStack stack) {
         for (Component line : stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL)) {
-            String text = stripColorCodes(line.getString()).trim();
+            String text = TextUtils.stripColorCodes(line.getString()).trim();
 
             Matcher binMatcher = BIN_PATTERN.matcher(text);
             if (binMatcher.find()) {
@@ -185,7 +186,7 @@ public class AuctionHouseHelper {
 
     private boolean isBinItem(ItemStack stack) {
         for (Component line : stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL)) {
-            String text = stripColorCodes(line.getString()).trim();
+            String text = TextUtils.stripColorCodes(line.getString()).trim();
             if (text.contains("Buy It Now") || text.contains("BIN")) {
                 return true;
             }
@@ -264,7 +265,4 @@ public class AuctionHouseHelper {
         return currentAhEntries;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

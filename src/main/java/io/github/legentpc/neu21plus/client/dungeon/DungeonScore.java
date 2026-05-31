@@ -17,6 +17,8 @@ public class DungeonScore {
     private static final Pattern SKILL_PATTERN = Pattern.compile("Skill: (\\d+)");
     private static final Pattern BONUS_PATTERN = Pattern.compile("Bonus: (\\d+)");
 
+    private static final int DEFAULT_MILESTONE_TARGET = 300;
+
     private int explorationScore;
     private int speedScore;
     private int skillScore;
@@ -49,7 +51,7 @@ public class DungeonScore {
         totalScore = 0;
         grade = ScoreGrade.UNKNOWN;
         milestoneReached = false;
-        milestoneTarget = 300;
+        milestoneTarget = DEFAULT_MILESTONE_TARGET;
         secretCount = 0;
         secretTotal = 0;
         deathCount = 0;

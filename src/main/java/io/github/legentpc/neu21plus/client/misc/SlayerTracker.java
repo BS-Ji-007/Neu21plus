@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.misc;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,8 @@ public class SlayerTracker {
     private static final Logger LOGGER = LoggerFactory.getLogger(SlayerTracker.class);
 
     private static final SlayerTracker INSTANCE = new SlayerTracker();
+
+    private static final long BOSS_TIMEOUT_MS = 300_000;
 
     private static final Pattern SLAYER_QUEST_START = Pattern.compile(
             "\\s*(Spider|Zombie|Wolf|Enderman|Blaze|Vampire) Slayer LVL (\\d)"
@@ -103,7 +106,7 @@ public class SlayerTracker {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = stripColorCodes(text).trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher questMatcher = SLAYER_QUEST_START.matcher(cleaned);
         if (questMatcher.find()) {
@@ -128,21 +131,13 @@ public class SlayerTracker {
 
         Matcher rngMatcher = SLAYER_RNG_METER.matcher(cleaned);
         if (rngMatcher.find()) {
-            try {
-                rngMeterPercent = Float.parseFloat(rngMatcher.group(1));
-            } catch (NumberFormatException ignored) {
-            }
+            rngMeterPercent = (float) TextUtils.parseDoubleSafe(rngMatcher.group(1), rngMeterPercent);
             return;
         }
 
         Matcher xpMatcher = SLAYER_XP_DROP.matcher(cleaned);
         if (xpMatcher.find()) {
-            try {
-                String amountStr = xpMatcher.group(1).replace(",", "");
-                int amount = Integer.parseInt(amountStr);
-                totalXpGained += amount;
-            } catch (NumberFormatException ignored) {
-            }
+            totalXpGained += TextUtils.parseIntSafe(xpMatcher.group(1), 0);
         }
     }
 
@@ -176,7 +171,7 @@ public class SlayerTracker {
     }
 
     private void checkBossTimeout() {
-        if (slayerStartTime > 0 && System.currentTimeMillis() - slayerStartTime > 300000) {
+        if (slayerStartTime > 0 && System.currentTimeMillis() - slayerStartTime > BOSS_TIMEOUT_MS) {
             bossAlive = false;
             slayerStartTime = -1;
         }
@@ -244,7 +239,4 @@ public class SlayerTracker {
         return bossAlive;
     }
 
-    private String stripColorCodes(String text) {
-        return text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "");
-    }
 }

@@ -3,6 +3,7 @@ package io.github.legentpc.neu21plus.client.collection;
 import io.github.legentpc.neu21plus.Neu21PlusMod;
 import io.github.legentpc.neu21plus.config.NeuConfig;
 import io.github.legentpc.neu21plus.skyblock.SBInfo;
+import io.github.legentpc.neu21plus.util.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -39,7 +40,7 @@ public class CollectionDisplay {
 
     public void onChatMessage(Component message) {
         String text = message.getString();
-        String cleaned = text.replaceAll("\u00a7[0-9a-fk-orA-FK-OR]", "").trim();
+        String cleaned = TextUtils.stripColorCodes(text).trim();
 
         Matcher matcher = COLLECTION_PATTERN.matcher(cleaned);
         if (matcher.find()) {
@@ -97,18 +98,11 @@ public class CollectionDisplay {
 
             Integer tier = collectionTiers.get(entry.getKey());
             String tierStr = tier != null ? " \u00a7aT" + tier : "";
-            String text = "\u00a7f" + entry.getKey() + ": \u00a77" + formatNumber(entry.getValue()) + tierStr;
+            String text = "\u00a7f" + entry.getKey() + ": \u00a77" + TextUtils.formatNumber(entry.getValue()) + tierStr;
             context.text(client.font, text, x + 2, y, 0xFFAAAAAA, false);
             y += lineH;
             count++;
         }
-    }
-
-    private String formatNumber(long num) {
-        if (num >= 1_000_000_000) return String.format("%.1fB", num / 1_000_000_000.0);
-        if (num >= 1_000_000) return String.format("%.1fM", num / 1_000_000.0);
-        if (num >= 1_000) return String.format("%.1fK", num / 1_000.0);
-        return String.valueOf(num);
     }
 
     public void reset() {
