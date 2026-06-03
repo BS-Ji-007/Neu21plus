@@ -2,11 +2,13 @@
 moulconfig = "4.7.2"
 nealisp = "1.1.0"
 minecraft = "26.1.2"
-fabric-loader = "0.18.4"
+fabric-loader = "0.19.2"
 fabric-api = "0.150.0+26.1.2"
 kotlin = "2.3.21"
 ksp = "2.3.21-1.0.30"
-loom = "1.15.2"
+loom = "1.15-SNAPSHOT"
+detekt = "2.0.0-alpha.2"
+detektrules-neu = "1.0.0"
 
 [libraries]
 nealisp = { module = "moe.nea:nealisp", version.ref = "nealisp" }
@@ -14,3 +16,13 @@ moulconfig = { module = "org.notenoughupdates.moulconfig:modern-26.1", version.r
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+detekt-api = { module = "dev.detekt:detekt-api", version.ref = "detekt" }
+detektrules-ktlint = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
+detekt-test = { module = "dev.detekt:detekt-test", version.ref = "detekt" }
+detektrules-neu = { module = "org.notenoughupdates:detektrules", version.ref = "detektrules-neu" }
+detektrules-authors = { module = "dev.detekt:detekt-rules-ruleauthors", version.ref = "detekt" }
+
+[plugins]
+detekt = { id = "dev.detekt", version.ref = "detekt" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
+shadow = { id = "com.gradleup.shadow", version = "9.4.1" }

@@ -15,12 +15,12 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     idea
     java
-    id("net.fabricmc.fabric-loom") version "1.15.2"
-    id("com.gradleup.shadow") version "9.4.1"
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.shadow)
     id("io.github.juuxel.loom-quiltflower") version "1.11.0"
     `maven-publish`
     kotlin("jvm") version libs.versions.kotlin.get()
-    id("io.gitlab.arturbosch.detekt") version "1.23.6"
+    alias(libs.plugins.detekt)
     id("com.google.devtools.ksp") version libs.versions.ksp.get()
     id("net.kyori.blossom") version "2.1.0"
     id("com.xpdustry.ksr") version "1.0.0"
@@ -32,7 +32,7 @@ group = "io.github.moulberry"
 val baseVersion = setVersionFromEnvironment()
 
 loom {
-    // 26.1+ is unobfuscated. Standard Loom 1.15+ handles this.
+    // Unobfuscated Minecraft 26.1+
 }
 
 repositories {
