@@ -30,7 +30,7 @@ abstract class CustomSignTask : DefaultTask() {
     @TaskAction
     fun run() {
         println("Hash to sign: ")
-        val hash = readLine()!!.trim().toUpperCase()
+        val hash = readLine()!!.trim().uppercase()
         require(hash.matches("[A-F0-9]{64}".toRegex())) { "Please provide a valid sha256 hash" }
         val secrets = project.file("secrets").listFiles()?.toList()
             ?.filter { !it.name.startsWith(".") } ?: emptyList()

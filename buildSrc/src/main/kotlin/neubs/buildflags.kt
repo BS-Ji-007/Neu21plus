@@ -39,7 +39,7 @@ class NEUBuildFlags : Plugin<Project> {
             this.encoding = StandardCharsets.UTF_8.name()
             this.setProperties(props)
             this.comment = "Store build time configuration for NEU"
-            this.setOutputFile(target.layout.buildDirectory.file("buildflags.properties"))
+            this.destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
 
