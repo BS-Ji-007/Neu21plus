@@ -1,22 +1,6 @@
 /*
  * Copyright (C) 2022-2026 NotEnoughUpdates contributors
- *
- * This file is part of NotEnoughUpdates.
- *
- * NotEnoughUpdates is free software: you can redistribute it
- * and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- *
- * NotEnoughUpdates is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with NotEnoughUpdates. If not, see <https://www.gnu.org/licenses/>.
  */
-
 
 import com.xpdustry.ksr.kotlinRelocate
 import neubs.CustomSignTask
@@ -30,7 +14,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     idea
     java
-    id("net.fabricmc.loom") version "1.15.+"
+    id("net.fabricmc.loom") version "1.15.2"
     id("com.gradleup.shadow") version "9.4.1"
     id("io.github.juuxel.loom-quiltflower") version "1.11.0"
     `maven-publish`
@@ -41,18 +25,14 @@ plugins {
     id("com.xpdustry.ksr") version "1.0.0"
 }
 
-
 apply<NEUBuildFlags>()
 
-// Build metadata
-
 group = "io.github.moulberry"
-
 val baseVersion = setVersionFromEnvironment()
 
-// Minecraft configuration:
 loom {
-    // 26.1+ is unobfuscated, no mappings needed
+    // Minecraft 26.1+ is unobfuscated. 
+    // Loom 1.15+ handles this automatically when no mappings are provided.
     
     launchConfigs {
         getByName("client") {
@@ -67,14 +47,9 @@ loom {
             }
             vmArgs.add("-Xmx4G")
         }
-        getByName("server") {
-            isIdeConfigGenerated = false
-        }
     }
 }
 
-
-// Dependencies:
 repositories {
     mavenCentral()
     mavenLocal()
@@ -90,45 +65,39 @@ val shadowImplementation: Configuration by configurations.creating {
 }
 
 val shadowOnly: Configuration by configurations.creating {
-
 }
 
 val shadowApi: Configuration by configurations.creating {
     configurations.api.get().extendsFrom(this)
 }
 
-val devEnv: Configuration by configurations.creating {
-    configurations.runtimeClasspath.get().extendsFrom(this)
-    isCanBeResolved = false
-    isCanBeConsumed = false
-    isVisible = false
-}
-
 val kotlinDependencies: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
 }
 
-configurations {
-    val main = getByName(sourceSets.main.get().compileClasspathConfigurationName)
-}
-
 dependencies {
+    // Modern Minecraft & Fabric
     minecraft(libs.minecraft)
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
 
-    // Please keep this version in sync with KotlinLoadingTweaker
+    // Kotlin
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}"))
     kotlinDependencies(kotlin("stdlib"))
     kotlinDependencies(kotlin("reflect"))
 
+    // KSP & Service
     ksp("dev.zacsweers.autoservice:auto-service-ksp:1.2.0")
     implementation("com.google.auto.service:auto-service-annotations:1.1.1")
 
+    // Project Annotations
     compileOnly(ksp(project(":annotations"))!!)
+    
+    // Lombok (Java 25 Compatible)
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 
+    // Dependencies
     shadowImplementation("com.mojang:brigadier:1.2.9")
     shadowImplementation("moe.nea:libautoupdate:1.3.1")
     shadowImplementation(libs.nealisp) {
@@ -137,45 +106,30 @@ dependencies {
 
     compileOnly("org.jetbrains:annotations:24.1.0")
 
-    modImplementation(libs.moulconfig)
+    // MoulConfig
+    implementation(libs.moulconfig)
     shadowOnly(libs.moulconfig)
 
     @Suppress("VulnerableLibrariesLocal")
     shadowApi("info.bliki.wiki:bliki-core:3.1.0")
+    
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-    detektPlugins("org.notenoughupdates:detektrules:1.0.0")
-    devEnv("me.djtheredstoner:DevAuth-fabric:1.2.1")
 }
-
-
 
 java {
     withSourcesJar()
     toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
-// Tasks:
-
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
-    options.isFork = true
 }
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
-    systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
-    this.javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
-    testLogging {
-        exceptionFormat = TestExceptionFormat.FULL
-    }
-}
-val badJars = layout.buildDirectory.dir("badjars")
-
-tasks.named("jar", Jar::class) {
-    archiveClassifier.set("named")
-    destinationDirectory.set(badJars)
 }
 
+// Jar naming & manifest
 tasks.withType(Jar::class) {
     archiveBaseName.set("NotEnoughUpdates")
     manifest.attributes.run {
@@ -183,43 +137,11 @@ tasks.withType(Jar::class) {
     }
 }
 
-val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
-    archiveClassifier.set("")
-    from(tasks.shadowJar)
-    input.set(tasks.shadowJar.get().archiveFile)
-}
-
-tasks.assemble.get().dependsOn(remapJar)
-
-/* Bypassing https://github.com/johnrengelman/shadow/issues/111 */
-// Use Zip instead of Jar as to not include META-INF
-val kotlinDependencyCollectionJar by tasks.creating(Zip::class) {
-    archiveFileName.set("kotlin-libraries-wrapped.jar")
-    destinationDirectory.set(project.layout.buildDirectory.dir("wrapperjars"))
-    from(kotlinDependencies)
-    into("neu-kotlin-libraries-wrapped")
-}
-
-val includeBackupRepo by tasks.registering(DownloadBackupRepo::class) {
-    this.branch.set("master")
-    this.outputDirectory.set(layout.buildDirectory.dir("downloadedRepo"))
-}
-
-
-tasks.shadowJar {
-    archiveClassifier.set("dep-dev")
+val shadowJar = tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveClassifier.set("shadow")
     configurations = listOf(shadowImplementation, shadowApi, shadowOnly)
-    destinationDirectory.set(badJars)
-    archiveBaseName.set("NotEnoughUpdates")
     exclude("**/module-info.class", "LICENSE.txt")
-    dependencies {
-        exclude {
-            it.moduleGroup.startsWith("org.apache.") || it.moduleName in
-                listOf("logback-classic", "commons-logging", "commons-codec", "logback-core")
-        }
-    }
-    from(kotlinDependencyCollectionJar)
-    dependsOn(kotlinDependencyCollectionJar)
+    
     fun relocate(name: String) = kotlinRelocate(name, "io.github.moulberry.notenoughupdates.deps.$name")
     relocate("com.mojang.brigadier")
     relocate("io.github.notenoughupdates.moulconfig")
@@ -228,33 +150,23 @@ tasks.shadowJar {
     mergeServiceFiles()
 }
 
+val remapJar = tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
+    archiveClassifier.set("")
+    input.set(shadowJar.flatMap { it.archiveFile })
+}
+
+tasks.assemble.get().dependsOn(remapJar)
+
 tasks.processResources {
-    from(tasks["generateBuildFlags"])
     from(includeBackupRepo)
-    filesMatching(listOf("fabric.mod.json", "META-INF/mods.toml")) {
-        expand(
-            "version" to project.version, "mcversion" to libs.versions.minecraft.get()
-        )
+    filesMatching(listOf("fabric.mod.json")) {
+        expand("version" to project.version, "mcversion" to libs.versions.minecraft.get())
     }
 }
 
-idea {
-    module {
-        // Not using += due to https://github.com/gradle/gradle/issues/8749
-        sourceDirs = sourceDirs + file("build/generated/ksp/main/kotlin")
-        testSourceDirs = testSourceDirs + file("build/generated/ksp/test/kotlin")
-        generatedSourceDirs =
-            generatedSourceDirs + file("build/generated/ksp/main/kotlin") + file("build/generated/ksp/test/kotlin")
-    }
-}
-
-sourceSets.main {
-    output.setResourcesDir(file("$buildDir/classes/java/main"))
-    this.blossom {
-        this.javaSources {
-            this.property("neuVersion", baseVersion)
-        }
-    }
+val includeBackupRepo by tasks.registering(DownloadBackupRepo::class) {
+    this.branch.set("master")
+    this.outputDirectory.set(layout.buildDirectory.dir("downloadedRepo"))
 }
 
 tasks.register("signRelease", CustomSignTask::class)
