@@ -22,10 +22,10 @@ package io.github.moulberry.notenoughupdates.options;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
-import io.github.moulberry.moulconfig.Config;
-import io.github.moulberry.moulconfig.Social;
-import io.github.moulberry.moulconfig.annotations.Category;
-import io.github.moulberry.moulconfig.gui.MoulConfigEditor;
+import io.github.notenoughupdates.moulconfig.Config;
+import io.github.notenoughupdates.moulconfig.Social;
+import io.github.notenoughupdates.moulconfig.annotations.Category;
+import io.github.notenoughupdates.moulconfig.gui.MoulConfigEditor;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.config.GuiPositionEditor;
 import io.github.moulberry.notenoughupdates.core.config.Position;
@@ -185,9 +185,9 @@ public class NEUConfig extends Config {
 	@Override
 	public void executeRunnable(int runnableId) {
 		String activeConfigCategory = null;
-		if (Minecraft.getMinecraft().currentScreen instanceof io.github.moulberry.moulconfig.gui.GuiScreenElementWrapper) {
-			io.github.moulberry.moulconfig.gui.GuiScreenElementWrapper wrapper =
-				(io.github.moulberry.moulconfig.gui.GuiScreenElementWrapper) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getMinecraft().currentScreen instanceof io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) {
+			io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper wrapper =
+				(io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) Minecraft.getMinecraft().currentScreen;
 			if (wrapper.element instanceof MoulConfigEditor) {
 				activeConfigCategory = ((MoulConfigEditor) wrapper.element).getSelectedCategory();
 			}

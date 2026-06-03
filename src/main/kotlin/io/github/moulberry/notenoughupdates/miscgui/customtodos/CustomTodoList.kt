@@ -19,10 +19,10 @@
 
 package io.github.moulberry.notenoughupdates.miscgui.customtodos
 
-import io.github.moulberry.moulconfig.internal.ClipboardUtils
-import io.github.moulberry.moulconfig.observer.ObservableList
-import io.github.moulberry.moulconfig.xml.Bind
-import io.github.moulberry.moulconfig.xml.XMLUniverse
+import io.github.notenoughupdates.moulconfig.internal.ClipboardUtils
+import io.github.notenoughupdates.moulconfig.observer.ObservableList
+import io.github.notenoughupdates.moulconfig.xml.Bind
+import io.github.notenoughupdates.moulconfig.xml.XMLUniverse
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent

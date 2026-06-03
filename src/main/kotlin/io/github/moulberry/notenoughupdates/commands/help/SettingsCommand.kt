@@ -19,13 +19,13 @@
 
 package io.github.moulberry.notenoughupdates.commands.help
 
-import io.github.moulberry.moulconfig.GuiTextures
-import io.github.moulberry.moulconfig.annotations.ConfigOption
-import io.github.moulberry.moulconfig.common.MyResourceLocation
-import io.github.moulberry.moulconfig.gui.GuiOptionEditor
-import io.github.moulberry.moulconfig.gui.GuiScreenElementWrapper
-import io.github.moulberry.moulconfig.gui.MoulConfigEditor
-import io.github.moulberry.moulconfig.processor.*
+import io.github.notenoughupdates.moulconfig.GuiTextures
+import io.github.notenoughupdates.moulconfig.annotations.ConfigOption
+import io.github.notenoughupdates.moulconfig.common.MyResourceLocation
+import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor
+import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper
+import io.github.notenoughupdates.moulconfig.gui.MoulConfigEditor
+import io.github.notenoughupdates.moulconfig.processor.*
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.config.GuiOptionEditorBlocked

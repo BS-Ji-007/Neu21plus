@@ -32,7 +32,7 @@ group = "io.github.moulberry"
 val baseVersion = setVersionFromEnvironment()
 
 loom {
-    // 26.1+ is unobfuscated.
+    // 26.1+ is unobfuscated. Standard Loom 1.15+ handles this.
 }
 
 repositories {
@@ -135,17 +135,16 @@ tasks.assemble {
     dependsOn(remapJar)
 }
 
+val includeBackupRepo = tasks.register<DownloadBackupRepo>("includeBackupRepo") {
+    this.branch.set("master")
+    this.outputDirectory.set(layout.buildDirectory.dir("downloadedRepo"))
+}
+
 tasks.processResources {
-    val backupRepo = tasks.named<DownloadBackupRepo>("includeBackupRepo")
-    from(backupRepo)
+    from(includeBackupRepo)
     filesMatching("fabric.mod.json") {
         expand("version" to project.version, "mcversion" to libs.versions.minecraft.get())
     }
-}
-
-tasks.register<DownloadBackupRepo>("includeBackupRepo") {
-    this.branch.set("master")
-    this.outputDirectory.set(layout.buildDirectory.dir("downloadedRepo"))
 }
 
 tasks.register("signRelease", neubs.CustomSignTask::class)

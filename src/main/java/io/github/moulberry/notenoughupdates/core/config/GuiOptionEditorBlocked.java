@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.core.config;
 
-import io.github.moulberry.moulconfig.gui.GuiOptionEditor;
+import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils;
 import lombok.var;

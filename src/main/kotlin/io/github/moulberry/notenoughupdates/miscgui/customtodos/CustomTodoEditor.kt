@@ -19,12 +19,12 @@
 
 package io.github.moulberry.notenoughupdates.miscgui.customtodos
 
-import io.github.moulberry.moulconfig.common.IItemStack
-import io.github.moulberry.moulconfig.forge.ForgeItemStack
-import io.github.moulberry.moulconfig.internal.ClipboardUtils
-import io.github.moulberry.moulconfig.observer.ObservableList
-import io.github.moulberry.moulconfig.xml.Bind
-import io.github.moulberry.moulconfig.xml.XMLUniverse
+import io.github.notenoughupdates.moulconfig.common.IItemStack
+import io.github.notenoughupdates.moulconfig.forge.ForgeItemStack
+import io.github.notenoughupdates.moulconfig.internal.ClipboardUtils
+import io.github.notenoughupdates.moulconfig.observer.ObservableList
+import io.github.notenoughupdates.moulconfig.xml.Bind
+import io.github.notenoughupdates.moulconfig.xml.XMLUniverse
 import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.loadResourceLocation

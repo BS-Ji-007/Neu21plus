@@ -19,8 +19,8 @@
 
 package io.github.moulberry.notenoughupdates.miscfeatures.updater
 
-import io.github.moulberry.moulconfig.gui.GuiOptionEditor
-import io.github.moulberry.moulconfig.processor.ProcessedOption
+import io.github.notenoughupdates.moulconfig.gui.GuiOptionEditor
+import io.github.notenoughupdates.moulconfig.processor.ProcessedOption
 import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils
 import io.github.moulberry.notenoughupdates.itemeditor.GuiElementButton
 import net.minecraft.client.Minecraft

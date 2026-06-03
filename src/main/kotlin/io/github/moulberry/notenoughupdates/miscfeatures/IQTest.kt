@@ -19,11 +19,11 @@
 
 package io.github.moulberry.notenoughupdates.miscfeatures
 
-import io.github.moulberry.moulconfig.gui.editors.GuiOptionEditorButton
-import io.github.moulberry.moulconfig.gui.editors.GuiOptionEditorInfoText
-import io.github.moulberry.moulconfig.gui.editors.GuiOptionEditorText
-import io.github.moulberry.moulconfig.processor.ProcessedCategory
-import io.github.moulberry.moulconfig.processor.ProcessedOption
+import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorButton
+import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorInfoText
+import io.github.notenoughupdates.moulconfig.gui.editors.GuiOptionEditorText
+import io.github.notenoughupdates.moulconfig.processor.ProcessedCategory
+import io.github.notenoughupdates.moulconfig.processor.ProcessedOption
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.commands.help.SettingsCommand
 import io.github.moulberry.notenoughupdates.util.Calculator

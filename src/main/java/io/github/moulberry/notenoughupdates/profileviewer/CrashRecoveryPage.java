@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.profileviewer;
 
-import io.github.moulberry.moulconfig.internal.ClipboardUtils;
+import io.github.notenoughupdates.moulconfig.internal.ClipboardUtils;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.util.Rectangle;

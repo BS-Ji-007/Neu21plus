@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.core.config;
 
-import io.github.moulberry.moulconfig.gui.GuiScreenElementWrapper;
+import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper;
 import io.github.moulberry.notenoughupdates.commands.help.SettingsCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

@@ -19,9 +19,9 @@
 
 package io.github.moulberry.notenoughupdates.util
 
-import io.github.moulberry.moulconfig.gui.GuiContext
-import io.github.moulberry.moulconfig.gui.GuiScreenElementWrapperNew
-import io.github.moulberry.moulconfig.xml.XMLUniverse
+import io.github.notenoughupdates.moulconfig.gui.GuiContext
+import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapperNew
+import io.github.notenoughupdates.moulconfig.xml.XMLUniverse
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
