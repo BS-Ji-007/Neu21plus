@@ -6,6 +6,7 @@ fabric-loader = "0.18.4"
 fabric-api = "0.150.0+26.1.2"
 kotlin = "2.3.21"
 ksp = "2.3.21-1.0.30"
+loom = "1.15.2"
 
 [libraries]
 nealisp = { module = "moe.nea:nealisp", version.ref = "nealisp" }

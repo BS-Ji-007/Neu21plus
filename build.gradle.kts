@@ -2,8 +2,9 @@
  * Copyright (C) 2022-2026 NotEnoughUpdates contributors
  */
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.xpdustry.ksr.kotlinRelocate
-import neubs.CustomSignTask
+import net.fabricmc.loom.task.RemapJarTask
 import neubs.DownloadBackupRepo
 import neubs.NEUBuildFlags
 import neubs.applyPublishingInformation
@@ -14,7 +15,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     idea
     java
-    id("net.fabricmc.loom") version "1.15.2"
+    id("net.fabricmc.fabric-loom") version "1.15.2"
     id("com.gradleup.shadow") version "9.4.1"
     id("io.github.juuxel.loom-quiltflower") version "1.11.0"
     `maven-publish`
@@ -31,23 +32,7 @@ group = "io.github.moulberry"
 val baseVersion = setVersionFromEnvironment()
 
 loom {
-    // Minecraft 26.1+ is unobfuscated. 
-    // Loom 1.15+ handles this automatically when no mappings are provided.
-    
-    launchConfigs {
-        getByName("client") {
-            property("mixin.debug", "true")
-            property("asmhelper.verbose", "true")
-        }
-    }
-    runConfigs {
-        getByName("client") {
-            if (SystemUtils.IS_OS_MAC_OSX) {
-                vmArgs.remove("-XstartOnFirstThread")
-            }
-            vmArgs.add("-Xmx4G")
-        }
-    }
+    // 26.1+ is unobfuscated.
 }
 
 repositories {
@@ -76,28 +61,21 @@ val kotlinDependencies: Configuration by configurations.creating {
 }
 
 dependencies {
-    // Modern Minecraft & Fabric
     minecraft(libs.minecraft)
-    implementation(libs.fabric.loader)
-    implementation(libs.fabric.api)
+    modImplementation(libs.fabric.loader)
+    modImplementation(libs.fabric.api)
 
-    // Kotlin
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}"))
     kotlinDependencies(kotlin("stdlib"))
     kotlinDependencies(kotlin("reflect"))
 
-    // KSP & Service
     ksp("dev.zacsweers.autoservice:auto-service-ksp:1.2.0")
     implementation("com.google.auto.service:auto-service-annotations:1.1.1")
 
-    // Project Annotations
     compileOnly(ksp(project(":annotations"))!!)
-    
-    // Lombok (Java 25 Compatible)
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 
-    // Dependencies
     shadowImplementation("com.mojang:brigadier:1.2.9")
     shadowImplementation("moe.nea:libautoupdate:1.3.1")
     shadowImplementation(libs.nealisp) {
@@ -106,8 +84,7 @@ dependencies {
 
     compileOnly("org.jetbrains:annotations:24.1.0")
 
-    // MoulConfig
-    implementation(libs.moulconfig)
+    modImplementation(libs.moulconfig)
     shadowOnly(libs.moulconfig)
 
     @Suppress("VulnerableLibrariesLocal")
@@ -121,23 +98,18 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
-tasks.withType(JavaCompile::class) {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
-
-// Jar naming & manifest
-tasks.withType(Jar::class) {
+tasks.withType<Jar> {
     archiveBaseName.set("NotEnoughUpdates")
     manifest.attributes.run {
         this["Main-Class"] = "NotSkyblockAddonsInstallerFrame"
     }
 }
 
-val shadowJar = tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("shadow")
     configurations = listOf(shadowImplementation, shadowApi, shadowOnly)
     exclude("**/module-info.class", "LICENSE.txt")
@@ -150,29 +122,36 @@ val shadowJar = tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.Sha
     mergeServiceFiles()
 }
 
-val remapJar = tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
+val remapJar = tasks.named<RemapJarTask>("remapJar") {
     archiveClassifier.set("")
-    input.set(shadowJar.flatMap { it.archiveFile })
+    inputFile.set(shadowJar.flatMap { it.archiveFile })
 }
 
-tasks.assemble.get().dependsOn(remapJar)
+val sourcesJar = tasks.named<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+}
+
+tasks.assemble {
+    dependsOn(remapJar)
+}
 
 tasks.processResources {
-    from(includeBackupRepo)
-    filesMatching(listOf("fabric.mod.json")) {
+    val backupRepo = tasks.named<DownloadBackupRepo>("includeBackupRepo")
+    from(backupRepo)
+    filesMatching("fabric.mod.json") {
         expand("version" to project.version, "mcversion" to libs.versions.minecraft.get())
     }
 }
 
-val includeBackupRepo by tasks.registering(DownloadBackupRepo::class) {
+tasks.register<DownloadBackupRepo>("includeBackupRepo") {
     this.branch.set("master")
     this.outputDirectory.set(layout.buildDirectory.dir("downloadedRepo"))
 }
 
-tasks.register("signRelease", CustomSignTask::class)
+tasks.register("signRelease", neubs.CustomSignTask::class)
 
 applyPublishingInformation(
     "deobf" to tasks.jar,
-    "all" to tasks.remapJar,
-    "sources" to tasks["sourcesJar"],
+    "all" to remapJar,
+    "sources" to sourcesJar,
 )

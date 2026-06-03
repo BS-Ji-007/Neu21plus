@@ -1,4 +1,4 @@
 jdk:
-  - openjdk17
+  - openjdk25
 env:
   CI: true
