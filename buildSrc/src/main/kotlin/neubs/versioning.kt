@@ -5,13 +5,17 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
-    val baos = ByteArrayOutputStream()
-    this.exec {
-        commandLine("git", "describe", "--tags", "--abbrev=0")
-        standardOutput = baos
-        isIgnoreExitValue = true
+    val projectInstance = this
+    
+    val baseVersion = run {
+        val baos = ByteArrayOutputStream()
+        projectInstance.exec {
+            commandLine("git", "describe", "--tags", "--abbrev=0")
+            standardOutput = baos
+            isIgnoreExitValue = true
+        }
+        baos.toString().trim()
     }
-    val baseVersion = baos.toString().trim()
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
@@ -19,7 +23,7 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    val execResult = this.exec {
+    val execResult = projectInstance.exec {
         commandLine("git", "rev-parse", "--short", "HEAD")
         standardOutput = stdout
         isIgnoreExitValue = true
@@ -29,7 +33,7 @@ fun Project.setVersionFromEnvironment(): String {
     }
 
     val gitDiffStdout = ByteArrayOutputStream()
-    val gitDiffResult = this.exec {
+    val gitDiffResult = projectInstance.exec {
         commandLine("git", "status", "--porcelain")
         standardOutput = gitDiffStdout
         isIgnoreExitValue = true

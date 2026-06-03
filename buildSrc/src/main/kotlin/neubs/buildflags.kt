@@ -3,7 +3,7 @@ package neubs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.WriteProperties
-import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.the
 import java.nio.charset.StandardCharsets
 
@@ -12,15 +12,18 @@ const val NEU_BUILDFLAGS_PREFIX = "neu.buildflags."
 class NEUBuildFlags : Plugin<Project> {
 
     override fun apply(target: Project) {
-        val props =
-            target.properties.filterKeys { it.startsWith(NEU_BUILDFLAGS_PREFIX) }.mapValues { it.value as String }
+        val props = target.properties
+            .filterKeys { it.startsWith(NEU_BUILDFLAGS_PREFIX) }
+            .mapValues { it.value as String }
+
         target.extensions.add("buildflags", Extension(props))
-        target.tasks.create<WriteProperties>("generateBuildFlags") {
-            this.encoding = StandardCharsets.UTF_8.name()
-            this.setProperties(props)
-            this.comment = "Store build time configuration for NEU"
-            // Gradle 9 uses destinationFile for WriteProperties task
-            this.destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
+
+        target.tasks.register<WriteProperties>("generateBuildFlags") {
+            encoding = StandardCharsets.UTF_8.name()
+            setProperties(props)
+            comment = "Store build time configuration for NEU"
+            // Gradle 9: use destinationFile (Property<RegularFile>)
+            destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
 
