@@ -19,8 +19,8 @@ class NEUBuildFlags : Plugin<Project> {
             this.encoding = StandardCharsets.UTF_8.name()
             this.setProperties(props)
             this.comment = "Store build time configuration for NEU"
-            // Use outputFile.set for Gradle 9 RegularFileProperty
-            this.outputFile.set(target.layout.buildDirectory.file("buildflags.properties"))
+            // Gradle 9 uses destinationFile for WriteProperties task
+            this.destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
 

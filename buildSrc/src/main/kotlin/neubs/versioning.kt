@@ -6,12 +6,12 @@ import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
     val baos = ByteArrayOutputStream()
-    this.project.exec {
+    this.exec {
         commandLine("git", "describe", "--tags", "--abbrev=0")
         standardOutput = baos
         isIgnoreExitValue = true
     }
-    val baseVersion = (baos.toByteArray()).decodeToString().trim()
+    val baseVersion = baos.toString().trim()
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
@@ -19,17 +19,17 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    val execResult = this.project.exec {
+    val execResult = this.exec {
         commandLine("git", "rev-parse", "--short", "HEAD")
         standardOutput = stdout
         isIgnoreExitValue = true
     }
     if (execResult.exitValue == 0) {
-        buildExtra.add(String(stdout.toByteArray()).trim())
+        buildExtra.add(stdout.toString().trim())
     }
 
     val gitDiffStdout = ByteArrayOutputStream()
-    val gitDiffResult = this.project.exec {
+    val gitDiffResult = this.exec {
         commandLine("git", "status", "--porcelain")
         standardOutput = gitDiffStdout
         isIgnoreExitValue = true
