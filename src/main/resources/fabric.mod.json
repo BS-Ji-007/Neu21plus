@@ -2,9 +2,30 @@
   "id": "notenoughupdates",
   "version": "${version}",
   "schemaVersion": 1,
+  "name": "NotEnoughUpdates",
+  "description": "NotEnoughUpdates",
+  "authors": [
+    "Moulberry"
+  ],
+  "contact": {
+    "homepage": "https://github.com/BS-Ji-007/Neu21plus",
+    "sources": "https://github.com/BS-Ji-007/Neu21plus"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/notenoughupdates/logo.png",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "io.github.moulberry.notenoughupdates.envcheck.FabricEntrypoint"
     ]
+  },
+  "mixins": [
+    "mixins.notenoughupdates.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": ">=26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
   }
 }

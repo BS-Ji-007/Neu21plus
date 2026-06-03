@@ -1,7 +1,15 @@
 [versions]
-moulconfig = "2.4.3"
+moulconfig = "4.7.2"
 nealisp = "1.1.0"
+minecraft = "26.1.2"
+fabric-loader = "0.18.4"
+fabric-api = "0.150.0+26.1.2"
+kotlin = "2.3.21"
+ksp = "2.3.21-1.0.30"
 
 [libraries]
 nealisp = { module = "moe.nea:nealisp", version.ref = "nealisp" }
-moulconfig = { module = "org.notenoughupdates.moulconfig:legacy", version.ref = "moulconfig" }
+moulconfig = { module = "org.notenoughupdates.moulconfig:modern-26.1", version.ref = "moulconfig" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
