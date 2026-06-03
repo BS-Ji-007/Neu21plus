@@ -1,18 +1,19 @@
 package neubs
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
-    val baos = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "describe", "--tags", "--abbrev=0")
-        standardOutput = baos
-        isIgnoreExitValue = true
+    val baseVersion = run {
+        val baos = ByteArrayOutputStream()
+        this.exec {
+            it.commandLine("git", "describe", "--tags", "--abbrev=0")
+            it.standardOutput = baos
+            it.isIgnoreExitValue = true
+        }
+        baos.toString().trim()
     }
-    val baseVersion = baos.toString().trim()
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
@@ -20,20 +21,20 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
-        isIgnoreExitValue = true
+    this.exec {
+        it.commandLine("git", "rev-parse", "--short", "HEAD")
+        it.standardOutput = stdout
+        it.isIgnoreExitValue = true
     }
     if (stdout.toString().trim().isNotEmpty()) {
         buildExtra.add(stdout.toString().trim())
     }
 
     val gitDiffStdout = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "status", "--porcelain")
-        standardOutput = gitDiffStdout
-        isIgnoreExitValue = true
+    this.exec {
+        it.commandLine("git", "status", "--porcelain")
+        it.standardOutput = gitDiffStdout
+        it.isIgnoreExitValue = true
     }
     if (gitDiffStdout.toString().trim().isNotEmpty()) {
         buildExtra.add("dirty")
