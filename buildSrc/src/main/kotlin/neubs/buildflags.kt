@@ -3,8 +3,7 @@ package neubs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.WriteProperties
-import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.the
+import org.gradle.kotlin.dsl.*
 import java.nio.charset.StandardCharsets
 
 const val NEU_BUILDFLAGS_PREFIX = "neu.buildflags."
@@ -22,7 +21,7 @@ class NEUBuildFlags : Plugin<Project> {
             encoding = StandardCharsets.UTF_8.name()
             setProperties(props)
             comment = "Store build time configuration for NEU"
-            // Gradle 9: use destinationFile (Property<RegularFile>)
+            // Use destinationFile for modern Gradle WriteProperties task
             destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
