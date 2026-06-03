@@ -9,7 +9,3 @@ plugins {
 repositories {
     mavenCentral()
 }
-
-// dependencies {
-//    implementation(gradleApi()) // kotlin-dsl already includes this
-// }
