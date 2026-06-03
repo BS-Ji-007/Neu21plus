@@ -1,14 +1,27 @@
-name: Check banned imports
+name: Banned Imports Check
+
 on:
-  - pull_request
-  - push
-  - workflow_dispatch
-permissions: {}
+  push:
+    branches: [ "p-modern", "main" ]
+  pull_request:
+    branches: [ "*" ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   check-imports:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout code
-      - name: Check imports
-        run: .github/workflows/ban-imports.sh
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Banned Imports
+        run: |
+          chmod +x .github/workflows/ban-imports.sh
+          ./.github/workflows/ban-imports.sh
