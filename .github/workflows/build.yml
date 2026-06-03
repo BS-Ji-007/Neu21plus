@@ -37,10 +37,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 25
-        uses: oracle-actions/setup-java@v1
+        uses: actions/setup-java@v4
         with:
-          website: oracle.com
-          release: 25
+          java-version: '25'
+          distribution: 'microsoft' # Microsoft Build of OpenJDK often has early and stable support for LTS
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
