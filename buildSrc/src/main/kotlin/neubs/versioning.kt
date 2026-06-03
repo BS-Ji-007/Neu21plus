@@ -7,7 +7,7 @@ import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
     val baos = ByteArrayOutputStream()
-    exec {
+    project.exec {
         commandLine("git", "describe", "--tags", "--abbrev=0")
         standardOutput = baos
         isIgnoreExitValue = true
@@ -20,7 +20,7 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    exec {
+    project.exec {
         commandLine("git", "rev-parse", "--short", "HEAD")
         standardOutput = stdout
         isIgnoreExitValue = true
@@ -30,7 +30,7 @@ fun Project.setVersionFromEnvironment(): String {
     }
 
     val gitDiffStdout = ByteArrayOutputStream()
-    exec {
+    project.exec {
         commandLine("git", "status", "--porcelain")
         standardOutput = gitDiffStdout
         isIgnoreExitValue = true

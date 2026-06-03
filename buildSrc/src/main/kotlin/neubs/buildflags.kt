@@ -21,7 +21,7 @@ class NEUBuildFlags : Plugin<Project> {
             encoding = StandardCharsets.UTF_8.name()
             setProperties(props)
             comment = "Store build time configuration for NEU"
-            // Use destinationFile for modern Gradle WriteProperties task
+            // Gradle 9: Use destinationFile for WriteProperties
             destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
