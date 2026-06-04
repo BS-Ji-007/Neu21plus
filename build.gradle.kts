@@ -18,7 +18,7 @@ plugins {
     `maven-publish`
     kotlin("jvm") version libs.versions.kotlin.get()
     alias(libs.plugins.detekt)
-    id("com.google.devtools.ksp") version libs.versions.ksp.get()
+    alias(libs.plugins.ksp)
     id("net.kyori.blossom") version "2.1.0"
     id("com.xpdustry.ksr") version "1.0.0"
 }
