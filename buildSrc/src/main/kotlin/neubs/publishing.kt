@@ -22,8 +22,7 @@ package neubs
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.*
 
 fun Project.applyPublishingInformation(
     vararg artifacts: Pair<String, Any>
@@ -38,7 +37,7 @@ fun Project.applyPublishingInformation(
                 }
                 pom {
                     name.set("NotEnoughUpdates")
-                    description.set("A feature rich 1.8.9 Minecraft forge mod for Hypixel Skyblock")
+                    description.set("A feature rich 1.26.1 Minecraft fabric mod for Hypixel Skyblock")
                     licenses {
                         license {
                             name.set("GNU Lesser General Public License")
