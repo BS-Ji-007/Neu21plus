@@ -29,12 +29,12 @@ import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -95,7 +95,7 @@ public class AuctionBINWarning extends GuiElement {
 
 		ItemStack priceStack = event.guiContainer.inventorySlots.getSlot(31).getStack();
 		if (priceStack != null) {
-			String displayName = priceStack.getDisplayName();
+			String displayName = priceStack.getName().getString();
 			Matcher priceMatcher = ITEM_PRICE_REGEX.matcher(displayName);
 
 			if (priceMatcher.matches()) {
@@ -110,7 +110,7 @@ public class AuctionBINWarning extends GuiElement {
 		if (sellStack == null) return;
 
 		String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(sellStack);
-		sellStackAmount = sellStack.stackSize;
+		sellStackAmount = sellStack.getCount();
 
 		if (internalname == null) {
 			return;

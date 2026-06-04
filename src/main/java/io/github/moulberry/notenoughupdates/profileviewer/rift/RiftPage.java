@@ -39,11 +39,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -202,7 +202,7 @@ public class RiftPage extends GuiProfileViewerPage {
 					ItemStack timecharmItem = NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withKnownInternalName(
 						"RIFT_TROPHY_" + timecharmType).resolveToItemStack();
 					if (timecharmItem != null) {
-						displayNames.add(timecharmItem.getDisplayName() + "§7: §a✔");
+						displayNames.add(timecharmItem.getName().getString() + "§7: §a✔");
 					} else {
 						displayNames.add(EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "ERROR LOADING TIMECHARM!");
 						displayNames.add(EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "PLEASE REPORT THIS AT " +
@@ -555,7 +555,7 @@ public class RiftPage extends GuiProfileViewerPage {
 	public static List<JsonObject> readBase64(String data) {
 		List<JsonObject> itemStacks = new ArrayList<>();
 		try {
-			NBTTagList items = CompressedStreamTools.readCompressed(
+			ListTag items = CompressedStreamTools.readCompressed(
 				new ByteArrayInputStream(Base64.getDecoder().decode(data))
 			).getTagList("i", 10);
 			for (int j = 0; j < items.tagCount(); j++) {

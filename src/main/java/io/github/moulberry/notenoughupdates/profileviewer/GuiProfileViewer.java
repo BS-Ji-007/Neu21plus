@@ -39,17 +39,17 @@ import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -197,7 +197,7 @@ public class GuiProfileViewer extends GuiScreen {
 		GuiProfileViewer.profile = profile;
 		GuiProfileViewer.profileName = profile.getLatestProfileName();
 
-		String displayname = getDisplayName();
+		String displayname = getName().getString();
 		// Make search bar empty in case no name was found, e.g. while currently loading
 		if (displayname.startsWith("§")) displayname = "";
 
@@ -711,7 +711,7 @@ public class GuiProfileViewer extends GuiScreen {
 		Utils.drawItemStack(stack, x + 6, y + 9);
 	}
 
-	public static String getDisplayName() {
+	public static String getName().getString() {
 		return Utils.getElementOrDefault(
 			profile.getHypixelProfile(),
 			"displayname",
@@ -720,7 +720,7 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	private void renderRecentPlayers(boolean renderCurrent) {
-		String playerName = getDisplayName();
+		String playerName = getName().getString();
 
 		boolean selected = Objects.equals(Minecraft.getInstance().player.getName(), playerName);
 		if (selected == renderCurrent) {
@@ -825,7 +825,7 @@ public class GuiProfileViewer extends GuiScreen {
 			}
 		}
 
-		String playerName = getDisplayName();
+		String playerName = getName().getString();
 
 		int x = guiLeft + sizeX;
 		int y = guiTop;
@@ -874,7 +874,7 @@ public class GuiProfileViewer extends GuiScreen {
 		) {
 			if (mouseY > guiTop + sizeY + 3 && mouseY < guiTop + sizeY + 23) {
 				String url =
-					"https://sky.shiiyu.moe/stats/" + getDisplayName() + "/" +
+					"https://sky.shiiyu.moe/stats/" + getName().getString() + "/" +
 						profileName;
 				Utils.openUrl(url);
 				Utils.playPressSound();
@@ -1046,11 +1046,11 @@ public class GuiProfileViewer extends GuiScreen {
 			}
 		}
 
-		NBTTagCompound nbt = new NBTTagCompound(); //Adding NBT Data for Custom Resource Packs
-		NBTTagCompound display = new NBTTagCompound();
+		CompoundTag nbt = new CompoundTag(); //Adding NBT Data for Custom Resource Packs
+		CompoundTag display = new CompoundTag();
 		display.setString("Name", skillName);
 		nbt.setTag("display", display);
-		stack.setTagCompound(nbt);
+		stack.setTag(nbt);
 
 		GL11.glTranslatef((x), (y - 6f), 0);
 		GL11.glScalef(0.7f, 0.7f, 1);
@@ -1315,11 +1315,11 @@ public class GuiProfileViewer extends GuiScreen {
 				stack = null;
 			} else {
 				stack = new ItemStack(item);
-				NBTTagCompound nbt = new NBTTagCompound(); //Adding NBT Data for Custom Resource Packs
-				NBTTagCompound display = new NBTTagCompound();
+				CompoundTag nbt = new CompoundTag(); //Adding NBT Data for Custom Resource Packs
+				CompoundTag display = new CompoundTag();
 				display.setString("Name", name);
 				nbt.setTag("display", display);
-				stack.setTagCompound(nbt);
+				stack.setTag(nbt);
 			}
 		}
 

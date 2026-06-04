@@ -21,10 +21,10 @@ package io.github.moulberry.notenoughupdates.util
 
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
-import net.minecraft.inventory.IInventory
+import net.minecraft.world.Container
 import net.minecraft.item.EnumDyeColor
-import net.minecraft.item.ItemDye
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemDye
+import net.minecraft.world.item.ItemStack
 
 object MuseumUtil {
 

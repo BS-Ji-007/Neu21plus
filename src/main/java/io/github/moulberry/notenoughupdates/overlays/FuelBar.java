@@ -28,10 +28,10 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -70,9 +70,9 @@ public class FuelBar {
 		if (internalname == null || (!internalname.contains("_DRILL_") && !internalname.equals("DIVAN_DRILL"))) {
 			return;
 		}
-		NBTTagCompound extraAttributes = ItemUtils.getExtraAttributes(held);
+		CompoundTag extraAttributes = ItemUtils.getExtraAttributes(held);
 		currentFuel = extraAttributes.getInteger("drill_fuel");
-		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(held.getTagCompound());
+		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(held.getTag());
 		for (String line : lore) {
 			try {
 				Matcher matcher = FUEL_PATTERN.matcher(line);

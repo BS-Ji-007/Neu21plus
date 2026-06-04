@@ -36,9 +36,9 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
@@ -244,7 +244,7 @@ public class EssenceUpgrades implements NeuRecipe {
 
 		ItemUtils.setLore(output.getItemStack(), newLore);
 		output.getItemStack().setStackDisplayName(
-			initialItemStack.getDisplayName() + " " + Utils.getStarsString(selectedTier));
+			initialItemStack.getName().getString() + " " + Utils.getStarsString(selectedTier));
 		slotList.add(new RecipeSlot(outputX, outputY, output.getItemStack()));
 
 		//other required items and/or coins, if applicable
@@ -264,7 +264,7 @@ public class EssenceUpgrades implements NeuRecipe {
 					EnumChatFormatting.AQUA + StringUtils.formatNumber(tierUpgrade.getEssenceRequired()) + " " + EnumChatFormatting.DARK_GRAY +
 						tierUpgrade.getEssenceType() + " Essence");
 
-				essenceItemStack.getTagCompound().setInteger(
+				essenceItemStack.getTag().setInteger(
 					ItemPriceInformation.STACKSIZE_OVERRIDE,
 					tierUpgrade.getEssenceRequired()
 				);
@@ -287,7 +287,7 @@ public class EssenceUpgrades implements NeuRecipe {
 					itemStack = manager.createItemResolutionQuery().withKnownInternalName(
 						requiredItem.getKey()).resolveToItemStack();
 					if (itemStack != null) {
-						itemStack.stackSize = requiredItem.getValue();
+						itemStack.getCount() = requiredItem.getValue();
 					}
 				}
 				if (itemStack != null) {

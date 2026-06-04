@@ -31,8 +31,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
@@ -215,7 +215,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		);
 
 		Utils.drawStringCentered(
-			museumCategories.get(selectedMuseumCategory).getDisplayName(),
+			museumCategories.get(selectedMuseumCategory).getName().getString(),
 			guiLeft + 251, guiTop + 14, true, 4210752
 		);
 

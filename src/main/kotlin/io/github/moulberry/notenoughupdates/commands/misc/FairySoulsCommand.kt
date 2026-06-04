@@ -23,8 +23,8 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.miscfeatures.FairySouls
 import io.github.moulberry.notenoughupdates.util.brigadier.*
-import net.minecraft.util.EnumChatFormatting.DARK_PURPLE
-import net.minecraft.util.EnumChatFormatting.RED
+import net.minecraft.ChatFormatting.DARK_PURPLE
+import net.minecraft.ChatFormatting.RED
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe

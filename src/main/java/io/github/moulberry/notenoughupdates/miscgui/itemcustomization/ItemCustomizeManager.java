@@ -42,10 +42,10 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -345,20 +345,20 @@ public class ItemCustomizeManager {
 			if (damageString.equals("?")) {
 				ArrayList<ItemStack> list = new ArrayList<>();
 				getCustomItem(stack).getSubItems(getCustomItem(stack), null, list);
-				if (damageMap.get(stack.getTagCompound().hashCode()) == null || System.currentTimeMillis() - lastUpdate.get(
-					stack.getTagCompound().hashCode()) > 250) {
-					damageMap.put(stack.getTagCompound().hashCode(), random.nextInt(list.size()));
+				if (damageMap.get(stack.getTag().hashCode()) == null || System.currentTimeMillis() - lastUpdate.get(
+					stack.getTag().hashCode()) > 250) {
+					damageMap.put(stack.getTag().hashCode(), random.nextInt(list.size()));
 
-					lastUpdate.put(stack.getTagCompound().hashCode(), System.currentTimeMillis());
+					lastUpdate.put(stack.getTag().hashCode(), System.currentTimeMillis());
 				}
-				return damageMap.get(stack.getTagCompound().hashCode());
+				return damageMap.get(stack.getTag().hashCode());
 			} else if (getCustomItem(stack) == Items.skull) {
 				String itemID = damageString.toUpperCase(Locale.ROOT).replace(" ", "_");
 				ItemStack itemStack = NotEnoughUpdates.INSTANCE.manager.createItem(itemID);
 				if (itemStack != null && itemStack.getItem() == Items.skull) {
 					return 3;
 				} else {
-					NBTTagCompound animatedCustomSkull = getAnimatedCustomSkull(itemID, "");
+					CompoundTag animatedCustomSkull = getAnimatedCustomSkull(itemID, "");
 					if (animatedCustomSkull != null) return 3;
 				}
 			}
@@ -415,11 +415,11 @@ public class ItemCustomizeManager {
 		ItemStack newStack = stack.copy();
 		newStack.setItem(ItemCustomizeManager.getCustomItem(newStack));
 		newStack.setItemDamage(ItemCustomizeManager.getCustomItemDamage(newStack));
-		if (newStack.hasTagCompound()) {
-			NBTTagCompound customSkull = ItemCustomizeManager.getCustomSkull(newStack);
+		if (newStack.hasTag()) {
+			CompoundTag customSkull = ItemCustomizeManager.getCustomSkull(newStack);
 			if (customSkull != null) {
-				newStack.getTagCompound().removeTag("SkullOwner");
-				newStack.getTagCompound().setTag("SkullOwner", customSkull);
+				newStack.getTag().removeTag("SkullOwner");
+				newStack.getTag().setTag("SkullOwner", customSkull);
 			}
 		}
 		if (armorSlot != 4 && !(newStack.getItem() instanceof ItemArmor))
@@ -438,9 +438,9 @@ public class ItemCustomizeManager {
 		ItemStack newStack = stack.copy();
 		newStack.setItem(ItemCustomizeManager.getCustomItem(newStack));
 		newStack.setItemDamage(ItemCustomizeManager.getCustomItemDamage(newStack));
-		NBTTagCompound tagCompound = newStack.getTagCompound();
+		CompoundTag tagCompound = newStack.getTag();
 		if (tagCompound != null) {
-			NBTTagCompound customSkull = ItemCustomizeManager.getCustomSkull(newStack);
+			CompoundTag customSkull = ItemCustomizeManager.getCustomSkull(newStack);
 			if (customSkull != null) {
 				tagCompound.removeTag("SkullOwner");
 				tagCompound.setTag("SkullOwner", customSkull);
@@ -454,9 +454,9 @@ public class ItemCustomizeManager {
 		ItemStack stack = instance.getCurrentArmor(3).copy();
 		stack.setItem(ItemCustomizeManager.getCustomItem(stack));
 		stack.setItemDamage(ItemCustomizeManager.getCustomItemDamage(stack));
-		NBTTagCompound tagCompound = stack.getTagCompound();
+		CompoundTag tagCompound = stack.getTag();
 		if (tagCompound != null) {
-			NBTTagCompound customSkull = ItemCustomizeManager.getCustomSkull(stack);
+			CompoundTag customSkull = ItemCustomizeManager.getCustomSkull(stack);
 			if (customSkull != null) {
 				tagCompound.removeTag("SkullOwner");
 				tagCompound.setTag("SkullOwner", customSkull);
@@ -465,7 +465,7 @@ public class ItemCustomizeManager {
 		return stack;
 	}
 
-	public static NBTTagCompound getCustomSkull(ItemStack stack) {
+	public static CompoundTag getCustomSkull(ItemStack stack) {
 		ItemData data = getDataForItem(stack);
 
 		if (data == null || data.customItem == null || data.customItem.isEmpty()) return null;
@@ -478,11 +478,11 @@ public class ItemCustomizeManager {
 			}
 			if (getCustomItem(stack) == Items.skull) {
 				String itemID = damageString.toUpperCase(Locale.ROOT).replace(" ", "_");
-				NBTTagCompound animatedCustomSkull = getAnimatedCustomSkull(itemID, index);
+				CompoundTag animatedCustomSkull = getAnimatedCustomSkull(itemID, index);
 				if (animatedCustomSkull != null) return animatedCustomSkull;
 				ItemStack itemStack = NotEnoughUpdates.INSTANCE.manager.createItem(itemID);
 				if (itemStack != null && itemStack.getItem() == Items.skull) {
-					return itemStack.getTagCompound().getCompoundTag("SkullOwner");
+					return itemStack.getTag().getCompoundTag("SkullOwner");
 				}
 			}
 		} catch (Exception ignored) {
@@ -497,7 +497,7 @@ public class ItemCustomizeManager {
 		customSkulls.clear();
 	}
 
-	public static NBTTagCompound getAnimatedCustomSkull(String itemID, String textureIndex) {
+	public static CompoundTag getAnimatedCustomSkull(String itemID, String textureIndex) {
 		int presetIndex = -1;
 		if (!textureIndex.isEmpty()) {
 			try {
@@ -511,7 +511,7 @@ public class ItemCustomizeManager {
 			int animatedIndex = ItemCustomizationUtils.getTicksForList(2, testSkulls.size(), presetIndex);
 			String skullTexture = testSkulls.get(animatedIndex);
 			ItemStack skull = Utils.createSkull("test", skullTexture.split(":")[0], skullTexture.split(":")[1]);
-			return skull.getTagCompound().getCompoundTag("SkullOwner");
+			return skull.getTag().getCompoundTag("SkullOwner");
 		}
 
 		if (customSkulls.containsKey(itemID)) {
@@ -551,7 +551,7 @@ public class ItemCustomizeManager {
 			String texture = skullTexture.getAsString();
 			//dont think the display name is important
 			ItemStack skull = Utils.createSkull("test", texture.split(":")[0], texture.split(":")[1]);
-			animatedSkull.skullOwners.add(skull.getTagCompound().getCompoundTag("SkullOwner"));
+			animatedSkull.skullOwners.add(skull.getTag().getCompoundTag("SkullOwner"));
 		}
 		customSkulls.put(itemID, animatedSkull);
 		return animatedSkull.skullOwners.get(animatedIndex);
@@ -579,7 +579,7 @@ public class ItemCustomizeManager {
 	}
 
 	static class AnimatedSkull {
-		ArrayList<NBTTagCompound> skullOwners;
+		ArrayList<CompoundTag> skullOwners;
 		int ticks;
 	}
 

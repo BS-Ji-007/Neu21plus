@@ -35,11 +35,11 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
@@ -483,11 +483,11 @@ public class DungeonPage extends GuiProfileViewerPage {
 					String b64Encoded = new String(Base64.getEncoder().encode(b64Decoded.getBytes()));
 
 					ItemStack stack = new ItemStack(Items.skull, 1, 3);
-					NBTTagCompound nbt = new NBTTagCompound();
-					NBTTagCompound skullOwner = new NBTTagCompound();
-					NBTTagCompound properties = new NBTTagCompound();
-					NBTTagList textures = new NBTTagList();
-					NBTTagCompound textures_0 = new NBTTagCompound();
+					CompoundTag nbt = new CompoundTag();
+					CompoundTag skullOwner = new CompoundTag();
+					CompoundTag properties = new CompoundTag();
+					ListTag textures = new ListTag();
+					CompoundTag textures_0 = new CompoundTag();
 
 					String uuid = UUID.nameUUIDFromBytes(b64Encoded.getBytes()).toString();
 					skullOwner.setString("Id", uuid);
@@ -499,7 +499,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 					properties.setTag("textures", textures);
 					skullOwner.setTag("Properties", properties);
 					nbt.setTag("SkullOwner", skullOwner);
-					stack.setTagCompound(nbt);
+					stack.setTag(nbt);
 
 					BOSS_HEADS[i - 1] = stack;
 				}

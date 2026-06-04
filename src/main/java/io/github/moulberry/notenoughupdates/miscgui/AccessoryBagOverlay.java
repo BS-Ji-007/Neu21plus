@@ -39,20 +39,20 @@ import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -136,7 +136,7 @@ public class AccessoryBagOverlay {
 		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (!containerName.trim().startsWith("Accessory Bag")) {
 				return false;
 			}
@@ -337,7 +337,7 @@ public class AccessoryBagOverlay {
 
 			dupePageActive = Math.min(dupePageActive, (duplicates.size() / 8));
 			for (ItemStack duplicate : sortedDupes.subList(dupePageActive * 8, sortedDupes.size())) {
-				String s = duplicate.getDisplayName();
+				String s = duplicate.getName().getString();
 				Utils.renderShadowedString(s.substring(0, Math.min(s.length(), 35)), x + 84, y + 20 + 11 * yIndex, 158);
 				if (++yIndex >= 8 && sortedDupes.size() > 9) break;
 			}
@@ -472,12 +472,12 @@ public class AccessoryBagOverlay {
 					.getItemInformation()
 					.get(internal), false);
 
-				if (missingDisplayNames.contains(stack.getDisplayName())) continue;
-				missingDisplayNames.add(stack.getDisplayName());
+				if (missingDisplayNames.contains(stack.getName().getString())) continue;
+				missingDisplayNames.add(stack.getName().getString());
 
 				if (hasDup) {
 					if (!missing_showAllTiers) continue;
-					stack.setStackDisplayName(stack.getDisplayName() + "*");
+					stack.setStackDisplayName(stack.getName().getString() + "*");
 				}
 				missing.add(stack);
 			}
@@ -490,7 +490,7 @@ public class AccessoryBagOverlay {
 			int yIndex = 0;
 			missingPageActive = Math.min(missingPageActive, missing.size() / 8);
 			for (ItemStack missingStack : missing.subList(missingPageActive * 8, missing.size())) {
-				String s = missingStack.getDisplayName();
+				String s = missingStack.getName().getString();
 				String internal = NotEnoughUpdates.INSTANCE.manager
 					.createItemResolutionQuery()
 					.withItemStack(missingStack)
@@ -583,7 +583,7 @@ public class AccessoryBagOverlay {
 		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (containerName.trim().startsWith("Accessory Bag") && !containerName.contains("Thaumaturgy") &&
 				!containerName.contains("Upgrades")) {
 				inAccessoryBag = true;
@@ -739,7 +739,7 @@ public class AccessoryBagOverlay {
 	) {
 		String internalname =
 			NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(stack).resolveInternalName();
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		PlayerStats.Stats stats = new PlayerStats.Stats();
 
 		if (internalname == null) {
@@ -747,9 +747,9 @@ public class AccessoryBagOverlay {
 		}
 
 		if (tag != null) {
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 			if (display.hasKey("Lore", 9)) {
-				NBTTagList list = display.getTagList("Lore", 8);
+				ListTag list = display.getTagList("Lore", 8);
 				for (int i = 0; i < list.tagCount(); i++) {
 					String line = list.getStringTagAt(i);
 					for (Map.Entry<String, Pattern> entry : patternMap.entrySet()) {
@@ -787,11 +787,11 @@ public class AccessoryBagOverlay {
 	}
 
 	public static int checkItemType(ItemStack stack, boolean contains, String... typeMatches) {
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		if (tag != null) {
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 			if (display.hasKey("Lore", 9)) {
-				NBTTagList list = display.getTagList("Lore", 8);
+				ListTag list = display.getTagList("Lore", 8);
 				for (int i = list.tagCount() - 1; i >= 0; i--) {
 					String line = list.getStringTagAt(i);
 					for (String rarity : Utils.rarityArr) {
@@ -837,11 +837,11 @@ public class AccessoryBagOverlay {
 	}
 
 	public static int getRarity(ItemStack stack) {
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		if (tag != null) {
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 			if (display.hasKey("Lore", 9)) {
-				NBTTagList list = display.getTagList("Lore", 8);
+				ListTag list = display.getTagList("Lore", 8);
 				for (int i = list.tagCount(); i >= 0; i--) {
 					String line = list.getStringTagAt(i);
 					for (int j = 0; j < Utils.rarityArrC.length; j++) {
@@ -952,7 +952,7 @@ public class AccessoryBagOverlay {
 					.stream()
 					.map(ItemStack::getDisplayName)
 					.collect(Collectors.toList())
-					.contains(stack.getDisplayName())) {
+					.contains(stack.getName().getString())) {
 					GlStateManager.translate(0, 0, 50);
 					GuiScreen.drawRect(
 						guiLeft + slot.xDisplayPosition,
@@ -1033,7 +1033,7 @@ public class AccessoryBagOverlay {
 				.withItemStack(stack)
 				.resolveInternalName();
 			tooltipToDisplay = Arrays.asList(
-				stack.getDisplayName().replace("*", ""),
+				stack.getName().getString().replace("*", ""),
 				"",
 				"§eClick to learn more!",
 				"§eCtrl+Click to search on ah!"
@@ -1051,7 +1051,7 @@ public class AccessoryBagOverlay {
 					NotEnoughUpdates.INSTANCE.overlay.setSearchBarFocus(true);
 				}
 			} else {
-				String displayname = Utils.cleanColour(stack.getDisplayName());
+				String displayname = Utils.cleanColour(stack.getName().getString());
 				NotEnoughUpdates.INSTANCE.trySendCommand("/ahs " + displayname.replace("*", ""));
 			}
 		}

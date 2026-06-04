@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.profileviewer.info;
 
 import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -32,8 +32,8 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -184,10 +184,10 @@ public class CrystalOverlay {
 				if (armorStand.isChild() && armorStand.getEquipmentInSlot(4) != null) {
 					ItemStack helmet = armorStand.getEquipmentInSlot(4);
 
-					if (helmet.getItem() == Items.skull && helmet.hasTagCompound()) {
-						NBTTagCompound tag = helmet.getTagCompound();
+					if (helmet.getItem() == Items.skull && helmet.hasTag()) {
+						CompoundTag tag = helmet.getTag();
 						if (tag.hasKey("SkullOwner", 10)) {
-							NBTTagCompound skullOwner = tag.getCompoundTag("SkullOwner");
+							CompoundTag skullOwner = tag.getCompoundTag("SkullOwner");
 							if (skullOwner.hasKey("Id", 8)) {
 								String id = skullOwner.getString("Id");
 

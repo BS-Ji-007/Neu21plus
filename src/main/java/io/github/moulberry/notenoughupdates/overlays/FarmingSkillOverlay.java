@@ -32,9 +32,9 @@ import io.github.moulberry.notenoughupdates.util.hypixelapi.HypixelItemAPI;
 import lombok.val;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -339,11 +339,11 @@ public class FarmingSkillOverlay extends TextOverlay {
 	}
 
 	private void updateCounter(ItemStack stack) {
-		if (stack != null && stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
+		if (stack != null && stack.hasTag()) {
+			CompoundTag tag = stack.getTag();
 
 			if (tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 				if (ea.hasKey("mined_crops", 99)) {
 					counter = ea.getLong("mined_crops");

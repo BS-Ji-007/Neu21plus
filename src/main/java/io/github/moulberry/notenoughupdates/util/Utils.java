@@ -38,7 +38,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -52,17 +52,17 @@ import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.play.client.C0DPacketCloseWindow;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -447,7 +447,7 @@ public class Utils {
 
 	public static List<String> getRawTooltip(ItemStack stack) {
 		List<String> list = Lists.newArrayList();
-		String s = stack.getDisplayName();
+		String s = stack.getName().getString();
 
 		if (stack.hasDisplayName()) {
 			s = EnumChatFormatting.ITALIC + s;
@@ -461,16 +461,16 @@ public class Utils {
 
 		list.add(s);
 
-		if (stack.hasTagCompound()) {
-			if (stack.getTagCompound().hasKey("display", 10)) {
-				NBTTagCompound nbttagcompound = stack.getTagCompound().getCompoundTag("display");
+		if (stack.hasTag()) {
+			if (stack.getTag().hasKey("display", 10)) {
+				CompoundTag nbttagcompound = stack.getTag().getCompoundTag("display");
 
 				if (nbttagcompound.hasKey("color", 3)) {
 					list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("item.dyed"));
 				}
 
 				if (nbttagcompound.getTagId("Lore") == 9) {
-					NBTTagList nbttaglist1 = nbttagcompound.getTagList("Lore", 8);
+					ListTag nbttaglist1 = nbttagcompound.getTagList("Lore", 8);
 
 					if (nbttaglist1.tagCount() > 0) {
 						for (int j1 = 0; j1 < nbttaglist1.tagCount(); ++j1) {
@@ -654,7 +654,7 @@ public class Utils {
 		GlStateManager.enableDepth();
 		drawItemStack(itemStack, x + 8, y + 7);
 		if (mouseY > y && mouseX > x && mouseY < y + 28 && mouseX < x + 28) {
-			guiProfileViewer.tooltipToDisplay = Collections.singletonList(itemStack.getDisplayName());
+			guiProfileViewer.tooltipToDisplay = Collections.singletonList(itemStack.getName().getString());
 		}
 	}
 
@@ -963,24 +963,24 @@ public class Utils {
 
 	public static ItemStack createItemStack(Item item, String displayName, int damage, int amount, String... lore) {
 		ItemStack stack = new ItemStack(item, amount, damage);
-		NBTTagCompound tag = new NBTTagCompound();
+		CompoundTag tag = new CompoundTag();
 		addNameAndLore(tag, displayName, lore);
 		tag.setInteger("HideFlags", 254);
 
-		stack.setTagCompound(tag);
+		stack.setTag(tag);
 
 		return stack;
 	}
 
-	private static void addNameAndLore(NBTTagCompound tag, String displayName, String[] lore) {
-		NBTTagCompound display = new NBTTagCompound();
+	private static void addNameAndLore(CompoundTag tag, String displayName, String[] lore) {
+		CompoundTag display = new CompoundTag();
 
 		display.setString("Name", displayName);
 
 		if (lore != null) {
-			NBTTagList tagLore = new NBTTagList();
+			ListTag tagLore = new ListTag();
 			for (String line : lore) {
-				tagLore.appendTag(new NBTTagString(line));
+				tagLore.appendTag(new StringTag(line));
 			}
 			display.setTag("Lore", tagLore);
 		}
@@ -994,14 +994,14 @@ public class Utils {
 		boolean disableNeuToolTips,
 		String... lore
 	) {
-		NBTTagCompound tag = itemStack.getTagCompound();
+		CompoundTag tag = itemStack.getTag();
 		if (tag == null)
-			tag = new NBTTagCompound();
-		NBTTagCompound display = tag.getCompoundTag("display");
-		NBTTagList Lore = new NBTTagList();
+			tag = new CompoundTag();
+		CompoundTag display = tag.getCompoundTag("display");
+		ListTag Lore = new ListTag();
 
 		for (String line : lore) {
-			Lore.appendTag(new NBTTagString(line));
+			Lore.appendTag(new StringTag(line));
 		}
 
 		display.setString("Name", displayName);
@@ -1013,7 +1013,7 @@ public class Utils {
 			tag.setBoolean("disableNeuTooltip", true);
 		}
 
-		itemStack.setTagCompound(tag);
+		itemStack.setTag(tag);
 
 		return itemStack;
 	}
@@ -1024,11 +1024,11 @@ public class Utils {
 
 	public static ItemStack createSkull(String displayName, String uuid, String value, String[] lore) {
 		ItemStack render = new ItemStack(Items.skull, 1, 3);
-		NBTTagCompound tag = new NBTTagCompound();
-		NBTTagCompound skullOwner = new NBTTagCompound();
-		NBTTagCompound properties = new NBTTagCompound();
-		NBTTagList textures = new NBTTagList();
-		NBTTagCompound textures_0 = new NBTTagCompound();
+		CompoundTag tag = new CompoundTag();
+		CompoundTag skullOwner = new CompoundTag();
+		CompoundTag properties = new CompoundTag();
+		ListTag textures = new ListTag();
+		CompoundTag textures_0 = new CompoundTag();
 
 		skullOwner.setString("Id", uuid);
 		skullOwner.setString("Name", uuid);
@@ -1041,7 +1041,7 @@ public class Utils {
 		properties.setTag("textures", textures);
 		skullOwner.setTag("Properties", properties);
 		tag.setTag("SkullOwner", skullOwner);
-		render.setTagCompound(tag);
+		render.setTag(tag);
 		return render;
 	}
 
@@ -2237,11 +2237,11 @@ public class Utils {
 	}
 
 	public static int getNumberOfStars(ItemStack stack) {
-		if (stack != null && stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
+		if (stack != null && stack.hasTag()) {
+			CompoundTag tag = stack.getTag();
 
 			if (tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 				if (ea.hasKey("upgrade_level", 99)) {
 					return ea.getInteger("upgrade_level");
 				} else if (ea.hasKey("dungeon_item_level")) {

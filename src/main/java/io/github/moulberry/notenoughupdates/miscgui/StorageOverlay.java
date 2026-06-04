@@ -40,7 +40,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -51,12 +51,12 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -393,7 +393,7 @@ public class StorageOverlay extends GuiElement {
 
 		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		if (stackOnMouse != null) {
-			String stackDisplay = Utils.cleanColour(stackOnMouse.getDisplayName());
+			String stackDisplay = Utils.cleanColour(stackOnMouse.getName().getString());
 			if (stackDisplay.startsWith("Backpack Slot ") || stackDisplay.startsWith("Empty Backpack Slot ") ||
 				stackDisplay.startsWith("Ender Chest Page ") || stackDisplay.startsWith("Locked Backpack Slot ")) {
 				stackOnMouse = null;

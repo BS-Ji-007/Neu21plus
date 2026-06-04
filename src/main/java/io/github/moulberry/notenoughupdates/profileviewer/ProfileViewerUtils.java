@@ -30,12 +30,12 @@ import io.github.moulberry.notenoughupdates.util.JsonUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -65,7 +65,7 @@ public class ProfileViewerUtils {
 			"H4sIAAAAAAAAAONiYOBkYMzkYmBg0GUgCQAA4gDYkzoAAAA="
 		);
 
-		NBTTagCompound nbt;
+		CompoundTag nbt;
 		try {
 			nbt = CompressedStreamTools.readCompressed(
 				new ByteArrayInputStream(Base64.getDecoder().decode(bytes))
@@ -75,7 +75,7 @@ public class ProfileViewerUtils {
 			return null;
 		}
 
-		NBTTagList items = nbt.getTagList("i", 10);
+		ListTag items = nbt.getTagList("i", 10);
 		JsonArray contents = new JsonArray();
 		NEUManager manager = NotEnoughUpdates.INSTANCE.manager;
 		for (int j = 0; j < items.tagCount(); j++) {
@@ -93,7 +93,7 @@ public class ProfileViewerUtils {
 				return null;
 			}
 		}).filter(Objects::nonNull).map(tag -> {
-			NBTTagList loreTagList = tag.getCompoundTag("display").getTagList("Lore", 8);
+			ListTag loreTagList = tag.getCompoundTag("display").getTagList("Lore", 8);
 			String lastElement = loreTagList.getStringTagAt(loreTagList.tagCount() - 1);
 			if (lastElement.contains(EnumChatFormatting.OBFUSCATED.toString())) {
 				lastElement = lastElement.substring(lastElement.indexOf(' ')).trim();

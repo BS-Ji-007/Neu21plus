@@ -29,11 +29,11 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
@@ -80,7 +80,7 @@ public class RecipeGenerator {
 	public void analyzeUI(GuiChest gui) {
 		ContainerChest container = (ContainerChest) gui.inventorySlots;
 		IInventory menu = container.getLowerChestInventory();
-		String uiTitle = menu.getDisplayName().getUnformattedText();
+		String uiTitle = menu.getName().getString().getUnformattedText();
 		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (uiTitle.startsWith("Item Casting") || uiTitle.startsWith("Refine")) {
 			if (durationDebouncer.trigger())
@@ -120,7 +120,7 @@ public class RecipeGenerator {
 	}
 
 	private List<String> getLore(ItemStack item) {
-		NBTTagList loreTag = item.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+		ListTag loreTag = item.getTag().getCompoundTag("display").getTagList("Lore", 8);
 		List<String> loreList = new ArrayList<>();
 		for (int i = 0; i < loreTag.tagCount(); i++) {
 			loreList.add(loreTag.getStringTagAt(i));
@@ -148,17 +148,17 @@ public class RecipeGenerator {
 		")$");
 
 	private void attemptToSaveBestiary(IInventory menu) {
-		if (!menu.getDisplayName().getUnformattedText().contains("➜")) return;
+		if (!menu.getName().getString().getUnformattedText().contains("➜")) return;
 		ItemStack backArrow = menu.getStackInSlot(48);
 		if (backArrow == null || backArrow.getItem() != Items.arrow) return;
 		if (!getLore(backArrow).stream().anyMatch(it -> it.startsWith("§7To Bestiary ➜"))) return;
 		List<NeuRecipe> recipes = new ArrayList<>();
 		String internalMobName =
-			menu.getDisplayName().getUnformattedText().split("➜")[1].toUpperCase(Locale.ROOT).trim() + "_MONSTER";
+			menu.getName().getString().getUnformattedText().split("➜")[1].toUpperCase(Locale.ROOT).trim() + "_MONSTER";
 		for (int i = 9; i < 44; i++) {
 			ItemStack mobStack = menu.getStackInSlot(i);
 			if (mobStack == null || mobStack.getItem() != Items.skull) continue;
-			Matcher matcher = MOB_DISPLAY_NAME_PATTERN.matcher(mobStack.getDisplayName());
+			Matcher matcher = MOB_DISPLAY_NAME_PATTERN.matcher(mobStack.getName().getString());
 			if (!matcher.matches()) continue;
 			String name = matcher.group("name");
 			int level = parseIntIgnoringCommas(matcher.group("level"));
@@ -270,16 +270,16 @@ public class RecipeGenerator {
 			int col = i % 9;
 			ItemStack itemStack = chest.getStackInSlot(i);
 			if (itemStack == null) continue;
-			String name = Utils.cleanColour(itemStack.getDisplayName());
+			String name = Utils.cleanColour(itemStack.getName().getString());
 			String internalId = neu.manager.getInternalNameForItem(itemStack);
 			Ingredient ingredient = null;
-			if (itemStack.getDisplayName().endsWith(COINS_SUFFIX)) {
+			if (itemStack.getName().getString().endsWith(COINS_SUFFIX)) {
 				int coinCost = Integer.parseInt(
 					name.substring(0, name.length() - COINS_SUFFIX.length())
 							.replace(",", ""));
 				ingredient = Ingredient.coinIngredient(neu.manager, coinCost);
 			} else if (internalId != null) {
-				ingredient = new Ingredient(neu.manager, internalId, itemStack.stackSize);
+				ingredient = new Ingredient(neu.manager, internalId, itemStack.getCount());
 			}
 			if (ingredient == null) continue;
 			if (col < 4) {

@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.MinionS
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.NpcSource;
 import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -70,7 +70,7 @@ public class Minion extends OverviewLine {
 		this.minionSource = minionSource;
 	}
 
-	public String getDisplayName() {
+	public String getName().getString() {
 		return displayName;
 	}
 
@@ -157,7 +157,7 @@ public class Minion extends OverviewLine {
 		ItemStack itemStack = new ItemResolutionQuery(NotEnoughUpdates.INSTANCE.manager).withKnownInternalName(
 			bazaarName).resolveToItemStack();
 		if (itemStack != null) {
-			String displayName = Utils.cleanColour(itemStack.getDisplayName());
+			String displayName = Utils.cleanColour(itemStack.getName().getString());
 			NotEnoughUpdates.INSTANCE.trySendCommand("/bz " + displayName);
 		}
 	}

@@ -27,10 +27,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -85,7 +85,7 @@ public class CraftingOverlay {
 		GuiChest guiChest = (GuiChest) gui;
 		ContainerChest chest = (ContainerChest) guiChest.inventorySlots;
 		IInventory chestInventory = chest.getLowerChestInventory();
-		if (!"Craft Item".equals(chestInventory.getDisplayName().getUnformattedText())) return;
+		if (!"Craft Item".equals(chestInventory.getName().getString().getUnformattedText())) return;
 		block.accept(guiChest, chest);
 	}
 
@@ -153,7 +153,7 @@ public class CraftingOverlay {
 			ItemStack actualItem = slot.getStack();
 			if (actualItem != null && (recipeIngredient == null ||
 				!recipeIngredient.getInternalItemId().equals(manager.getInternalNameForItem(actualItem)) ||
-				actualItem.stackSize < recipeIngredient.getCount())) {
+				actualItem.getCount() < recipeIngredient.getCount())) {
 				drawItemStack(guiChest, slot, actualItem);
 			}
 			if (recipeIngredient != null && actualItem == null) {

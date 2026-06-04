@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.util
 import com.google.gson.JsonArray
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.miscfeatures.tablisttutorial.TablistAPI
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.ChatFormatting
 import java.util.regex.Pattern
 import kotlin.math.abs
 

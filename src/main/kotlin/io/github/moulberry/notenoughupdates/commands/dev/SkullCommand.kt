@@ -31,8 +31,8 @@ import io.github.moulberry.notenoughupdates.util.brigadier.thenExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.thenLiteral
 import io.github.moulberry.notenoughupdates.util.brigadier.thenLiteralExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting.YELLOW
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.ChatFormatting.YELLOW
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe

@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils
 import io.github.moulberry.notenoughupdates.itemeditor.GuiElementButton
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.EnumChatFormatting.*
+import net.minecraft.ChatFormatting.*
 
 import org.lwjgl.input.Mouse
 

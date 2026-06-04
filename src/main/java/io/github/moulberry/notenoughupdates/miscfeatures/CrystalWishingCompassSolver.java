@@ -34,11 +34,11 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3i;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -493,7 +493,7 @@ public class CrystalWishingCompassSolver {
 
 	private boolean isKeyInInventory() {
 		for (ItemStack item : mc.player.inventory.mainInventory) {
-			if (item != null && item.getDisplayName().contains("Jungle Key")) {
+			if (item != null && item.getName().getString().contains("Jungle Key")) {
 				return true;
 			}
 		}

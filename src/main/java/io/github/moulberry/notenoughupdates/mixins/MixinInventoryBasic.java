@@ -21,8 +21,8 @@ package io.github.moulberry.notenoughupdates.mixins;
 
 import io.github.moulberry.notenoughupdates.events.ReplaceItemEvent;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +35,7 @@ public abstract class MixinInventoryBasic {
 	private ItemStack[] inventoryContents;
 
 	@Shadow
-	public abstract IChatComponent getDisplayName();
+	public abstract IChatComponent getName().getString();
 
 	@Inject(method = "getStackInSlot", at = @At("HEAD"), cancellable = true)
 	public void on(int index, CallbackInfoReturnable<ItemStack> cir) {

@@ -48,13 +48,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -275,7 +275,7 @@ public class PetInfoOverlay extends TextOverlay {
 		return interp;
 	}
 
-	public static Pet getPetFromStack(NBTTagCompound tag) {
+	public static Pet getPetFromStack(CompoundTag tag) {
 		if (Constants.PETS == null || Constants.PETS.get("pet_levels") == null ||
 			Constants.PETS.get("pet_levels") instanceof JsonNull) {
 			Utils.showOutdatedRepoNotification("pets.json");
@@ -290,7 +290,7 @@ public class PetInfoOverlay extends TextOverlay {
 		int skinVariantSelected = -1;
 
 		if (tag != null && tag.hasKey("ExtraAttributes")) {
-			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+			CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 			if (ea.hasKey("petInfo")) {
 				JsonObject petInfo = new JsonParser().parse(ea.getString("petInfo")).getAsJsonObject();
 				petType = petInfo.get("type").getAsString();
@@ -409,7 +409,7 @@ public class PetInfoOverlay extends TextOverlay {
 		if (currentPet.skin != null) {
 			JsonObject skinJson = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet.skin);
 			if (skinJson != null) {
-				String displayName = NotEnoughUpdates.INSTANCE.manager.jsonToStack(skinJson).getDisplayName();
+				String displayName = NotEnoughUpdates.INSTANCE.manager.jsonToStack(skinJson).getName().getString();
 				String colourSt = Character.toString(Utils.getPrimaryColourCode(displayName));
 				petName += "§" + colourSt + " ✦";
 			}
@@ -467,7 +467,7 @@ public class PetInfoOverlay extends TextOverlay {
 			if (json != null) {
 				String name;
 				if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petItemIcon)
-					name = NotEnoughUpdates.INSTANCE.manager.jsonToStack(json).getDisplayName();
+					name = NotEnoughUpdates.INSTANCE.manager.jsonToStack(json).getName().getString();
 				else name = "";
 				petItemStr = EnumChatFormatting.AQUA + "Held Item: " + name;
 			}
@@ -738,7 +738,7 @@ public class PetInfoOverlay extends TextOverlay {
 	}
 
 	private void getAnimatedSkin(ItemStack stack, Pet currentPet) {
-		NBTTagCompound tagCompound = stack.getTagCompound();
+		CompoundTag tagCompound = stack.getTag();
 		if (tagCompound != null) {
 			String skin = currentPet.skin;
 			if (currentPet.skinVariantSelected >= 0) {
@@ -764,7 +764,7 @@ public class PetInfoOverlay extends TextOverlay {
 				}
 
 			}
-			NBTTagCompound customSkull = ItemCustomizeManager.getAnimatedCustomSkull(skin, "");
+			CompoundTag customSkull = ItemCustomizeManager.getAnimatedCustomSkull(skin, "");
 			if (customSkull != null) {
 				tagCompound.removeTag("SkullOwner");
 				tagCompound.setTag("SkullOwner", customSkull);
@@ -787,7 +787,7 @@ public class PetInfoOverlay extends TextOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 
 			if (lower.getSizeInventory() >= 54 && event.guiContainer.inventorySlots.windowId == container.windowId) {
 				int page = 0;
@@ -816,8 +816,8 @@ public class PetInfoOverlay extends TextOverlay {
 					} else {
 						setCurrentPet(newSelected);
 
-						if (event.slot.getStack() != null && event.slot.getStack().getTagCompound() != null) {
-							Pet pet = getPetFromStack(event.slot.getStack().getTagCompound());
+						if (event.slot.getStack() != null && event.slot.getStack().getTag() != null) {
+							Pet pet = getPetFromStack(event.slot.getStack().getTag());
 							if (pet != null) {
 								config.petMap.put(config.selectedPet, pet);
 							}
@@ -834,7 +834,7 @@ public class PetInfoOverlay extends TextOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 
 			if (lower.getSizeInventory() >= 54) {
 				int page = 0;
@@ -875,12 +875,12 @@ public class PetInfoOverlay extends TextOverlay {
 
 						ItemStack stack = lower.getStackInSlot(itemIndex);
 
-						if (stack == null || !stack.hasTagCompound()) {
+						if (stack == null || !stack.hasTag()) {
 							if (index < 27) {
 								int itemIndexNext = 10 + (index + 1) + (index + 1) / 7 * 2;
 								ItemStack stackNext = lower.getStackInSlot(itemIndexNext);
 
-								if (stackNext == null || !stackNext.hasTagCompound()) {
+								if (stackNext == null || !stackNext.hasTag()) {
 									int old = removeMap.getOrDefault(petIndex, 0);
 									if (old >= 20) {
 										config.petMap.remove(petIndex);
@@ -891,8 +891,8 @@ public class PetInfoOverlay extends TextOverlay {
 								}
 							}
 						} else {
-							String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
-							Pet pet = getPetFromStack(stack.getTagCompound());
+							String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
+							Pet pet = getPetFromStack(stack.getTag());
 							if (pet != null) {
 								config.petMap.put(petIndex, pet);
 
@@ -919,10 +919,10 @@ public class PetInfoOverlay extends TextOverlay {
 				} else if (containerName.startsWith("Your Equipment")) {
 					ItemStack petStack = lower.getStackInSlot(47);
 					if (petStack != null && petStack.getItem() == Items.skull) {
-						NBTTagCompound tag = petStack.getTagCompound();
+						CompoundTag tag = petStack.getTag();
 
 						if (tag.hasKey("ExtraAttributes", 10)) {
-							NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+							CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 							if (ea.hasKey("petInfo")) {
 								JsonParser jsonParser = new JsonParser();
 

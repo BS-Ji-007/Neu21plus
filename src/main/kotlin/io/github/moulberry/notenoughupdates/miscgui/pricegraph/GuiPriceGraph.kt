@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.util.roundToDecimals
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.world.item.ItemStack
+import net.minecraft.ChatFormatting
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 import java.text.DecimalFormat

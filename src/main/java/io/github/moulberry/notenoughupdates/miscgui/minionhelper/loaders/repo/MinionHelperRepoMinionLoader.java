@@ -108,7 +108,7 @@ public class MinionHelperRepoMinionLoader {
 					repoLoader.errorWhileLoading = true;
 					if (NotEnoughUpdates.INSTANCE.config.hidden.dev) {
 						Utils.addChatMessage(
-							"§c[NEU] Error in MinionHelperRepoLoader while loading repo entry " + minion.getDisplayName() + " " +
+							"§c[NEU] Error in MinionHelperRepoLoader while loading repo entry " + minion.getName().getString() + " " +
 								minion.getTier() + ": " +
 								e.getClass().getSimpleName() + ": " + e.getMessage());
 					}

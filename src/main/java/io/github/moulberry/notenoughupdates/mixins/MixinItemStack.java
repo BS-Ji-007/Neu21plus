@@ -22,8 +22,8 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.core.ChromaColour;
 import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,7 +44,7 @@ public class MixinItemStack {
 	}
 
 	@Shadow
-	private NBTTagCompound stackTagCompound;
+	private CompoundTag stackTagCompound;
 
 	@Inject(method = "getDisplayName", at = @At("HEAD"), cancellable = true)
 	public void getDisplayName(CallbackInfoReturnable<String> returnable) {
@@ -71,8 +71,8 @@ public class MixinItemStack {
 		}
 	}
 
-	@Redirect(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NBTTagCompound;hasKey(Ljava/lang/String;I)Z", ordinal = 2))
-	public boolean getTooltip_hasKey2(NBTTagCompound nbttagcompound, String key, int type) {
+	@Redirect(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet.minecraft.nbt.CompoundTag;hasKey(Ljava/lang/String;I)Z", ordinal = 2))
+	public boolean getTooltip_hasKey2(CompoundTag nbttagcompound, String key, int type) {
 		ItemStack stack = (ItemStack) (Object) this;
 		ItemCustomizeManager.ItemData data = ItemCustomizeManager.getDataForItem(stack);
 		if (data != null && data.customLeatherColour != null && ItemCustomizeManager.shouldRenderLeatherColour(stack)) {

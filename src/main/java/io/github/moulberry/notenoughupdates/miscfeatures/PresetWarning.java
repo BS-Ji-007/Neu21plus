@@ -29,12 +29,12 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -90,7 +90,7 @@ public class PresetWarning extends GuiElement {
 		String last = list.get(list.size() - 1);
 		if (last.contains("Right-Click to delete!")) {
 			showWarning = true;
-			presetName = clickedPreset.getDisplayName();
+			presetName = clickedPreset.getName().getString();
 			presetSlot = event.slotId;
 			event.setCanceled(true);
 		}

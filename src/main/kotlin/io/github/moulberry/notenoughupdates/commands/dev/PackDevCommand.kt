@@ -34,10 +34,10 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLiving
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.tileentity.TileEntitySkull
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.ChatFormatting
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 

@@ -31,10 +31,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -149,13 +149,13 @@ public class DwarvenMinesWaypoints {
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 
-			if (lower.getDisplayName().getFormattedText().contains("Commissions")) {
+			if (lower.getName().getString().getFormattedText().contains("Commissions")) {
 				for (int i = 0; i < lower.getSizeInventory(); i++) {
 					ItemStack stack = lower.getStackInSlot(i);
 					if (stack == null) continue;
-					if (stack.getDisplayName().equals(EnumChatFormatting.YELLOW + "Commission Milestones")) {
+					if (stack.getName().getString().equals(EnumChatFormatting.YELLOW + "Commission Milestones")) {
 						hidden.commissionMilestone = 5;
-						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 						for (String line : lore) {
 							String clean = Utils.cleanColour(line);
 							switch (clean) {
@@ -192,7 +192,7 @@ public class DwarvenMinesWaypoints {
 		if (!SBInfo.getInstance().getLocation().equals("mining_3")) return;
 
 		if (commissionFinished && event.entity instanceof EntityArmorStand) {
-			String name = event.entity.getDisplayName().getFormattedText();
+			String name = event.entity.getName().getString().getFormattedText();
 			if (emissaryRemovedDistSq > 0 && name.equals(
 				EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "CLICK" + EnumChatFormatting.RESET)) {
 				EntityPlayerSP p = Minecraft.getInstance().player;

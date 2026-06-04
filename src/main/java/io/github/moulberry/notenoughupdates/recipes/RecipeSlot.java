@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.recipes;
 
 import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class RecipeSlot {
 	private final int x;
@@ -38,7 +38,7 @@ public class RecipeSlot {
 		this.x = x;
 		this.y = y;
 		this.itemStack = itemStack;
-		this.stackSize = stackSize;
+		this.getCount() = stackSize;
 	}
 
 	public ItemStack getItemStack() {

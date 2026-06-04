@@ -27,11 +27,11 @@ import io.github.moulberry.notenoughupdates.miscfeatures.profileviewer.bestiary.
 import io.github.moulberry.notenoughupdates.util.Constants
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.MainWindow
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.world.item.ItemStack
+import net.minecraft.ChatFormatting
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11

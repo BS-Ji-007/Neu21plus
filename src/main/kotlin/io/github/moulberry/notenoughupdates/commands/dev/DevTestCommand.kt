@@ -34,10 +34,10 @@ import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.command.ICommandSender
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.entity.player.Player
 import net.minecraft.launchwrapper.Launch
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting.*
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.ChatFormatting.*
 import net.minecraft.util.EnumParticleTypes
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

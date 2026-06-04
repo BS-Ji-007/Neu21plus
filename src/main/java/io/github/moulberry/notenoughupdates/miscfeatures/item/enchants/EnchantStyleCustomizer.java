@@ -90,7 +90,7 @@ public class EnchantStyleCustomizer {
 
 	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
-		var nbt = event.itemStack.getTagCompound();
+		var nbt = event.itemStack.getTag();
 		if (nbt == null) return;
 		var extraAttributes = nbt.getCompoundTag("ExtraAttributes");
 		var enchantments = extraAttributes.getCompoundTag("enchantments");

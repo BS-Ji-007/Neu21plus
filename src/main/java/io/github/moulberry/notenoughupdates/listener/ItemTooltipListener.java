@@ -34,13 +34,13 @@ import io.github.moulberry.notenoughupdates.util.PetLeveling;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -102,12 +102,12 @@ public class ItemTooltipListener {
 		}
 		petToolTipXPExtendPetMenu(event);
 
-		boolean hasEnchantments = event.itemStack.getTagCompound().getCompoundTag("ExtraAttributes").hasKey(
+		boolean hasEnchantments = event.itemStack.getTag().getCompoundTag("ExtraAttributes").hasKey(
 			"enchantments",
 			10
 		);
 		Set<String> enchantIds = new HashSet<>();
-		if (hasEnchantments) enchantIds = event.itemStack.getTagCompound().getCompoundTag("ExtraAttributes").getCompoundTag(
+		if (hasEnchantments) enchantIds = event.itemStack.getTag().getCompoundTag("ExtraAttributes").getCompoundTag(
 			"enchantments").getKeySet();
 
 		JsonObject enchantsConst = Constants.ENCHANTS;
@@ -132,11 +132,11 @@ public class ItemTooltipListener {
 				}
 
 				JsonObject enchantsObj = enchantsConst.get("enchants").getAsJsonObject();
-				NBTTagCompound tag = event.itemStack.getTagCompound();
+				CompoundTag tag = event.itemStack.getTag();
 				if (tag != null) {
-					NBTTagCompound display = tag.getCompoundTag("display");
+					CompoundTag display = tag.getCompoundTag("display");
 					if (display.hasKey("Lore", 9)) {
-						NBTTagList list = display.getTagList("Lore", 8);
+						ListTag list = display.getTagList("Lore", 8);
 						out:
 						for (int i = list.tagCount(); i >= 0; i--) {
 							String line = list.getStringTagAt(i);
@@ -564,13 +564,13 @@ public class ItemTooltipListener {
 							if (worth > 0 && totalValue >= 0) {
 								totalValue += worth;
 
-								String display = item.getDisplayName();
+								String display = item.getName().getString();
 
 								if (display.contains("Enchanted Book")) {
-									NBTTagCompound tag = item.getTagCompound();
+									CompoundTag tag = item.getTag();
 									if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-										NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
-										NBTTagCompound enchants = ea.getCompoundTag("enchantments");
+										CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
+										CompoundTag enchants = ea.getCompoundTag("enchantments");
 
 										int highestLevel = -1;
 										for (String enchname : enchants.getKeySet()) {
@@ -641,7 +641,7 @@ public class ItemTooltipListener {
 			ItemPriceInformation.addToTooltip(event.toolTip, internalName, event.itemStack);
 		}
 
-		if (event.itemStack.getTagCompound() != null && event.itemStack.getTagCompound().getBoolean("NEUHIDEPETTOOLTIP") &&
+		if (event.itemStack.getTag() != null && event.itemStack.getTag().getBoolean("NEUHIDEPETTOOLTIP") &&
 			NotEnoughUpdates.INSTANCE.config.petOverlay.hidePetTooltip) {
 			event.toolTip.clear();
 		}
@@ -651,7 +651,7 @@ public class ItemTooltipListener {
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.petExtendExp) return;
 		//7 is just a random number i chose, prob no pets with less lines than 7
 		if (event.toolTip.size() < 7) return;
-		if (event.itemStack.getTagCompound().hasKey("NEUHIDEPETTOOLTIP")) return;
+		if (event.itemStack.getTag().hasKey("NEUHIDEPETTOOLTIP")) return;
 		if (petToolTipRegex.matcher(Utils.cleanColour(event.toolTip.get(1))).matches()) {
 			PetLeveling.PetLevel petLevel;
 
@@ -668,7 +668,7 @@ public class ItemTooltipListener {
 			}
 
 			PetInfoOverlay.Pet pet = PetInfoOverlay.getPetFromStack(
-				event.itemStack.getTagCompound()
+				event.itemStack.getTag()
 			);
 			if (pet == null) {
 				return;
@@ -734,7 +734,7 @@ public class ItemTooltipListener {
 			event.toolTip.remove(event.toolTip.size() - 1);
 
 			StringBuilder sb = new StringBuilder();
-			String nbt = event.itemStack.getTagCompound().toString();
+			String nbt = event.itemStack.getTag().toString();
 			int indent = 0;
 			for (char c : nbt.toCharArray()) {
 				boolean newline = false;
@@ -801,8 +801,8 @@ public class ItemTooltipListener {
 				Utils.copyToClipboard(internal);
 			}
 
-			if (event.itemStack.getTagCompound() != null) {
-				NBTTagCompound tag = event.itemStack.getTagCompound();
+			if (event.itemStack.getTag() != null) {
+				CompoundTag tag = event.itemStack.getTag();
 
 				event.toolTip.add(EnumChatFormatting.AQUA + "NBT: " + EnumChatFormatting.GRAY + "[...]" +
 					EnumChatFormatting.GOLD + " [B]");
@@ -812,17 +812,17 @@ public class ItemTooltipListener {
 
 				if (tag.hasKey("SkullOwner", 10)) {
 					if (!copied && y && isDev) {
-						NBTTagCompound skullOwner = event.itemStack.getTagCompound().getCompoundTag("SkullOwner");
+						CompoundTag skullOwner = event.itemStack.getTag().getCompoundTag("SkullOwner");
 						String id = skullOwner.getString("Id");
 						String value = skullOwner.getCompoundTag("Properties").getTagList("textures", 10).getCompoundTagAt(0).getString(
 							"Value");
 						skullTextures.add(new JsonPrimitive(id + ":" + value));
-						Utils.addChatMessage("Added " + event.itemStack.getDisplayName() + " to the texture list. Size: " + skullTextures.size());
+						Utils.addChatMessage("Added " + event.itemStack.getName().getString() + " to the texture list. Size: " + skullTextures.size());
 
 						Utils.copyToClipboard(skullTextures.toString());
 					}
 
-					GameProfile gameprofile = NBTUtil.readGameProfileFromNBT(tag.getCompoundTag("SkullOwner"));
+					GameProfile gameprofile = NbtUtils.readGameProfileFromNBT(tag.getCompoundTag("SkullOwner"));
 
 					if (gameprofile != null) {
 						event.toolTip.add(EnumChatFormatting.AQUA + "Skull UUID: " + EnumChatFormatting.GRAY + gameprofile.getId() +

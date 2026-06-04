@@ -43,21 +43,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
@@ -440,11 +440,11 @@ public class GuiCustomHex extends Gui {
 
 			if (enchantingItem != null) {
 				playerEnchantIds.clear();
-				NBTTagCompound tag = enchantingItem.getTagCompound();
+				CompoundTag tag = enchantingItem.getTag();
 				if (tag != null) {
-					NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+					CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 					if (ea != null) {
-						NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+						CompoundTag enchantments = ea.getCompoundTag("enchantments");
 						if (enchantments != null) {
 							for (String enchId : enchantments.getKeySet()) {
 								playerEnchantIds.put(enchId, enchantments.getInteger(enchId));
@@ -480,19 +480,19 @@ public class GuiCustomHex extends Gui {
 						hasXpBottle = true;
 					}
 					if (book != null && book.getItem() == Items.enchanted_book) {
-						NBTTagCompound tagBook = book.getTagCompound();
+						CompoundTag tagBook = book.getTag();
 						if (tagBook != null) {
-							NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+							CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 							if (ea != null) {
-								NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+								CompoundTag enchantments = ea.getCompoundTag("enchantments");
 								if (enchantments != null) {
 									String enchId = Utils
-										.cleanColour(book.getDisplayName())
+										.cleanColour(book.getName().getString())
 										.toLowerCase(Locale.ROOT)
 										.replace(" ", "_")
 										.replace("-", "_")
 										.replaceAll("[^a-z_]", "");
-									String name = Utils.cleanColour(book.getDisplayName());
+									String name = Utils.cleanColour(book.getName().getString());
 									int enchLevel = -1;
 									if (name.equalsIgnoreCase("Bane of Arthropods")) {
 										name = "Bane of Arth.";
@@ -602,21 +602,21 @@ public class GuiCustomHex extends Gui {
 							hasXpBottle = true;
 						}
 						if (book != null) {
-							NBTTagCompound tagBook = book.getTagCompound();
+							CompoundTag tagBook = book.getTag();
 							if (tagBook != null) {
-								NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+								CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 								if (ea != null) {
-									NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+									CompoundTag enchantments = ea.getCompoundTag("enchantments");
 									if (enchantments != null) {
 										String enchId = Utils
-											.cleanColour(book.getDisplayName())
+											.cleanColour(book.getName().getString())
 											.toLowerCase(Locale.ROOT)
 											.replace(" ", "_")
 											.replace("-", "_")
 											.replaceAll("[^a-z_]", "");
 										if (enchId.equalsIgnoreCase("_")) continue;
 										enchId = ItemUtils.fixEnchantId(enchId, true);
-										String name = Utils.cleanColour(book.getDisplayName());
+										String name = Utils.cleanColour(book.getName().getString());
 
 										if (searchField.getText().trim().isEmpty() ||
 											name.toLowerCase(Locale.ROOT).contains(searchField.getText().trim().toLowerCase(Locale.ROOT))) {
@@ -783,8 +783,8 @@ public class GuiCustomHex extends Gui {
 				ItemStack randomReforge = cc.getLowerChestInventory().getStackInSlot(48);
 				if (!hasRandomReforge && randomReforge != null &&
 					randomReforge.getItem() == Item.getItemFromBlock(Blocks.anvil)) {
-					String name = Utils.cleanColour(randomReforge.getDisplayName());
-					String id = Utils.cleanColour(randomReforge.getDisplayName());
+					String name = Utils.cleanColour(randomReforge.getName().getString());
+					String id = Utils.cleanColour(randomReforge.getName().getString());
 					if (name.equals("Convert to Dungeon Item")) {
 						name = "Dungeonize Item";
 						id = "CONVERT_TO_DUNGEON";
@@ -807,17 +807,17 @@ public class GuiCustomHex extends Gui {
 					hasRandomReforge = true;
 				}
 				if (book != null) {
-					NBTTagCompound tagBook = book.getTagCompound();
+					CompoundTag tagBook = book.getTag();
 					if (tagBook != null) {
-						NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+						CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 						if (ea != null) {
-							NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+							CompoundTag enchantments = ea.getCompoundTag("enchantments");
 							if (enchantments != null) {
-								String itemId = Utils.cleanColour(book.getDisplayName()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
+								String itemId = Utils.cleanColour(book.getName().getString()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
 									"-",
 									"_"
 								);
-								String name = Utils.cleanColour(book.getDisplayName());
+								String name = Utils.cleanColour(book.getName().getString());
 								if (itemId.equalsIgnoreCase("_")) continue;
 								if (itemId.equalsIgnoreCase("Item_Maxed_Out")) continue;
 								if (searchField.getText().trim().isEmpty() ||
@@ -854,9 +854,9 @@ public class GuiCustomHex extends Gui {
 											boolean implosion = false;
 											String reforge = "";
 											if (enchantingItem != null) {
-												NBTTagCompound tagItem = enchantingItem.getTagCompound();
+												CompoundTag tagItem = enchantingItem.getTag();
 												if (tagItem != null) {
-													NBTTagCompound extra = tagItem.getCompoundTag("ExtraAttributes");
+													CompoundTag extra = tagItem.getCompoundTag("ExtraAttributes");
 													if (extra != null) {
 														potatoCount = extra.getInteger("hot_potato_count");
 														killCount = extra.getInteger("stats_book");
@@ -869,8 +869,8 @@ public class GuiCustomHex extends Gui {
 														peaceCount = extra.getInteger("art_of_peace_count");
 														manaDisintegratorCount = extra.getInteger("mana_disintegrator_count");
 														reforge = extra.getString("modifier");
-														NBTTagCompound enchs = extra.getCompoundTag("enchantments");
-														NBTTagList scrolls = extra.getTagList("ability_scroll", 8);
+														CompoundTag enchs = extra.getCompoundTag("enchantments");
+														ListTag scrolls = extra.getTagList("ability_scroll", 8);
 														if (enchs != null) {
 															effLevel = enchs.getInteger("efficiency");
 														}
@@ -1049,17 +1049,17 @@ public class GuiCustomHex extends Gui {
 					hasHexItem = true;
 				}
 				if (book != null) {
-					NBTTagCompound tagBook = book.getTagCompound();
+					CompoundTag tagBook = book.getTag();
 					if (tagBook != null) {
-						NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+						CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 						if (ea != null) {
-							NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+							CompoundTag enchantments = ea.getCompoundTag("enchantments");
 							if (enchantments != null) {
-								String itemId = Utils.cleanColour(book.getDisplayName()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
+								String itemId = Utils.cleanColour(book.getName().getString()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
 									"-",
 									"_"
 								);
-								String name = Utils.cleanColour(book.getDisplayName());
+								String name = Utils.cleanColour(book.getName().getString());
 								if (itemId.equalsIgnoreCase("_")) continue;
 								if (itemId.equalsIgnoreCase("Item_Maxed_Out")) continue;
 								if (searchField.getText().trim().isEmpty() ||
@@ -1196,17 +1196,17 @@ public class GuiCustomHex extends Gui {
 				int slotIndex = 12 + (i % 5) + (i / 5) * 9;
 				ItemStack book = cc.getLowerChestInventory().getStackInSlot(slotIndex);
 				if (book != null) {
-					NBTTagCompound tagBook = book.getTagCompound();
+					CompoundTag tagBook = book.getTag();
 					if (tagBook != null) {
-						NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+						CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 						if (ea != null) {
-							NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+							CompoundTag enchantments = ea.getCompoundTag("enchantments");
 							if (enchantments != null) {
-								String itemId = Utils.cleanColour(book.getDisplayName()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
+								String itemId = Utils.cleanColour(book.getName().getString()).toUpperCase(Locale.ROOT).replace(" ", "_").replace(
 									"-",
 									"_"
 								);
-								String name = Utils.cleanColour(book.getDisplayName());
+								String name = Utils.cleanColour(book.getName().getString());
 								if (itemId.equalsIgnoreCase("_")) continue;
 								if (itemId.equalsIgnoreCase("Item_Maxed_Out")) continue;
 								if (searchField.getText().trim().isEmpty() ||
@@ -1492,7 +1492,7 @@ public class GuiCustomHex extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(Minecraft.getInstance().player.inventory
-				.getDisplayName()
+				.getName().getString()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
@@ -2052,7 +2052,7 @@ public class GuiCustomHex extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(Minecraft.getInstance().player.inventory
-				.getDisplayName()
+				.getName().getString()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
@@ -2417,7 +2417,7 @@ public class GuiCustomHex extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(
-			Minecraft.getInstance().player.inventory.getDisplayName().getUnformattedText(),
+			Minecraft.getInstance().player.inventory.getName().getString().getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
@@ -2758,7 +2758,7 @@ public class GuiCustomHex extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(Minecraft.getInstance().player.inventory
-				.getDisplayName()
+				.getName().getString()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
@@ -2960,9 +2960,9 @@ public class GuiCustomHex extends Gui {
 			boolean implosion = false;
 			String reforge = "";
 			if (enchantingItem != null) {
-				NBTTagCompound tagItem = enchantingItem.getTagCompound();
+				CompoundTag tagItem = enchantingItem.getTag();
 				if (tagItem != null) {
-					NBTTagCompound ea = tagItem.getCompoundTag("ExtraAttributes");
+					CompoundTag ea = tagItem.getCompoundTag("ExtraAttributes");
 					if (ea != null) {
 						potatoCount = ea.getInteger("hot_potato_count");
 						killCount = ea.getInteger("stats_book");
@@ -2976,8 +2976,8 @@ public class GuiCustomHex extends Gui {
 						manaDisintegratorCount = ea.getInteger("mana_disintegrator_count");
 						dungeonItem = ea.getInteger("dungeon_item");
 						reforge = ea.getString("modifier");
-						NBTTagCompound enchs = ea.getCompoundTag("enchantments");
-						NBTTagList scrolls = ea.getTagList("ability_scroll", 8);
+						CompoundTag enchs = ea.getCompoundTag("enchantments");
+						ListTag scrolls = ea.getTagList("ability_scroll", 8);
 						if (enchs != null) {
 							effLevel = enchs.getInteger("efficiency");
 						}

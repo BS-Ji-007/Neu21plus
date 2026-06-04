@@ -34,12 +34,12 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -151,7 +151,7 @@ public class GuiItemRecipe extends GuiScreen {
 		List<RecipeSlot> slots = getAllRenderedSlots();
 		for (RecipeSlot slot : slots) {
 			if (slot.getStackSize() != -1) {
-				slot.getItemStack().stackSize = 1;
+				slot.getItemStack().getCount() = 1;
 			}
 			Utils.drawItemStack(slot.getItemStack(), slot.getX(this), slot.getY(this), true);
 			if (slot.getStackSize() != -1) {
@@ -267,7 +267,7 @@ public class GuiItemRecipe extends GuiScreen {
 		int hotbarSize = InventoryPlayer.getHotbarSize();
 		for (int i = 0; i < inventory.length; i++) {
 			ItemStack item = inventory[i];
-			if (item == null || item.stackSize == 0) continue;
+			if (item == null || item.getCount() == 0) continue;
 			int row = i / hotbarSize;
 			int col = i % hotbarSize;
 			if (row == 0)

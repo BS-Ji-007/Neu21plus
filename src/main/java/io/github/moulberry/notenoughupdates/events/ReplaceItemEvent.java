@@ -19,8 +19,8 @@
 
 package io.github.moulberry.notenoughupdates.events;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 
 public class ReplaceItemEvent extends NEUEvent {
 

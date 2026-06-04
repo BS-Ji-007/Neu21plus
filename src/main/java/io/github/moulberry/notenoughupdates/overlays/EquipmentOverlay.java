@@ -40,10 +40,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -427,7 +427,7 @@ public class EquipmentOverlay {
 		if (currentEquipment == null) return;
 
 		ItemStack itemInSlot = NotEnoughUpdates.INSTANCE.manager.jsonToStack(currentEquipment.getAsJsonObject(), false);
-		if (itemInSlot != null && itemInSlot.getDisplayName().contains("Empty")) itemsToAdd.put(heldItem, slot);
+		if (itemInSlot != null && itemInSlot.getName().getString().contains("Empty")) itemsToAdd.put(heldItem, slot);
 	}
 
 	@SubscribeEvent
@@ -435,7 +435,7 @@ public class EquipmentOverlay {
 		if (event.type == 2 || !event.message.getUnformattedText().startsWith("You equipped a ") || itemsToAdd.isEmpty()) return;
 
 		for (ItemStack item : itemsToAdd.keySet()) {
-			if (event.message.getUnformattedText().contains(Utils.cleanColour(item.getDisplayName()))) {
+			if (event.message.getUnformattedText().contains(Utils.cleanColour(item.getName().getString()))) {
 
 				NEUConfig.HiddenProfileSpecific profileSpecific = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 				if (profileSpecific == null) return;
@@ -507,7 +507,7 @@ public class EquipmentOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 			wardrobeOpen = containerName.contains(guiName);
 		}
 		if (guiScreen instanceof GuiInventory) {

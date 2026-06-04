@@ -34,9 +34,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -191,9 +191,9 @@ public class PetsPage extends GuiProfileViewerPage {
 
 			if (pet != null) {
 				{
-					NBTTagCompound tag = stack.getTagCompound();
+					CompoundTag tag = stack.getTag();
 					tag.setBoolean("DisablePetExp", true);
-					stack.setTagCompound(tag);
+					stack.setTag(tag);
 				}
 				int xIndex = (i % 20) % COLLS_XCOUNT;
 				int yIndex = (i % 20) / COLLS_XCOUNT;
@@ -226,7 +226,7 @@ public class PetsPage extends GuiProfileViewerPage {
 			} else {
 				petStack = sortedPetsStack.get(selectedPet);
 			}
-			String display = petStack.getDisplayName();
+			String display = petStack.getName().getString();
 			JsonObject pet = sortedPets.get(selectedPet);
 
 			int x = guiLeft + 280;

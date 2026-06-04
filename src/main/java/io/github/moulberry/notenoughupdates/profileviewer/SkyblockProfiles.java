@@ -40,11 +40,11 @@ import io.github.moulberry.notenoughupdates.util.kotlin.KotlinTypeAdapterFactory
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
@@ -593,7 +593,7 @@ public class SkyblockProfiles {
 				String contentBytes = contentItems.get("data").getAsString();
 
 				try {
-					NBTTagList items = CompressedStreamTools.readCompressed(
+					ListTag items = CompressedStreamTools.readCompressed(
 						new ByteArrayInputStream(Base64.getDecoder().decode(contentBytes))
 					).getTagList("i", 10);
 					for (int j = 0; j < items.tagCount(); j++) {
@@ -796,7 +796,7 @@ public class SkyblockProfiles {
 					);
 
 					try {
-						NBTTagList items = CompressedStreamTools.readCompressed(
+						ListTag items = CompressedStreamTools.readCompressed(
 							new ByteArrayInputStream(Base64.getDecoder().decode(contentBytes))
 						).getTagList("i", 10);
 						for (int j = 0; j < items.tagCount(); j++) {
@@ -830,7 +830,7 @@ public class SkyblockProfiles {
 				if (backpack.getValue().isJsonObject()) {
 					try {
 						String bytes = Utils.getElementAsString(backpack.getValue().getAsJsonObject().get("data"), defaultNbtData);
-						NBTTagList items = CompressedStreamTools.readCompressed(
+						ListTag items = CompressedStreamTools.readCompressed(
 							new ByteArrayInputStream(Base64.getDecoder().decode(bytes))
 						).getTagList("i", 10);
 
@@ -1132,11 +1132,11 @@ public class SkyblockProfiles {
 								for (int bytesArrI = 0; bytesArrI < bytesArr.size(); bytesArrI++) {
 									bytes[bytesArrI] = bytesArr.get(bytesArrI).getAsByte();
 								}
-								NBTTagCompound contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
-								NBTTagList items = contents_nbt.getTagList("i", 10);
+								CompoundTag contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
+								ListTag items = contents_nbt.getTagList("i", 10);
 								for (int j = 0; j < items.tagCount(); j++) {
 									if (items.getCompoundTagAt(j).getKeySet().size() > 0) {
-										NBTTagCompound nbt = items.getCompoundTagAt(j).getCompoundTag("tag");
+										CompoundTag nbt = items.getCompoundTagAt(j).getCompoundTag("tag");
 										String internalname2 =
 											profileViewer.getManager().createItemResolutionQuery().withItemNBT(nbt).resolveInternalName();
 										if (internalname2 != null) {

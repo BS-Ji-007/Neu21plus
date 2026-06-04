@@ -25,11 +25,11 @@ import io.github.moulberry.notenoughupdates.miscgui.InventoryStorageSelector;
 import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Team;
 import org.spongepowered.asm.lib.Opcodes;
@@ -84,7 +84,7 @@ public class MixinGuiIngame {
 		}
 	}
 
-	@Redirect(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/InventoryPlayer;getCurrentItem()Lnet/minecraft/item/ItemStack;"))
+	@Redirect(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/InventoryPlayer;getCurrentItem()Lnet.minecraft.world.item.ItemStack;"))
 	public ItemStack updateTick_getCurrentItem(InventoryPlayer inventory) {
 		if (!NotEnoughUpdates.INSTANCE.config.storageGUI.showInvBackpackPreview &&
 			InventoryStorageSelector.getInstance().isSlotSelected()) {
@@ -93,17 +93,17 @@ public class MixinGuiIngame {
 		return inventory.getCurrentItem();
 	}
 
-	@Redirect(method = "renderHotbarItem", at = @At(value = "FIELD", target = "Lnet/minecraft/item/ItemStack;animationsToGo:I", opcode = Opcodes.GETFIELD))
+	@Redirect(method = "renderHotbarItem", at = @At(value = "FIELD", target = "Lnet.minecraft.world.item.ItemStack;animationsToGo:I", opcode = Opcodes.GETFIELD))
 	public int renderHotbarItem_animationsToGo(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack).animationsToGo;
 	}
 
-	@ModifyArg(method = "renderHotbarItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", ordinal = 0))
+	@ModifyArg(method = "renderHotbarItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet.minecraft.world.item.ItemStack;II)V", ordinal = 0))
 	public ItemStack renderHotbarItem_renderItemAndEffectIntoGUI(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}
 
-	@ModifyArg(method = "renderHotbarItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlays(Lnet/minecraft/client/gui/FontRenderer;Lnet/minecraft/item/ItemStack;II)V", ordinal = 0))
+	@ModifyArg(method = "renderHotbarItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlays(Lnet/minecraft/client/gui/FontRenderer;Lnet.minecraft.world.item.ItemStack;II)V", ordinal = 0))
 	public ItemStack renderHotbarItem_renderItemOverlays(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}

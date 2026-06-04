@@ -23,10 +23,10 @@ import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.ContainerChest;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
 
 import java.util.List;
 
@@ -111,7 +111,7 @@ public class NotificationHandler {
 		if (gui instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) gui;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (containerName.trim().equals("Fast Travel") || containerName.trim().equals("Porhtal")) {
 				validGui = false;
 			}

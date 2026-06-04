@@ -46,15 +46,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
@@ -546,15 +546,15 @@ public class NEUManager {
 	public boolean doesStackMatchSearch(ItemStack stack, String query) {
 		if (query.startsWith("title:")) {
 			query = query.substring(6);
-			return multiSearchString(stack.getDisplayName(), query);
+			return multiSearchString(stack.getName().getString(), query);
 		} else if (query.startsWith("desc:")) {
 			query = query.substring(5);
 			String lore = "";
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundTag tag = stack.getTag();
 			if (tag != null) {
-				NBTTagCompound display = tag.getCompoundTag("display");
+				CompoundTag display = tag.getCompoundTag("display");
 				if (display.hasKey("Lore", 9)) {
-					NBTTagList list = display.getTagList("Lore", 8);
+					ListTag list = display.getTagList("Lore", 8);
 					for (int i = 0; i < list.tagCount(); i++) {
 						lore += list.getStringTagAt(i) + " ";
 					}
@@ -572,21 +572,21 @@ public class NEUManager {
 				for (char c : query.toCharArray()) {
 					sb.append(c).append(" ");
 				}
-				result = result || multiSearchString(stack.getDisplayName(), sb.toString());
+				result = result || multiSearchString(stack.getName().getString(), sb.toString());
 			}
 
-			result = result || multiSearchString(stack.getDisplayName(), query);
+			result = result || multiSearchString(stack.getName().getString(), query);
 
 			String lore = "";
 			if (stack.getItem() instanceof ItemArmor &&
 				((ItemArmor) stack.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
 				lore = String.format("#%06x ", ((ItemArmor) stack.getItem()).getColor(stack));
 			}
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundTag tag = stack.getTag();
 			if (tag != null) {
-				NBTTagCompound display = tag.getCompoundTag("display");
+				CompoundTag display = tag.getCompoundTag("display");
 				if (display.hasKey("Lore", 9)) {
-					NBTTagList list = display.getTagList("Lore", 8);
+					ListTag list = display.getTagList("Lore", 8);
 					for (int i = 0; i < list.tagCount(); i++) {
 						lore += list.getStringTagAt(i) + " ";
 					}
@@ -766,10 +766,10 @@ public class NEUManager {
 		return inputWithoutLastChar + incrementedLastChar;
 	}
 
-	public static String getUUIDFromNBT(NBTTagCompound tag) {
+	public static String getUUIDFromNBT(CompoundTag tag) {
 		String uuid = null;
 		if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+			CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 			if (ea.hasKey("uuid", 8)) {
 				uuid = ea.getString("uuid");
@@ -778,13 +778,13 @@ public class NEUManager {
 		return uuid;
 	}
 
-	public String getSkullValueFromNBT(NBTTagCompound tag) {
+	public String getSkullValueFromNBT(CompoundTag tag) {
 		if (tag != null && tag.hasKey("SkullOwner", 10)) {
-			NBTTagCompound ea = tag.getCompoundTag("SkullOwner");
-			NBTTagCompound ea3 = tag.getCompoundTag("display");
+			CompoundTag ea = tag.getCompoundTag("SkullOwner");
+			CompoundTag ea3 = tag.getCompoundTag("display");
 
 			if (ea.hasKey("Properties", 10)) {
-				NBTTagCompound ea2 = ea;
+				CompoundTag ea2 = ea;
 				ea = ea.getCompoundTag("Properties");
 				ea = ea.getTagList("textures", 10).getCompoundTagAt(0);
 				String name = ea3.getString("Name").replaceAll(" M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$", "");
@@ -795,15 +795,15 @@ public class NEUManager {
 		return null;
 	}
 
-	public String[] getLoreFromNBT(NBTTagCompound tag) {
+	public String[] getLoreFromNBT(CompoundTag tag) {
 		return ItemUtils.getLore(tag).toArray(new String[0]);
 	}
 
-	public JsonObject getJsonFromNBT(NBTTagCompound tag) {
+	public JsonObject getJsonFromNBT(CompoundTag tag) {
 		return getJsonFromNBTEntry(tag.getTagList("i", 10).getCompoundTagAt(0));
 	}
 
-	public JsonObject getJsonFromNBTEntry(NBTTagCompound tag) {
+	public JsonObject getJsonFromNBTEntry(CompoundTag tag) {
 		if (tag.getKeySet().size() == 0) return null;
 
 		int id = tag.getShort("id");
@@ -818,7 +818,7 @@ public class NEUManager {
 			.resolveInternalName();
 		if (internalname == null) return null;
 
-		NBTTagCompound display = tag.getCompoundTag("display");
+		CompoundTag display = tag.getCompoundTag("display");
 		String[] lore = getLoreFromNBT(tag);
 
 		Item itemMc = Item.getItemById(id);
@@ -834,7 +834,7 @@ public class NEUManager {
 		item.addProperty("displayname", displayName);
 
 		if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+			CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 			byte[] bytes = null;
 			for (String key : ea.getKeySet()) {
@@ -881,7 +881,7 @@ public class NEUManager {
 		String internalName = item.get("internalname").getAsString();
 		Set<NeuRecipe> recipesFor = getRecipesFor(internalName);
 		if (container != null &&
-			container.getLowerChestInventory().getDisplayName().getUnformattedText().equals("Craft Item")) {
+			container.getLowerChestInventory().getName().getString().getUnformattedText().equals("Craft Item")) {
 			Optional<NeuRecipe> recipe = recipesFor.stream().filter(it -> it instanceof CraftingRecipe).findAny();
 			if (recipe.isPresent()) {
 				craftingOverlay.setShownRecipe((CraftingRecipe) recipe.get());
@@ -913,15 +913,15 @@ public class NEUManager {
 	 * Takes an item stack and produces a JsonObject.
 	 */
 	public JsonObject getJsonForItem(ItemStack stack) {
-		NBTTagCompound tag = stack.getTagCompound() == null ? new NBTTagCompound() : stack.getTagCompound();
+		CompoundTag tag = stack.getTag() == null ? new CompoundTag() : stack.getTag();
 
 		//Item lore
 		String[] lore = new String[0];
 		if (tag.hasKey("display", 10)) {
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 
 			if (display.hasKey("Lore", 9)) {
-				NBTTagList list = display.getTagList("Lore", 8);
+				ListTag list = display.getTagList("Lore", 8);
 				lore = new String[list.tagCount()];
 				for (int i = 0; i < list.tagCount(); i++) {
 					lore[i] = list.getStringTagAt(i);
@@ -929,8 +929,8 @@ public class NEUManager {
 			}
 		}
 
-		if (stack.getDisplayName().endsWith(" Recipes")) {
-			stack.setStackDisplayName(stack.getDisplayName().substring(0, stack.getDisplayName().length() - 8));
+		if (stack.getName().getString().endsWith(" Recipes")) {
+			stack.setStackDisplayName(stack.getName().getString().substring(0, stack.getName().getString().length() - 8));
 		}
 
 		if (lore.length > 0 && (lore[lore.length - 1].contains("Click to view recipes!") ||
@@ -942,7 +942,7 @@ public class NEUManager {
 
 		JsonObject json = new JsonObject();
 		json.addProperty("itemid", stack.getItem().getRegistryName());
-		json.addProperty("displayname", stack.getDisplayName());
+		json.addProperty("displayname", stack.getName().getString());
 		json.addProperty("nbttag", tag.toString());
 		json.addProperty("damage", stack.getItemDamage());
 
@@ -957,7 +957,7 @@ public class NEUManager {
 
 	public String getSkullValueForItem(ItemStack stack) {
 		if (stack == null) return null;
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		return getSkullValueFromNBT(tag);
 	}
 
@@ -977,7 +977,7 @@ public class NEUManager {
 
 	public static String getUUIDForItem(ItemStack stack) {
 		if (stack == null) return null;
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		return getUUIDFromNBT(tag);
 	}
 
@@ -1191,7 +1191,7 @@ public class NEUManager {
 	public JsonObject createItemJson(
 		String internalname, String itemid, String displayName, String[] lore,
 		String crafttext, String infoType, String[] info,
-		String clickcommand, int damage, NBTTagCompound nbttag
+		String clickcommand, int damage, CompoundTag nbttag
 	) {
 		return createItemJson(
 			new JsonObject(),
@@ -1211,7 +1211,7 @@ public class NEUManager {
 	public JsonObject createItemJson(
 		JsonObject base, String internalname, String itemid, String displayName, String[] lore,
 		String crafttext, String infoType, String[] info,
-		String clickcommand, int damage, NBTTagCompound nbttag
+		String clickcommand, int damage, CompoundTag nbttag
 	) {
 		if (internalname == null || internalname.isEmpty()) {
 			return null;
@@ -1225,15 +1225,15 @@ public class NEUManager {
 		json.addProperty("clickcommand", clickcommand);
 		json.addProperty("damage", damage);
 		nbttag.setInteger("HideFlags", 254);
-		NBTTagCompound display = nbttag.getCompoundTag("display");
+		CompoundTag display = nbttag.getCompoundTag("display");
 		nbttag.setTag("display", display);
 		display.setString("Name", displayName);
-		NBTTagList loreList = new NBTTagList();
+		ListTag loreList = new ListTag();
 		for (String loreLine : lore) {
-			loreList.appendTag(new NBTTagString(loreLine));
+			loreList.appendTag(new StringTag(loreLine));
 		}
 		display.setTag("Lore", loreList);
-		NBTTagCompound extraAttributes = nbttag.getCompoundTag("ExtraAttributes");
+		CompoundTag extraAttributes = nbttag.getCompoundTag("ExtraAttributes");
 		nbttag.setTag("ExtraAttributes", extraAttributes);
 		extraAttributes.setString("id", internalname);
 
@@ -1260,7 +1260,7 @@ public class NEUManager {
 
 	public boolean writeItemJson(
 		JsonObject base, String internalname, String itemid, String displayName, String[] lore,
-		String crafttext, String infoType, String[] info, String clickcommand, int damage, NBTTagCompound nbttag
+		String crafttext, String infoType, String[] info, String clickcommand, int damage, CompoundTag nbttag
 	) {
 		JsonObject json = createItemJson(
 			base,
@@ -1456,11 +1456,11 @@ public class NEUManager {
 		return replacements;
 	}
 
-	public HashMap<String, String> getPetLoreReplacements(NBTTagCompound tag, int level) {
+	public HashMap<String, String> getPetLoreReplacements(CompoundTag tag, int level) {
 		String petname = null;
 		String tier = null;
 		if (tag != null && tag.hasKey("ExtraAttributes")) {
-			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+			CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 			if (ea.hasKey("petInfo")) {
 				String petInfoStr = ea.getString("petInfo");
 				JsonObject petInfo = gson.fromJson(petInfoStr, JsonObject.class);
@@ -1493,8 +1493,8 @@ public class NEUManager {
 		return getPetLoreReplacements(petname, tier, level);
 	}
 
-	public NBTTagList processLore(JsonArray lore, HashMap<String, String> replacements) {
-		NBTTagList nbtLore = new NBTTagList();
+	public ListTag processLore(JsonArray lore, HashMap<String, String> replacements) {
+		ListTag nbtLore = new ListTag();
 		for (JsonElement line : lore) {
 			String lineStr = line.getAsString();
 			if (!lineStr.contains("Click to view recipes!") &&
@@ -1502,7 +1502,7 @@ public class NEUManager {
 				for (Map.Entry<String, String> entry : replacements.entrySet()) {
 					lineStr = lineStr.replace("{" + entry.getKey() + "}", entry.getValue());
 				}
-				nbtLore.appendTag(new NBTTagString(lineStr));
+				nbtLore.appendTag(new StringTag(lineStr));
 			}
 		}
 		return nbtLore;
@@ -1541,7 +1541,7 @@ public class NEUManager {
 			new ResourceLocation(json.get("itemid").getAsString())));
 
 		if (json.has("count")) {
-			stack.stackSize = json.get("count").getAsInt();
+			stack.getCount() = json.get("count").getAsInt();
 		}
 
 		if (stack.getItem() == null) {
@@ -1553,8 +1553,8 @@ public class NEUManager {
 
 			if (json.has("nbttag")) {
 				try {
-					NBTTagCompound tag = JsonToNBT.getTagFromJson(json.get("nbttag").getAsString());
-					stack.setTagCompound(tag);
+					CompoundTag tag = JsonToNBT.getTagFromJson(json.get("nbttag").getAsString());
+					stack.setTag(tag);
 				} catch (NBTException ignored) {
 				}
 			}
@@ -1562,7 +1562,7 @@ public class NEUManager {
 			HashMap<String, String> replacements = new HashMap<>();
 
 			if (useReplacements) {
-				replacements = getPetLoreReplacements(stack.getTagCompound(), -1);
+				replacements = getPetLoreReplacements(stack.getTag(), -1);
 
 				String displayName = json.get("displayname").getAsString();
 				for (Map.Entry<String, String> entry : replacements.entrySet()) {
@@ -1572,14 +1572,14 @@ public class NEUManager {
 			}
 
 			if (json.has("lore")) {
-				NBTTagCompound display = new NBTTagCompound();
-				if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("display")) {
-					display = stack.getTagCompound().getCompoundTag("display");
+				CompoundTag display = new CompoundTag();
+				if (stack.getTag() != null && stack.getTag().hasKey("display")) {
+					display = stack.getTag().getCompoundTag("display");
 				}
 				display.setTag("Lore", processLore(json.get("lore").getAsJsonArray(), replacements));
-				NBTTagCompound tag = stack.getTagCompound() != null ? stack.getTagCompound() : new NBTTagCompound();
+				CompoundTag tag = stack.getTag() != null ? stack.getTag() : new CompoundTag();
 				tag.setTag("display", display);
-				stack.setTagCompound(tag);
+				stack.setTag(tag);
 			}
 		}
 

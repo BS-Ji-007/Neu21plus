@@ -27,10 +27,10 @@ import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @NEUAutoSubscribe
@@ -89,11 +89,11 @@ public class ProfileViewerButton {
 			replaceSlot = event.getSlotNumber();
 		} else if (event.getSlotNumber() == 22) {
 			ItemStack stack = event.getOriginal();
-			if (stack != null && stack.getTagCompound() != null) {
+			if (stack != null && stack.getTag() != null) {
 				username = "";
-				NBTTagCompound tag = stack.getTagCompound();
+				CompoundTag tag = stack.getTag();
 				String tagName = tag.getCompoundTag("SkullOwner").getString("Name");
-				String displayName = Utils.cleanColour(stack.getDisplayName());
+				String displayName = Utils.cleanColour(stack.getName().getString());
 				if (displayName.length() - tagName.length() >= 0 && tagName.equals(displayName.substring(
 					displayName.length() - tagName.length()))) {
 					username = tagName;

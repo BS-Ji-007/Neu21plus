@@ -33,13 +33,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.StringUtils;
 
 import java.io.BufferedReader;
@@ -85,13 +85,13 @@ public class RepoExporters {
 			JsonObject newEntry = new JsonObject();
 			for (int i = 0; i < 54; i++) {
 				ItemStack stack = lower.getStackInSlot(i);
-				if (!stack.getDisplayName().isEmpty() && stack.getItem() != Item.getItemFromBlock(Blocks.barrier) &&
+				if (!stack.getName().getString().isEmpty() && stack.getItem() != Item.getItemFromBlock(Blocks.barrier) &&
 					stack.getItem() != Items.arrow) {
-					if (stack.getTagCompound().getCompoundTag("display").hasKey("Lore", 9)) {
+					if (stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
 						int stars = Utils.getNumberOfStars(stack);
 						if (stars == 0) continue;
 
-						NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+						ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 						int costIndex = 10000;
 						id = NotEnoughUpdates.INSTANCE.manager
 							.createItemResolutionQuery()
@@ -217,13 +217,13 @@ public class RepoExporters {
 				IInventory lower = cc.getLowerChestInventory();
 				ItemStack stack = lower.getStackInSlot(i);
 				if (stack == null) continue;
-				if (!stack.getDisplayName().isEmpty() && stack.getItem() != Item.getItemFromBlock(Blocks.barrier) &&
+				if (!stack.getName().getString().isEmpty() && stack.getItem() != Item.getItemFromBlock(Blocks.barrier) &&
 					stack.getItem() != Items.arrow) {
-					if (stack.getTagCompound().getCompoundTag("display").hasKey("Lore", 9)) {
+					if (stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
 
-						NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+						ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 						int costIndex = 10000;
-						id = StringUtils.stripControlCodes(stack.getDisplayName().replace(" ", "_").toUpperCase(Locale.US));
+						id = StringUtils.stripControlCodes(stack.getName().getString().replace(" ", "_").toUpperCase(Locale.US));
 						id = ItemUtils.fixDraconicId(id);
 						if (!NotEnoughUpdates.INSTANCE.manager.isValidInternalName(id)) continue;
 
@@ -308,12 +308,12 @@ public class RepoExporters {
 		for (int i = 9; i < 45; i++) {
 			ItemStack stack = lower.getStackInSlot(i);
 			if (stack == null) continue;
-			if (stack.getDisplayName().isEmpty() || stack.getDisplayName().equals(" ")) continue;
+			if (stack.getName().getString().isEmpty() || stack.getName().getString().equals(" ")) continue;
 			String internalName = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 			if (internalName == null) {
 				Utils.addChatMessage(
 					EnumChatFormatting.RED + "ERROR: Could not get internal name for: " + EnumChatFormatting.AQUA +
-						stack.getDisplayName());
+						stack.getName().getString());
 				continue;
 			}
 			JsonObject itemObject = NotEnoughUpdates.INSTANCE.manager.getJsonForItem(stack);
@@ -334,9 +334,9 @@ public class RepoExporters {
 
 			if (!NEUItemEditor.saveOnly(internalName, itemObject)) {
 				Utils.addChatMessage(
-					EnumChatFormatting.RED + "ERROR: Failed to save item: " + EnumChatFormatting.AQUA + stack.getDisplayName());
+					EnumChatFormatting.RED + "ERROR: Failed to save item: " + EnumChatFormatting.AQUA + stack.getName().getString());
 			}
 		}
-		Utils.addChatMessage(EnumChatFormatting.AQUA + "Parsed page: " + lower.getDisplayName().getUnformattedText());
+		Utils.addChatMessage(EnumChatFormatting.AQUA + "Parsed page: " + lower.getName().getString().getUnformattedText());
 	}
 }

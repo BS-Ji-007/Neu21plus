@@ -31,9 +31,9 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -79,7 +79,7 @@ public class PowerStoneStatsDisplay {
 			ItemStack stack = slot.getStack();
 			if (stack == null) continue;
 
-			String displayName = stack.getDisplayName();
+			String displayName = stack.getName().getString();
 			if (!"§aAccessory Bag".equals(displayName)) continue;
 			dirty = false;
 

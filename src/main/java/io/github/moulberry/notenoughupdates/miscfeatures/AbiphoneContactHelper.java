@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
@@ -57,7 +57,7 @@ public class AbiphoneContactHelper {
 		List<String> list = event.toolTip;
 		if (list == null) return;
 		if (list.isEmpty()) return;
-		String rawNpcName = event.itemStack.getDisplayName();
+		String rawNpcName = event.itemStack.getName().getString();
 		String npcName = StringUtils.cleanColour(rawNpcName);
 
 		JsonObject data = getJsonData(npcName);
@@ -102,9 +102,9 @@ public class AbiphoneContactHelper {
 		if (!Utils.getOpenChestName().equals("Contacts Directory")) return;
 
 		ItemStack stack = event.slot.getStack();
-		if (stack == null || stack.getDisplayName() == null) return;
+		if (stack == null || stack.getName().getString() == null) return;
 
-		String rawNpcName = stack.getDisplayName();
+		String rawNpcName = stack.getName().getString();
 		String npcName = StringUtils.cleanColour(rawNpcName);
 
 		JsonObject data = getJsonData(npcName);

@@ -30,9 +30,9 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.set
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.inventory.GuiChest
-import net.minecraft.inventory.ContainerChest
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.inventory.AbstractContainerMenuChest
+import net.minecraft.world.item.ItemStack
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.StringUtils
 
 @AutoService(RepoExporter::class)
@@ -55,7 +55,7 @@ class ItemShopExporter : RepoExporter {
             arrayOf("TODO"),
             "viewrecipe",
             3,
-            NBTTagCompound()
+            CompoundTag()
         )
         baseNPCJson["x"] = context.mc.player.posX.toInt()
         baseNPCJson["y"] = context.mc.player.posY.toInt()
@@ -106,7 +106,7 @@ class ItemShopExporter : RepoExporter {
             }
         }
         return ItemShopRecipe(
-            null, costList, Ingredient(context.manager, resultName, stack.stackSize.toDouble()), null
+            null, costList, Ingredient(context.manager, resultName, stack.getCount().toDouble()), null
         )
     }
 

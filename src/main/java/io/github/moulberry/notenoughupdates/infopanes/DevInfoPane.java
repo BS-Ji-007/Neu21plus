@@ -25,14 +25,14 @@ import io.github.moulberry.notenoughupdates.NEUOverlay;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -471,7 +471,7 @@ public class DevInfoPane extends TextInfoPane {
 									if (stack.getItemDamage() != 0 && stack.getItemDamage() < 32000) {
 										stacki += "-" + stack.getItemDamage();
 									}
-									stacki += ":" + stack.stackSize;
+									stacki += ":" + stack.getCount();
 								}
 							}
 						}
@@ -631,10 +631,10 @@ public class DevInfoPane extends TextInfoPane {
 		if (stackToAdd.getItemDamage() != 0 && stackToAdd.getItemDamage() < 32000) {
 			res.setItemDamage(stackToAdd.getItemDamage());
 		}
-		res.getTagCompound().setInteger("HideFlags", 254);
-		NBTTagCompound ea = new NBTTagCompound();
+		res.getTag().setInteger("HideFlags", 254);
+		CompoundTag ea = new CompoundTag();
 		ea.setString("id", internalname);
-		res.getTagCompound().setTag("ExtraAttributes", ea);
+		res.getTag().setTag("ExtraAttributes", ea);
 
 		JsonObject json = manager.getJsonForItem(res);
 		if (stackToAdd.getItemDamage() != 0 && stackToAdd.getItemDamage() < 32000) {
@@ -867,10 +867,10 @@ public class DevInfoPane extends TextInfoPane {
 								EnumChatFormatting.WHITE + item.getItemStackDisplayName(new ItemStack(item)),
 								EnumChatFormatting.WHITE.toString() + EnumChatFormatting.BOLD + "COMMON"
 							);
-							res.getTagCompound().setInteger("HideFlags", 254);
-							NBTTagCompound ea = new NBTTagCompound();
+							res.getTag().setInteger("HideFlags", 254);
+							CompoundTag ea = new CompoundTag();
 							ea.setString("id", internalname);
-							res.getTagCompound().setTag("ExtraAttributes", ea);
+							res.getTag().setTag("ExtraAttributes", ea);
 
 							JsonObject json = manager.getJsonForItem(res);
 							json.addProperty("internalname", internalname);
@@ -894,10 +894,10 @@ public class DevInfoPane extends TextInfoPane {
 									EnumChatFormatting.WHITE.toString() + EnumChatFormatting.BOLD + "COMMON"
 								);
 								res.setItemDamage(entry.getKey());
-								res.getTagCompound().setInteger("HideFlags", 254);
-								NBTTagCompound ea = new NBTTagCompound();
+								res.getTag().setInteger("HideFlags", 254);
+								CompoundTag ea = new CompoundTag();
 								ea.setString("id", internalname);
-								res.getTagCompound().setTag("ExtraAttributes", ea);
+								res.getTag().setTag("ExtraAttributes", ea);
 
 								JsonObject json = manager.getJsonForItem(res);
 

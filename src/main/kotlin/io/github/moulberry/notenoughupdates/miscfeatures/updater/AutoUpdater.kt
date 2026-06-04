@@ -36,7 +36,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.launchwrapper.Launch
-import net.minecraft.util.ChatComponentText
+import net.minecraft.network.chat.MutableComponent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent

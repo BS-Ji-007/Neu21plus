@@ -71,12 +71,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
@@ -550,11 +550,11 @@ public class NEUOverlay extends Gui {
 				float extraScale = 1;
 				if (display.length() > 20) { //Custom head
 					render = new ItemStack(Items.skull, 1, 3);
-					NBTTagCompound nbt = new NBTTagCompound();
-					NBTTagCompound skullOwner = new NBTTagCompound();
-					NBTTagCompound properties = new NBTTagCompound();
-					NBTTagList textures = new NBTTagList();
-					NBTTagCompound textures_0 = new NBTTagCompound();
+					CompoundTag nbt = new CompoundTag();
+					CompoundTag skullOwner = new CompoundTag();
+					CompoundTag properties = new CompoundTag();
+					ListTag textures = new ListTag();
+					CompoundTag textures_0 = new CompoundTag();
 
 					String uuid = UUID.nameUUIDFromBytes(display.getBytes()).toString();
 					skullOwner.setString("Id", uuid);
@@ -566,7 +566,7 @@ public class NEUOverlay extends Gui {
 					properties.setTag("textures", textures);
 					skullOwner.setTag("Properties", properties);
 					nbt.setTag("SkullOwner", skullOwner);
-					render.setTagCompound(nbt);
+					render.setTag(nbt);
 
 					extraScale = 1.3f;
 				} else if (manager.getItemInformation().containsKey(display)) {
@@ -578,9 +578,9 @@ public class NEUOverlay extends Gui {
 					}
 				}
 				if (render != null) {
-					NBTTagCompound tag = render.getTagCompound() != null ? render.getTagCompound() : new NBTTagCompound();
+					CompoundTag tag = render.getTag() != null ? render.getTag() : new CompoundTag();
 					tag.setString("qc_id", quickCommandStrSplit[0].toLowerCase(Locale.ROOT).trim());
-					render.setTagCompound(tag);
+					render.setTag(tag);
 
 					Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 					GlStateManager.color(1, 1, 1, 1);
@@ -1254,7 +1254,7 @@ public class NEUOverlay extends Gui {
 								.trim());
 							NotEnoughUpdates.INSTANCE.trySendCommand("/recipe " + displayName);
 						} else if (keyPressed == NotEnoughUpdates.INSTANCE.config.misc.neuCustomizeKeybind && itemstack.get() != null) {
-							String uuid = NEUManager.getUUIDFromNBT(itemstack.get().getTagCompound());
+							String uuid = NEUManager.getUUIDFromNBT(itemstack.get().getTag());
 							if (uuid != null) {
 								NotEnoughUpdates.INSTANCE.openGui = new GuiItemCustomize(itemstack.get(), uuid);
 							} else {
@@ -2284,9 +2284,9 @@ public class NEUOverlay extends Gui {
 
 			ItemStack stack = manager.jsonToStack(json, false, true);
 			{
-				NBTTagCompound tag = stack.getTagCompound();
+				CompoundTag tag = stack.getTag();
 				tag.setBoolean("DisablePetExp", true);
-				stack.setTagCompound(tag);
+				stack.setTag(tag);
 			}
 
 			List<String> text = stack.getTooltip(Minecraft.getInstance().player,

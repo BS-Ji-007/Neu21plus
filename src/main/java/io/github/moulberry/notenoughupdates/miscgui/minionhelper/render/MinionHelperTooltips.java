@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.Minion;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.MinionSource;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -56,7 +56,7 @@ public class MinionHelperTooltips {
 
 		ItemStack itemStack = event.itemStack;
 		if (itemStack == null) return;
-		String displayName = itemStack.getDisplayName();
+		String displayName = itemStack.getName().getString();
 		if (!displayName.endsWith(" Minion")) return;
 		displayName = StringUtils.cleanColour(displayName);
 

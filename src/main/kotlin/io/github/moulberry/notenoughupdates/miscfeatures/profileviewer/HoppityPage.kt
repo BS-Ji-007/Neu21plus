@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.util.toRoman
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 
@@ -487,7 +487,7 @@ class HoppityPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstanc
 
     private fun fallbackList(name: String) = listOf(
         "§d${name} §7hasn't been obtained yet!",
-        "§8${GuiProfileViewer.getDisplayName()} §8hasn't obtained this yet"
+        "§8${GuiProfileViewer.getName().getString()} §8hasn't obtained this yet"
     )
 
 
@@ -522,9 +522,9 @@ class HoppityPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstanc
                     buildList {
                         add("§l${rabbitInfo.displayName} Rabbits")
                         if (rabbitInfo == RabbitCollectionRarity.TOTAL) {
-                            add("§8${GuiProfileViewer.getDisplayName()} hasn't found any rabbits.")
+                            add("§8${GuiProfileViewer.getName().getString()} hasn't found any rabbits.")
                         } else {
-                            add("§8${GuiProfileViewer.getDisplayName()} hasn't found any ${rabbitInfo.apiName} rabbits.")
+                            add("§8${GuiProfileViewer.getName().getString()} hasn't found any ${rabbitInfo.apiName} rabbits.")
                         }
                     }
                 } else {

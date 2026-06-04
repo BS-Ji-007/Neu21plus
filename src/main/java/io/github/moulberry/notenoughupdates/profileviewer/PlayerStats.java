@@ -30,9 +30,9 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.PetLeveling;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -555,14 +555,14 @@ public class PlayerStats {
 				bytes[i] = bytesArr.get(i).getAsByte();
 			}
 			try {
-				NBTTagCompound contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
-				NBTTagList items = contents_nbt.getTagList("i", 10);
+				CompoundTag contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
+				ListTag items = contents_nbt.getTagList("i", 10);
 				HashSet<Integer> cakes = new HashSet<>();
 				for (int j = 0; j < items.tagCount(); j++) {
 					if (items.getCompoundTagAt(j).getKeySet().size() > 0) {
-						NBTTagCompound nbt = items.getCompoundTagAt(j).getCompoundTag("tag");
+						CompoundTag nbt = items.getCompoundTagAt(j).getCompoundTag("tag");
 						if (nbt != null && nbt.hasKey("ExtraAttributes", 10)) {
-							NBTTagCompound ea = nbt.getCompoundTag("ExtraAttributes");
+							CompoundTag ea = nbt.getCompoundTag("ExtraAttributes");
 							if (ea.hasKey("new_years_cake")) {
 								cakes.add(ea.getInteger("new_years_cake"));
 							}

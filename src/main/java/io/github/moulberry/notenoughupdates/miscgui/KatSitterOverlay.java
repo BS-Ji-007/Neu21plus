@@ -30,11 +30,11 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -50,13 +50,13 @@ public class KatSitterOverlay {
 		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.showKatSitting) return;
 		GuiChest gui = (GuiChest) event.gui;
 		ContainerChest container = (ContainerChest) gui.inventorySlots;
-		if (!"Pet Sitter".equals(container.getLowerChestInventory().getDisplayName().getUnformattedText())) return;
+		if (!"Pet Sitter".equals(container.getLowerChestInventory().getName().getString().getUnformattedText())) return;
 		Slot slot = container.getSlot(13);
 		if (slot == null || !slot.getHasStack() || slot.getStack() == null) return;
 		ItemStack item = slot.getStack();
-		NBTTagCompound tagCompound = item.getTagCompound();
+		CompoundTag tagCompound = item.getTag();
 		if (tagCompound == null || !tagCompound.hasKey("ExtraAttributes", 10)) return;
-		NBTTagCompound extra = tagCompound.getCompoundTag("ExtraAttributes");
+		CompoundTag extra = tagCompound.getCompoundTag("ExtraAttributes");
 		if (extra == null || !extra.hasKey("id", 8) ||
 			!"PET".equals(extra.getString("id")) || !extra.hasKey("petInfo", 8))
 			return;

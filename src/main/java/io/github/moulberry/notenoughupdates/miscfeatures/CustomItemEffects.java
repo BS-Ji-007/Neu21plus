@@ -30,7 +30,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -41,18 +41,18 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemBlock;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -181,11 +181,11 @@ public class CustomItemEffects {
 				boolean shadowWarp = false;
 				if (internal.equals("HYPERION") || internal.equals("VALKYRIE") || internal.equals("SCYLLA") || internal.equals(
 					"ASTRAEA")) {
-					NBTTagCompound tag = held.getTagCompound();
+					CompoundTag tag = held.getTag();
 					if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-						NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+						CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 						if (ea != null && ea.hasKey("ability_scroll", 9)) {
-							NBTTagList list = ea.getTagList("ability_scroll", 8);
+							ListTag list = ea.getTagList("ability_scroll", 8);
 							for (int i = 0; i < list.tagCount(); i++) {
 								if (list.getStringTagAt(i).equals("IMPLOSION_SCROLL")) {
 									lastUsedHyperion = System.currentTimeMillis();
@@ -615,15 +615,15 @@ public class CustomItemEffects {
 		return null;
 	}
 
-	public NBTTagCompound getBuildersNbt(boolean isWand) {
+	public CompoundTag getBuildersNbt(boolean isWand) {
 		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		if (held == null) return null;
 
-		if (held.hasTagCompound() && held.getTagCompound().hasKey("ExtraAttributes", 10) &&
-			held.getTagCompound().getCompoundTag("ExtraAttributes").hasKey(isWand
+		if (held.hasTag() && held.getTag().hasKey("ExtraAttributes", 10) &&
+			held.getTag().getCompoundTag("ExtraAttributes").hasKey(isWand
 				? "builder's_wand_data"
 				: "builder's_ruler_data", 7)) {
-			byte[] bytes = held.getTagCompound().getCompoundTag("ExtraAttributes").getByteArray(isWand
+			byte[] bytes = held.getTag().getCompoundTag("ExtraAttributes").getByteArray(isWand
 				? "builder's_wand_data"
 				: "builder's_ruler_data");
 			try {
@@ -641,7 +641,7 @@ public class CustomItemEffects {
 
 		for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			if (match.isItemEqual(stack)) {
-				count += stack.stackSize;
+				count += stack.getCount();
 			}
 		}
 
@@ -651,12 +651,12 @@ public class CustomItemEffects {
 		boolean isWand = heldInternal != null && heldInternal.equals("BUILDERS_WAND");
 		if (heldInternal == null || !heldInternal.equals(isWand ? "BUILDERS_WAND" : "BUILDERS_RULER")) return count;
 
-		NBTTagCompound contents_nbt = getBuildersNbt(isWand);
+		CompoundTag contents_nbt = getBuildersNbt(isWand);
 		if (contents_nbt == null) return count;
 
-		NBTTagList items = contents_nbt.getTagList("i", 10);
+		ListTag items = contents_nbt.getTagList("i", 10);
 		for (int j = 0; j < items.tagCount(); j++) {
-			NBTTagCompound buildersItem = items.getCompoundTagAt(j);
+			CompoundTag buildersItem = items.getCompoundTagAt(j);
 			if (buildersItem.getKeySet().size() > 0) {
 				if (buildersItem.getInteger("id") == Item.getIdFromItem(match.getItem()) &&
 					buildersItem.getInteger("Damage") == match.getItemDamage()) {
@@ -675,12 +675,12 @@ public class CustomItemEffects {
 
 		if (heldInternal == null || !heldInternal.equals("BUILDERS_RULER")) return null;
 
-		NBTTagCompound contents_nbt = getBuildersNbt(false);
+		CompoundTag contents_nbt = getBuildersNbt(false);
 		if (contents_nbt == null) return null;
 
-		NBTTagList items = contents_nbt.getTagList("i", 10);
+		ListTag items = contents_nbt.getTagList("i", 10);
 		for (int j = 0; j < items.tagCount(); j++) {
-			NBTTagCompound buildersItem = items.getCompoundTagAt(j);
+			CompoundTag buildersItem = items.getCompoundTagAt(j);
 			if (buildersItem.getKeySet().size() > 0) {
 				ItemStack newStack = new ItemStack(
 					Item.getItemById(buildersItem.getInteger("id")),
@@ -710,18 +710,18 @@ public class CustomItemEffects {
 		String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 		boolean isWand = heldInternal != null && heldInternal.equals("BUILDERS_WAND");
 		if (heldInternal != null && heldInternal.equals(isWand ? "BUILDERS_WAND" : "BUILDERS_RULER")) {
-			if (held.hasTagCompound() && held.getTagCompound().hasKey("ExtraAttributes", 10) &&
-				held.getTagCompound().getCompoundTag("ExtraAttributes").hasKey(isWand
+			if (held.hasTag() && held.getTag().hasKey("ExtraAttributes", 10) &&
+				held.getTag().getCompoundTag("ExtraAttributes").hasKey(isWand
 					? "builder's_wand_data"
 					: "builder's_ruler_data", 7)) {
-				byte[] bytes = held.getTagCompound().getCompoundTag("ExtraAttributes").getByteArray(isWand
+				byte[] bytes = held.getTag().getCompoundTag("ExtraAttributes").getByteArray(isWand
 					? "builder's_wand_data"
 					: "builder's_ruler_data");
 				try {
-					NBTTagCompound contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
-					NBTTagList items = contents_nbt.getTagList("i", 10);
+					CompoundTag contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
+					ListTag items = contents_nbt.getTagList("i", 10);
 					for (int j = 0; j < items.tagCount(); j++) {
-						NBTTagCompound buildersItem = items.getCompoundTagAt(j);
+						CompoundTag buildersItem = items.getCompoundTagAt(j);
 						if (buildersItem.getKeySet().size() > 0) {
 							String internalname =
 								NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery()
@@ -841,9 +841,9 @@ public class CustomItemEffects {
 		usingEtherwarp = !aotv;
 
 		if (aotv) {
-			NBTTagCompound tag = held.getTagCompound();
+			CompoundTag tag = held.getTag();
 			if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 				usingEtherwarp = ea.hasKey("ethermerge");
 			}
 		}
@@ -852,7 +852,7 @@ public class CustomItemEffects {
 			return false;
 		}
 		int dist = 0;
-		for (String line : NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(held.getTagCompound())) {
+		for (String line : NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(held.getTag())) {
 			String cleaned = Utils.cleanColour(line);
 			Matcher matcher = etherwarpDistancePattern.matcher(cleaned);
 			if (matcher.matches()) {

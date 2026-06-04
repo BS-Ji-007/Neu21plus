@@ -34,7 +34,7 @@ import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
-import net.minecraft.item.Item
+import net.minecraft.world.item.Item
 
 @AutoService(RepoExporter::class)
 class HotmExporter : RepoExporter {

@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

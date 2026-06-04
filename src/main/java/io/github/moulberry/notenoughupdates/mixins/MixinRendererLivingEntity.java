@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.overlays.BonemerangOverlay;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,12 +35,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(RendererLivingEntity.class)
 public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> {
 	@Redirect(method = "renderName", at = @At(value = "INVOKE", target =
-		"Lnet/minecraft/entity/EntityLivingBase;getDisplayName()Lnet/minecraft/util/IChatComponent;"))
+		"Lnet/minecraft/entity/EntityLivingBase;getName().getString()Lnet.minecraft.network.chat.Component;"))
 	public IChatComponent renderName_getDisplayName(EntityLivingBase entity) {
 		if (entity instanceof EntityArmorStand) {
 			return DamageCommas.replaceName(entity);
 		} else {
-			return entity.getDisplayName();
+			return entity.getName().getString();
 		}
 	}
 

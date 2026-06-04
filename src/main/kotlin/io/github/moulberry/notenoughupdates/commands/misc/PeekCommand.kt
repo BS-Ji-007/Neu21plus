@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.profileviewer.SkyblockProfiles
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting.*
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.ChatFormatting.*
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.commons.lang3.text.WordUtils
 import java.util.*

@@ -38,12 +38,12 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -248,9 +248,9 @@ public class GuiItemCustomize extends GuiScreen {
 		if (!this.textFieldRename.getText().isEmpty()) {
 			data.customName = this.textFieldRename.getText();
 
-			NBTTagCompound stackTagCompound = stack.getTagCompound();
+			CompoundTag stackTagCompound = stack.getTag();
 			if (stackTagCompound != null && stackTagCompound.hasKey("display", 10)) {
-				NBTTagCompound nbttagcompound = stackTagCompound.getCompoundTag("display");
+				CompoundTag nbttagcompound = stackTagCompound.getCompoundTag("display");
 
 				if (nbttagcompound.hasKey("Name", 8)) {
 					String name = nbttagcompound.getString("Name");
@@ -591,7 +591,7 @@ public class GuiItemCustomize extends GuiScreen {
 				displayName = itemId;
 			}
 			if (itemStack != null) {
-				if (displayName == null) displayName = itemStack.getDisplayName();
+				if (displayName == null) displayName = itemStack.getName().getString();
 				//Utils.drawItemStack(itemStack, xCenter - 90, yTop);
 				GlStateManager.enableDepth();
 				GlStateManager.pushMatrix();

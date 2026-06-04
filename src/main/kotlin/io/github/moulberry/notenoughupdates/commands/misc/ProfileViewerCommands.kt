@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.command.ICommandSender
-import net.minecraft.util.EnumChatFormatting.RED
+import net.minecraft.ChatFormatting.RED
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 

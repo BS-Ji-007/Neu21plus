@@ -37,7 +37,7 @@ import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import org.lwjgl.input.Mouse;
 
@@ -157,7 +157,7 @@ public class MinionHelperOverlayHover {
 			if (minion.getCustomSource() != null) {
 				minionSource = minion.getCustomSource();
 			}
-			String displayName = minion.getDisplayName();
+			String displayName = minion.getName().getString();
 			lines.add("§9" + displayName + " " + minion.getTier());
 			List<MinionRequirement> requirements = manager.getRequirementsManager().getRequirements(minion);
 			if (!requirements.isEmpty()) {

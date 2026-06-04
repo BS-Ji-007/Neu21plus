@@ -37,8 +37,8 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting.*
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.ChatFormatting.*
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*
 import java.util.concurrent.CompletableFuture

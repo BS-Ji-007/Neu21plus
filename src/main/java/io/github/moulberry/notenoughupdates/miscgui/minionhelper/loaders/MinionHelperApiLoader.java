@@ -34,7 +34,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -174,7 +174,7 @@ public class MinionHelperApiLoader {
 				LinkedHashMap<String, ItemStack> collectionMap = ProfileViewer.getCollectionToCollectionDisplayMap();
 				if (collectionMap.containsKey(name)) {
 					ItemStack itemStack = collectionMap.get(name);
-					String displayName = itemStack.getDisplayName();
+					String displayName = itemStack.getName().getString();
 					name = Utils.cleanColour(displayName);
 					name = manager.formatInternalName(name);
 				} else {

@@ -44,8 +44,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -113,7 +113,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 	@Inject(method = "drawScreen",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/entity/player/InventoryPlayer;getItemStack()Lnet/minecraft/item/ItemStack;",
+			target = "Lnet/minecraft/entity/player/InventoryPlayer;getItemStack()Lnet.minecraft.world.item.ItemStack;",
 			shift = At.Shift.BEFORE,
 			ordinal = 1
 		)
@@ -181,7 +181,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 	}
 
 	private static final String TARGET_GETSTACK =
-		"Lnet/minecraft/inventory/Slot;getStack()Lnet/minecraft/item/ItemStack;";
+		"Lnet.minecraft.world.inventory.Slot;getStack()Lnet.minecraft.world.item.ItemStack;";
 
 	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_GETSTACK))
 	public ItemStack drawScreen_getStack(Slot slot) {
@@ -212,20 +212,20 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		return stack;
 	}
 
-	private static final String TARGET_CANBEHOVERED = "Lnet/minecraft/inventory/Slot;canBeHovered()Z";
+	private static final String TARGET_CANBEHOVERED = "Lnet.minecraft.world.inventory.Slot;canBeHovered()Z";
 
 	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_CANBEHOVERED))
 	public boolean drawScreen_canBeHovered(Slot slot) {
 		if ((NotEnoughUpdates.INSTANCE.config.improvedSBMenu.hideEmptyPanes &&
 			BetterContainers.isOverriding() && BetterContainers.isBlankStack(slot.slotNumber, slot.getStack())) ||
 			slot.getStack() != null &&
-				slot.getStack().hasTagCompound() && slot.getStack().getTagCompound().getBoolean("NEUHIDETOOLIP")) {
+				slot.getStack().hasTag() && slot.getStack().getTag().getBoolean("NEUHIDETOOLIP")) {
 			return false;
 		}
 		return slot.canBeHovered();
 	}
 
-	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;handleMouseClick(Lnet/minecraft/inventory/Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;handleMouseClick(Lnet.minecraft.world.inventory.Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	public void checkHotbarKeys_Slotlock(int keyCode, CallbackInfoReturnable<Boolean> cir, int i) {
 		if (SlotLocking.getInstance().isSlotIndexLocked(i)) {
 			cir.setReturnValue(false);
@@ -256,12 +256,12 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		new GuiContainerBackgroundDrawnEvent(((GuiContainer) (Object) this), partialTicks).post();
 	}
 
-	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", ordinal = 0))
+	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet.minecraft.world.item.ItemStack;II)V", ordinal = 0))
 	public ItemStack drawSlot_renderItemAndEffectIntoGUI(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}
 
-	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlayIntoGUI(Lnet/minecraft/client/gui/FontRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V"))
+	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlayIntoGUI(Lnet/minecraft/client/gui/FontRenderer;Lnet.minecraft.world.item.ItemStack;IILjava/lang/String;)V"))
 	public ItemStack drawSlot_renderItemOverlays(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}

@@ -26,9 +26,9 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import io.github.moulberry.notenoughupdates.util.XPInformation;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -104,11 +104,11 @@ public class CombatSkillOverlay
 		if (Minecraft.getInstance().player == null) return;
 
 		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
-		if (stack != null && stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
+		if (stack != null && stack.hasTag()) {
+			CompoundTag tag = stack.getTag();
 
 			if (tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 				if (ea.hasKey("stats_book", 99)) {
 					kill = ea.getInteger("stats_book");

@@ -41,12 +41,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -410,7 +410,7 @@ public class MinionHelperOverlay {
 		Map<Minion, Double> sort = TrophyRewardOverlay.sortByValue(prices);
 		for (Minion minion : sort.keySet()) {
 			if (i >= skipPreviousPages) {
-				String displayName = minion.getDisplayName();
+				String displayName = minion.getName().getString();
 				if (displayName == null) {
 					if (NotEnoughUpdates.INSTANCE.config.hidden.dev) {
 						Utils.addChatMessage("§cDisplayname is null for " + minion.getInternalName());

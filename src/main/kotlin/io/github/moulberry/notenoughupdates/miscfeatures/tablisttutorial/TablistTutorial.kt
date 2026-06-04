@@ -37,8 +37,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.inventory.ContainerChest
-import net.minecraft.inventory.Slot
+import net.minecraft.world.inventory.AbstractContainerMenuChest
+import net.minecraft.world.inventory.Slot
 import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

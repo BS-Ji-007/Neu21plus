@@ -30,10 +30,10 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
@@ -86,16 +86,16 @@ public class CrystalHollowOverlay extends TextOverlay {
 		if (perProfileConfig == null) return;
 
 		ItemStack crystalStateStack = lower.getStackInSlot(50);
-		if (crystalStateStack == null || !crystalStateStack.hasTagCompound()) {
+		if (crystalStateStack == null || !crystalStateStack.hasTag()) {
 			return;
 		}
 
-		String name = Utils.cleanColour(crystalStateStack.getDisplayName()).trim();
+		String name = Utils.cleanColour(crystalStateStack.getName().getString()).trim();
 		if (!name.equals("Crystal Hollows Crystals")) {
 			return;
 		}
 
-		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(crystalStateStack.getTagCompound());
+		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(crystalStateStack.getTag());
 		for (String line : lore) {
 			if (line == null) {
 				continue;
@@ -123,7 +123,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 
 			if (containerName.equals("Heart of the Mountain") && lower.getSizeInventory() >= 54) {
 				updateHotmCrystalState(lower);
@@ -154,9 +154,9 @@ public class CrystalHollowOverlay extends TextOverlay {
 		HashMap<String, Integer> storageData = new HashMap<>(inventoryData);
 		for (ItemStack item : mc.player.inventory.mainInventory)
 			if (item != null) {
-				String name = Utils.cleanColour(item.getDisplayName());
+				String name = Utils.cleanColour(item.getName().getString());
 				if (inventoryData.containsKey(name))
-					inventoryData.put(name, inventoryData.get(name) + item.stackSize);
+					inventoryData.put(name, inventoryData.get(name) + item.getCount());
 			}
 		for (Map.Entry<Integer, Integer> entry : storageManager.storageConfig.displayToStorageIdMap.entrySet()) {
 			int storageId = entry.getValue();
@@ -164,9 +164,9 @@ public class CrystalHollowOverlay extends TextOverlay {
 			if (page != null && page.rows > 0)
 				for (ItemStack item : page.items)
 					if (item != null) {
-						String name = Utils.cleanColour(item.getDisplayName());
+						String name = Utils.cleanColour(item.getName().getString());
 						if (storageData.containsKey(name))
-							storageData.put(name, storageData.get(name) + item.stackSize);
+							storageData.put(name, storageData.get(name) + item.getCount());
 					}
 		}
 

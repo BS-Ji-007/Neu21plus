@@ -38,7 +38,7 @@ import kotlin.Unit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.Vec3i;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -317,7 +317,7 @@ public class Navigation {
 		return island;
 	}
 
-	public String getDisplayName() {
+	public String getName().getString() {
 		return displayName;
 	}
 

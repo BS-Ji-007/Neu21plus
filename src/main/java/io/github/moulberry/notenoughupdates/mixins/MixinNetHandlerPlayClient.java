@@ -31,7 +31,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.world.CrystalHollowChes
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
@@ -51,7 +51,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
 public class MixinNetHandlerPlayClient {
-	private static final String TARGET = "Lnet/minecraft/entity/player/EntityPlayer;" +
+	private static final String TARGET = "Lnet.minecraft.world.entity.player.Player;" +
 		"setPositionAndRotation(DDDFF)V";
 
 	@Redirect(method = "handlePlayerPosLook", at = @At(value = "INVOKE", target = TARGET))

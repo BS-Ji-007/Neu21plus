@@ -34,17 +34,17 @@ import lombok.Getter;
 import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -87,7 +87,7 @@ public class DungeonNpcProfitOverlay {
 
 	private boolean isChestOverview(IInventory inventory) {
 		return chestNamePattern.matcher(StringUtils.cleanColour(
-			inventory.getDisplayName()
+			inventory.getName().getString()
 							 .getUnformattedText())).matches();
 	}
 
@@ -178,7 +178,7 @@ public class DungeonNpcProfitOverlay {
 		if (lore.size() == 0 || !"§7Contents".equals(lore.get(0))) {
 			return;
 		}
-		dungeonChest.name = stack.getDisplayName();
+		dungeonChest.name = stack.getName().getString();
 		List<SkyblockItem> items = new ArrayList<>();
 		boolean isInCost = false;
 		int counter = -1;
@@ -310,7 +310,7 @@ public class DungeonNpcProfitOverlay {
 				double cost = item.calculateCost();
 				profit += cost;
 				lore.add(
-					EnumChatFormatting.AQUA + " - " + item.getDisplayName() + EnumChatFormatting.RESET + " " +
+					EnumChatFormatting.AQUA + " - " + item.getName().getString() + EnumChatFormatting.RESET + " " +
 						EnumChatFormatting.GREEN +
 						Utils.shortNumberFormat(cost, 0));
 			}
@@ -409,7 +409,7 @@ public class DungeonNpcProfitOverlay {
 			return 0d;
 		}
 
-		public String getDisplayName() {
+		public String getName().getString() {
 			JsonObject entry = NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withKnownInternalName(
 				internalName).resolveToItemListJson();
 			if (entry != null) {

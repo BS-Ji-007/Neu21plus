@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -80,9 +80,9 @@ public class FrozenTreasuresHighlighter extends GenericBlockHighlighter {
 			if ((entity instanceof EntityArmorStand) &&
 					((EntityArmorStand) entity).getCurrentArmor(3) != null) {
 
-				// If an armor stand has a 'hat' with a NBTTagCompound check if it has a pet texture url
-				if (((EntityArmorStand) entity).getCurrentArmor(3).hasTagCompound()) {
-					NBTTagCompound nbtTagCompound = ((EntityArmorStand) entity).getCurrentArmor(3).getTagCompound();
+				// If an armor stand has a 'hat' with a CompoundTag check if it has a pet texture url
+				if (((EntityArmorStand) entity).getCurrentArmor(3).hasTag()) {
+					CompoundTag nbtTagCompound = ((EntityArmorStand) entity).getCurrentArmor(3).getTag();
 
 					// Get Base64 texture value from the tag compound
 					String textureValue = nbtTagCompound
@@ -112,7 +112,7 @@ public class FrozenTreasuresHighlighter extends GenericBlockHighlighter {
 					}
 				} else {
 					// This is for frozen treasures which are just blocks i.e. Packed Ice, Enchanted Packed Ice etc.
-					// (Since I don't believe the blocks have NBTTagCompound data)
+					// (Since I don't believe the blocks have CompoundTag data)
 					highlightedBlocks.add(entity.getPosition().add(0, 1, 0));
 				}
 			}

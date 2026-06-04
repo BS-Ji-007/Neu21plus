@@ -27,10 +27,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.client.C01PacketChatMessage;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Locale;
@@ -52,7 +52,7 @@ public class AntiCoopAdd {
 
 		ItemStack stack = event.slot.getStack();
 		if (stack == null) return;
-		if (stack.getItem() == Items.diamond && stack.getDisplayName() != null && stack.getDisplayName().contains(
+		if (stack.getItem() == Items.diamond && stack.getName().getString() != null && stack.getName().getString().contains(
 			"Co-op Request")) {
 			String ign = Utils.getOpenChestName().split("'s Profile")[0];
 			ChatComponentText storageMessage = new ChatComponentText(

@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.util
 
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 

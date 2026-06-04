@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -42,7 +42,7 @@ public abstract class MixinLayerArmorBase<T extends ModelBase> {
 	@Redirect(method = "renderLayer",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/item/ItemStack;hasEffect()Z"
+			target = "Lnet.minecraft.world.item.ItemStack;hasEffect()Z"
 		)
 	)
 	public boolean renderItem_hasEffect(ItemStack stack) {
@@ -74,7 +74,7 @@ public abstract class MixinLayerArmorBase<T extends ModelBase> {
 	@Redirect(method = "renderLayer",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/item/ItemArmor;getColor(Lnet/minecraft/item/ItemStack;)I"
+			target = "Lnet.minecraft.world.item.ItemArmor;getColor(Lnet.minecraft.world.item.ItemStack;)I"
 		)
 	)
 	public int renderItem_getColor(ItemArmor item, ItemStack stack) {
@@ -95,7 +95,7 @@ public abstract class MixinLayerArmorBase<T extends ModelBase> {
 	@Redirect(method = "renderLayer",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getCurrentArmor(Lnet/minecraft/entity/EntityLivingBase;I)Lnet/minecraft/item/ItemStack;"
+			target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getCurrentArmor(Lnet/minecraft/entity/EntityLivingBase;I)Lnet.minecraft.world.item.ItemStack;"
 		)
 	)
 	public ItemStack renderItem_getCurrentArmor(LayerArmorBase<?> instance, EntityLivingBase entitylivingbaseIn, int armorSlot) {

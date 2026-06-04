@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.util.kotlin.set
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11

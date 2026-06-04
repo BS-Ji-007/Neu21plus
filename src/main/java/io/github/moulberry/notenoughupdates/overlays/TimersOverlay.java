@@ -37,12 +37,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -59,7 +59,7 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.minecraft.util.EnumChatFormatting.DARK_AQUA;
+import static net.minecraft.ChatFormatting.DARK_AQUA;
 
 public class TimersOverlay extends TextTabOverlay {
 	public TimersOverlay(
@@ -321,13 +321,13 @@ public class TimersOverlay extends TextTabOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 			ItemStack stack = lower.getStackInSlot(0);
 			switch (containerName.intern()) {
 				case "Dimensional Infusion":
 					if (lower.getSizeInventory() != 9 * 4) break;
 					var freeInfusionSlot = lower.getStackInSlot(13);
-					if (freeInfusionSlot == null || freeInfusionSlot.stackSize != 1 ||
+					if (freeInfusionSlot == null || freeInfusionSlot.getCount() != 1 ||
 						freeInfusionSlot.getItem() != Item.getItemFromBlock(Blocks.double_plant) ||
 						freeInfusionSlot.getItemDamage() != 1) {
 						break;
@@ -345,8 +345,8 @@ public class TimersOverlay extends TextTabOverlay {
 					}
 					for (int i = 9; i < 18; i++) {
 						stack = lower.getStackInSlot(i);
-						if (stack != null && stack.hasTagCompound()) {
-							String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+						if (stack != null && stack.hasTag()) {
+							String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 							for (String line : lore) {
 								if (line.contains("(Daily")) {
 									hidden.commissionsCompleted = 0;
@@ -371,8 +371,8 @@ public class TimersOverlay extends TextTabOverlay {
 					}
 					ItemStack stackSuperPairs = lower.getStackInSlot(22);
 					if (stackSuperPairs != null && stackSuperPairs.getItem() == Items.skull &&
-						stackSuperPairs.getTagCompound() != null) {
-						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stackSuperPairs.getTagCompound());
+						stackSuperPairs.getTag() != null) {
+						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stackSuperPairs.getTag());
 						String text = lore[lore.length - 1];
 						String cleanText = Utils.cleanColour(text);
 						if (cleanText.equals("Experiments on cooldown!")) {
@@ -387,7 +387,7 @@ public class TimersOverlay extends TextTabOverlay {
 						break;
 					}
 					stack = lower.getStackInSlot(13);
-					if (stack != null && Utils.cleanColour(stack.getDisplayName()).equals("Superpairs")) {
+					if (stack != null && Utils.cleanColour(stack.getName().getString()).equals("Superpairs")) {
 						hidden.experimentsCompleted = currentTime;
 					}
 				case "SkyBlock Menu":
@@ -403,9 +403,9 @@ public class TimersOverlay extends TextTabOverlay {
 						stack = lower.getStackInSlot(13);
 					}
 
-					if (stack != null && Utils.cleanColour(stack.getDisplayName()).equals("Booster Cookie") &&
-						stack.getTagCompound() != null) {
-						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+					if (stack != null && Utils.cleanColour(stack.getName().getString()).equals("Booster Cookie") &&
+						stack.getTag() != null) {
+						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 						for (String line : lore) {
 							if (line.contains("Duration: ")) {
 								String clean = line.replaceAll("(\u00a7.)", "");

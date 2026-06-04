@@ -34,7 +34,7 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.passive.EntityVillager
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
 import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -157,7 +157,7 @@ class NPCLocationExporter {
                         pointedEntity.uniqueID,
                         pointedEntity.position,
                         location,
-                        pointedEntity.getCurrentArmor(3)?.takeIf { it.stackSize > 0 }
+                        pointedEntity.getCurrentArmor(3)?.takeIf { it.getCount() > 0 }
                             ?: ItemUtils.createQuestionMarkSkull("")
                     )
                 )

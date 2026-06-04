@@ -28,12 +28,12 @@ import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -58,8 +58,8 @@ public class EnchantingSolvers {
 		SUPERPAIRS
 	}
 
-	private static final NBTTagCompound enchTag = new NBTTagCompound() {{
-		setTag("ench", new NBTTagList());
+	private static final CompoundTag enchTag = new CompoundTag() {{
+		setTag("ench", new ListTag());
 	}};
 
 	// Chronomatron
@@ -121,7 +121,7 @@ public class EnchantingSolvers {
 			return null;
 		}
 
-		if (stack != null && stack.getDisplayName() != null) {
+		if (stack != null && stack.getName().getString() != null) {
 			if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
 				GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 				ContainerChest container = (ContainerChest) chest.inventorySlots;
@@ -131,7 +131,7 @@ public class EnchantingSolvers {
 					return null;
 				}
 
-				String displayName = stack.getDisplayName();
+				String displayName = stack.getName().getString();
 
 				if (currentSolver == SolverType.CHRONOMATRON) {
 					ItemStack timerStack = lower.getStackInSlot(lower.getSizeInventory() - 5);
@@ -157,8 +157,8 @@ public class EnchantingSolvers {
 											1,
 											stack.getItemDamage()
 										);
-										retStack.setTagCompound(enchTag);
-										retStack.setStackDisplayName(stack.getDisplayName());
+										retStack.setTag(enchTag);
+										retStack.setStackDisplayName(stack.getName().getString());
 										return retStack;
 									} else {
 										ItemStack retStack = new ItemStack(
@@ -166,7 +166,7 @@ public class EnchantingSolvers {
 											1,
 											stack.getItemDamage()
 										);
-										retStack.setStackDisplayName(stack.getDisplayName());
+										retStack.setStackDisplayName(stack.getName().getString());
 										return retStack;
 									}
 								} else {
@@ -179,12 +179,12 @@ public class EnchantingSolvers {
 												1,
 												stack.getItemDamage()
 											);
-											retStack.setStackDisplayName(stack.getDisplayName());
+											retStack.setStackDisplayName(stack.getName().getString());
 											return retStack;
 										}
 									}
 									ItemStack retStack = new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, 8);
-									retStack.setStackDisplayName(stack.getDisplayName());
+									retStack.setStackDisplayName(stack.getName().getString());
 									return retStack;
 								}
 							}
@@ -205,15 +205,15 @@ public class EnchantingSolvers {
 								if (item.containerIndex == slotIndex) {
 									ItemStack newStack = item.stack;
 									if (solveIndex == ultrasequencerReplayIndex) {
-										newStack.setTagCompound(enchTag);
+										newStack.setTag(enchTag);
 									} else {
-										newStack.setTagCompound(null);
+										newStack.setTag(null);
 									}
 									return newStack;
 								}
 							}
 							ItemStack retStack = new ItemStack(Item.getItemFromBlock(Blocks.stained_glass_pane), 1, 15);
-							retStack.setStackDisplayName(stack.getDisplayName());
+							retStack.setStackDisplayName(stack.getName().getString());
 							return retStack;
 						}
 					}
@@ -237,7 +237,7 @@ public class EnchantingSolvers {
 			return false;
 		}
 
-		if (stack != null && stack.getDisplayName() != null) {
+		if (stack != null && stack.getName().getString() != null) {
 			if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
 				GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 				ContainerChest container = (ContainerChest) chest.inventorySlots;
@@ -320,10 +320,10 @@ public class EnchantingSolvers {
 		}
 
 		ItemStack stack = event.slot.getStack();
-		if (stack == null || stack.getDisplayName() == null) {
+		if (stack == null || stack.getName().getString() == null) {
 			return;
 		}
-		String displayName = stack.getDisplayName();
+		String displayName = stack.getName().getString();
 		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			return;
 		}
@@ -422,11 +422,11 @@ public class EnchantingSolvers {
 				for (int index = 0; index < lower.getSizeInventory(); index++) {
 					ItemStack stack = lower.getStackInSlot(index);
 					if (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay)) {
-						if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("ench")) {
-							if (stainedHardenedClayName != null && !stack.getDisplayName().equals(stainedHardenedClayName)) {
+						if (stack.getTag() != null && stack.getTag().hasKey("ench")) {
+							if (stainedHardenedClayName != null && !stack.getName().getString().equals(stainedHardenedClayName)) {
 								return;
 							}
-							stainedHardenedClayName = stack.getDisplayName();
+							stainedHardenedClayName = stack.getName().getString();
 						}
 					}
 				}
@@ -469,12 +469,12 @@ public class EnchantingSolvers {
 				for (int index = 0; index < lower.getSizeInventory(); index++) {
 					ItemStack stack = lower.getStackInSlot(index);
 					if (stack != null && stack.getItem() == Items.dye) {
-						if (ultraSequencerOrder.containsKey(stack.stackSize - 1)) {
-							UltrasequencerItem ultrasequencerItem = ultraSequencerOrder.get(stack.stackSize - 1);
+						if (ultraSequencerOrder.containsKey(stack.getCount() - 1)) {
+							UltrasequencerItem ultrasequencerItem = ultraSequencerOrder.get(stack.getCount() - 1);
 							ultrasequencerItem.containerIndex = index;
 							ultrasequencerItem.stack = stack;
 						} else {
-							ultraSequencerOrder.put(stack.stackSize - 1, new UltrasequencerItem(stack, index));
+							ultraSequencerOrder.put(stack.getCount() - 1, new UltrasequencerItem(stack, index));
 						}
 					}
 				}
@@ -493,11 +493,11 @@ public class EnchantingSolvers {
 						stack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) {
 						superpairStacks.put(index, stack);
 
-						NBTTagCompound tag = stack.getTagCompound();
+						CompoundTag tag = stack.getTag();
 						if (tag != null) {
-							NBTTagCompound display = tag.getCompoundTag("display");
+							CompoundTag display = tag.getCompoundTag("display");
 							if (display.hasKey("Lore", 9)) {
-								NBTTagList list = display.getTagList("Lore", 8);
+								ListTag list = display.getTagList("Lore", 8);
 								for (int i = 0; i < list.tagCount(); i++) {
 									if (list.getStringTagAt(i).toLowerCase(Locale.ROOT).contains("powerup")) {
 										powerupMatches.add(index);
@@ -510,7 +510,7 @@ public class EnchantingSolvers {
 						int numMatches = 0;
 						for (int index2 = 0; index2 < lower.getSizeInventory(); index2++) {
 							ItemStack stack2 = lower.getStackInSlot(index2);
-							if (stack2 != null && stack2.getDisplayName().equals(stack.getDisplayName()) &&
+							if (stack2 != null && stack2.getName().getString().equals(stack.getName().getString()) &&
 								stack.getItem() == stack2.getItem() && stack.getItemDamage() == stack2.getItemDamage()) {
 								numMatches++;
 							}
@@ -523,7 +523,7 @@ public class EnchantingSolvers {
 								if (oddMatches && index2 == lastSlotClicked) continue;
 
 								ItemStack stack2 = lower.getStackInSlot(index2);
-								if (stack2 != null && stack2.getDisplayName().equals(stack.getDisplayName()) &&
+								if (stack2 != null && stack2.getName().getString().equals(stack.getName().getString()) &&
 									stack.getItem() == stack2.getItem() && stack.getItemDamage() == stack2.getItemDamage()) {
 									successfulMatches.add(index);
 									successfulMatches.add(index2);
@@ -539,7 +539,7 @@ public class EnchantingSolvers {
 
 								if (superpairStacks.containsKey(index2) && superpairStacks.get(index2) != null) {
 									ItemStack stack2 = superpairStacks.get(index2);
-									if (stack1.getDisplayName().equals(stack2.getDisplayName()) &&
+									if (stack1.getName().getString().equals(stack2.getName().getString()) &&
 										stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage()) {
 										possibleMatches.add(index);
 										possibleMatches.add(index2);

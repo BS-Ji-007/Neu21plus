@@ -34,7 +34,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -45,11 +45,11 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMap;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemMap;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
@@ -1533,7 +1533,7 @@ public class DungeonMap {
 			boolean holdingBow = false;
 			if (stack != null) {
 				holdingBow |= stack.getItem() == Items.arrow;
-				String customname = ItemUtils.getDisplayName(stack.getTagCompound());
+				String customname = ItemUtils.getDisplayName(stack.getTag());
 				holdingBow |= customname != null && customname.endsWith("Arrow");
 			}
 			holdingBow &= colourMap != null;

@@ -31,12 +31,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,13 +85,13 @@ public class AuctionProfit {
 		int unclaimedAuctions = 0;
 		for (ItemStack itemStack : inventoryContainer.getInventory()) {
 			boolean isBin = false;
-			if (itemStack == null || !itemStack.hasTagCompound()) continue;
+			if (itemStack == null || !itemStack.hasTag()) continue;
 
-			NBTTagCompound tag = itemStack.getTagCompound();
+			CompoundTag tag = itemStack.getTag();
 			if (tag == null) continue;
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 			if (!display.hasKey("Lore", 9)) continue;
-			NBTTagList lore = itemStack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+			ListTag lore = itemStack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 
 			double coinsToCheck = 0;
 			for (int i = 0; i < lore.tagCount(); i++) {
@@ -196,7 +196,7 @@ public class AuctionProfit {
 		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
-		return containerChest.getLowerChestInventory().getDisplayName()
+		return containerChest.getLowerChestInventory().getName().getString()
 												 .getUnformattedText().equalsIgnoreCase("Manage Auctions");
 	}
 }

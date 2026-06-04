@@ -23,9 +23,9 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 
 import java.util.WeakHashMap;
 import java.util.regex.Matcher;
@@ -52,9 +52,9 @@ public class DamageCommas {
 	private static final Pattern OVERLOAD_PATTERN = Pattern.compile("(\u00a7.)" + OVERLOAD_STAR + "((?:\u00a7.[\\d,])+)(\u00a7.)" + OVERLOAD_STAR + "\u00a7r");
 
 	public static IChatComponent replaceName(EntityLivingBase entity) {
-		if (!entity.hasCustomName()) return entity.getDisplayName();
+		if (!entity.hasCustomName()) return entity.getName().getString();
 
-		IChatComponent name = entity.getDisplayName();
+		IChatComponent name = entity.getName().getString();
 		if (!NotEnoughUpdates.INSTANCE.config.misc.damageIndicatorStyle2) return name;
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return name;
 

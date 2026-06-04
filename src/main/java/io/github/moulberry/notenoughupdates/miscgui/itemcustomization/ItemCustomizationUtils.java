@@ -26,12 +26,12 @@ import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -108,9 +108,9 @@ public class ItemCustomizationUtils {
 		if (!instance.textFieldCustomItem.getText().isEmpty()) {
 			customStack.setItem(ItemCustomizeManager.getCustomItem(stack, instance.textFieldCustomItem.getText().trim()));
 			customStack.setItemDamage(ItemCustomizeManager.getCustomItemDamage(stack));
-			NBTTagCompound tagCompound = customStack.getTagCompound();
+			CompoundTag tagCompound = customStack.getTag();
 			if (tagCompound != null) {
-				NBTTagCompound customSkull = ItemCustomizeManager.getCustomSkull(customStack);
+				CompoundTag customSkull = ItemCustomizeManager.getCustomSkull(customStack);
 				if (customSkull != null) {
 					tagCompound.removeTag("SkullOwner");
 					tagCompound.setTag("SkullOwner", customSkull);

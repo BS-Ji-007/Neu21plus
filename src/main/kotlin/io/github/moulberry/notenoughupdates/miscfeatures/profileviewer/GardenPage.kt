@@ -41,7 +41,7 @@ import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.init.Blocks
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 import java.util.concurrent.atomic.AtomicBoolean
@@ -588,7 +588,7 @@ class GardenPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance
 
     private fun openWebsite() {
         if (eliteData == null) return
-        Utils.openUrl("https://elitebot.dev/@" + GuiProfileViewer.getDisplayName() + "/" + GuiProfileViewer.getProfileName())
+        Utils.openUrl("https://elitebot.dev/@" + GuiProfileViewer.getName().getString() + "/" + GuiProfileViewer.getProfileName())
         Utils.playPressSound()
     }
 

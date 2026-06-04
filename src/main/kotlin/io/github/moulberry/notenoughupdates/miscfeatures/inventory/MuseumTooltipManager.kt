@@ -30,9 +30,9 @@ import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.KSerializable
 import io.github.moulberry.notenoughupdates.util.stripControlCodes
-import net.minecraft.inventory.ContainerChest
-import net.minecraft.inventory.Slot
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.world.inventory.AbstractContainerMenuChest
+import net.minecraft.world.inventory.Slot
+import net.minecraft.ChatFormatting
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File

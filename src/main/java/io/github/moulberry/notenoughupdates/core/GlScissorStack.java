@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.core;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import org.lwjgl.opengl.GL11;
 
 import java.util.LinkedList;

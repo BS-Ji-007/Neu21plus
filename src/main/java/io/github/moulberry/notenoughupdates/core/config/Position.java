@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.core.config;
 
 import com.google.gson.annotations.Expose;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 
 public class Position {
 	@Expose

@@ -39,8 +39,8 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -70,10 +70,10 @@ public abstract class MixinRenderItem {
 
 	private static String customEnchGlint = null;
 
-	@Redirect(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V",
+	@Redirect(method = "renderItem(Lnet.minecraft.world.item.ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/item/ItemStack;hasEffect()Z"
+			target = "Lnet.minecraft.world.item.ItemStack;hasEffect()Z"
 		)
 	)
 	public boolean renderItem_hasEffect(ItemStack stack) {
@@ -90,10 +90,10 @@ public abstract class MixinRenderItem {
 		return stack.hasEffect();
 	}
 
-	@Redirect(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V",
+	@Redirect(method = "renderItem(Lnet.minecraft.world.item.ItemStack;Lnet/minecraft/client/resources/model/IBakedModel;)V",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/renderer/tileentity/TileEntityItemStackRenderer;renderByItem(Lnet/minecraft/item/ItemStack;)V"
+			target = "Lnet/minecraft/client/renderer/tileentity/TileEntityItemStackRenderer;renderByItem(Lnet.minecraft.world.item.ItemStack;)V"
 		)
 	)
 	public void renderItem_renderByItem(TileEntityItemStackRenderer tileEntityItemStackRenderer, ItemStack stack) {
@@ -128,7 +128,7 @@ public abstract class MixinRenderItem {
 	@Redirect(method = "renderQuads",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/item/Item;getColorFromItemStack(Lnet/minecraft/item/ItemStack;I)I"
+			target = "Lnet.minecraft.world.item.Item;getColorFromItemStack(Lnet.minecraft.world.item.ItemStack;I)I"
 		)
 	)
 	public int renderItem_renderByItem(Item item, ItemStack stack, int renderPass) {
@@ -181,7 +181,7 @@ public abstract class MixinRenderItem {
 
 	@Inject(method = "renderItemIntoGUI", at = @At("RETURN"))
 	public void renderItemReturn(ItemStack stack, int x, int y, CallbackInfo ci) {
-		if (stack != null && stack.stackSize != 1) return;
+		if (stack != null && stack.getCount() != 1) return;
 		if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getInstance().currentScreen instanceof GuiProfileViewer)) {
 			boolean matches = false;
 
@@ -212,7 +212,7 @@ public abstract class MixinRenderItem {
 		String text,
 		CallbackInfo ci
 	) {
-		if (stack != null && stack.stackSize != 1) {
+		if (stack != null && stack.getCount() != 1) {
 			if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getInstance().currentScreen instanceof GuiProfileViewer)) {
 				boolean matches = false;
 
@@ -266,7 +266,7 @@ public abstract class MixinRenderItem {
 		}
 	}
 
-	@Redirect(method = "renderItemOverlayIntoGUI", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;showDurabilityBar(Lnet/minecraft/item/ItemStack;)Z"))
+	@Redirect(method = "renderItemOverlayIntoGUI", at = @At(value = "INVOKE", target = "Lnet.minecraft.world.item.Item;showDurabilityBar(Lnet.minecraft.world.item.ItemStack;)Z"))
 	public boolean renderItemOverlayIntoGUI_showDurabilityBar(
 		Item instance, ItemStack stack
 	) {

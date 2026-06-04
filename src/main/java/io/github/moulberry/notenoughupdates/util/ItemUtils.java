@@ -29,14 +29,14 @@ import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.listener.ItemTooltipListener;
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.MathHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -89,9 +89,9 @@ public class ItemUtils {
 			uuid,
 			texture
 		);
-		NBTTagCompound extraAttributes = skull.getTagCompound().getCompoundTag("ExtraAttributes");
+		CompoundTag extraAttributes = skull.getTag().getCompoundTag("ExtraAttributes");
 		extraAttributes.setString("id", "SKYBLOCK_COIN");
-		skull.getTagCompound().setTag("ExtraAttributes", extraAttributes);
+		skull.getTag().setTag("ExtraAttributes", extraAttributes);
 		return skull;
 	}
 
@@ -103,54 +103,54 @@ public class ItemUtils {
 		);
 	}
 
-	public static NBTTagCompound getOrCreateTag(ItemStack is) {
-		if (is.hasTagCompound()) return is.getTagCompound();
-		NBTTagCompound nbtTagCompound = new NBTTagCompound();
-		is.setTagCompound(nbtTagCompound);
+	public static CompoundTag getOrCreateTag(ItemStack is) {
+		if (is.hasTag()) return is.getTag();
+		CompoundTag nbtTagCompound = new CompoundTag();
+		is.setTag(nbtTagCompound);
 		return nbtTagCompound;
 	}
 
 	public static void appendLore(ItemStack is, List<String> moreLore) {
-		NBTTagCompound tagCompound = is.getTagCompound();
+		CompoundTag tagCompound = is.getTag();
 		if (tagCompound == null) {
-			tagCompound = new NBTTagCompound();
+			tagCompound = new CompoundTag();
 		}
-		NBTTagCompound display = tagCompound.getCompoundTag("display");
-		NBTTagList lore = display.getTagList("Lore", 8);
+		CompoundTag display = tagCompound.getCompoundTag("display");
+		ListTag lore = display.getTagList("Lore", 8);
 		for (String s : moreLore) {
-			lore.appendTag(new NBTTagString(s));
+			lore.appendTag(new StringTag(s));
 		}
 		display.setTag("Lore", lore);
 		tagCompound.setTag("display", display);
-		is.setTagCompound(tagCompound);
+		is.setTag(tagCompound);
 	}
 
 	public static void setLore(ItemStack is, List<String> newLore) {
-		NBTTagCompound tagCompound = is.getTagCompound();
+		CompoundTag tagCompound = is.getTag();
 		if (tagCompound == null) {
-			tagCompound = new NBTTagCompound();
+			tagCompound = new CompoundTag();
 		}
 
-		NBTTagCompound display = tagCompound.getCompoundTag("display");
-		NBTTagList lore = new NBTTagList();
+		CompoundTag display = tagCompound.getCompoundTag("display");
+		ListTag lore = new ListTag();
 		for (String s : newLore) {
-			lore.appendTag(new NBTTagString(s));
+			lore.appendTag(new StringTag(s));
 		}
 		display.setTag("Lore", lore);
 		tagCompound.setTag("display", display);
-		is.setTagCompound(tagCompound);
+		is.setTag(tagCompound);
 	}
 
 	public static @NotNull List<@NotNull String> getLore(@Nullable ItemStack is) {
 		if (is == null) return new ArrayList<>();
-		return getLore(is.getTagCompound());
+		return getLore(is.getTag());
 	}
 
-	public static @NotNull List<@NotNull String> getLore(@Nullable NBTTagCompound tagCompound) {
+	public static @NotNull List<@NotNull String> getLore(@Nullable CompoundTag tagCompound) {
 		if (tagCompound == null) {
 			return Collections.emptyList();
 		}
-		NBTTagList tagList = tagCompound.getCompoundTag("display").getTagList("Lore", 8);
+		ListTag tagList = tagCompound.getCompoundTag("display").getTagList("Lore", 8);
 		List<String> list = new ArrayList<>();
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			list.add(tagList.getStringTagAt(i));
@@ -160,10 +160,10 @@ public class ItemUtils {
 
 	public static @Nullable String getDisplayName(@Nullable ItemStack itemStack) {
 		if (null == itemStack) return null;
-		return getDisplayName(itemStack.getTagCompound());
+		return getDisplayName(itemStack.getTag());
 	}
 
-	public static @Nullable String getDisplayName(@Nullable NBTTagCompound compound) {
+	public static @Nullable String getDisplayName(@Nullable CompoundTag compound) {
 		if (compound == null) return null;
 		String string = compound.getCompoundTag("display").getString("Name");
 		if (string == null || string.isEmpty())
@@ -216,9 +216,9 @@ public class ItemUtils {
 		return text;
 	}
 
-	public static @NotNull NBTTagCompound getExtraAttributes(ItemStack itemStack) {
-		NBTTagCompound tag = getOrCreateTag(itemStack);
-		NBTTagCompound extraAttributes = tag.getCompoundTag("ExtraAttributes");
+	public static @NotNull CompoundTag getExtraAttributes(ItemStack itemStack) {
+		CompoundTag tag = getOrCreateTag(itemStack);
+		CompoundTag extraAttributes = tag.getCompoundTag("ExtraAttributes");
 		tag.setTag("ExtraAttributes", extraAttributes);
 		return extraAttributes;
 	}
@@ -275,12 +275,12 @@ public class ItemUtils {
 				"" + MathHelper.floor_float(Float.parseFloat(original) * modifier));
 		}
 
-		NBTTagCompound tag = getOrCreateTag(petItemstack);
+		CompoundTag tag = getOrCreateTag(petItemstack);
 		if (tag.hasKey("display", 10)) {
-			NBTTagCompound displayTag = tag.getCompoundTag("display");
+			CompoundTag displayTag = tag.getCompoundTag("display");
 			if (displayTag.hasKey("Lore", 9)) {
 				List<String> newLore = new ArrayList<>();
-				NBTTagList lore = displayTag.getTagList("Lore", 8);
+				ListTag lore = displayTag.getTagList("Lore", 8);
 				int secondLastBlankLine = -1, lastBlankLine = -1;
 				for (int j = 0; j < lore.tagCount(); j++) {
 					String line = lore.getStringTagAt(j);
@@ -298,7 +298,7 @@ public class ItemUtils {
 						.resolveToItemListJson();
 					if (petSkin != null) {
 						try {
-							NBTTagCompound nbt = JsonToNBT.getTagFromJson(petSkin.get("nbttag").getAsString());
+							CompoundTag nbt = JsonToNBT.getTagFromJson(petSkin.get("nbttag").getAsString());
 							tag.setTag("SkullOwner", nbt.getTag("SkullOwner"));
 							String name = petSkin.get("displayname").getAsString();
 							if (name != null) {
@@ -349,9 +349,9 @@ public class ItemUtils {
 					}
 					newLore.addAll(secondLastBlankLine + 1, petItemLore);
 				}
-				NBTTagList temp = new NBTTagList();
+				ListTag temp = new ListTag();
 				for (String loreLine : newLore) {
-					temp.appendTag(new NBTTagString(loreLine));
+					temp.appendTag(new StringTag(loreLine));
 				}
 				displayTag.setTag("Lore", temp);
 			}
@@ -359,13 +359,13 @@ public class ItemUtils {
 			if (displayTag.hasKey("Name", 8)) {
 				String displayName = displayTag.getString("Name");
 				displayName = applyReplacements(replacements, displayName);
-				displayTag.setTag("Name", new NBTTagString(displayName));
+				displayTag.setTag("Name", new StringTag(displayName));
 			}
 			tag.setTag("display", displayTag);
 		}
 
 		// Adds the missing pet fields to the tag
-		NBTTagCompound extraAttributes = new NBTTagCompound();
+		CompoundTag extraAttributes = new CompoundTag();
 		JsonObject petInfo = new JsonObject();
 		if (tag.hasKey("ExtraAttributes", 10)) {
 			extraAttributes = tag.getCompoundTag("ExtraAttributes");
@@ -384,31 +384,31 @@ public class ItemUtils {
 		}
 		extraAttributes.setString("petInfo", petInfo.toString());
 		tag.setTag("ExtraAttributes", extraAttributes);
-		petItemstack.setTagCompound(tag);
+		petItemstack.setTag(tag);
 		return petItemstack;
 	}
 
 	private static final DecimalFormat decimalFormatter = new DecimalFormat("#,###,###.###");
 
 	public static ItemStack petToolTipXPExtendPetOverlay(ItemStack stack) {
-		NBTTagCompound tag = stack.getTagCompound() == null ? new NBTTagCompound() : stack.getTagCompound();
+		CompoundTag tag = stack.getTag() == null ? new CompoundTag() : stack.getTag();
 		if (tag.hasKey("display", 10)) {
-			NBTTagCompound display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompoundTag("display");
 			if (display.hasKey("Lore", 9)) {
-				NBTTagList lore = display.getTagList("Lore", 8);
+				ListTag lore = display.getTagList("Lore", 8);
 				if (ItemTooltipListener.petToolTipRegex.matcher(Utils.cleanColour(lore.getStringTagAt(0))).matches() &&
 					lore.tagCount() > 7) {
 
 					PetLeveling.PetLevel petLevel;
 
 					PetInfoOverlay.Pet pet = PetInfoOverlay.getPetFromStack(
-						stack.getTagCompound()
+						stack.getTag()
 					);
 					if (pet == null) return stack;
 					petLevel = pet.petLevel;
 					if (petLevel == null) return stack;
 
-					NBTTagList newLore = new NBTTagList();
+					ListTag newLore = new ListTag();
 					int maxLvl = 100;
 					if (Constants.PETS != null && Constants.PETS.has("custom_pet_leveling") &&
 						Constants.PETS.getAsJsonObject("custom_pet_leveling").has(pet.petType.toUpperCase(Locale.ROOT)) &&
@@ -426,13 +426,13 @@ public class ItemUtils {
 					}
 					for (int i = 0; i < lore.tagCount(); i++) {
 						if (i == lore.tagCount() - 2) {
-							newLore.appendTag(new NBTTagString(""));
+							newLore.appendTag(new StringTag(""));
 							if (petLevel.getCurrentLevel() >= maxLvl) {
-								newLore.appendTag(new NBTTagString(
+								newLore.appendTag(new StringTag(
 									EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "MAX LEVEL"));
 							} else {
 								double levelPercent = (Math.round(petLevel.getPercentageToNextLevel() * 1000) / 10.0);
-								newLore.appendTag(new NBTTagString(
+								newLore.appendTag(new StringTag(
 									EnumChatFormatting.GRAY + "Progress to Level " + (petLevel.getCurrentLevel() + 1) + ": " +
 										EnumChatFormatting.YELLOW + levelPercent + "%"));
 								StringBuilder sb = new StringBuilder();
@@ -445,8 +445,8 @@ public class ItemUtils {
 									}
 									sb.append(EnumChatFormatting.BOLD + "" + EnumChatFormatting.STRIKETHROUGH + " ");
 								}
-								newLore.appendTag(new NBTTagString(sb.toString()));
-								newLore.appendTag(new NBTTagString(
+								newLore.appendTag(new StringTag(sb.toString()));
+								newLore.appendTag(new StringTag(
 									EnumChatFormatting.GRAY + "EXP: " + EnumChatFormatting.YELLOW +
 										decimalFormatter.format(petLevel.getExpInCurrentLevel()) +
 										EnumChatFormatting.GOLD + "/" + EnumChatFormatting.YELLOW +
@@ -461,7 +461,7 @@ public class ItemUtils {
 				}
 			}
 		}
-		stack.setTagCompound(tag);
+		stack.setTag(tag);
 		return stack;
 	}
 

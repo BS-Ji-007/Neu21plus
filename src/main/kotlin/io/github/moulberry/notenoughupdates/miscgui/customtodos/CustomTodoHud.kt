@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.events.TabListChangeEvent
 import io.github.moulberry.notenoughupdates.miscgui.GuiInvButtonEditor
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.init.Items
-import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.world.item.ItemStack
+import net.minecraft.ChatFormatting
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*

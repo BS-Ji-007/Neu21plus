@@ -37,16 +37,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -147,16 +147,16 @@ public class CalendarOverlay {
 	); // Star Cult Stack
 
 	static {
-		NBTTagCompound tag = new NBTTagCompound();
+		CompoundTag tag = new CompoundTag();
 		tag.setString("event_id", "dark_auction");
-		//tag.setTag("ench", new NBTTagList());
+		//tag.setTag("ench", new ListTag());
 
 		DA_STACK = new ItemStack(Items.netherbrick);
-		DA_STACK.setTagCompound(tag);
+		DA_STACK.setTag(tag);
 
 		tag.setString("event_id", "jacob_farming");
 		JF_STACK = new ItemStack(Items.wheat);
-		JF_STACK.setTagCompound(tag);
+		JF_STACK.setTag(tag);
 	}
 
 	public long getTimeOffset(String time) {
@@ -430,7 +430,7 @@ public class CalendarOverlay {
 
 		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 
 		Matcher matcher = CALENDAR_PATTERN.matcher(Utils.cleanColour(containerName));
 		if (farmingEventTypes != null && matcher.matches()) scrapeMonthlyCalendar(matcher, cc);
@@ -524,7 +524,7 @@ public class CalendarOverlay {
 			if (first.startsWith(startsInText)) {
 				boolean zoo = false;
 				if (item.hasDisplayName()) {
-					zoo = item.getDisplayName().equals("§aTraveling Zoo");
+					zoo = item.getName().getString().equals("§aTraveling Zoo");
 				}
 				String time = Utils.cleanColour(first.substring(startsInText.length()));
 				long eventTime = currentTime + getTimeOffset(time);
@@ -551,7 +551,7 @@ public class CalendarOverlay {
 					desc.add(getZooPet(eventTime));
 				}
 				getEventsAt(eventTime).add(new SBEvent(
-					getIdForDisplayName(item.getDisplayName()), item.getDisplayName(),
+					getIdForDisplayName(item.getName().getString()), item.getName().getString(),
 					true, item, desc, lastsFor
 				));
 			}
@@ -607,7 +607,7 @@ public class CalendarOverlay {
 
 		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
 			setEnabled(false);
 			return;
@@ -649,7 +649,7 @@ public class CalendarOverlay {
 
 		ItemStack mayorStack = cc.getLowerChestInventory().getStackInSlot(37);
 		if (mayorStack != null) {
-			String mayor = mayorStack.getDisplayName();
+			String mayor = mayorStack.getName().getString();
 			float verticalHeight = Utils.getVerticalHeight(mayor);
 			Utils.drawStringVertical(mayor, guiLeft + 8, guiTop + 96 - verticalHeight / 2,
 				false, -1
@@ -1040,7 +1040,7 @@ public class CalendarOverlay {
 
 		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
 			setEnabled(false);
 			return;
@@ -1125,7 +1125,7 @@ public class CalendarOverlay {
 
 			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (!containerName.trim().equals("Calendar and Events")) {
 				setEnabled(false);
 				return;
@@ -1647,7 +1647,7 @@ public class CalendarOverlay {
 
 		public ItemStack getStack() {
 			if (stack != null) {
-				NBTTagCompound tag = ItemUtils.getOrCreateTag(stack);
+				CompoundTag tag = ItemUtils.getOrCreateTag(stack);
 				tag.setString("event_id", id);
 			}
 			return stack;

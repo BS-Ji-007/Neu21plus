@@ -29,8 +29,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
-import net.minecraft.inventory.Slot
-import net.minecraft.item.Item
+import net.minecraft.world.inventory.Slot
+import net.minecraft.world.item.Item
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe

@@ -33,8 +33,8 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.util.MinionHelp
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.util.MinionHelperRequirementsManager;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class MinionHelperManager {
 		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
-		String name = containerChest.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String name = containerChest.getLowerChestInventory().getName().getString().getUnformattedText();
 		return name.equalsIgnoreCase("Crafted Minions");
 	}
 
@@ -109,7 +109,7 @@ public class MinionHelperManager {
 
 	public Minion getMinionByName(String displayName, int tier) {
 		for (Minion minion : minions.values()) {
-			if (displayName.equals(minion.getDisplayName())) {
+			if (displayName.equals(minion.getName().getString())) {
 				if (minion.getTier() == tier) {
 					return minion;
 				}

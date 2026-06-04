@@ -26,10 +26,10 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.Minion;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -129,7 +129,7 @@ public class MinionHelperInventoryLoader {
 		if (firstSlot != null) {
 			if (firstSlot.getHasStack()) {
 				ItemStack stack = firstSlot.getStack();
-				String displayName = stack.getDisplayName();
+				String displayName = stack.getName().getString();
 				if (!pagesSeenAlready.contains(displayName)) {
 					pagesSeenAlready.add(displayName);
 					shouldLoad = true;
@@ -146,7 +146,7 @@ public class MinionHelperInventoryLoader {
 			if (stack == null) continue;
 			if (slot.slotNumber != slot.getSlotIndex()) continue;
 
-			String displayName = stack.getDisplayName();
+			String displayName = stack.getName().getString();
 			if (!displayName.contains(" Minion")) continue;
 
 			displayName = StringUtils.cleanColour(displayName);

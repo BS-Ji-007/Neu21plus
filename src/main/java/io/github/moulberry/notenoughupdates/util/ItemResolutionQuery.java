@@ -29,11 +29,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public class ItemResolutionQuery {
 		"MYTHIC"
 	);
 	private final NEUManager manager;
-	private NBTTagCompound compound;
+	private CompoundTag compound;
 	private Item itemType;
 	private int stackSize = -1;
 	private Gui guiContext;
@@ -69,7 +69,7 @@ public class ItemResolutionQuery {
 		this.manager = manager;
 	}
 
-	public ItemResolutionQuery withItemNBT(NBTTagCompound compound) {
+	public ItemResolutionQuery withItemNBT(CompoundTag compound) {
 		this.compound = compound;
 		return this;
 	}
@@ -77,8 +77,8 @@ public class ItemResolutionQuery {
 	public ItemResolutionQuery withItemStack(ItemStack stack) {
 		if (stack == null) return this;
 		this.itemType = stack.getItem();
-		this.compound = stack.getTagCompound();
-		this.stackSize = stack.stackSize;
+		this.compound = stack.getTag();
+		this.getCount() = stack.getCount();
 		return this;
 	}
 
@@ -168,13 +168,13 @@ public class ItemResolutionQuery {
 
 	// <editor-fold desc="Resolution Helpers">
 	private boolean isBazaar(IInventory chest) {
-		if (chest.getDisplayName().getFormattedText().startsWith("Bazaar ➜ ")) {
+		if (chest.getName().getString().getFormattedText().startsWith("Bazaar ➜ ")) {
 			return true;
 		}
 		int bazaarSlot = chest.getSizeInventory() - 5;
 		if (bazaarSlot < 0) return false;
 		ItemStack stackInSlot = chest.getStackInSlot(bazaarSlot);
-		if (stackInSlot == null || stackInSlot.stackSize == 0) return false;
+		if (stackInSlot == null || stackInSlot.getCount() == 0) return false;
 		// NBT lore, we do not care about rendered lore
 		List<String> lore = ItemUtils.getLore(stackInSlot);
 		return lore.contains("§7To Bazaar");
@@ -186,7 +186,7 @@ public class ItemResolutionQuery {
 		}
 		GuiChest chest = (GuiChest) guiContext;
 		ContainerChest inventorySlots = (ContainerChest) chest.inventorySlots;
-		String guiName = inventorySlots.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String guiName = inventorySlots.getLowerChestInventory().getName().getString().getUnformattedText();
 		boolean isOnBazaar = isBazaar(inventorySlots.getLowerChestInventory());
 		String displayName = ItemUtils.getDisplayName(compound);
 		if (displayName == null) return null;
@@ -356,14 +356,14 @@ public class ItemResolutionQuery {
 	}
 
 	private String resolveEnchantedBookNameFromNBT() {
-		NBTTagCompound enchantments = getExtraAttributes().getCompoundTag("enchantments");
+		CompoundTag enchantments = getExtraAttributes().getCompoundTag("enchantments");
 		String enchantName = IteratorUtils.getOnlyElement(enchantments.getKeySet(), null);
 		if (enchantName == null || enchantName.isEmpty()) return null;
 		return enchantName.toUpperCase(Locale.ROOT) + ";" + enchantments.getInteger(enchantName);
 	}
 
 	private String resolveRuneName() {
-		NBTTagCompound runes = getExtraAttributes().getCompoundTag("runes");
+		CompoundTag runes = getExtraAttributes().getCompoundTag("runes");
 		String runeName = IteratorUtils.getOnlyElement(runes.getKeySet(), null);
 		if (runeName == null || runeName.isEmpty()) return null;
 		return runeName.toUpperCase(Locale.ROOT) + "_RUNE;" + runes.getInteger(runeName);
@@ -409,14 +409,14 @@ public class ItemResolutionQuery {
 	}
 
 	private String resolveAttributeShardName() {
-		NBTTagCompound attributes = getExtraAttributes().getCompoundTag("attributes");
+		CompoundTag attributes = getExtraAttributes().getCompoundTag("attributes");
 		String attributeName = IteratorUtils.getOnlyElement(attributes.getKeySet(), null);
 		if (attributeName == null || attributeName.isEmpty()) return null;
 		return "ATTRIBUTE_SHARD_" + attributeName.toUpperCase(Locale.ROOT) + ";" + attributes.getInteger(attributeName);
 	}
 
-	private NBTTagCompound getExtraAttributes() {
-		if (compound == null) return new NBTTagCompound();
+	private CompoundTag getExtraAttributes() {
+		if (compound == null) return new CompoundTag();
 		return compound.getCompoundTag(EXTRA_ATTRIBUTES);
 	}
 

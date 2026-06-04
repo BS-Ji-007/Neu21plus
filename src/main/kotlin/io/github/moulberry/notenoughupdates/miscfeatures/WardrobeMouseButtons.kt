@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.config.KeybindHelper
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.gui.inventory.GuiChest
-import net.minecraft.inventory.ContainerChest
+import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -79,7 +79,7 @@ class WardrobeMouseButtons {
             var notEquipped = 0
             for (j in 36..44) {
                 val stackItem = container.getSlot(j).getStack() ?: return
-                if (stackItem.getDisplayName().contains("Equipped")) {
+                if (stackItem.getName().getString().contains("Equipped")) {
                     slotNum = j
                 }
                 else {
@@ -98,7 +98,7 @@ class WardrobeMouseButtons {
         }
 
         val thatItemStack = container.getSlot(slotNum).getStack() ?: return
-        if (thatItemStack.getDisplayName().isEmpty()) return
+        if (thatItemStack.getName().getString().isEmpty()) return
         if (slotNum < 36 || ((slotNum > 45) && (slotNum != 53))) return
         Utils.sendLeftMouseClick(gui.inventorySlots.windowId, slotNum)
         lastClick = System.currentTimeMillis()

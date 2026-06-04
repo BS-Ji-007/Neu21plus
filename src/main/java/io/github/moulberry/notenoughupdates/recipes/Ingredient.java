@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.recipes;
 import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NEUManager;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,7 +97,7 @@ public class Ingredient {
 		}
 		JsonObject itemInfo = manager.getItemInformation().get(internalItemId);
 		itemStack = manager.jsonToStack(itemInfo, false, true);
-		itemStack.stackSize = (int) count;
+		itemStack.getCount() = (int) count;
 		return itemStack;
 	}
 

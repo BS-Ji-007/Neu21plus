@@ -23,8 +23,8 @@ import io.github.moulberry.notenoughupdates.miscgui.InventoryStorageSelector;
 import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -35,7 +35,7 @@ public abstract class MixinItemRenderer {
 
 	@Redirect(method = "updateEquippedItem", at = @At(
 		value = "INVOKE",
-		target = "Lnet/minecraft/entity/player/InventoryPlayer;getCurrentItem()Lnet/minecraft/item/ItemStack;"
+		target = "Lnet/minecraft/entity/player/InventoryPlayer;getCurrentItem()Lnet.minecraft.world.item.ItemStack;"
 	))
 	public ItemStack modifyStackToRender(InventoryPlayer player) {
 		if (InventoryStorageSelector.getInstance().isSlotSelected()) {
@@ -44,17 +44,17 @@ public abstract class MixinItemRenderer {
 		return player.getCurrentItem();
 	}
 
-	@Redirect(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"))
+	@Redirect(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet.minecraft.world.item.ItemStack;getItem()Lnet.minecraft.world.item.Item;"))
 	public Item renderItem_getItem(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack).getItem();
 	}
 
-	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;shouldRenderItemIn3D(Lnet/minecraft/item/ItemStack;)Z"))
+	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;shouldRenderItemIn3D(Lnet.minecraft.world.item.ItemStack;)Z"))
 	public ItemStack renderItem_shouldRenderItemIn3D(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}
 
-	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemModelForEntity(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", ordinal = 0))
+	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemModelForEntity(Lnet.minecraft.world.item.ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", ordinal = 0))
 	public ItemStack renderItem_renderItemModelForEntity(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}

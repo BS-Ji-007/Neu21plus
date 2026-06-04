@@ -32,11 +32,11 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagByteArray;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ByteArray;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -502,7 +502,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		Minecraft
 			.getMinecraft()
 			.font.drawString(
-				Utils.cleanColour(invNameToDisplayMap.get(selectedInventory).getDisplayName()),
+				Utils.cleanColour(invNameToDisplayMap.get(selectedInventory).getName().getString()),
 				x + 8,
 				y + 6,
 				4210752
@@ -861,9 +861,9 @@ public class InventoriesPage extends GuiProfileViewerPage {
 						bytes[bytesArrI] = bytesArr.get(bytesArrI).getAsByte();
 					}
 					//byte[] bytes2 = null;
-					NBTTagCompound tag = stack.getTagCompound();
+					CompoundTag tag = stack.getTag();
 					if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-						NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+						CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 						for (String key : ea.getKeySet()) {
 							if (key.endsWith("backpack_data") || key.equals("new_year_cake_bag_data")) {
 								ea.setTag(key, new NBTTagByteArray(bytes));
@@ -871,7 +871,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 							}
 						}
 						tag.setTag("ExtraAttributes", ea);
-						stack.setTagCompound(tag);
+						stack.setTag(tag);
 					}
 				}
 

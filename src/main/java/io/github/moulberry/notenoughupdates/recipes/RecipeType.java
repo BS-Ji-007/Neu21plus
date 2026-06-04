@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NEUManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public enum RecipeType {
 	CRAFTING("crafting", "Crafting", CraftingRecipe::parseCraftingRecipe, new ItemStack(Blocks.crafting_table)),

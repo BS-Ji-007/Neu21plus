@@ -32,12 +32,12 @@ import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
@@ -373,7 +373,7 @@ public class MiningPage extends GuiProfileViewerPage {
 						tooltip.add("§cMissing item " + id);
 						showError = true;
 					} else {
-						displayName = itemStack.getDisplayName().replace("[Lvl {LVL}] ", "");
+						displayName = itemStack.getName().getString().replace("[Lvl {LVL}] ", "");
 					}
 
 					if (forgeRecipe == null) {

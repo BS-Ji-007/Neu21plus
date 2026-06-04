@@ -33,8 +33,8 @@ import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.command.ICommandSender
-import net.minecraft.util.EnumChatFormatting.DARK_RED
-import net.minecraft.util.EnumChatFormatting.GREEN
+import net.minecraft.ChatFormatting.DARK_RED
+import net.minecraft.ChatFormatting.GREEN
 import net.minecraftforge.common.ForgeVersion
 import net.minecraftforge.fml.client.FMLClientHandler
 import net.minecraftforge.fml.common.Loader

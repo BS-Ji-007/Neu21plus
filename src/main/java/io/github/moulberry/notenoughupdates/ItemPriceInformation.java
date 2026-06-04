@@ -29,8 +29,8 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import io.github.moulberry.notenoughupdates.util.hypixelapi.HypixelItemAPI;
 import lombok.val;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.input.Keyboard;
 
 import java.io.BufferedReader;
@@ -109,7 +109,7 @@ public class ItemPriceInformation {
 	}
 
 	public static void addToTooltip(List<String> tooltip, String internalname, ItemStack stack, boolean useStackSize) {
-		if (stack.getTagCompound().hasKey("disableNeuTooltip") && stack.getTagCompound().getBoolean("disableNeuTooltip")) {
+		if (stack.getTag().hasKey("disableNeuTooltip") && stack.getTag().getBoolean("disableNeuTooltip")) {
 			return;
 		}
 		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.disablePriceKey &&
@@ -139,9 +139,9 @@ public class ItemPriceInformation {
 			}
 		}
 
-		int shiftStackMultiplier = useStackSize && stack.stackSize > 1 ? stack.stackSize : stack.getItem().getItemStackLimit(stack);
-		if (stack.getTagCompound() != null && stack.getTagCompound().hasKey(STACKSIZE_OVERRIDE)) {
-			shiftStackMultiplier = stack.getTagCompound().getInteger(STACKSIZE_OVERRIDE);
+		int shiftStackMultiplier = useStackSize && stack.getCount() > 1 ? stack.getCount() : stack.getItem().getItemStackLimit(stack);
+		if (stack.getTag() != null && stack.getTag().hasKey(STACKSIZE_OVERRIDE)) {
+			shiftStackMultiplier = stack.getTag().getInteger(STACKSIZE_OVERRIDE);
 		}
 		int stackMultiplier = 1;
 		boolean foundMulti = false;

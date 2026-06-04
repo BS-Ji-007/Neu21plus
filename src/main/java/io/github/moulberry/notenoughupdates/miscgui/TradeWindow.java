@@ -28,18 +28,18 @@ import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
 import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -143,8 +143,8 @@ public class TradeWindow {
 	) {
 		String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 		if (internalname == null) {
-			if (stack.getDisplayName().endsWith(" coins")) {
-				String clean = Utils.cleanColour(stack.getDisplayName());
+			if (stack.getName().getString().endsWith(" coins")) {
+				String clean = Utils.cleanColour(stack.getName().getString());
 
 				int mult = 1;
 				StringBuilder sb = new StringBuilder();
@@ -201,12 +201,12 @@ public class TradeWindow {
 			if (pricePer > 0) {
 				topItemsStack.putIfAbsent(internalname, stack);
 
-				long price = pricePer * stack.stackSize;
+				long price = pricePer * stack.getCount();
 				long priceInclBackpack = price;
 
-				NBTTagCompound tag = stack.getTagCompound();
+				CompoundTag tag = stack.getTag();
 				if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-					NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+					CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 					byte[] bytes = null;
 					for (String key : ea.getKeySet()) {
@@ -217,11 +217,11 @@ public class TradeWindow {
 					}
 					if (bytes != null) {
 						try {
-							NBTTagCompound contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
-							NBTTagList items = contents_nbt.getTagList("i", 10);
+							CompoundTag contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
+							ListTag items = contents_nbt.getTagList("i", 10);
 							for (int k = 0; k < items.tagCount(); k++) {
 								if (items.getCompoundTagAt(k).getKeySet().size() > 0) {
-									NBTTagCompound nbt = items.getCompoundTagAt(k).getCompoundTag("tag");
+									CompoundTag nbt = items.getCompoundTagAt(k).getCompoundTag("tag");
 
 									int id2 = items.getCompoundTagAt(k).getShort("id");
 									int count2 = items.getCompoundTagAt(k).getByte("Count");
@@ -233,7 +233,7 @@ public class TradeWindow {
 									if (mcItem == null) continue;
 
 									ItemStack stack2 = new ItemStack(mcItem, count2, damage2);
-									stack2.setTagCompound(nbt);
+									stack2.setTag(nbt);
 
 									priceInclBackpack += processTopItems(stack2, topItems, topItemsStack, topItemsCount);
 								}
@@ -258,7 +258,7 @@ public class TradeWindow {
 				items.add(internalname);
 
 				int count = topItemsCount.computeIfAbsent(internalname, l -> 0);
-				topItemsCount.put(internalname, count + stack.stackSize);
+				topItemsCount.put(internalname, count + stack.getCount());
 
 				return priceInclBackpack;
 			}
@@ -269,9 +269,9 @@ public class TradeWindow {
 	private static int getBackpackValue(ItemStack stack) {
 		int price = 0;
 
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundTag tag = stack.getTag();
 		if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+			CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 			byte[] bytes = null;
 			for (String key : ea.getKeySet()) {
@@ -282,11 +282,11 @@ public class TradeWindow {
 			}
 			if (bytes != null) {
 				try {
-					NBTTagCompound contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
-					NBTTagList items = contents_nbt.getTagList("i", 10);
+					CompoundTag contents_nbt = CompressedStreamTools.readCompressed(new ByteArrayInputStream(bytes));
+					ListTag items = contents_nbt.getTagList("i", 10);
 					for (int k = 0; k < items.tagCount(); k++) {
 						if (items.getCompoundTagAt(k).getKeySet().size() > 0) {
-							NBTTagCompound nbt = items.getCompoundTagAt(k).getCompoundTag("tag");
+							CompoundTag nbt = items.getCompoundTagAt(k).getCompoundTag("tag");
 							String internalname2 = NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery()
 																																			.withItemNBT(nbt)
 																																			.resolveInternalName();
@@ -311,7 +311,7 @@ public class TradeWindow {
 
 		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
@@ -337,8 +337,8 @@ public class TradeWindow {
 
 			String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 			if (internalname == null) {
-				if (stack.getDisplayName().endsWith(" coins")) {
-					String clean = Utils.cleanColour(stack.getDisplayName());
+				if (stack.getName().getString().endsWith(" coins")) {
+					String clean = Utils.cleanColour(stack.getName().getString());
 
 					int mult = 1;
 					StringBuilder sb = new StringBuilder();
@@ -407,29 +407,29 @@ public class TradeWindow {
 			ItemStack stack = chest.inventorySlots.getInventory().get(containerIndex);
 			if (stack == null) continue;
 
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundTag tag = stack.getTag();
 			String uuid;
 			if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 				if (ea.hasKey("uuid", 8)) {
 					uuid = ea.getString("uuid");
 				} else {
-					int displayCount = displayCountMap.computeIfAbsent(stack.getDisplayName(), k -> 0);
-					uuid = stack.getDisplayName() + ":" + displayCount;
-					displayCountMap.put(stack.getDisplayName(), displayCount + 1);
+					int displayCount = displayCountMap.computeIfAbsent(stack.getName().getString(), k -> 0);
+					uuid = stack.getName().getString() + ":" + displayCount;
+					displayCountMap.put(stack.getName().getString(), displayCount + 1);
 				}
 			} else {
-				int displayCount = displayCountMap.computeIfAbsent(stack.getDisplayName(), k -> 0);
-				uuid = stack.getDisplayName() + ":" + displayCount;
-				displayCountMap.put(stack.getDisplayName(), displayCount + 1);
+				int displayCount = displayCountMap.computeIfAbsent(stack.getName().getString(), k -> 0);
+				uuid = stack.getName().getString() + ":" + displayCount;
+				displayCountMap.put(stack.getName().getString(), displayCount + 1);
 			}
 			if (uuid != null) theirTradeCurrent.add(uuid);
 
 			String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 			if (internalname == null) {
-				if (stack.getDisplayName().endsWith(" coins")) {
-					String clean = Utils.cleanColour(stack.getDisplayName());
+				if (stack.getName().getString().endsWith(" coins")) {
+					String clean = Utils.cleanColour(stack.getName().getString());
 
 					int mult = 1;
 					StringBuilder sb = new StringBuilder();
@@ -477,11 +477,11 @@ public class TradeWindow {
 				if (info != null && info.has("price") && info.has("count")) {
 					int auctionPricePer = (int) (info.get("price").getAsFloat() / info.get("count").getAsFloat());
 
-					price = auctionPricePer * stack.stackSize;
+					price = auctionPricePer * stack.getCount();
 				} else {
 					JsonObject bazaarInfo = NotEnoughUpdates.INSTANCE.manager.auctionManager.getBazaarInfo(internalname);
 					if (bazaarInfo != null && bazaarInfo.has("avg_buy")) {
-						price = (int) bazaarInfo.get("avg_buy").getAsFloat() * stack.stackSize;
+						price = (int) bazaarInfo.get("avg_buy").getAsFloat() * stack.getCount();
 					}
 				}
 
@@ -528,22 +528,22 @@ public class TradeWindow {
 				ItemStack stack = chest.inventorySlots.getInventory().get(index);
 				if (stack == null) continue;
 
-				NBTTagCompound tag = stack.getTagCompound();
+				CompoundTag tag = stack.getTag();
 				String uuid;
 				if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-					NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+					CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 					if (ea.hasKey("uuid", 8)) {
 						uuid = ea.getString("uuid");
 					} else {
-						int displayCount = displayCountMap.computeIfAbsent(stack.getDisplayName(), k -> 0);
-						uuid = stack.getDisplayName() + ":" + displayCount;
-						displayCountMap.put(stack.getDisplayName(), displayCount + 1);
+						int displayCount = displayCountMap.computeIfAbsent(stack.getName().getString(), k -> 0);
+						uuid = stack.getName().getString() + ":" + displayCount;
+						displayCountMap.put(stack.getName().getString(), displayCount + 1);
 					}
 				} else {
-					int displayCount = displayCountMap.computeIfAbsent(stack.getDisplayName(), k -> 0);
-					uuid = stack.getDisplayName() + ":" + displayCount;
-					displayCountMap.put(stack.getDisplayName(), displayCount + 1);
+					int displayCount = displayCountMap.computeIfAbsent(stack.getName().getString(), k -> 0);
+					uuid = stack.getName().getString() + ":" + displayCount;
+					displayCountMap.put(stack.getName().getString(), displayCount + 1);
 				}
 				//System.out.println(uuid);
 				theirTradeOld[theirTradeIndex] = uuid;
@@ -650,7 +650,7 @@ public class TradeWindow {
 
 		ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
 		if (confirmStack != null) {
-			String confirmDisplay = confirmStack.getDisplayName();
+			String confirmDisplay = confirmStack.getName().getString();
 			if (!confirmDisplay.equals(EnumChatFormatting.GREEN + "Trading!")) {
 				if (mouseX > guiLeft + 81 - 51 && mouseX < guiLeft + 81) {
 					if (mouseY > guiTop + 91 && mouseY < guiTop + 91 + 14) {
@@ -722,7 +722,7 @@ public class TradeWindow {
 
 		ItemStack theirConfirmStack = chest.inventorySlots.getInventory().get(41);
 		if (theirConfirmStack != null) {
-			String confirmDisplay = theirConfirmStack.getDisplayName();
+			String confirmDisplay = theirConfirmStack.getName().getString();
 			if (mouseX > guiLeft + 95 && mouseX < guiLeft + 95 + 51) {
 				if (mouseY > guiTop + 91 && mouseY < guiTop + 91 + 14) {
 					tooltipToDisplay = theirConfirmStack.getTooltip(
@@ -863,7 +863,7 @@ public class TradeWindow {
 						GlStateManager.enableBlend();
 					} else {
 						drawStringShadow(
-							stack.getDisplayName() + EnumChatFormatting.GRAY + "x" + ourTopItemsCount.get(ourTopItemInternal),
+							stack.getName().getString() + EnumChatFormatting.GRAY + "x" + ourTopItemsCount.get(ourTopItemInternal),
 							guiLeft - 40 - 3,
 							guiTop + 46 + 20 * ourTopIndex,
 							72
@@ -925,7 +925,7 @@ public class TradeWindow {
 						);
 						GlStateManager.enableBlend();
 					} else {
-						drawStringShadow(stack.getDisplayName(),
+						drawStringShadow(stack.getName().getString(),
 							guiLeft + xSize + 3 + 40, guiTop + 46 + 20 * theirTopIndex, 72
 						);
 						drawStringShadow(
@@ -1069,7 +1069,7 @@ public class TradeWindow {
 
 			ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
 			if (confirmStack != null) {
-				String confirmDisplay = confirmStack.getDisplayName();
+				String confirmDisplay = confirmStack.getName().getString();
 				if (!confirmDisplay.equals(EnumChatFormatting.GREEN + "Trading!")) {
 					if (mouseX > guiLeft + 42 && mouseX < guiLeft + 42 + 40) {
 						if (mouseY > guiTop + 92 && mouseY < guiTop + 92 + 14) {

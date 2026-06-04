@@ -28,9 +28,9 @@ import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.block.material.MapColor
 import net.minecraft.client.Minecraft
-import net.minecraft.item.ItemMap
-import net.minecraft.util.EnumChatFormatting.GREEN
-import net.minecraft.util.EnumChatFormatting.RED
+import net.minecraft.world.item.ItemMap
+import net.minecraft.ChatFormatting.GREEN
+import net.minecraft.ChatFormatting.RED
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 

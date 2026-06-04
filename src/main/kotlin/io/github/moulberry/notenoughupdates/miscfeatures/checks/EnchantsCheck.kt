@@ -22,14 +22,14 @@ package io.github.moulberry.notenoughupdates.miscfeatures.checks
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.EnumChatFormatting.BLUE
-import net.minecraft.util.EnumChatFormatting.BOLD
-import net.minecraft.util.EnumChatFormatting.GREEN
-import net.minecraft.util.EnumChatFormatting.LIGHT_PURPLE
-import net.minecraft.util.EnumChatFormatting.RED
-import net.minecraft.util.EnumChatFormatting.YELLOW
-import net.minecraft.util.IChatComponent
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.ChatFormatting.BLUE
+import net.minecraft.ChatFormatting.BOLD
+import net.minecraft.ChatFormatting.GREEN
+import net.minecraft.ChatFormatting.LIGHT_PURPLE
+import net.minecraft.ChatFormatting.RED
+import net.minecraft.ChatFormatting.YELLOW
+import net.minecraft.network.chat.Component
 import net.minecraftforge.fml.common.Loader
 
 class EnchantsCheck {

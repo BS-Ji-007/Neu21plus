@@ -32,9 +32,9 @@ import io.github.moulberry.notenoughupdates.util.MuseumUtil
 import io.github.moulberry.notenoughupdates.util.MuseumUtil.isMuseumInventory
 import net.minecraft.client.gui.Gui
 import net.minecraft.init.Items
-import net.minecraft.inventory.ContainerChest
+import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.item.EnumDyeColor
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe

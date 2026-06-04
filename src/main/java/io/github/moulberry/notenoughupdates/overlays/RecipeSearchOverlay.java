@@ -28,9 +28,9 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class RecipeSearchOverlay extends SearchOverlayScreen {
 	@SubscribeEvent
 	public void onSlotClick(SlotClickEvent event) {
 		ItemStack stack = event.slot.getStack();
-		if (enableSearchOverlay() && (event.slot.slotNumber == 50 || event.slot.slotNumber == 51) && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getDisplayName().equals("§aSearch Recipes")) {
+		if (enableSearchOverlay() && (event.slot.slotNumber == 50 || event.slot.slotNumber == 51) && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getName().getString().equals("§aSearch Recipes")) {
 			event.setCanceled(true);
 			NotEnoughUpdates.INSTANCE.openGui = new RecipeSearchOverlay();
 		}

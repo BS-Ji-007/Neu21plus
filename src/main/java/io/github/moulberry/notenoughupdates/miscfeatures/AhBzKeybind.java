@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class AhBzKeybind {
 
 	public static void onKeyPressed(ItemStack hoveredStack) {
 		if (hoveredStack != null) {
-			String displayName = hoveredStack.getDisplayName();
+			String displayName = hoveredStack.getName().getString();
 			List<@NotNull String> lore = ItemUtils.getLore(hoveredStack);
 			ItemResolutionQuery query =
 				NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(hoveredStack);

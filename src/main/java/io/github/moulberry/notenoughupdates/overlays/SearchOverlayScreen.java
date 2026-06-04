@@ -30,14 +30,14 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.client.C12PacketUpdateSign;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
@@ -105,7 +105,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 			JsonObject repoObject = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(searchString);
 			if (repoObject != null) {
 				ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(repoObject);
-				return Utils.cleanColour(stack.getDisplayName().replaceAll("\\[.+]", ""));
+				return Utils.cleanColour(stack.getName().getString().replaceAll("\\[.+]", ""));
 			}
 
 		}
@@ -422,9 +422,9 @@ public class SearchOverlayScreen extends GuiEditSign {
 						);
 
 					}
-					String itemName = Utils.trimIgnoreColour(stack.getDisplayName().replaceAll("\\[.+]", ""));
+					String itemName = Utils.trimIgnoreColour(stack.getName().getString().replaceAll("\\[.+]", ""));
 					if (itemName.contains("Enchanted Book") && str.contains(";")) {
-						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 						itemName = lore[0].trim();
 					}
 
@@ -628,9 +628,9 @@ public class SearchOverlayScreen extends GuiEditSign {
 							ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(obj);
 							if (mouseX >= width / 2 - 96 && mouseX <= width / 2 + 96 && mouseY >= topY + 30 + num * 22 &&
 								mouseY <= topY + 30 + num * 22 + 20) {
-								searchString = Utils.cleanColour(stack.getDisplayName().replaceAll("\\[.+]", "")).trim();
+								searchString = Utils.cleanColour(stack.getName().getString().replaceAll("\\[.+]", "")).trim();
 								if (searchString.contains("Enchanted Book") && str.contains(";")) {
-									String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+									String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 									if (lore != null) {
 										if (currentGuiType() == GuiType.AUCTION_HOUSE) {
 											String[] split = Utils.cleanColour(lore[0]).trim().split(" ");

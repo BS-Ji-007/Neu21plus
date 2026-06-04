@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -102,7 +102,7 @@ public class AuctionSearchOverlay extends SearchOverlayScreen {
 		if (!CookieWarning.hasActiveBoosterCookie()) return;
 		if (!Utils.getOpenChestName().startsWith("Auctions")) return;
 		ItemStack stack = event.slot.getStack();
-		if (event.slot.slotNumber == 48 && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getDisplayName().equals("§aSearch")) {
+		if (event.slot.slotNumber == 48 && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getName().getString().equals("§aSearch")) {
 			event.setCanceled(true);
 			Minecraft.getInstance().currentScreen = null;
 			NotEnoughUpdates.INSTANCE.openGui = new AuctionSearchOverlay();

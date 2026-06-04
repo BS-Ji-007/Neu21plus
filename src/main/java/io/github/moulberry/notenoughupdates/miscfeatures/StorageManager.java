@@ -39,24 +39,24 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagByte;
-import net.minecraft.nbt.NBTTagByteArray;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
-import net.minecraft.nbt.NBTTagFloat;
-import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagIntArray;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagLong;
-import net.minecraft.nbt.NBTTagShort;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.Byte;
+import net.minecraft.nbt.ByteArray;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Double;
+import net.minecraft.nbt.Float;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.IntTagArray;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Long;
+import net.minecraft.nbt.Short;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.network.play.server.S2DPacketOpenWindow;
 import net.minecraft.network.play.server.S2EPacketCloseWindow;
@@ -82,7 +82,7 @@ public class StorageManager {
 		@Override
 		public JsonElement serialize(ItemStack src, Type typeOfSrc, JsonSerializationContext context) {
 			fixPetInfo(src);
-			NBTTagCompound tag = src.serializeNBT();
+			CompoundTag tag = src.serializeNBT();
 			return nbtToJson(tag);
 		}
 	}
@@ -96,7 +96,7 @@ public class StorageManager {
 			try {
 				JsonObject object = json.getAsJsonObject();
 
-				NBTTagCompound tag = JsonToNBT.getTagFromJson(JSON_FIX_REGEX.matcher(object.toString()).replaceAll("$1:"));
+				CompoundTag tag = JsonToNBT.getTagFromJson(JSON_FIX_REGEX.matcher(object.toString()).replaceAll("$1:"));
 
 				Item item;
 				if (tag.hasKey("id", 8)) {
@@ -113,8 +113,8 @@ public class StorageManager {
 				ItemStack stack = new ItemStack(item, stackSize, damage);
 
 				if (tag.hasKey("tag")) {
-					NBTTagCompound itemTag = tag.getCompoundTag("tag");
-					stack.setTagCompound(itemTag);
+					CompoundTag itemTag = tag.getCompoundTag("tag");
+					stack.setTag(itemTag);
 				}
 
 				return stack;
@@ -125,8 +125,8 @@ public class StorageManager {
 		}
 	}
 
-	private static JsonObject nbtToJson(NBTTagCompound NBTTagCompound) {
-		return (JsonObject) loadJson(NBTTagCompound);
+	private static JsonObject nbtToJson(CompoundTag CompoundTag) {
+		return (JsonObject) loadJson(CompoundTag);
 	}
 
 	private static class PetInfo {
@@ -175,15 +175,15 @@ public class StorageManager {
 	}
 
 	private static void fixPetInfo(ItemStack src) {
-		if (src.getTagCompound() == null || !src.getTagCompound().hasKey("ExtraAttributes") ||
-			!src.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("petInfo")) return;
+		if (src.getTag() == null || !src.getTag().hasKey("ExtraAttributes") ||
+			!src.getTag().getCompoundTag("ExtraAttributes").hasKey("petInfo")) return;
 		PetInfo oldPetInfo = GSON.fromJson(
-			src.getTagCompound().getCompoundTag("ExtraAttributes").getString("petInfo"),
+			src.getTag().getCompoundTag("ExtraAttributes").getString("petInfo"),
 			PetInfo.class
 		);
-		src.getTagCompound().getCompoundTag("ExtraAttributes").removeTag("petInfo");
+		src.getTag().getCompoundTag("ExtraAttributes").removeTag("petInfo");
 		try {
-			src.getTagCompound().getCompoundTag("ExtraAttributes").setTag(
+			src.getTag().getCompoundTag("ExtraAttributes").setTag(
 				"petInfo",
 				JsonToNBT.getTagFromJson(oldPetInfo.toString())
 			);
@@ -191,23 +191,23 @@ public class StorageManager {
 		}
 	}
 
-	private static JsonElement loadJson(NBTBase tag) {
-		if (tag instanceof NBTTagCompound) {
-			NBTTagCompound compoundTag = (NBTTagCompound) tag;
+	private static JsonElement loadJson(Tag tag) {
+		if (tag instanceof CompoundTag) {
+			CompoundTag compoundTag = (CompoundTag) tag;
 			JsonObject jsonObject = new JsonObject();
 			for (String key : compoundTag.getKeySet()) {
 				jsonObject.add(key, loadJson(compoundTag.getTag(key)));
 			}
 			return jsonObject;
-		} else if (tag instanceof NBTTagList) {
-			NBTTagList listTag = (NBTTagList) tag;
+		} else if (tag instanceof ListTag) {
+			ListTag listTag = (ListTag) tag;
 			JsonArray jsonArray = new JsonArray();
 			for (int i = 0; i < listTag.tagCount(); i++) {
 				jsonArray.add(loadJson(listTag.get(i)));
 			}
 			return jsonArray;
-		} else if (tag instanceof NBTTagIntArray) {
-			NBTTagIntArray listTag = (NBTTagIntArray) tag;
+		} else if (tag instanceof IntTagArray) {
+			IntTagArray listTag = (IntTagArray) tag;
 			int[] arr = listTag.getIntArray();
 			JsonArray jsonArray = new JsonArray();
 			for (int j : arr) {
@@ -224,8 +224,8 @@ public class StorageManager {
 			return jsonArray;
 		} else if (tag instanceof NBTTagShort) {
 			return new JsonPrimitive(((NBTTagShort) tag).getShort());
-		} else if (tag instanceof NBTTagInt) {
-			return new JsonPrimitive(((NBTTagInt) tag).getInt());
+		} else if (tag instanceof IntTag) {
+			return new JsonPrimitive(((IntTag) tag).getInt());
 		} else if (tag instanceof NBTTagLong) {
 			return new JsonPrimitive(((NBTTagLong) tag).getLong());
 		} else if (tag instanceof NBTTagFloat) {
@@ -234,8 +234,8 @@ public class StorageManager {
 			return new JsonPrimitive(((NBTTagDouble) tag).getDouble());
 		} else if (tag instanceof NBTTagByte) {
 			return new JsonPrimitive(((NBTTagByte) tag).getByte());
-		} else if (tag instanceof NBTTagString) {
-			return new JsonPrimitive(((NBTTagString) tag).getString());
+		} else if (tag instanceof StringTag) {
+			return new JsonPrimitive(((StringTag) tag).getString());
 		} else {
 			return new JsonPrimitive("Broken_Json_Deserialize_Tag");
 		}

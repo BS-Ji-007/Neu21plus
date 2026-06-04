@@ -19,8 +19,8 @@
 
 package io.github.moulberry.notenoughupdates.util
 
-import net.minecraft.util.EnumChatFormatting.RED
-import net.minecraft.util.EnumChatFormatting.YELLOW
+import net.minecraft.ChatFormatting.RED
+import net.minecraft.ChatFormatting.YELLOW
 import java.util.*
 import kotlin.math.pow
 import kotlin.math.round

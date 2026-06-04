@@ -200,7 +200,7 @@ public class MinionHelperRepoLoader {
 					Utils.addChatMessage("§c[NEU] The Minion '" + minion.getInternalName() + " has no source!");
 				}
 			}
-			if (minion.getDisplayName() == null) {
+			if (minion.getName().getString() == null) {
 				errorWhileLoading = true;
 				if (NotEnoughUpdates.INSTANCE.config.hidden.dev) {
 					Utils.addChatMessage("§c[NEU] The Minion '" + minion.getInternalName() + " has no display name!");

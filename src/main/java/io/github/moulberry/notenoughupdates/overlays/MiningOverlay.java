@@ -38,10 +38,10 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -58,11 +58,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static io.github.moulberry.notenoughupdates.util.Utils.showOutdatedRepoNotification;
-import static net.minecraft.util.EnumChatFormatting.DARK_AQUA;
-import static net.minecraft.util.EnumChatFormatting.GOLD;
-import static net.minecraft.util.EnumChatFormatting.GREEN;
-import static net.minecraft.util.EnumChatFormatting.RED;
-import static net.minecraft.util.EnumChatFormatting.YELLOW;
+import static net.minecraft.ChatFormatting.DARK_AQUA;
+import static net.minecraft.ChatFormatting.GOLD;
+import static net.minecraft.ChatFormatting.GREEN;
+import static net.minecraft.ChatFormatting.RED;
+import static net.minecraft.ChatFormatting.YELLOW;
 
 public class MiningOverlay extends TextTabOverlay {
 	public MiningOverlay(
@@ -82,7 +82,7 @@ public class MiningOverlay extends TextTabOverlay {
 			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getDisplayName().getUnformattedText();
+			String containerName = lower.getName().getString().getUnformattedText();
 
 			if (containerName.equals("Commissions") && lower.getSizeInventory() >= 27) {
 				updateCommissions(lower);
@@ -102,15 +102,15 @@ public class MiningOverlay extends TextTabOverlay {
 		for (int i = 0; i < MAX_FORGE_SLOTS; i++) {
 			ItemStack stack = lower.getStackInSlot(i + 10);
 			if (stack != null) {
-				String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+				String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 
 				for (String line : lore) {
 					Matcher matcher = timeRemainingForge.matcher(line);
-					if (stack.getDisplayName().matches("\\xA7cSlot #([1-" + MAX_FORGE_SLOTS + "])")) {
+					if (stack.getName().getString().matches("\\xA7cSlot #([1-" + MAX_FORGE_SLOTS + "])")) {
 						ForgeItem newForgeItem = new ForgeItem(i, 1, false);
 						replaceForgeOrAdd(newForgeItem, hidden.forgeItems, true);
 						//empty Slot
-					} else if (stack.getDisplayName().matches("\\xA7aSlot #([1-" + MAX_FORGE_SLOTS + "])")) {
+					} else if (stack.getName().getString().matches("\\xA7aSlot #([1-" + MAX_FORGE_SLOTS + "])")) {
 						ForgeItem newForgeItem = new ForgeItem(i, 0, false);
 						replaceForgeOrAdd(newForgeItem, hidden.forgeItems, true);
 					} else if (matcher.matches()) {
@@ -119,7 +119,7 @@ public class MiningOverlay extends TextTabOverlay {
 						long duration = 0;
 
 						if (matcher.group("Completed") != null && !matcher.group("Completed").equals("")) {
-							ForgeItem newForgeItem = new ForgeItem(Utils.cleanColour(stack.getDisplayName()), 0, i, false);
+							ForgeItem newForgeItem = new ForgeItem(Utils.cleanColour(stack.getName().getString()), 0, i, false);
 							replaceForgeOrAdd(newForgeItem, hidden.forgeItems, true);
 						} else {
 
@@ -140,7 +140,7 @@ public class MiningOverlay extends TextTabOverlay {
 							}
 							if (duration > 0) {
 								ForgeItem newForgeItem = new ForgeItem(
-									Utils.cleanColour(stack.getDisplayName()),
+									Utils.cleanColour(stack.getName().getString()),
 									System.currentTimeMillis() + duration,
 									i,
 									false
@@ -161,17 +161,17 @@ public class MiningOverlay extends TextTabOverlay {
 	private void updateCommissions(IInventory lower) {
 		// Get the location (type) of the currently shown commissions
 		ItemStack commTypeStack = lower.getStackInSlot(32);
-		if (commTypeStack == null || !commTypeStack.hasTagCompound()) {
+		if (commTypeStack == null || !commTypeStack.hasTag()) {
 			return;
 		}
 
-		String name = Utils.cleanColour(commTypeStack.getDisplayName()).trim();
+		String name = Utils.cleanColour(commTypeStack.getName().getString()).trim();
 		if (!name.equals("Filter")) {
 			return;
 		}
 
 		String commLocation = null;
-		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(commTypeStack.getTagCompound());
+		String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(commTypeStack.getTag());
 		for (String line : lore) {
 			if (line == null) {
 				continue;
@@ -196,8 +196,8 @@ public class MiningOverlay extends TextTabOverlay {
 		// Now get the commission info
 		for (int i = 9; i < 18; i++) {
 			ItemStack stack = lower.getStackInSlot(i);
-			if (stack != null && stack.hasTagCompound()) {
-				lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound());
+			if (stack != null && stack.hasTag()) {
+				lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 				String commName = null;
 				int numberValue = -1;
 				for (String line : lore) {

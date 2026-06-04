@@ -38,20 +38,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
@@ -363,11 +363,11 @@ public class GuiCustomEnchant extends Gui {
 
 			if (enchantingItem != null) {
 				playerEnchantIds.clear();
-				NBTTagCompound tag = enchantingItem.getTagCompound();
+				CompoundTag tag = enchantingItem.getTag();
 				if (tag != null) {
-					NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+					CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 					if (ea != null) {
-						NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+						CompoundTag enchantments = ea.getCompoundTag("enchantments");
 						if (enchantments != null) {
 							for (String enchId : enchantments.getKeySet()) {
 								playerEnchantIds.put(enchId, enchantments.getInteger(enchId));
@@ -384,19 +384,19 @@ public class GuiCustomEnchant extends Gui {
 					int slotIndex = 9 + i;
 					ItemStack book = cc.getLowerChestInventory().getStackInSlot(slotIndex);
 					if (book != null && book.getItem() == Items.enchanted_book) {
-						NBTTagCompound tagBook = book.getTagCompound();
+						CompoundTag tagBook = book.getTag();
 						if (tagBook != null) {
-							NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+							CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 							if (ea != null) {
-								NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+								CompoundTag enchantments = ea.getCompoundTag("enchantments");
 								if (enchantments != null) {
 									String enchId = Utils
-										.cleanColour(book.getDisplayName())
+										.cleanColour(book.getName().getString())
 										.toLowerCase(Locale.ROOT)
 										.replace(" ", "_")
 										.replace("-", "_")
 										.replaceAll("[^a-z_]", "");
-									String name = Utils.cleanColour(book.getDisplayName());
+									String name = Utils.cleanColour(book.getName().getString());
 									int enchLevel = -1;
 									if (name.equalsIgnoreCase("Bane of Arthropods")) {
 										name = "Bane of Arth.";
@@ -463,21 +463,21 @@ public class GuiCustomEnchant extends Gui {
 						int slotIndex = 12 + (i % 5) + (i / 5) * 9;
 						ItemStack book = cc.getLowerChestInventory().getStackInSlot(slotIndex);
 						if (book != null) {
-							NBTTagCompound tagBook = book.getTagCompound();
+							CompoundTag tagBook = book.getTag();
 							if (tagBook != null) {
-								NBTTagCompound ea = tagBook.getCompoundTag("ExtraAttributes");
+								CompoundTag ea = tagBook.getCompoundTag("ExtraAttributes");
 								if (ea != null) {
-									NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+									CompoundTag enchantments = ea.getCompoundTag("enchantments");
 									if (enchantments != null) {
 										String enchId = Utils
-											.cleanColour(book.getDisplayName())
+											.cleanColour(book.getName().getString())
 											.toLowerCase(Locale.ROOT)
 											.replace(" ", "_")
 											.replace("-", "_")
 											.replaceAll("[^a-z_]", "");
 										if (enchId.equalsIgnoreCase("_")) continue;
 										enchId = ItemUtils.fixEnchantId(enchId, true);
-										String name = Utils.cleanColour(book.getDisplayName());
+										String name = Utils.cleanColour(book.getName().getString());
 
 										if (searchField.getText().trim().isEmpty() ||
 											name.toLowerCase(Locale.ROOT).contains(searchField.getText().trim().toLowerCase(Locale.ROOT))) {
@@ -882,7 +882,7 @@ public class GuiCustomEnchant extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(
-			Minecraft.getInstance().player.inventory.getDisplayName().getUnformattedText(),
+			Minecraft.getInstance().player.inventory.getName().getString().getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();

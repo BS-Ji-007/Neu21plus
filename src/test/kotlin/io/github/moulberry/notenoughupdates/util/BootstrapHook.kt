@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.util
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFire
 import net.minecraft.init.Bootstrap
-import net.minecraft.item.Item
+import net.minecraft.world.item.Item
 import net.minecraft.launchwrapper.Launch
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.Extension

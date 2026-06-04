@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import io.github.moulberry.notenoughupdates.util.hypixelapi.ProfileCollectionInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -193,7 +193,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		}
 
 		Utils.drawStringCentered(
-			selectedCollectionCategory.getDisplayName() + " Collections",
+			selectedCollectionCategory.getName().getString() + " Collections",
 			guiLeft + 134, guiTop + 14, true, 4210752
 		);
 
@@ -273,7 +273,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					if (mouseY > guiTop + (int) y + 2 && mouseY < guiTop + (int) y + 18) {
 						tooltipToDisplay = new ArrayList<>();
 						tooltipToDisplay.add(
-							collectionItem.getDisplayName() +
+							collectionItem.getName().getString() +
 								" " +
 								(completedness >= 1 ? EnumChatFormatting.GOLD : EnumChatFormatting.GRAY) +
 								tierString
@@ -294,7 +294,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		}
 
 		Utils.drawStringCentered(
-			selectedCollectionCategory.getDisplayName() + " Minions", guiLeft + 326, guiTop + 14, true, 4210752);
+			selectedCollectionCategory.getName().getString() + " Minions", guiLeft + 326, guiTop + 14, true, 4210752);
 
 		if (minions != null) {
 			for (int i = page * 20, j = 0; i < Math.min((page + 1) * 20, minions.size()); i++, j++) {

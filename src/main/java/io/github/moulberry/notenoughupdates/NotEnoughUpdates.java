@@ -46,6 +46,13 @@ public class NotEnoughUpdates {
 			config = new NEUConfig();
 			saveConfig();
 		}
+
+        // Register Events
+        new NEUEventListener(this).registerEvents();
+        new ChatListener(this).registerEvents();
+        new RenderListener(this).registerEvents();
+        new WorldListener(this).registerEvents();
+        SBInfo.getInstance().registerEvents();
 	}
 
 	public void saveConfig() {

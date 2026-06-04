@@ -30,9 +30,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.client.audio.SoundCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 
 import java.text.NumberFormat;
@@ -108,11 +108,11 @@ public class FishingSkillOverlay
 		if (Minecraft.getInstance().player == null) return;
 
 		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
-		if (stack != null && stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
+		if (stack != null && stack.hasTag()) {
+			CompoundTag tag = stack.getTag();
 
 			if (tag.hasKey("ExtraAttributes", 10)) {
-				NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+				CompoundTag ea = tag.getCompoundTag("ExtraAttributes");
 
 				if (ea.hasKey("expertise_kills", 99)) {
 					expertise = ea.getInteger("expertise_kills");

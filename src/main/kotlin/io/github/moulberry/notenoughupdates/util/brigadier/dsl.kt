@@ -30,8 +30,8 @@ import com.mojang.brigadier.tree.LiteralCommandNode
 import io.github.moulberry.notenoughupdates.commands.dev.DevTestCommand
 import io.github.moulberry.notenoughupdates.util.iterate
 import net.minecraft.command.ICommandSender
-import net.minecraft.util.ChatComponentText
-import net.minecraft.util.IChatComponent
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.Component
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import java.lang.reflect.TypeVariable

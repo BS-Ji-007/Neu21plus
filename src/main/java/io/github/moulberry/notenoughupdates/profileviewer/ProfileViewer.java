@@ -27,9 +27,9 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.Getter;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

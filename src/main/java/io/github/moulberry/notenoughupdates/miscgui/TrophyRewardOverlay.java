@@ -36,10 +36,10 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -86,7 +86,7 @@ public class TrophyRewardOverlay {
 
 		ItemStack itemStack = event.itemStack;
 		if (itemStack == null) return;
-		if (!"§aFillet Trophy Fish".equals(itemStack.getDisplayName())) return;
+		if (!"§aFillet Trophy Fish".equals(itemStack.getName().getString())) return;
 		if (ItemUtils.getLore(itemStack).contains("§8Sacks")) return;
 
 		event.toolTip.add(2, getToolTip());
@@ -210,8 +210,8 @@ public class TrophyRewardOverlay {
 				if (stack != null) {
 					String internalId = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 					if (data.containsKey(internalId)) {
-						String displayName = stack.getDisplayName();
-						int stackSize = stack.stackSize;
+						String displayName = stack.getName().getString();
+						int stackSize = stack.getCount();
 
 						int amount = totalAmount.getOrDefault(displayName, 0) + stackSize;
 						totalAmount.put(displayName, amount);
@@ -303,7 +303,7 @@ public class TrophyRewardOverlay {
 		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
-		return containerChest.getLowerChestInventory().getDisplayName()
+		return containerChest.getLowerChestInventory().getName().getString()
 												 .getUnformattedText().equalsIgnoreCase("Trophy Fishing");
 	}
 }

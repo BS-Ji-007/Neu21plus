@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.util;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

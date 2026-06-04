@@ -19,6 +19,6 @@
 
 package io.github.moulberry.notenoughupdates.events
 
-import net.minecraft.inventory.Slot
+import net.minecraft.world.inventory.Slot
 
 data class DrawSlotReturnEvent(val slot: Slot) : NEUEvent()

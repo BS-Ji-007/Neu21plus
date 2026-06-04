@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.Locati
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -310,7 +310,7 @@ public class ItemCooldowns {
 	}
 
 	private static void setSpecificCooldown(ItemStack stack, Item item) {
-		if (stack != null && stack.hasTagCompound()) {
+		if (stack != null && stack.hasTag()) {
 
 			String internalname =
 				NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(stack).resolveInternalName();
@@ -337,7 +337,7 @@ public class ItemCooldowns {
 	}
 
 	private static int setCooldown(ItemStack stack) {
-		for (String line : NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTagCompound())) {
+		for (String line : NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag())) {
 			Matcher matcher = COOLDOWN_LORE.matcher(line);
 			if (matcher.find()) {
 				try {

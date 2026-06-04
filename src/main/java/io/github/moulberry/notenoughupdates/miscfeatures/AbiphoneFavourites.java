@@ -33,10 +33,10 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,7 +85,7 @@ public class AbiphoneFavourites {
 
 		ItemStack stack = event.itemStack;
 		if (!isContact(stack)) return;
-		String rawName = stack.getDisplayName();
+		String rawName = stack.getName().getString();
 		String name = StringUtils.cleanColour(rawName);
 
 		if (isAbiphoneShowOnlyFavourites()) {
@@ -121,7 +121,7 @@ public class AbiphoneFavourites {
 		if (isWrongInventory()) return;
 
 		ItemStack stack = event.slot.getStack();
-		if (stack == null || stack.getDisplayName() == null) return;
+		if (stack == null || stack.getName().getString() == null) return;
 
 		if ((stack == ITEM_STACK_FAVOURITE_ONLY || stack == ITEM_STACK_ALL)) {
 			if (System.currentTimeMillis() > lastClick + 200) {
@@ -147,7 +147,7 @@ public class AbiphoneFavourites {
 				return;
 			}
 		}
-		String rawName = stack.getDisplayName();
+		String rawName = stack.getName().getString();
 		String name = StringUtils.cleanColour(rawName);
 
 		//allows calling
@@ -169,7 +169,7 @@ public class AbiphoneFavourites {
 
 	@SubscribeEvent
 	public void replaceItem(ReplaceItemEvent event) {
-		IChatComponent chatComponent = event.getInventory().getDisplayName();
+		IChatComponent chatComponent = event.getInventory().getName().getString();
 		if (chatComponent == null || isWrongInventory()) return;
 		ItemStack original = event.getOriginal();
 		if (original == null) return;
@@ -193,11 +193,11 @@ public class AbiphoneFavourites {
 	public boolean onRenderStack(ItemStack stack) {
 		if (isWrongInventory()) return false;
 
-		if (stack == null || stack.getDisplayName() == null) return false;
+		if (stack == null || stack.getName().getString() == null) return false;
 
 		if (!isContact(stack)) return false;
 
-		String rawName = stack.getDisplayName();
+		String rawName = stack.getName().getString();
 		String name = StringUtils.cleanColour(rawName);
 
 		return isAbiphoneShowOnlyFavourites() && !getFavouriteContacts().contains(name);
@@ -210,7 +210,7 @@ public class AbiphoneFavourites {
 		GuiContainer container = event.getContainer();
 
 		ItemStack checkForShowMenu = container.inventorySlots.getSlot(1*9 + 4).getStack();
-		isInShowMenu = checkForShowMenu != null && checkForShowMenu.getDisplayName().contains("Abiphone ");
+		isInShowMenu = checkForShowMenu != null && checkForShowMenu.getName().getString().contains("Abiphone ");
 
 		for (Slot slot : container.inventorySlots.inventorySlots) {
 			if (slot == null) continue;
@@ -219,7 +219,7 @@ public class AbiphoneFavourites {
 
 			if (!isContact(stack)) continue;
 
-			String rawName = stack.getDisplayName();
+			String rawName = stack.getName().getString();
 			String name = StringUtils.cleanColour(rawName);
 
 			if (!isAbiphoneShowOnlyFavourites()) {

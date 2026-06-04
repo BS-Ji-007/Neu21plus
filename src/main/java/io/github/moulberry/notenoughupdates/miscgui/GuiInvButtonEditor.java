@@ -35,12 +35,12 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -283,11 +283,11 @@ public class GuiInvButtonEditor extends GuiScreen {
 			if (skullMap.containsKey(link)) return skullMap.get(link);
 
 			ItemStack render = new ItemStack(Items.skull, 1, 3);
-			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagCompound skullOwner = new NBTTagCompound();
-			NBTTagCompound properties = new NBTTagCompound();
-			NBTTagList textures = new NBTTagList();
-			NBTTagCompound textures_0 = new NBTTagCompound();
+			CompoundTag nbt = new CompoundTag();
+			CompoundTag skullOwner = new CompoundTag();
+			CompoundTag properties = new CompoundTag();
+			ListTag textures = new ListTag();
+			CompoundTag textures_0 = new CompoundTag();
 
 			String uuid = UUID.nameUUIDFromBytes(link.getBytes()).toString();
 			skullOwner.setString("Id", uuid);
@@ -302,7 +302,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			properties.setTag("textures", textures);
 			skullOwner.setTag("Properties", properties);
 			nbt.setTag("SkullOwner", skullOwner);
-			render.setTagCompound(nbt);
+			render.setTag(nbt);
 
 			skullMap.put(link, render);
 			return render;

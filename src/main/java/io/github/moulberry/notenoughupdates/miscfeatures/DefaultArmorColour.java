@@ -22,11 +22,11 @@ package io.github.moulberry.notenoughupdates.miscfeatures;
 import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemArmor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -55,8 +55,8 @@ public class DefaultArmorColour {
 
 		if (itemJson.has("nbttag")) {
 			try {
-				NBTTagCompound nbt = JsonToNBT.getTagFromJson(itemJson.get("nbttag").getAsString());
-				NBTTagCompound display;
+				CompoundTag nbt = JsonToNBT.getTagFromJson(itemJson.get("nbttag").getAsString());
+				CompoundTag display;
 
 				if (nbt.hasKey("display") && (display = nbt.getCompoundTag("display")).hasKey("color")) {
 					int colour = display.getInteger("color");

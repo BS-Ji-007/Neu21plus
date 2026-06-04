@@ -37,9 +37,9 @@ import moe.nea.lisp.LispParser
 import moe.nea.lisp.StackFrame
 import moe.nea.lisp.bind.AutoBinder
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.MainWindow
 import net.minecraft.init.Items
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.floor

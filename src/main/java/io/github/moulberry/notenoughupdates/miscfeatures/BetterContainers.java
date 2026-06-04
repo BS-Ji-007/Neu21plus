@@ -30,14 +30,14 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractContainerMenuChest;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -125,7 +125,7 @@ public class BetterContainers {
 
 		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		return containerName.toLowerCase(Locale.ROOT).trim().startsWith("navigate the maze");
 	}
 
@@ -137,7 +137,7 @@ public class BetterContainers {
 	public static boolean isBlankStack(int index, ItemStack stack) {
 		return stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane) &&
 			stack.getItemDamage() == 15 &&
-			stack.getDisplayName() != null && stack.getDisplayName().trim().isEmpty();
+			stack.getName().getString() != null && stack.getName().getString().trim().isEmpty();
 	}
 
 	public static boolean shouldRenderStack(int index, ItemStack stack) {
@@ -155,9 +155,9 @@ public class BetterContainers {
 	}
 
 	public static boolean isToggleOn(ItemStack stack) {
-		if (stack != null && stack.getTagCompound() != null && stack.getTagCompound().hasKey("display", 10) &&
-			stack.getTagCompound().getCompoundTag("display").hasKey("Lore", 9)) {
-			NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+		if (stack != null && stack.getTag() != null && stack.getTag().hasKey("display", 10) &&
+			stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
+			ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 			return lore.tagCount() == 1 && lore.getStringTagAt(0).equalsIgnoreCase(
 				EnumChatFormatting.GRAY + "click to disable!");
 		}
@@ -165,9 +165,9 @@ public class BetterContainers {
 	}
 
 	public static boolean isToggleOff(ItemStack stack) {
-		if (stack != null && stack.getTagCompound() != null && stack.getTagCompound().hasKey("display", 10) &&
-			stack.getTagCompound().getCompoundTag("display").hasKey("Lore", 9)) {
-			NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
+		if (stack != null && stack.getTag() != null && stack.getTag().hasKey("display", 10) &&
+			stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
+			ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 			return lore.tagCount() == 1 && lore.getStringTagAt(0).equalsIgnoreCase(
 				EnumChatFormatting.GRAY + "click to enable!");
 		}
@@ -267,10 +267,10 @@ public class BetterContainers {
 				boolean[][] slots = new boolean[9][size / 9];
 				boolean[][] buttons = new boolean[9][size / 9];
 
-				boolean ultrasequencer = lower.getDisplayName().getUnformattedText().startsWith("Ultrasequencer") &&
-					!lower.getDisplayName().getUnformattedText().contains("Stakes");
-				boolean superpairs = lower.getDisplayName().getUnformattedText().startsWith("Superpairs") &&
-					!lower.getDisplayName().getUnformattedText().contains("Stakes");
+				boolean ultrasequencer = lower.getName().getString().getUnformattedText().startsWith("Ultrasequencer") &&
+					!lower.getName().getString().getUnformattedText().contains("Stakes");
+				boolean superpairs = lower.getName().getString().getUnformattedText().startsWith("Superpairs") &&
+					!lower.getName().getString().getUnformattedText().contains("Stakes");
 				for (int index = 0; index < size; index++) {
 					ItemStack stack = getStackFromInvetory(lower, index);
 					buttons[index % 9][index / 9] = isButtonStack(index, stack);

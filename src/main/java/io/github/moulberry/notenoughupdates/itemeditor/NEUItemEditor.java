@@ -29,17 +29,17 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -80,7 +80,7 @@ public class NEUItemEditor extends GuiScreen {
 	private final Supplier<String> info;
 	private final Supplier<String> clickCommand;
 	private final Supplier<String> damage;
-	private NBTTagCompound nbtTag;
+	private CompoundTag nbtTag;
 	private int saved = 0;
 
 	public NEUItemEditor(String internalName, JsonObject item) {
@@ -91,7 +91,7 @@ public class NEUItemEditor extends GuiScreen {
 			} catch (NBTException ignored) {
 			}
 		}
-		NBTTagCompound extraAttributes = nbtTag.getCompoundTag("ExtraAttributes");
+		CompoundTag extraAttributes = nbtTag.getCompoundTag("ExtraAttributes");
 		extraAttributes.removeTag("uuid");
 		extraAttributes.removeTag("timestamp");
 
@@ -183,7 +183,7 @@ public class NEUItemEditor extends GuiScreen {
 		rightOptions.add(new GuiElementButton(
 			"Add enchant glint",
 			Color.ORANGE.getRGB(),
-			() -> nbtTag.setTag("ench", new NBTTagList())
+			() -> nbtTag.setTag("ench", new ListTag())
 		));
 		rightOptions.add(new GuiElementButton(
 			"Remove lore under dashes",
@@ -265,15 +265,15 @@ public class NEUItemEditor extends GuiScreen {
 	}
 
 	public void resyncNbttag() {
-		if (nbtTag == null) nbtTag = new NBTTagCompound();
+		if (nbtTag == null) nbtTag = new CompoundTag();
 
 		//Item lore
-		NBTTagList list = new NBTTagList();
+		ListTag list = new ListTag();
 		for (String lore : this.lore.get().split("\n")) {
-			list.appendTag(new NBTTagString(lore));
+			list.appendTag(new StringTag(lore));
 		}
 
-		NBTTagCompound display = nbtTag.getCompoundTag("display");
+		CompoundTag display = nbtTag.getCompoundTag("display");
 		display.setTag("Lore", list);
 
 		//Name
@@ -281,7 +281,7 @@ public class NEUItemEditor extends GuiScreen {
 		nbtTag.setTag("display", display);
 
 		//Internal ID
-		NBTTagCompound ea = nbtTag.getCompoundTag("ExtraAttributes");
+		CompoundTag ea = nbtTag.getCompoundTag("ExtraAttributes");
 		ea.setString("id", internalName.get());
 		nbtTag.setTag("ExtraAttributes", ea);
 	}
@@ -368,7 +368,7 @@ public class NEUItemEditor extends GuiScreen {
 			}
 
 			resyncNbttag();
-			stack.setTagCompound(nbtTag);
+			stack.setTag(nbtTag);
 
 			int scaleFactor = itemSize / 16;
 			GL11.glPushMatrix();

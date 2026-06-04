@@ -33,10 +33,10 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -50,7 +50,7 @@ import java.util.Set;
 public class AnimatedSkullExporter {
 
 	static RecordingType recordingState = RecordingType.NOT_RECORDING;
-	static ArrayList<NBTTagCompound> skullsList = new ArrayList<>();
+	static ArrayList<CompoundTag> skullsList = new ArrayList<>();
 	public static ArrayList<String> lastSkullsList = new ArrayList<>();
 	public static String trackedPlayer = "";
 
@@ -65,7 +65,7 @@ public class AnimatedSkullExporter {
 		if (recordingState == RecordingType.HEAD) {
 			EntityPlayerSP player = Minecraft.getInstance().player;
 			ItemStack currentArmor = player.getCurrentArmor(3);
-			NBTTagCompound skullOwner = getSkullOwner(currentArmor);
+			CompoundTag skullOwner = getSkullOwner(currentArmor);
 			if (skullOwner != null) skullsList.add(skullOwner);
 
 		} else if (recordingState == RecordingType.PET) {
@@ -75,9 +75,9 @@ public class AnimatedSkullExporter {
 					ItemStack[] currentArmorS = armorStand.getInventory();
 					for (ItemStack currentArmor : currentArmorS) {
 						if (currentArmor == null) continue;
-						String displayName = currentArmor.getDisplayName();
+						String displayName = currentArmor.getName().getString();
 						if (displayName.contains("Head") || displayName.contains("Lvl")) {
-							NBTTagCompound skullOwner = getSkullOwner(currentArmor);
+							CompoundTag skullOwner = getSkullOwner(currentArmor);
 							if (skullOwner != null) skullsList.add(skullOwner);
 						}
 					}
@@ -90,7 +90,7 @@ public class AnimatedSkullExporter {
 					EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 					if (otherPlayer.getName().toLowerCase(Locale.ROOT).contains(trackedPlayer.toLowerCase(Locale.ROOT))) {
 						ItemStack currentArmor = otherPlayer.getCurrentArmor(3);
-						NBTTagCompound skullOwner = getSkullOwner(currentArmor);
+						CompoundTag skullOwner = getSkullOwner(currentArmor);
 						if (skullOwner != null) skullsList.add(skullOwner);
 					}
 				}
@@ -138,10 +138,10 @@ public class AnimatedSkullExporter {
 	public static void finishRecording(boolean save, boolean recordExisting) {
 		trackedPlayer = "";
 		recordingState = RecordingType.NOT_RECORDING;
-		ArrayList<NBTTagCompound> noDuplicates = removeDuplicates(skullsList);
+		ArrayList<CompoundTag> noDuplicates = removeDuplicates(skullsList);
 		if (save) {
 			JsonArray jsonArray = new JsonArray();
-			for (NBTTagCompound noDuplicate : noDuplicates) {
+			for (CompoundTag noDuplicate : noDuplicates) {
 				String id = noDuplicate.getString("Id");
 				String value = noDuplicate
 					.getCompoundTag("Properties")
@@ -188,18 +188,18 @@ public class AnimatedSkullExporter {
 		return false;
 	}
 
-	public static ArrayList<NBTTagCompound> removeDuplicates(ArrayList<NBTTagCompound> list) {
-		Set<NBTTagCompound> set = new LinkedHashSet<>();
+	public static ArrayList<CompoundTag> removeDuplicates(ArrayList<CompoundTag> list) {
+		Set<CompoundTag> set = new LinkedHashSet<>();
 		set.addAll(list);
 		list.clear();
 		list.addAll(set);
 		return list;
 	}
 
-	public static NBTTagCompound getSkullOwner(ItemStack stack) {
+	public static CompoundTag getSkullOwner(ItemStack stack) {
 		if (stack != null && stack.getItem() == Items.skull) {
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("SkullOwner")) {
-				return stack.getTagCompound().getCompoundTag("SkullOwner");
+			if (stack.hasTag() && stack.getTag().hasKey("SkullOwner")) {
+				return stack.getTag().getCompoundTag("SkullOwner");
 			}
 		}
 		return null;

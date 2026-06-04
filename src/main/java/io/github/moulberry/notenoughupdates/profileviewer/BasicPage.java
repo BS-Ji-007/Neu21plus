@@ -48,9 +48,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
@@ -618,9 +618,9 @@ public class BasicPage extends GuiProfileViewerPage {
 						ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(item, false);
 
 						// Remove extra attributes so no CIT
-						NBTTagCompound stackTag = stack.getTagCompound() == null ? new NBTTagCompound() : stack.getTagCompound();
+						CompoundTag stackTag = stack.getTag() == null ? new CompoundTag() : stack.getTag();
 						stackTag.removeTag("ExtraAttributes");
-						stack.setTagCompound(stackTag);
+						stack.setTag(stackTag);
 
 						GlStateManager.scale(1.5f, 1.5f, 1);
 						GlStateManager.enableDepth();
@@ -684,7 +684,7 @@ public class BasicPage extends GuiProfileViewerPage {
 				int yPosition = position % 8;
 				int xPosition = position / 8;
 
-				String skillName = entry.getValue().getDisplayName();
+				String skillName = entry.getValue().getName().getString();
 
 				ProfileViewer.Level level = skyblockInfo.get(entry.getKey());
 				int levelFloored = (int) Math.floor(level.level);
