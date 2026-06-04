@@ -13,5 +13,5 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation(kotlin("gradle-plugin"))
+    implementation(kotlin("gradle-plugin", version = "2.2.21"))
 }

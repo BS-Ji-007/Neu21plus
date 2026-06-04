@@ -17,7 +17,7 @@ java {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.google.devtools.ksp:symbol-processing-api:2.3.21-1.0.30")
-    implementation("com.squareup:kotlinpoet:1.17.0")
-    implementation("com.squareup:kotlinpoet-ksp:1.17.0")
+    implementation("com.google.devtools.ksp:symbol-processing-api:2.3.9")
+    implementation("com.squareup:kotlinpoet:2.1.0")
+    implementation("com.squareup:kotlinpoet-ksp:2.1.0")
 }
