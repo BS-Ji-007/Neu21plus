@@ -46,8 +46,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -101,7 +99,6 @@ public class DungeonNpcProfitOverlay {
 	 *
 	 * @see io.github.moulberry.notenoughupdates.mixins.MixinContainerScreen#drawSlotRet(Slot, CallbackInfo)
 	 */
-	@SubscribeEvent
 	public void onDrawSlot(DrawSlotReturnEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.dungeons.croesusProfitOverlay
 			|| !NotEnoughUpdates.INSTANCE.config.dungeons.croesusHighlightHighestProfit
@@ -122,7 +119,6 @@ public class DungeonNpcProfitOverlay {
 		);
 	}
 
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (isRendering())
 			event.blockArea(
@@ -135,7 +131,6 @@ public class DungeonNpcProfitOverlay {
 			);
 	}
 
-	@SubscribeEvent
 	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.dungeons.croesusProfitOverlay || !(event.gui instanceof ChestScreen)) {
 			chestProfits.clear();

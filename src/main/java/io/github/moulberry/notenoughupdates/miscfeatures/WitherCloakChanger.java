@@ -26,11 +26,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
@@ -46,7 +41,6 @@ public class WitherCloakChanger {
 	public static long lastCreeperRender = 0;
 	public static long lastDeactivate = System.currentTimeMillis();
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChatMessage(ClientChatReceivedEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return;
 		if (event.message.getString().startsWith("Creeper Veil ")) {
@@ -62,7 +56,6 @@ public class WitherCloakChanger {
 		}
 	}
 
-	@SubscribeEvent
 	public void onWorldChange(WorldEvent.Unload event) {
 		isCloakActive = false;
 	}
@@ -70,7 +63,6 @@ public class WitherCloakChanger {
 	private static final ResourceLocation witherCloakShield = new ResourceLocation(
 		"notenoughupdates:wither_cloak_shield.png");
 
-	@SubscribeEvent
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (isCloakActive) {
 			//last creeper rendered over 2 seconds ago -> Creeper Veil de activated without a message. Happens for example when picking up the item in the inventory
@@ -98,29 +90,29 @@ public class WitherCloakChanger {
 					-0.5 * accuracy)) % (360 * accuracy)) / accuracy;
 			angle += (360d / NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakCount) * i;
 			angle %= 360;
-			double posX = mc.player.posX - (shieldWidth / 2);
-			double posY = mc.player.posY;
-			double posZ = mc.player.posZ + NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakDistance;
+			double posX = mc.player.getX() - (shieldWidth / 2);
+			double posY = mc.player.getY();
+			double posZ = mc.player.getZ() + NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakDistance;
 
 			Vec3 topLeft = rotateAboutOrigin(
-				mc.player.posX,
-				mc.player.posZ,
+				mc.player.getX(),
+				mc.player.getZ(),
 				angle,
 				new Vec3(posX, posY + shieldHeight, posZ)
 			);
 			Vec3 topRight = rotateAboutOrigin(
-				mc.player.posX,
-				mc.player.posZ,
+				mc.player.getX(),
+				mc.player.getZ(),
 				angle,
 				new Vec3(posX + shieldWidth, posY + shieldHeight, posZ)
 			);
 			Vec3 bottomRight = rotateAboutOrigin(
-				mc.player.posX,
-				mc.player.posZ,
+				mc.player.getX(),
+				mc.player.getZ(),
 				angle,
 				new Vec3(posX + shieldWidth, posY, posZ)
 			);
-			Vec3 bottomLeft = rotateAboutOrigin(mc.player.posX, mc.player.posZ, angle, new Vec3(posX, posY, posZ));
+			Vec3 bottomLeft = rotateAboutOrigin(mc.player.getX(), mc.player.getZ(), angle, new Vec3(posX, posY, posZ));
 			RenderUtils.drawFilledQuadWithTexture(
 				topLeft,
 				topRight,

@@ -185,7 +185,7 @@ public class GuiPositionEditor extends GuiScreen {
 			if (keyCode == Keyboard.KEY_R) {
 				position.set(originalPositions.get(positions.indexOf(position)));
 			} else if (!position.getClicked()) {
-				boolean shiftHeld = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+				boolean shiftHeld = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 				int dist = shiftHeld ? 10 : 1;
 				if (keyCode == Keyboard.KEY_DOWN) {
 					position.moveY(dist, elementHeight, new ScaledResolution(Minecraft.getInstance()));

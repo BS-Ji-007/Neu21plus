@@ -40,10 +40,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -209,13 +205,11 @@ public class FishingHelper {
 		hookEntities.remove(entityId);
 	}
 
-	@SubscribeEvent
 	public void onWorldUnload(WorldEvent.Unload event) {
 		hookEntities.clear();
 		chains.clear();
 	}
 
-	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR &&
 			event.entityPlayer == Minecraft.getInstance().player) {
@@ -233,7 +227,6 @@ public class FishingHelper {
 
 	private int tickCounter = 0;
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (Minecraft.getInstance().player != null && event.phase == TickEvent.Phase.END) {
 			if (buildupSoundDelay > 0) buildupSoundDelay--;
@@ -341,7 +334,7 @@ public class FishingHelper {
 		double angle1,
 		double angle2
 	) {
-		double dY = particleY - hook.posY;
+		double dY = particleY - hook.getY();
 		double tolerance = 0.5F;
 		if (hook.worldObj != null) {
 			for (int i = -2; i < 2; i++) {
@@ -356,8 +349,8 @@ public class FishingHelper {
 			return HookPossibleRet.NOT_POSSIBLE;
 		}
 
-		double dX = particleX - hook.posX;
-		double dZ = particleZ - hook.posZ;
+		double dX = particleX - hook.getX();
+		double dZ = particleZ - hook.getZ();
 		double dist = Math.sqrt(dX * dX + dZ * dZ);
 
 		if (dist < 0.2) {
@@ -390,7 +383,6 @@ public class FishingHelper {
 		return 1 / (d + (1 / (ZERO_PITCH - MAX_PITCH))) * (1 - d / MAX_DISTANCE) + MAX_PITCH;
 	}
 
-	@SubscribeEvent
 	public void onSpawnParticle(SpawnParticleEvent event) {
 		EnumParticleTypes particleType = event.getParticleTypes();
 		double x = event.getXCoord();
@@ -467,8 +459,8 @@ public class FishingHelper {
 								if (entity != null && !entity.isDead) {
 									double oldDistance = chain.distances.get(hookEntityId);
 
-									double dX = entity.posX - x;
-									double dZ = entity.posZ - z;
+									double dX = entity.getX() - x;
+									double dZ = entity.getZ() - z;
 									double newDistance = Math.sqrt(dX * dX + dZ * dZ);
 
 									double delta = oldDistance - newDistance;
@@ -583,8 +575,8 @@ public class FishingHelper {
 							EntityFishHook entity = hookEntities.get(hookEntityId);
 
 							if (entity != null && !entity.isDead) {
-								double dX = entity.posX - x;
-								double dZ = entity.posZ - z;
+								double dX = entity.getX() - x;
+								double dZ = entity.getZ() - z;
 								double newDistance = Math.sqrt(dX * dX + dZ * dZ);
 								chain.distances.put(hookEntityId, newDistance);
 							}
@@ -604,8 +596,8 @@ public class FishingHelper {
 							EntityFishHook entity = hookEntities.get(hookEntityId);
 
 							if (entity != null && !entity.isDead) {
-								double dX = entity.posX - x;
-								double dZ = entity.posZ - z;
+								double dX = entity.getX() - x;
+								double dZ = entity.getZ() - z;
 								double newDistance = Math.sqrt(dX * dX + dZ * dZ);
 								chain.distances.put(hookEntityId, newDistance);
 							}
@@ -654,9 +646,9 @@ public class FishingHelper {
 						return;
 					}
 
-					double xDist = Minecraft.getInstance().getRenderViewEntity().posX - x;
-					double yDist = Minecraft.getInstance().getRenderViewEntity().posY - y;
-					double zDist = Minecraft.getInstance().getRenderViewEntity().posZ - z;
+					double xDist = Minecraft.getInstance().getRenderViewEntity().getX() - x;
+					double yDist = Minecraft.getInstance().getRenderViewEntity().getY() - y;
+					double zDist = Minecraft.getInstance().getRenderViewEntity().getZ() - z;
 					double distSq = xDist * xDist + yDist * yDist + zDist * zDist;
 
 					if (distSq < 32 * 32) {
@@ -706,9 +698,9 @@ public class FishingHelper {
 							0
 						);
 
-						fx.motionX = Math.random() * 0.02 - 0.01;
-						fx.motionY = yVel;
-						fx.motionZ = Math.random() * 0.02 - 0.01;
+						fx.getDeltaMovement().x() = Math.random() * 0.02 - 0.01;
+						fx.getDeltaMovement().y() = yVel;
+						fx.getDeltaMovement().z() = Math.random() * 0.02 - 0.01;
 
 						if (customColour) {
 							float red = ((argb >> 16) & 0xFF) / 255f;

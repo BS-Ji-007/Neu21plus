@@ -30,14 +30,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static io.github.moulberry.notenoughupdates.util.MathUtil.isDecimalPartApproximately;
 
 @NEUAutoSubscribe
 public class GlowingMushroomHighlighter extends GenericBlockHighlighter {
 
-	@SubscribeEvent
 	public void onParticleSpawn(SpawnParticleEvent event) {
 		if (!isEnabled()) return;
 		if (event.getParticleTypes() == EnumParticleTypes.SPELL_MOB) {

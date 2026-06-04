@@ -36,10 +36,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -194,7 +190,7 @@ public class CrystalOverlay {
 								if (skullId.containsKey(id)) {
 									CrystalType type = skullId.get(id);
 									foundTypes.add(type);
-									BlockPos pos = new BlockPos(armorStand.posX, armorStand.posY + 0.5f, armorStand.posZ);
+									BlockPos pos = new BlockPos(armorStand.getX(), armorStand.getY() + 0.5f, armorStand.getZ());
 
 									if (crystals.containsKey(type)) {
 										BlockPos old = crystals.get(type);
@@ -219,7 +215,6 @@ public class CrystalOverlay {
 		crystals.keySet().retainAll(foundTypes);
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.itemOverlays.enableCrystalOverlay) return;
 
@@ -231,17 +226,17 @@ public class CrystalOverlay {
 		if (p == null) return;
 
 		if (event.phase == TickEvent.Phase.START) {
-			double dX = p.posX - posLastUpdateX;
-			double dY = p.posY - posLastUpdateY;
-			double dZ = p.posZ - posLastUpdateZ;
+			double dX = p.getX() - posLastUpdateX;
+			double dY = p.getY() - posLastUpdateY;
+			double dZ = p.getZ() - posLastUpdateZ;
 
 			if (dX * dX + dY * dY + dZ * dZ < 1) {
 				return;
 			}
 
-			posLastUpdateX = p.posX;
-			posLastUpdateY = p.posY;
-			posLastUpdateZ = p.posZ;
+			posLastUpdateX = p.getX();
+			posLastUpdateY = p.getY();
+			posLastUpdateZ = p.getZ();
 
 			for (CrystalType type : crystals.keySet()) {
 				if (type == CrystalType.MINING_MINION) {
@@ -258,21 +253,20 @@ public class CrystalOverlay {
 
 					worldRenderer.setTranslation(0, 0, 0);
 					worldRenderer.sortVertexData(
-						(float) p.posX - crystal.getX(),
-						(float) p.posY - crystal.getY(),
-						(float) p.posZ - crystal.getZ()
+						(float) p.getX() - crystal.getX(),
+						(float) p.getY() - crystal.getY(),
+						(float) p.getZ() - crystal.getZ()
 					);
                     /*es.submit(() -> worldRenderer.sortVertexData(
-                            (float)p.posX-crystal.getX(),
-                            (float)p.posY-crystal.getY(),
-                            (float)p.posZ-crystal.getZ()));*/
+                            (float)p.getX()-crystal.getX(),
+                            (float)p.getY()-crystal.getY(),
+                            (float)p.getZ()-crystal.getZ()));*/
 
 				}
 			}
 		}
 	}
 
-	@SubscribeEvent
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.itemOverlays.enableCrystalOverlay) return;
 
@@ -281,9 +275,9 @@ public class CrystalOverlay {
 		}
 
 		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
-		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
-		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
-		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;
+		double viewerX = viewer.lastTickPosX + (viewer.getX() - viewer.lastTickPosX) * event.partialTicks;
+		double viewerY = viewer.lastTickPosY + (viewer.getY() - viewer.lastTickPosY) * event.partialTicks;
+		double viewerZ = viewer.lastTickPosZ + (viewer.getZ() - viewer.lastTickPosZ) * event.partialTicks;
 
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -325,7 +319,6 @@ public class CrystalOverlay {
 		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
-	@SubscribeEvent
 	public void onWorldUnload(WorldEvent.Unload event) {
 		crystals.clear();
 	}

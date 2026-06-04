@@ -25,9 +25,6 @@ import io.github.moulberry.notenoughupdates.core.util.StringUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.world.inventory.AbstractContainerMenuChest
-import net.minecraftforge.client.event.GuiOpenEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import java.util.regex.Pattern
 
 @NEUAutoSubscribe
@@ -35,7 +32,6 @@ class HotmInformation {
     private var ticksTillReload = 0
     private val pattern = Pattern.compile("§[7b]Level (\\d*)(?:§8/.*)?")
 
-    @SubscribeEvent
     fun onGuiOpen(event: GuiOpenEvent) {
         val gui = event.gui
         if (gui !is ChestScreen) return
@@ -45,7 +41,6 @@ class HotmInformation {
         }
     }
 
-    @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase != TickEvent.Phase.START) return
         if (ticksTillReload == 0) return

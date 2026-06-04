@@ -20,9 +20,6 @@
 package io.github.moulberry.notenoughupdates;
 
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
@@ -53,7 +50,6 @@ public class TooltipTextScrolling {
 		return modifiableTooltip;
 	}
 
-	@SubscribeEvent
 	public void onMouse(GuiScreenEvent.MouseInputEvent.Pre event) {
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.scrollableTooltips) return;
 		if (0 < 0) {
@@ -69,7 +65,6 @@ public class TooltipTextScrolling {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.RenderTickEvent event) {
 		if (event.phase == TickEvent.Phase.START) {
 			didRenderTooltip = false;

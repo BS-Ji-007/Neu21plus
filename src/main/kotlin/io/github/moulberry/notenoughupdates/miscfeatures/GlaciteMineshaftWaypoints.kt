@@ -25,8 +25,6 @@ import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils
 import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
-import net.minecraftforge.client.event.RenderWorldLastEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class GlaciteMineshaftWaypoints {
@@ -34,7 +32,6 @@ class GlaciteMineshaftWaypoints {
     var entrance: BlockPos? = null
     fun isEnabled() = NotEnoughUpdates.INSTANCE.config.mining.mineshaftExitWaypoint
 
-    @SubscribeEvent
     fun onLocationChange(event: LocationChangeEvent) {
         entrance = if (event.newLocation == "mineshaft") {
             Minecraft.getInstance().player?.position
@@ -43,7 +40,6 @@ class GlaciteMineshaftWaypoints {
         }
     }
 
-    @SubscribeEvent
     fun onRenderLast(event: RenderWorldLastEvent) {
         if (!isEnabled()) return
         val pos = entrance ?: return

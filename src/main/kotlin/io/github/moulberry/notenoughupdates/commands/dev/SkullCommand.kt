@@ -33,12 +33,10 @@ import io.github.moulberry.notenoughupdates.util.brigadier.thenLiteralExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.ChatFormatting.YELLOW
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class SkullCommand {
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neuskull") {
             thenLiteralExecute("start") {

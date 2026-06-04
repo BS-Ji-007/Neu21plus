@@ -24,7 +24,6 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.util.brigadier.*
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class HelpCommand {
@@ -68,7 +67,6 @@ class HelpCommand {
         "§6§lScroll up to see everything"
     )
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neuhelp") {
             thenArgumentExecute("command", string()) { commandName ->

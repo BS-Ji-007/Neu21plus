@@ -31,9 +31,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +61,6 @@ public class GardenNpcPrices {
 	//§5§o §8+§cNaN Copper
 	private Map<List<String>, List<String>> prices = new HashMap<>();
 	private Map<String, SkyMartItem> skymart = null;
-	@SubscribeEvent
 	public void onRepoReload(RepositoryReloadEvent reload) {
 		skymart = gson.fromJson(
 			Utils.getConstant("skymart", NotEnoughUpdates.INSTANCE.manager.gson),
@@ -72,7 +68,6 @@ public class GardenNpcPrices {
 		);
 	}
 
-	@SubscribeEvent
 	public void onGardenNpcPrices(ItemTooltipEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.gardenNpcPrice) return;
 		if (event.toolTip.size() <= 2 || event.itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_hardened_clay)) return;
@@ -133,7 +128,6 @@ public class GardenNpcPrices {
 		return 0d;
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event) {
 		prices.clear();
 	}

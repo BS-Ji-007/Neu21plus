@@ -522,7 +522,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 			float sliderAmount = (mouseX - (guiLeft + 76 - 48)) / 96f;
 			double val = minValue + (maxValue - minValue) * sliderAmount;
-			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				val = Math.round(val);
 			}
 			float value = (float) Math.max(minValue, Math.min(maxValue, val));

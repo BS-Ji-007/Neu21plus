@@ -57,9 +57,9 @@ class ItemShopExporter : RepoExporter {
             3,
             CompoundTag()
         )
-        baseNPCJson["x"] = context.mc.player.posX.toInt()
-        baseNPCJson["y"] = context.mc.player.posY.toInt()
-        baseNPCJson["z"] = context.mc.player.posZ.toInt()
+        baseNPCJson["x"] = context.mc.player.getX().toInt()
+        baseNPCJson["y"] = context.mc.player.getY().toInt()
+        baseNPCJson["z"] = context.mc.player.getZ().toInt()
         baseNPCJson["island"] = SBInfo.getInstance().getLocation() ?: "none"
 
         val recipes = mutableListOf<ItemShopRecipe>()

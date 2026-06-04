@@ -41,9 +41,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.text.WordUtils;
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -87,7 +84,6 @@ public class ItemTooltipListener {
 		percentStats.add("ability_damage");
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onItemTooltipLow(ItemTooltipEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return;
 
@@ -171,7 +167,7 @@ public class ItemTooltipListener {
 				JsonObject reforgeStones = Constants.REFORGESTONES;
 
 				if (reforgeStones != null && reforgeStones.has(internalName)) {
-					boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+					boolean shift = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 					if (!pressedShiftLast && shift) {
 						showReforgeStoneStats = !showReforgeStoneStats;
 					}
@@ -207,8 +203,8 @@ public class ItemTooltipListener {
 							}
 						}
 
-						boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-						boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+						boolean left = InputConstants.isKeyDown(Keyboard.KEY_LEFT);
+						boolean right = InputConstants.isKeyDown(Keyboard.KEY_RIGHT);
 						if (!pressedArrowLast && (left || right)) {
 							if (left) {
 								rarityIndex--;
@@ -321,7 +317,7 @@ public class ItemTooltipListener {
 					int lineToInject = event.toolTip.get(1).contains("Collection Item") ? 3 : 1;
 
 					if (k == lineToInject) {
-						boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+						boolean shift = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 						if (!pressedShiftLast && shift) {
 							showGemstoneStats = !showGemstoneStats;
 						}
@@ -349,8 +345,8 @@ public class ItemTooltipListener {
 						}
 
 						if (showGemstoneStats) {
-							boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-							boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+							boolean left = InputConstants.isKeyDown(Keyboard.KEY_LEFT);
+							boolean right = InputConstants.isKeyDown(Keyboard.KEY_RIGHT);
 							if (!pressedArrowLast && (left || right)) {
 								if (left) {
 									rarityIndex--;
@@ -406,7 +402,7 @@ public class ItemTooltipListener {
 					Utils.chromaString("Rainbow Rune", k, false) + ChatFormatting.BLUE
 				);
 			} else if (hasEnchantments) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) &&
+				if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) &&
 					NotEnoughUpdates.INSTANCE.config.tooltipTweaks.missingEnchantList) {
 					boolean lineHasEnch = false;
 					for (String s : enchantIds) {
@@ -463,7 +459,7 @@ public class ItemTooltipListener {
 				if (line.contains(ChatFormatting.GRAY + "Buy it now: ") || line.contains(
 					ChatFormatting.GRAY + "Bidder: ") || line.contains(ChatFormatting.GRAY + "Starting bid: ")) {
 
-					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+					if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) && !InputConstants.isKeyDown(Keyboard.KEY_RSHIFT)) {
 						newTooltip.add("");
 						newTooltip.add(ChatFormatting.GRAY + "[SHIFT for Price Info]");
 					} else {
@@ -631,8 +627,8 @@ public class ItemTooltipListener {
 			}
 		}
 
-		pressedShiftLast = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-		pressedArrowLast = Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+		pressedShiftLast = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
+		pressedArrowLast = InputConstants.isKeyDown(Keyboard.KEY_LEFT) || InputConstants.isKeyDown(Keyboard.KEY_RIGHT);
 
 		event.toolTip.clear();
 		event.toolTip.addAll(newTooltip);
@@ -698,7 +694,6 @@ public class ItemTooltipListener {
 
 	JsonArray skullTextures = new JsonArray();
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!neu.isOnSkyblock()) return;
 		if (event.toolTip == null) return;
@@ -728,7 +723,7 @@ public class ItemTooltipListener {
 			}
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && NotEnoughUpdates.INSTANCE.config.hidden.dev &&
+		if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL) && NotEnoughUpdates.INSTANCE.config.hidden.dev &&
 			event.toolTip.size() > 0 && event.toolTip.get(event.toolTip.size() - 1).startsWith(
 			ChatFormatting.DARK_GRAY + "NBT: ")) {
 			event.toolTip.remove(event.toolTip.size() - 1);
@@ -758,7 +753,7 @@ public class ItemTooltipListener {
 				}
 			}
 			event.toolTip.add(sb.toString());
-			if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+			if (InputConstants.isKeyDown(Keyboard.KEY_H)) {
 				if (!copied) {
 					copied = true;
 					StringSelection selection = new StringSelection(sb.toString().replace("§r§7", ""));
@@ -776,13 +771,13 @@ public class ItemTooltipListener {
 
 			String internal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(event.itemStack);
 
-			boolean k = Keyboard.isKeyDown(Keyboard.KEY_K);
-			boolean m = Keyboard.isKeyDown(Keyboard.KEY_M);
-			boolean n = Keyboard.isKeyDown(Keyboard.KEY_N);
-			boolean f = Keyboard.isKeyDown(Keyboard.KEY_F);
-			boolean b = Keyboard.isKeyDown(Keyboard.KEY_B);
-			boolean y = Keyboard.isKeyDown(Keyboard.KEY_Y);
-			boolean j = Keyboard.isKeyDown(Keyboard.KEY_J);
+			boolean k = InputConstants.isKeyDown(Keyboard.KEY_K);
+			boolean m = InputConstants.isKeyDown(Keyboard.KEY_M);
+			boolean n = InputConstants.isKeyDown(Keyboard.KEY_N);
+			boolean f = InputConstants.isKeyDown(Keyboard.KEY_F);
+			boolean b = InputConstants.isKeyDown(Keyboard.KEY_B);
+			boolean y = InputConstants.isKeyDown(Keyboard.KEY_Y);
+			boolean j = InputConstants.isKeyDown(Keyboard.KEY_J);
 
 			boolean isDev = NotEnoughUpdates.INSTANCE.config.hidden.dev;
 			if (!copied && f && isDev) {

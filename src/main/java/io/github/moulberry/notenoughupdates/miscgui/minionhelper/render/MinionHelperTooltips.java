@@ -26,9 +26,6 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperMan
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.MinionSource;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.List;
@@ -47,7 +44,7 @@ public class MinionHelperTooltips {
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.tooltip) return;
 		if (manager.notReady()) return;
 
-		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+		boolean shift = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 		if (!pressedShiftLast && shift) {
 			showFullCost = !showFullCost;
 		}

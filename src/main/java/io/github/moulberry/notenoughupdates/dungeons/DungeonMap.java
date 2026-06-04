@@ -55,9 +55,6 @@ import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec4b;
 import net.minecraft.world.storage.MapData;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
@@ -1285,15 +1282,15 @@ public class DungeonMap {
 					if (entity instanceof EntityPlayer) {
 						EntityPlayer player = (EntityPlayer) entity;
 
-						float roomX = (float) (player.posX + 200) / (roomSizeBlocks + 1);
-						float roomY = (float) (player.posZ + 200) / (roomSizeBlocks + 1);
+						float roomX = (float) (player.getX() + 200) / (roomSizeBlocks + 1);
+						float roomY = (float) (player.getZ() + 200) / (roomSizeBlocks + 1);
 
 						float playerRoomOffsetX = (float) Math.floor(roomX);
 						float playerConnOffsetX = (float) Math.floor(roomX);
 						float playerRoomOffsetY = (float) Math.floor(roomY);
 						float playerConnOffsetY = (float) Math.floor(roomY);
 
-						float roomXInBlocks = (float) (player.posX + 200) % (roomSizeBlocks + 1);
+						float roomXInBlocks = (float) (player.getX() + 200) % (roomSizeBlocks + 1);
 						if (roomXInBlocks < 2) { //0,1
 							playerConnOffsetX -= 2 / 5f - roomXInBlocks / 5f;
 						} else if (roomXInBlocks > roomSizeBlocks - 2) { //31,30,29
@@ -1303,7 +1300,7 @@ public class DungeonMap {
 							playerRoomOffsetX += (roomXInBlocks - 2) / (roomSizeBlocks - 4);
 						}
 
-						float roomYInBlocks = (float) (player.posZ + 200) % (roomSizeBlocks + 1);
+						float roomYInBlocks = (float) (player.getZ() + 200) % (roomSizeBlocks + 1);
 						if (roomYInBlocks < 2) { //0,1
 							playerConnOffsetY -= 2 / 5f - roomYInBlocks / 5f;
 						} else if (roomYInBlocks > roomSizeBlocks - 2) { //31,30,29
@@ -1511,12 +1508,10 @@ public class DungeonMap {
 		this.colourMap = colourMap;
 	}
 
-	@SubscribeEvent
 	public void onWorldChange(WorldEvent.Load event) {
 		colourMap = null;
 	}
 
-	@SubscribeEvent
 	public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (event.type == RenderGameOverlayEvent.ElementType.ALL) {

@@ -28,11 +28,9 @@ import io.github.moulberry.notenoughupdates.miscgui.NEUOverlayPlacements
 import io.github.moulberry.notenoughupdates.options.NEUConfig
 import io.github.moulberry.notenoughupdates.util.brigadier.thenExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class ScreenOpenCommands {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neubuttons") {
             thenExecute {

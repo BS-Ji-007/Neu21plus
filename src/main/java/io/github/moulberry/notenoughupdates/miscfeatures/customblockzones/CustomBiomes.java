@@ -33,7 +33,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +78,6 @@ public class CustomBiomes {
 		return subdivider.getSpecialZoneForBlock(location, pos);
 	}
 
-	@SubscribeEvent
 	public void onBreakSound(OnBlockBreakSoundEffect event) {
 		SpecialBlockZone specialZone = getSpecialZone(event.getPosition());
 		boolean hasMithrilSounds = NotEnoughUpdates.INSTANCE.config.mining.mithrilSounds;
@@ -156,7 +154,6 @@ public class CustomBiomes {
 			state.getValue(BlockColored.COLOR) == color);
 	}
 
-	@SubscribeEvent
 	public void onLocationChange(LocationChangeEvent event) {
 		WorldClient world = Minecraft.getInstance().level;
 		String location = event.newLocation;
@@ -169,7 +166,7 @@ public class CustomBiomes {
 				EntityPlayerSP player = Minecraft.getInstance().player;
 				if (player == null) return;
 
-				world.markBlocksDirtyVertical((int) player.posX, (int) player.posX, (int) player.posZ, (int) player.posZ);
+				world.markBlocksDirtyVertical((int) player.getX(), (int) player.getX(), (int) player.getZ(), (int) player.getZ());
 		}
 	}
 

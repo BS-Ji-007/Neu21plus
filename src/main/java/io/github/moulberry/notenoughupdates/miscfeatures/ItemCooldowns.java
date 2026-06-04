@@ -28,11 +28,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -112,7 +107,6 @@ public class ItemCooldowns {
 		SPRAYONATOR
 	}
 
-	@SubscribeEvent
 	public void tick(TickEvent.ClientTickEvent event) {
 		if (event.phase == TickEvent.Phase.END && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
 			if (tickCounter++ >= 20 * 10) {
@@ -160,19 +154,16 @@ public class ItemCooldowns {
 		}
 	}
 
-	@SubscribeEvent
 	public void onLocationChange(LocationChangeEvent event) {
 		if ("mineshaft".equals(event.newLocation) && pickaxeCooldown > 0) {
 			pickaxeUseCooldownMillisRemaining = 0;
 		}
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event) {
 		blocksClicked.clear();
 	}
 
-	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR ||
 			event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
@@ -273,7 +264,6 @@ public class ItemCooldowns {
 			internalname.equals("DIVAN_DRILL") || internalname.equals("BINGONIMBUS_2000");
 	}
 
-	@SubscribeEvent
 	public void onChatMessage(ClientChatReceivedEvent event) {
 		if (pickaxeCooldown != 0 && PICKAXE_ABILITY_ACTIVATION.matcher(event.message.getString()).matches()) {
 			findCooldownInTooltip(Item.PICKAXES);

@@ -150,7 +150,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		}
 
 		int extraRotation = 0;
-		if (Mouse.isButtonDown(0) || Mouse.isButtonDown(1)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) || net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(1)) {
 			if (backgroundClickedX == -1) {
 				if (mouseX > guiLeft + 23 && mouseX < guiLeft + 23 + 81) {
 					if (mouseY > guiTop + 44 && mouseY < guiTop + 44 + 108) {
@@ -370,7 +370,7 @@ public class BasicPage extends GuiProfileViewerPage {
 								lbPosStr + ChatFormatting.GREEN + " on soopy's networth leaderboard!");
 						}
 
-						if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+						if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 							getInstance().tooltipToDisplay.addAll(nwCategoryHover);
 							getInstance().tooltipToDisplay.add(
 								ChatFormatting.RED + "The IRL price is calculated using the current");
@@ -506,7 +506,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		Map<String, JsonArray> inventoryInfo = getSelectedProfile().getInventoryInfo();
 
 		if (entityPlayer != null) {
-			if (backgroundClickedX != -1 && Mouse.isButtonDown(1)) {
+			if (backgroundClickedX != -1 && net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(1)) {
 				Arrays.fill(entityPlayer.inventory.armorInventory, null);
 			} else {
 				if (inventoryInfo != null && inventoryInfo.containsKey("inv_armor")) {
@@ -669,7 +669,7 @@ public class BasicPage extends GuiProfileViewerPage {
 
 		if (mouseX >= guiLeft + 128 && mouseX <= guiLeft + 216) {
 			if (mouseY >= guiTop + 49 && mouseY <= guiTop + 113) {
-				if (Mouse.isButtonDown(0)) GuiProfileViewer.onSecondPage = true;
+				if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) GuiProfileViewer.onSecondPage = true;
 			}
 		}
 

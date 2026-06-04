@@ -163,7 +163,7 @@ public class ItemPriceInformation {
 				}
 			}
 		}
-		boolean shiftPressed = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
+		boolean shiftPressed = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT);
 		if (shiftPressed) {
 			stackMultiplier = shiftStackMultiplier;
 		}
@@ -430,7 +430,7 @@ public class ItemPriceInformation {
 									starString + ChatFormatting.YELLOW + ChatFormatting.BOLD + ": " +
 									ChatFormatting.GOLD + ChatFormatting.BOLD + upgradeCost + " " + essenceType);
 								if (requiresItems && itemsObject.has(nextStarLevelString)) {
-									boolean shouldShow = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) ||
+									boolean shouldShow = InputConstants.isKeyDown(Keyboard.KEY_LCONTROL) ||
 										NotEnoughUpdates.INSTANCE.config.tooltipTweaks.alwaysShowRequiredItems;
 
 									if (shouldShow) {

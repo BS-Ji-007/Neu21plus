@@ -22,8 +22,6 @@ package io.github.moulberry.notenoughupdates.miscfeatures;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +46,6 @@ public class MutingComposter {
 			&& NotEnoughUpdates.INSTANCE.config.garden.muteComposterSounds;
 	}
 
-	@SubscribeEvent
 	public void onSoundPlay(PlaySoundEvent event) {
 		if (mutableSounds.contains(event.name) && isEnabled()) {
 			event.result = null;

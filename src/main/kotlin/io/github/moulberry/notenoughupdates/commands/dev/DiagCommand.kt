@@ -28,12 +28,10 @@ import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSo
 import io.github.moulberry.notenoughupdates.options.customtypes.NEUDebugFlag
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import io.github.moulberry.notenoughupdates.util.brigadier.EnumArgumentType.Companion.enum
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 // Why is this not merged into /neudevtest
 @NEUAutoSubscribe
 class DiagCommand {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neudiag") {
             thenLiteral("metal") {

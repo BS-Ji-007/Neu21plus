@@ -40,8 +40,6 @@ import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.world.inventory.Slot
 import net.minecraft.resources.ResourceLocation
-import net.minecraftforge.client.event.GuiScreenEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 object TablistTutorial {
@@ -85,7 +83,6 @@ object TablistTutorial {
 
     var activeTask: TabListWidget? = null
 
-    @SubscribeEvent
     fun onGuiPostRender(event: GuiScreenEvent.DrawScreenEvent.Post) {
         if (activeTask == null) {
             activeTask = TablistTaskQueue.getNextQueueItem()
@@ -233,7 +230,6 @@ object TablistTutorial {
         Arrow.drawBigRedArrow(gui, regionSlot, "§cClick here!")
     }
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neutesttablisttutorial") {
             thenArgument("region", string()) { region ->

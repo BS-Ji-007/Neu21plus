@@ -23,8 +23,6 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.util.TabListUtils
 import io.github.moulberry.notenoughupdates.util.stripControlCodes
 import net.minecraft.client.Minecraft
-import net.minecraftforge.event.entity.EntityJoinWorldEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*
 
 @NEUAutoSubscribe
@@ -33,7 +31,6 @@ object TablistAPI {
     private var lastWorldSwitch = 0L
     var lastWidgetEnabled: WidgetNames? = null
 
-    @SubscribeEvent
     fun onWorldSwitch(event: EntityJoinWorldEvent) {
         if (event.entity == Minecraft.getInstance().player) {
             lastWorldSwitch = System.nanoTime()

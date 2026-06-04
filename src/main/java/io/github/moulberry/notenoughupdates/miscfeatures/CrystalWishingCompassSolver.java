@@ -41,11 +41,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3i;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -202,13 +197,11 @@ public class CrystalWishingCompassSolver {
 		resetForNewTarget();
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Unload event) {
 		initWorld();
 		isSkytilsPresent = Loader.isModLoaded("skytils");
 	}
 
-	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.mining.wishingCompassSolver ||
 			SBInfo.getInstance().getLocation() == null ||
@@ -351,7 +344,6 @@ public class CrystalWishingCompassSolver {
 	 *                                            per-area structure missing, or because Hypixel.
 	 *                                            Always within 1 block of X=513 Y=106 Z=551.
 	 */
-	@SubscribeEvent
 	public void onSpawnParticle(SpawnParticleEvent event) {
 		EnumParticleTypes particleType = event.getParticleTypes();
 		double x = event.getXCoord();
@@ -817,7 +809,7 @@ public class CrystalWishingCompassSolver {
 		}
 
 		destinationMessage += ChatFormatting.YELLOW + " [Add Skytils Waypoint]";
-		ChatComponentText chatMessage = new ChatComponentText(destinationMessage);
+		ChatComponentText chatMessage = Component.literal(destinationMessage);
 		chatMessage.setChatStyle(Utils.createClickStyle(
 			ClickEvent.Action.RUN_COMMAND,
 			skytilsCommand,

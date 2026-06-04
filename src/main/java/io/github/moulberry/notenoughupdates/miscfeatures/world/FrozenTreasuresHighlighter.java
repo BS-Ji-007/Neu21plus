@@ -31,8 +31,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -70,7 +68,6 @@ public class FrozenTreasuresHighlighter extends GenericBlockHighlighter {
 		return b == Blocks.ice;
 	}
 
-	@SubscribeEvent
 	public void onTickNew(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END || !isEnabled()) return;
 		World w = Minecraft.getInstance().level;

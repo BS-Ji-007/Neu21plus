@@ -470,9 +470,9 @@ public class CrystalMetalDetectorSolver {
 
 	private static Vec3Comparable getPlayerPosAdjustedForEyeHeight() {
 		return new Vec3Comparable(
-			mc.player.posX,
-			mc.player.posY + (mc.player.getEyeHeight() - mc.player.getDefaultEyeHeight()),
-			mc.player.posZ
+			mc.player.getX(),
+			mc.player.getY() + (mc.player.getEyeHeight() - mc.player.getDefaultEyeHeight()),
+			mc.player.getZ()
 		);
 	}
 

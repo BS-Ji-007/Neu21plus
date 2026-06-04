@@ -35,11 +35,6 @@ import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.HashMap;
@@ -117,7 +112,6 @@ public class DwarvenMinesWaypoints {
 
 	Mining config = NotEnoughUpdates.INSTANCE.config.mining;
 
-	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent event) {
 		Matcher matcherGhast = ghastRegex.matcher(event.message.getString());
 		if (matcherGhast.find() && config.powderGhastWaypoint) {
@@ -134,7 +128,6 @@ public class DwarvenMinesWaypoints {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		emissaryRemovedDistSq = -1;
 
@@ -186,7 +179,6 @@ public class DwarvenMinesWaypoints {
 	private boolean commissionFinished = false;
 	private double emissaryRemovedDistSq = 0;
 
-	@SubscribeEvent
 	public void onRenderSpecial(RenderLivingEvent.Specials.Pre<EntityArmorStand> event) {
 		if (SBInfo.getInstance().getLocation() == null) return;
 		if (!SBInfo.getInstance().getLocation().equals("mining_3")) return;
@@ -196,13 +188,13 @@ public class DwarvenMinesWaypoints {
 			if (emissaryRemovedDistSq > 0 && name.equals(
 				ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "CLICK" + ChatFormatting.RESET)) {
 				EntityPlayerSP p = Minecraft.getInstance().player;
-				double distSq = event.entity.getDistanceSq(p.posX, p.posY, p.posZ);
+				double distSq = event.entity.getDistanceSq(p.getX(), p.getY(), p.getZ());
 				if (Math.abs(distSq - emissaryRemovedDistSq) < 1) {
 					event.setCanceled(true);
 				}
 			} else if (emissaryNames.contains(name)) {
 				EntityPlayerSP p = Minecraft.getInstance().player;
-				double distSq = event.entity.getDistanceSq(p.posX, p.posY, p.posZ);
+				double distSq = event.entity.getDistanceSq(p.getX(), p.getY(), p.getZ());
 				if (distSq >= 12 * 12) {
 					emissaryRemovedDistSq = distSq;
 					event.setCanceled(true);
@@ -211,7 +203,6 @@ public class DwarvenMinesWaypoints {
 		}
 	}
 
-	@SubscribeEvent
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (SBInfo.getInstance().getLocation() == null) return;
 		if (!SBInfo.getInstance().getLocation().equals("mining_3")) return;
@@ -284,9 +275,9 @@ public class DwarvenMinesWaypoints {
 					if (hidden.commissionMilestone >= emissary.minMilestone) {
 
 						EntityPlayerSP p = Minecraft.getInstance().player;
-						double dX = emissary.loc.x + 0.5f - p.posX;
-						double dY = emissary.loc.y + 0.188f - p.posY;
-						double dZ = emissary.loc.z + 0.5f - p.posZ;
+						double dX = emissary.loc.x + 0.5f - p.getX();
+						double dY = emissary.loc.y + 0.188f - p.getY();
+						double dZ = emissary.loc.z + 0.5f - p.getZ();
 
 						double distSq = dX * dX + dY * dY + dZ * dZ;
 						if (distSq >= 12 * 12) {

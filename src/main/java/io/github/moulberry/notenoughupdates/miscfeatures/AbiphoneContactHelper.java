@@ -30,8 +30,6 @@ import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.List;
@@ -49,7 +47,6 @@ public class AbiphoneContactHelper {
 	private String selectedWaypointName = "";
 	private long lastClick = 0L;
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (!Utils.getOpenChestName().equals("Contacts Directory")) return;
@@ -95,7 +92,6 @@ public class AbiphoneContactHelper {
 		}
 	}
 
-	@SubscribeEvent
 	public void onStackClick(SlotClickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.abiphoneContactMarker) return;
@@ -121,7 +117,7 @@ public class AbiphoneContactHelper {
 		if (lastClick + 500 > System.currentTimeMillis()) return;
 		lastClick = System.currentTimeMillis();
 
-		boolean shiftPressed = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
+		boolean shiftPressed = InputConstants.isKeyDown(Keyboard.KEY_RSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_LSHIFT);
 		if (selectedWaypointName.equals(npcName) && !shiftPressed) {
 			NotEnoughUpdates.INSTANCE.navigation.untrackWaypoint();
 			selectedWaypointName = "";

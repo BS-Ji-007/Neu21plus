@@ -51,9 +51,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -225,7 +222,6 @@ public class SlotLocking {
 		return ((AccessorContainerScreen) container).doGetSlotAtPosition(mouseX, mouseY);
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void keyboardInput(GuiScreenEvent.KeyboardInputEvent.Pre event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() ||
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
@@ -300,7 +296,6 @@ public class SlotLocking {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void mouseEvent(GuiScreenEvent.MouseInputEvent.Pre event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() ||
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
@@ -403,7 +398,6 @@ public class SlotLocking {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drawScreenEvent(GuiScreenEvent.DrawScreenEvent.Post event) {
 		if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && !event.isCanceled() && pairingSlot != null &&
 			lockKeyHeld) {
@@ -470,7 +464,6 @@ public class SlotLocking {
 		}
 	}
 
-	@SubscribeEvent
 	public void onWindowClick(SlotClickEvent slotClickEvent) {
 		LockedSlot locked = getLockedSlot(slotClickEvent.slot);
 		if (locked == null) {
@@ -771,7 +764,6 @@ public class SlotLocking {
 		return true;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void afterRenderInventory(GuiScreenEvent.DrawScreenEvent.Post event) {
 		if (!(event.gui instanceof ContainerScreen)) return;
 		var gui = (ContainerScreen) event.gui;
@@ -797,7 +789,6 @@ public class SlotLocking {
 		);
 	}
 
-	@SubscribeEvent
 	public void barrierInventory(ReplaceItemEvent event) {
 		if (!shouldShowBarrier(event.getSlotNumber(), event.getInventory())) return;
 		ItemStack stack = new ItemStack(Blocks.barrier);

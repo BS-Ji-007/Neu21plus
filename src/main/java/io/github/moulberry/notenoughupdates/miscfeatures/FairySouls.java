@@ -36,11 +36,6 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -86,7 +81,6 @@ public class FairySouls {
 		return showSouls;
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event) {
 		currentLocation = null;
 		trackSouls = NotEnoughUpdates.INSTANCE.config.misc.trackFairySouls;
@@ -167,7 +161,6 @@ public class FairySouls {
 		return ((value - min) / (max - min));
 	}
 
-	@SubscribeEvent
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (!showSouls || !trackSouls || currentLocation == null || closestMissingSouls.isEmpty()) {
 			return;
@@ -363,7 +356,6 @@ public class FairySouls {
 		Utils.addChatMessage(s);
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		if (!trackSouls || event.type == 2) return;
 

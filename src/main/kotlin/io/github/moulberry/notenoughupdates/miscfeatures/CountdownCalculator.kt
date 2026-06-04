@@ -21,8 +21,6 @@ package io.github.moulberry.notenoughupdates.miscfeatures
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import net.minecraft.client.Minecraft
-import net.minecraftforge.event.entity.player.ItemTooltipEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -74,7 +72,6 @@ class CountdownCalculator {
         LIZSTONKREDEMPTION("Resets in:", "Resets at");
     }
 
-    @SubscribeEvent
     fun onTooltip(event: ItemTooltipEvent) {
         var formatterAsString = when (NotEnoughUpdates.INSTANCE.config.misc.showWhenCountdownEnds) {
             1 -> "EEEE, MMM d h:mm a"

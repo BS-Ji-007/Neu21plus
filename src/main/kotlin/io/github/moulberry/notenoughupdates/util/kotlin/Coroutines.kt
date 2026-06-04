@@ -20,8 +20,6 @@
 package io.github.moulberry.notenoughupdates.util.kotlin
 
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -72,7 +70,6 @@ object Coroutines {
 
     private val tasks = mutableListOf<DelayedTask>()
 
-    @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase == TickEvent.Phase.END) {
             val toRun = mutableListOf<DelayedTask>()

@@ -225,7 +225,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		boolean leftHovered = false;
 		boolean rightHovered = false;
-		if (Mouse.isButtonDown(0)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 			if (mouseY > guiTop + pageArrowsHeight && mouseY < guiTop + pageArrowsHeight + 16) {
 				if (mouseX > guiLeft + 251 - 12 && mouseX < guiLeft + 251 + 12) {
 					if (mouseX < guiLeft + 251) {
@@ -320,7 +320,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 						(mouseY >= y && mouseY <= y + 16)) {
 						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 						String itemID = item.get("internalname").getAsString();
-						if (Mouse.isButtonDown(0) && museumData.getSavedItems().containsKey(itemID)) {
+						if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) && museumData.getSavedItems().containsKey(itemID)) {
 							selectedItem = items;
 							currentItemSelected = itemID;
 						}
@@ -371,7 +371,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 				if ((mouseX >= x && mouseX <= x + 16) &&
 					(mouseY >= y && mouseY <= y + 16)) {
-					if (Mouse.isButtonDown(0) && museumData.getSavedItems().containsKey(itemID) && actualItem) {
+					if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) && museumData.getSavedItems().containsKey(itemID) && actualItem) {
 						selectedItem = items;
 						currentItemSelected = itemID;
 					}

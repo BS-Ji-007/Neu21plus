@@ -33,8 +33,6 @@ import io.github.moulberry.notenoughupdates.util.kotlin.KotlinTypeAdapterFactory
 import io.github.moulberry.notenoughupdates.util.kotlin.fromJson
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
-import net.minecraftforge.client.event.RenderWorldLastEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 object GlaciteTunnelWaypoints {
@@ -57,7 +55,6 @@ object GlaciteTunnelWaypoints {
         .registerTypeAdapterFactory(BlockPosTypeAdapterFactory)
         .create()
 
-    @SubscribeEvent
     fun onRepoReload(event: RepositoryReloadEvent) {
         val text = event.repositoryRoot.resolve("constants/glacite_tunnel_waypoints.json")
             .takeIf { it.exists() }?.readText()
@@ -68,7 +65,6 @@ object GlaciteTunnelWaypoints {
 
     var waypointsForQuest: Map<String, Waypoints> = mapOf()
 
-    @SubscribeEvent
     fun onRender(event: RenderWorldLastEvent) {
         if (NotEnoughUpdates.INSTANCE.config.mining.tunnelWaypoints.get() == Mining.GlaciteTunnelWaypointBehaviour.NONE)
             return

@@ -29,11 +29,9 @@ import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import net.minecraft.event.ClickEvent
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.ChatFormatting
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class FeaturesCommand {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neufeatures") {
             thenExecute {

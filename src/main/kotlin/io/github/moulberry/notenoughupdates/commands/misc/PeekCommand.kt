@@ -29,7 +29,6 @@ import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.ChatFormatting.*
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.commons.lang3.text.WordUtils
 import java.util.*
 import java.util.concurrent.*
@@ -297,7 +296,6 @@ class PeekCommand {
         }
     }
 
-    @SubscribeEvent
     fun onCommand(event: RegisterBrigadierCommandEvent) {
         event.command("peek") {
             thenArgument("player", string()) { player ->

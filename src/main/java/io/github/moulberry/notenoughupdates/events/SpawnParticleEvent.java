@@ -20,7 +20,6 @@
 package io.github.moulberry.notenoughupdates.events;
 
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable
 public class SpawnParticleEvent extends NEUEvent {

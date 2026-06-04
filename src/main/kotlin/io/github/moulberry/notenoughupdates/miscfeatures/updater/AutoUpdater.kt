@@ -37,9 +37,6 @@ import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.network.chat.MutableComponent
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import org.apache.logging.log4j.LogManager
 import java.util.concurrent.CompletableFuture
 import javax.net.ssl.HttpsURLConnection
@@ -173,7 +170,6 @@ object AutoUpdater {
 
     val config get() = NotEnoughUpdates.INSTANCE.config.about
 
-    @SubscribeEvent
     fun onPlayerAvailableOnce(event: TickEvent.ClientTickEvent) {
         val p = Minecraft.getInstance().player ?: return
         MinecraftForge.EVENT_BUS.unregister(this)
@@ -182,7 +178,6 @@ object AutoUpdater {
     }
 
 
-    @SubscribeEvent
     fun testCommand(event: RegisterBrigadierCommandEvent) {
         event.command("neuinternalupdatenow") {
             thenExecute {

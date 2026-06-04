@@ -31,7 +31,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @NEUAutoSubscribe
 public class ProfileViewerButton {
@@ -46,7 +45,6 @@ public class ProfileViewerButton {
 	String username = "";
 	int replaceSlot = -1;
 
-	@SubscribeEvent
 	public void onSlotClick(SlotClickEvent event) {
 		if (!Utils.getOpenChestName().contains(" Profile") || event.guiContainer.menu.menu.size() < 54) {
 			username = "";
@@ -70,7 +68,6 @@ public class ProfileViewerButton {
 		//username = "";
 	}
 
-	@SubscribeEvent
 	public void itemReplace(ReplaceItemEvent event) {
 		if (event.getInventory() instanceof InventoryPlayer) {
 			return;

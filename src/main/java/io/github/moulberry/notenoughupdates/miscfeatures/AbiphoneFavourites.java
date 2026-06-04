@@ -37,9 +37,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -75,7 +72,6 @@ public class AbiphoneFavourites {
 		"§eClick to show only favourite contacts!"
 	);
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (isWrongInventory()) return;
 
@@ -116,7 +112,6 @@ public class AbiphoneFavourites {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onStackClick(SlotClickEvent event) {
 		if (isWrongInventory()) return;
 
@@ -167,7 +162,6 @@ public class AbiphoneFavourites {
 		event.setCanceled(true);
 	}
 
-	@SubscribeEvent
 	public void replaceItem(ReplaceItemEvent event) {
 		IChatComponent chatComponent = event.getInventory().getName().getString();
 		if (chatComponent == null || isWrongInventory()) return;
@@ -203,7 +197,6 @@ public class AbiphoneFavourites {
 		return isAbiphoneShowOnlyFavourites() && !getFavouriteContacts().contains(name);
 	}
 
-	@SubscribeEvent
 	public void onDrawBackground(ContainerScreenBackgroundDrawnEvent event) {
 		if (isWrongInventory()) return;
 

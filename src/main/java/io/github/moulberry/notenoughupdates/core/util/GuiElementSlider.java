@@ -116,7 +116,7 @@ public class GuiElementSlider extends GuiElement {
 
 	@Override
 	public boolean mouseInput(int mouseX, int mouseY) {
-		if (!Mouse.isButtonDown(0)) {
+		if (!net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 			clicked = false;
 		}
 

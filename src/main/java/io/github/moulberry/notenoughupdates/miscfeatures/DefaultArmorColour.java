@@ -27,8 +27,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,7 +74,6 @@ public class DefaultArmorColour {
 		return item.getColor(stack);
 	}
 
-	@SubscribeEvent
 	public void onWorldChange(WorldEvent.Unload event) {
 		armorColourCache.clear();
 	}

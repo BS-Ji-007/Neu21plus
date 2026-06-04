@@ -143,7 +143,7 @@ public class PetsPage extends GuiProfileViewerPage {
 
 		boolean leftHovered = false;
 		boolean rightHovered = false;
-		if (Mouse.isButtonDown(0)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 			if (mouseY > guiTop + 6 && mouseY < guiTop + 22) {
 				if (mouseX > guiLeft + 100 - 20 - 12 && mouseX < guiLeft + 100 - 20) {
 					leftHovered = true;

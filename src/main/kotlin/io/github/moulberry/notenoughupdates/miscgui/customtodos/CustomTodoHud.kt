@@ -29,8 +29,6 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.init.Items
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting
-import net.minecraftforge.client.event.ClientChatReceivedEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*
 
 @NEUAutoSubscribe
@@ -45,7 +43,6 @@ object CustomTodoHud {
         }
     }
 
-    @SubscribeEvent
     fun onTabList(event: TabListChangeEvent) {
         NotEnoughUpdates.INSTANCE.config.hidden.customTodos
             .forEach { todo ->
@@ -59,7 +56,6 @@ object CustomTodoHud {
             }
     }
 
-    @SubscribeEvent
     fun onSidebar(event: SidebarChangeEvent) {
         NotEnoughUpdates.INSTANCE.config.hidden.customTodos
             .forEach { todo ->
@@ -73,7 +69,6 @@ object CustomTodoHud {
             }
     }
 
-    @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
         val text = StringUtils.cleanColour(event.message.unformattedText)
         NotEnoughUpdates.INSTANCE.config.hidden.customTodos

@@ -23,7 +23,6 @@ import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper;
 import io.github.moulberry.notenoughupdates.commands.help.SettingsCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraftforge.fml.client.IModGuiFactory;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.IOException;

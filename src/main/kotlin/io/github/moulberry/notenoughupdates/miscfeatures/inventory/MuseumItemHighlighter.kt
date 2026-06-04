@@ -35,7 +35,6 @@ import net.minecraft.init.Items
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.item.EnumDyeColor
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 object MuseumItemHighlighter {
@@ -48,7 +47,6 @@ object MuseumItemHighlighter {
 
     private val findRawItemForName = LRUCache.memoize(::findRawItemForName0, 4 * 7 * 2)
 
-    @SubscribeEvent
     fun onRepositoryReload(event: RepositoryReloadEvent) {
         findRawItemForName.clearCache()
     }
@@ -59,7 +57,6 @@ object MuseumItemHighlighter {
     }
 
 
-    @SubscribeEvent
     fun onItemOverride(event: ReplaceItemEvent) {
         if (!config.museumItemShow) return
         if (!isMuseumInventory(event.inventory)) return
@@ -75,7 +72,6 @@ object MuseumItemHighlighter {
         return itemStack.hasDisplayName() && itemStack.item == Items.dye && EnumDyeColor.byDyeDamage(itemStack.itemDamage) == EnumDyeColor.LIME
     }
 
-    @SubscribeEvent
     fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val egui = event.container ?: return
         val chest = egui.menu as? ChestMenu ?: return

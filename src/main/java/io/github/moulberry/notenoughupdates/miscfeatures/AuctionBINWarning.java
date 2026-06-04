@@ -35,7 +35,6 @@ import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -83,7 +82,6 @@ public class AuctionBINWarning extends GuiElement {
 		return shouldPerformCheck() && showWarning;
 	}
 
-	@SubscribeEvent
 	public void onMouseClick(SlotClickEvent event) {
 		if (!shouldPerformCheck()) return;
 

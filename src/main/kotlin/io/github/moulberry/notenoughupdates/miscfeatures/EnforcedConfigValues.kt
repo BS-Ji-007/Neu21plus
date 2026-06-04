@@ -28,9 +28,6 @@ import io.github.moulberry.notenoughupdates.util.Shimmy
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.fromJson
 import net.minecraft.client.Minecraft
-import net.minecraftforge.client.event.GuiOpenEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 
 @NEUAutoSubscribe
 object EnforcedConfigValues {
@@ -51,7 +48,6 @@ object EnforcedConfigValues {
 
     var enforcedValues: List<EnforcedValueData> = listOf()
 
-    @SubscribeEvent
     fun onRepoReload(event: RepositoryReloadEvent) {
         val fixedValues = event.repositoryRoot.resolve("enforced_values")
         enforcedValues = if (fixedValues.exists()) {
@@ -71,14 +67,12 @@ object EnforcedConfigValues {
             sendPSAs()
     }
 
-    @SubscribeEvent
     fun onGuiClose(event: GuiOpenEvent) {
         enforceOntoConfig(NotEnoughUpdates.INSTANCE.config ?: return)
     }
 
     var hasSentPSAsOnce = false
 
-    @SubscribeEvent
     fun onTick(tickEvent: TickEvent.ClientTickEvent) {
         if (hasSentPSAsOnce || Minecraft.getInstance().player == null || !NotEnoughUpdates.INSTANCE.isOnSkyblock) return
         hasSentPSAsOnce = true

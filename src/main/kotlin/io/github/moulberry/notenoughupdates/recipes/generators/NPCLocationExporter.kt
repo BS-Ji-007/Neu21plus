@@ -36,8 +36,6 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
-import net.minecraftforge.client.event.MouseEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import com.mojang.blaze3d.platform.InputConstants
 import java.util.*
 
@@ -123,7 +121,6 @@ class NPCLocationExporter {
         }
     }
 
-    @SubscribeEvent
     fun onMouseClick(event: MouseEvent) {
         if (event.buttonstate || event.button != 2 || !NotEnoughUpdates.INSTANCE.config.apiData.repositoryEditing ||
             !NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()

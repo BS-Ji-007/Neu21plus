@@ -34,10 +34,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,7 +50,6 @@ public class PowerStoneStatsDisplay {
 		return instance;
 	}
 
-	@SubscribeEvent
 	public void onProfileDataLoaded(ProfileDataLoadedEvent event) {
 		JsonObject profileInfo = event.getProfileInfo();
 		if (profileInfo == null) return;
@@ -67,7 +62,6 @@ public class PowerStoneStatsDisplay {
 		configProfileSpecific.magicalPower = ProfileViewerUtils.getMagicalPower(inventoryInfo, profileInfo);
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.powerStoneStats) return;
 		if (!dirty) return;
@@ -94,14 +88,12 @@ public class PowerStoneStatsDisplay {
 		}
 	}
 
-	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		if (event.gui != null) {
 			dirty = true;
 		}
 	}
 
-	@SubscribeEvent
 	public void onItemTooltipLow(ItemTooltipEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.powerStoneStats) return;
 

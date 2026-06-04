@@ -34,8 +34,6 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.IOException;
@@ -665,7 +663,7 @@ public class DevInfoPane extends TextInfoPane {
 	@Override
 	public boolean keyboardInput() {
 		if (running.get() || true) return false;
-		if (Keyboard.isKeyDown(Keyboard.KEY_J)) {
+		if (InputConstants.isKeyDown(Keyboard.KEY_J)) {
 			running.set(!running.get());
 
 			for (String bukkit : bukkitList) {

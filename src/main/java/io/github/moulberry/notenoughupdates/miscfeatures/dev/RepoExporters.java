@@ -294,7 +294,7 @@ public class RepoExporters {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
+			Minecraft.getInstance().player.addChatMessage(Component.literal(
 				ChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details."));
 		}
 	}

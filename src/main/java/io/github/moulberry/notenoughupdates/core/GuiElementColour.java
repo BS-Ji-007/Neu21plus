@@ -121,7 +121,7 @@ public class GuiElementColour extends GuiElement {
 
 		BufferedImage bufferedImage = new BufferedImage(288, 288, BufferedImage.TYPE_INT_ARGB);
 		float borderRadius = 0.05f;
-		if (Keyboard.isKeyDown(Keyboard.KEY_N)) borderRadius = 0;
+		if (InputConstants.isKeyDown(Keyboard.KEY_N)) borderRadius = 0;
 		for (int x = -16; x < 272; x++) {
 			for (int y = -16; y < 272; y++) {
 				float radius = (float) Math.sqrt(((x - 128) * (x - 128) + (y - 128) * (y - 128)) / 16384f);
@@ -361,7 +361,7 @@ public class GuiElementColour extends GuiElement {
 				return false;
 			}
 		}
-		if (Mouse.isButtonDown(0) && clickedComponent >= 0) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) && clickedComponent >= 0) {
 			int currentColour = ChromaColour.specialToSimpleRGB(colour.get());
 			Color c = new Color(currentColour, true);
 			float[] hsv = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), null);

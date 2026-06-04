@@ -24,10 +24,6 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.util.NotificationHandler;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @NEUAutoSubscribe
 public class OldAnimationChecker {
@@ -36,7 +32,6 @@ public class OldAnimationChecker {
 		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event) {
 		if (!NotEnoughUpdates.INSTANCE.config.notifications.doOamNotif) {
 			unregister();

@@ -27,9 +27,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.potion.Potion;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
@@ -264,7 +261,6 @@ public class CapeManager {
 		updateWorldFramebuffer = false;
 	}
 
-	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Post e) {
 		if (e.partialRenderTick == 1.0F) return; //rendering in inventory
 
@@ -294,7 +290,6 @@ public class CapeManager {
 
 	private static final ExecutorService CAPE_TICKER = Executors.newCachedThreadPool();
 
-	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
 		if (Minecraft.getInstance().level == null) return;

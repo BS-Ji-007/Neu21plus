@@ -28,8 +28,6 @@ import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.inventory.ContainerScreen
-import net.minecraftforge.client.event.GuiScreenEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Mouse
 import java.util.*
 
@@ -42,7 +40,6 @@ object RepoExporters {
     private var lastRenderedButtons = listOf<Pair<GuiButton, RepoExporter>>()
     private var lastGui: ContainerScreen? = null
 
-    @SubscribeEvent
     fun onGuiRender(event: ContainerScreenBackgroundDrawnEvent) {
         if (!NotEnoughUpdates.INSTANCE.config.apiData.repositoryEditing) return
         val mouseX = Utils.getMouseX()
@@ -69,7 +66,6 @@ object RepoExporters {
         }
     }
 
-    @SubscribeEvent
     fun onGuiClick(event: GuiScreenEvent.MouseInputEvent.Pre) {
         if (!Mouse.getEventButtonState()) return
         val accessor = event.gui as? AccessorContainerScreen ?: return

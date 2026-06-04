@@ -37,8 +37,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -54,7 +52,6 @@ public class AnimatedSkullExporter {
 	public static ArrayList<String> lastSkullsList = new ArrayList<>();
 	public static String trackedPlayer = "";
 
-	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!isRecording()) return;
 		if (Minecraft.getInstance().level == null) {
@@ -110,27 +107,27 @@ public class AnimatedSkullExporter {
 		}
 		if (recordingType == RecordingType.HEAD) {
 			recordingState = RecordingType.HEAD;
-			Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Started recording skull frames"));
+			Utils.addChatMessage(Component.literal(ChatFormatting.YELLOW + "[NEU] Started recording skull frames"));
 		} else if (recordingType == RecordingType.PET) {
 			recordingState = RecordingType.PET;
-			Utils.addChatMessage(new ChatComponentText(
+			Utils.addChatMessage(Component.literal(
 				ChatFormatting.YELLOW + "[NEU] Started recording pet skull frames"));
-			Utils.addChatMessage(new ChatComponentText(
+			Utils.addChatMessage(Component.literal(
 				ChatFormatting.YELLOW + "[NEU] Make sure you are near NO OTHER armour stands"));
-			Utils.addChatMessage(new ChatComponentText(
+			Utils.addChatMessage(Component.literal(
 				ChatFormatting.YELLOW + "[NEU] The corner of my island /visit throwpo works"));
 		} else if (recordingType == RecordingType.PLAYER) {
 			recordingState = RecordingType.PLAYER;
-			Utils.addChatMessage(new ChatComponentText(
+			Utils.addChatMessage(Component.literal(
 				ChatFormatting.YELLOW + "[NEU] Started recording " + trackedPlayer + "'s skull frames"));
 		}
-		Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Wait for the animation to play out"));
-		Utils.addChatMessage(new ChatComponentText(
+		Utils.addChatMessage(Component.literal(ChatFormatting.YELLOW + "[NEU] Wait for the animation to play out"));
+		Utils.addChatMessage(Component.literal(
 			ChatFormatting.YELLOW + "[NEU] Use /neuskull stop to stop recording"));
 	}
 
 	public static void restartRecording(RecordingType recordingType) {
-		Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Restarting..."));
+		Utils.addChatMessage(Component.literal(ChatFormatting.YELLOW + "[NEU] Restarting..."));
 		AnimatedSkullExporter.finishRecording(false, true);
 		AnimatedSkullExporter.startRecording(recordingType);
 	}

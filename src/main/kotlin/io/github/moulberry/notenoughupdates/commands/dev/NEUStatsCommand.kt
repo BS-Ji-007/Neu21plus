@@ -35,10 +35,6 @@ import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.command.ICommandSender
 import net.minecraft.ChatFormatting.DARK_RED
 import net.minecraft.ChatFormatting.GREEN
-import net.minecraftforge.common.ForgeVersion
-import net.minecraftforge.fml.client.FMLClientHandler
-import net.minecraftforge.fml.common.Loader
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
 import java.awt.datatransfer.StringSelection
@@ -48,7 +44,6 @@ import javax.management.ObjectName
 
 @NEUAutoSubscribe
 class NEUStatsCommand {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command( "neustats") {
             thenLiteralExecute("modlist") {

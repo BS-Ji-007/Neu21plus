@@ -39,8 +39,6 @@ import net.minecraft.launchwrapper.Launch
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.ChatFormatting.*
 import net.minecraft.util.EnumParticleTypes
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.function.Predicate
 import kotlin.math.floor
 
@@ -100,7 +98,6 @@ class DevTestCommand {
         return isDeveloper(commandSender)
     }
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         val hook = event.command("neudevtest") {
             requires {
@@ -240,9 +237,9 @@ class DevTestCommand {
                 }.withHelp("Open a gui by class name")
             }
             thenLiteralExecute("center") {
-                val x = floor(Minecraft.getInstance().player.posX) + 0.5f
-                val z = floor(Minecraft.getInstance().player.posZ) + 0.5f
-                Minecraft.getInstance().player.setPosition(x, Minecraft.getInstance().player.posY, z)
+                val x = floor(Minecraft.getInstance().player.getX()) + 0.5f
+                val z = floor(Minecraft.getInstance().player.getZ()) + 0.5f
+                Minecraft.getInstance().player.setPosition(x, Minecraft.getInstance().player.getY(), z)
                 reply("Literal hacks")
             }.withHelp("Center yourself on the block you are currently standing (like using AOTE)")
             thenLiteral("minion") {

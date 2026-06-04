@@ -21,7 +21,6 @@ package io.github.moulberry.notenoughupdates.events;
 
 import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.world.inventory.Slot;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import org.jetbrains.annotations.NotNull;
 
 @Cancelable

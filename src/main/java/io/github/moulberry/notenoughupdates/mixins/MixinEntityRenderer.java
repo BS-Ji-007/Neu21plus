@@ -26,7 +26,6 @@ import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.util.vector.Vector3f;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -73,9 +72,9 @@ public abstract class MixinEntityRenderer {
 		Vector3f currentPosition = CustomItemEffects.INSTANCE.getCurrentPosition();
 		if (currentPosition != null) {
 			Entity entity = Minecraft.getInstance().getRenderViewEntity();
-			double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
-			double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
-			double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
+			double d0 = entity.lastTickPosX + (entity.getX() - entity.lastTickPosX) * (double) partialTicks;
+			double d1 = entity.lastTickPosY + (entity.getY() - entity.lastTickPosY) * (double) partialTicks;
+			double d2 = entity.lastTickPosZ + (entity.getZ() - entity.lastTickPosZ) * (double) partialTicks;
 
 			com.mojang.blaze3d.systems.RenderSystem.translate(-currentPosition.x + d0, -currentPosition.y + d1, -currentPosition.z + d2);
 			ForgeHooksClient.dispatchRenderLast(context, partialTicks);

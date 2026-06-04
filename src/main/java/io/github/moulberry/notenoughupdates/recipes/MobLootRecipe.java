@@ -67,7 +67,7 @@ public class MobLootRecipe implements NeuRecipe {
 		}
 
 		public ItemStack getItemStack() {
-			if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				lastHoveredIndex = (int) ((System.currentTimeMillis() / 2000) % (alternatives.size() + 1));
 			}
 			if (lastHoveredIndex == alternatives.size()) {

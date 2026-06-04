@@ -81,7 +81,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.ClientCommandHandler;
 import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -1052,7 +1051,7 @@ public class NEUOverlay extends Gui {
 			return false;
 		}
 
-		if (NotEnoughUpdates.INSTANCE.config.hidden.dev && (Keyboard.isKeyDown(Keyboard.KEY_Y) && !Keyboard.isKeyDown(
+		if (NotEnoughUpdates.INSTANCE.config.hidden.dev && (InputConstants.isKeyDown(Keyboard.KEY_Y) && !InputConstants.isKeyDown(
 			Keyboard.KEY_LCONTROL)) && !searchBarHasFocus) {
 			DevInfoPane devInfoPane = new DevInfoPane(this, manager);
 			if (devInfoPane.getText().isEmpty()) {
@@ -1067,7 +1066,7 @@ public class NEUOverlay extends Gui {
 				searchBarHasFocus = false;
 			}
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F) &&
+			if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL) && InputConstants.isKeyDown(Keyboard.KEY_F) &&
 				NotEnoughUpdates.INSTANCE.config.toolbar.searchBar && NotEnoughUpdates.INSTANCE.config.toolbar.ctrlF) {
 				searchBarHasFocus = !searchBarHasFocus;
 				if (searchBarHasFocus) {
@@ -1197,7 +1196,7 @@ public class NEUOverlay extends Gui {
 							}
 						} else if (apiData.repositoryEditing &&
 							keyPressed == Keyboard.KEY_K) {
-							if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+							if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 								var externalEditorCommand = NotEnoughUpdates.INSTANCE.config.hidden.externalEditor;
 								if (externalEditorCommand == null) {
 									Utils.addChatMessage(
@@ -1706,7 +1705,7 @@ public class NEUOverlay extends Gui {
 		int leftPressed = 0;
 		int rightPressed = 0;
 
-		if (Mouse.isButtonDown(0) || Mouse.isButtonDown(1)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) || net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(1)) {
 			int width = Utils.peekGuiScale().getScaledWidth();
 			int height = Utils.peekGuiScale().getScaledHeight();
 
@@ -1848,7 +1847,7 @@ public class NEUOverlay extends Gui {
 		rendermanager.setRenderShadow(false);
 		for (EntityLivingBase ent : entities) {
 			GL11.glColor4f(1, 1, 1, 1);
-			if (ent != null) rendermanager.renderEntityWithPosYaw(ent, ent.posX, ent.posY, ent.posZ, 0.0F, 1.0F);
+			if (ent != null) rendermanager.renderEntityWithPosYaw(ent, ent.getX(), ent.getY(), ent.getZ(), 0.0F, 1.0F);
 		}
 		rendermanager.setRenderShadow(true);
 

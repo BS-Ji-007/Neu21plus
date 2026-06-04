@@ -26,8 +26,6 @@ import io.github.moulberry.notenoughupdates.util.SkyBlockTime
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.init.Items
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.client.event.ClientChatReceivedEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.time.Duration
 import java.time.Instant
 import java.util.regex.Pattern
@@ -37,7 +35,6 @@ class SkyMallDisplay {
 
     private val pattern = Pattern.compile("§r§eNew buff§r§r§r: (.*)§r")
 
-    @SubscribeEvent(receiveCanceled = true)
     fun onChatReceive(event: ClientChatReceivedEvent) {
         if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return
 

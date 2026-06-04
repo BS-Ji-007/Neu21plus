@@ -1010,7 +1010,7 @@ public class TradeWindow {
 
 		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
-		if (Mouse.getEventButtonState() && Mouse.isButtonDown(0)) {
+		if (Mouse.getEventButtonState() && net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 			int index = 0;
 			for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 				if (stack == null) {

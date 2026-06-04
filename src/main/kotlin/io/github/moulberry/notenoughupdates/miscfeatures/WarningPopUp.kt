@@ -28,7 +28,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.MainWindow
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.ChatFormatting
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import com.mojang.blaze3d.platform.InputConstants
 import org.lwjgl.input.Mouse
 
@@ -142,7 +141,6 @@ abstract class WarningPopUp : ScreenReplacer() {
         return false
     }
 
-    @SubscribeEvent
     fun onHover(event: IsSlotBeingHoveredEvent) {
         if (shouldShow()) {
             event.prevent()

@@ -28,8 +28,6 @@ import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines.await
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines.continueOn
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines.launchCoroutine
 import net.minecraft.client.Minecraft
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import java.time.Duration
 import java.time.Instant
 import java.util.*
@@ -184,7 +182,6 @@ class UrsaClient(val apiUtil: ApiUtil) {
 
     @NEUAutoSubscribe
     object TickHandler {
-        @SubscribeEvent
         fun onTick(event: TickEvent) {
             NotEnoughUpdates.INSTANCE.manager.ursaClient.bumpRequests()
         }

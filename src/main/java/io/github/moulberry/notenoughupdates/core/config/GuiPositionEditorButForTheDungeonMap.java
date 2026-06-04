@@ -148,7 +148,7 @@ public class GuiPositionEditorButForTheDungeonMap extends GuiScreen { // nea is 
 		if (keyCode == Keyboard.KEY_R) {
 			position.set(originalPosition);
 		} else if (!clicked) {
-			boolean shiftHeld = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+			boolean shiftHeld = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 			int dist = shiftHeld ? 10 : 1;
 			if (keyCode == Keyboard.KEY_DOWN) {
 				position.moveY(dist, elementHeight, new ScaledResolution(Minecraft.getInstance()));

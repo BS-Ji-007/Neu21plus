@@ -27,7 +27,6 @@ import net.minecraft.client.gui.GuiTextField
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.init.Items
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.fml.client.GuiScrollingList
 
 class ItemSearchGui(initialText: String, val onSelect: (String?) -> Unit) : GuiScreen() {
     val textField = GuiTextField(

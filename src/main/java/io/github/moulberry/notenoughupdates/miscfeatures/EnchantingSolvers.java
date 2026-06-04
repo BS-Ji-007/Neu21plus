@@ -34,10 +34,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
@@ -91,7 +87,6 @@ public class EnchantingSolvers {
 	private static final HashSet<Integer> possibleMatches = new HashSet<>();
 	private static final HashSet<Integer> powerupMatches = new HashSet<>();
 
-	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		chronomatronOrder.clear();
 		currentSolver = SolverType.NONE;
@@ -312,7 +307,6 @@ public class EnchantingSolvers {
 		return false;
 	}
 
-	@SubscribeEvent
 	public void onStackClick(SlotClickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.enchantingSolvers.enableEnchantingSolvers
 			|| !NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
@@ -558,7 +552,6 @@ public class EnchantingSolvers {
 		}
 	}
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (NotEnoughUpdates.INSTANCE.config.enchantingSolvers.hideTooltips &&
 			(currentSolver == SolverType.CHRONOMATRON || currentSolver == SolverType.ULTRASEQUENCER)) {
@@ -574,7 +567,6 @@ public class EnchantingSolvers {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			currentSolver = SolverType.NONE;

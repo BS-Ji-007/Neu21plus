@@ -37,11 +37,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Map;
 
@@ -114,7 +109,6 @@ public class MiningStuff {
 		return false;
 	}
 
-	@SubscribeEvent
 	public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
 		if (!NotEnoughUpdates.INSTANCE.config.mining.titaniumAlert) {
 			return;
@@ -160,14 +154,13 @@ public class MiningStuff {
 		}
 	}
 
-	@SubscribeEvent
 	public void renderWorldLast(RenderWorldLastEvent event) {
 		if (overlayLoc == null) return;
 
 		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
-		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
-		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
-		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;
+		double viewerX = viewer.lastTickPosX + (viewer.getX() - viewer.lastTickPosX) * event.partialTicks;
+		double viewerY = viewer.lastTickPosY + (viewer.getY() - viewer.lastTickPosY) * event.partialTicks;
+		double viewerZ = viewer.lastTickPosZ + (viewer.getZ() - viewer.lastTickPosZ) * event.partialTicks;
 
 		AxisAlignedBB bb = new AxisAlignedBB(
 			overlayLoc.getX() - viewerX,
@@ -184,12 +177,10 @@ public class MiningStuff {
 		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
-	@SubscribeEvent
 	public void onLoadWorld(WorldEvent.Load event) {
 		overlayLoc = null;
 	}
 
-	@SubscribeEvent
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.mining.puzzlerSolver) {
 			overlayLoc = null;

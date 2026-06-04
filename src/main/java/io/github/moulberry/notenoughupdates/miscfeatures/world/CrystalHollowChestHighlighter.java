@@ -34,10 +34,6 @@ import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +74,6 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (!isEnabled()) return;
 
@@ -97,7 +92,6 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 		blockToRemove.forEach(markedBlocks::remove);
 	}
 
-	@SubscribeEvent
 	public void onBlockInteraction(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			markedBlocks.remove(event.pos);

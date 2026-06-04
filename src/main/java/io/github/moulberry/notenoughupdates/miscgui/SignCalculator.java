@@ -29,8 +29,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

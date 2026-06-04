@@ -19,7 +19,6 @@
 
 package io.github.moulberry.notenoughupdates.events
 
-import net.minecraftforge.fml.common.eventhandler.Event
 
 
 class IsSlotBeingHoveredEvent : Event() {

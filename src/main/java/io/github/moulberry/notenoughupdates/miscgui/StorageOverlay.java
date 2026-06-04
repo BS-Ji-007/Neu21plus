@@ -1798,7 +1798,7 @@ public class StorageOverlay extends GuiElement {
 
 		if (mouseX > guiLeft + 181 && mouseX < guiLeft + 181 + 162 &&
 			mouseY > guiTop + storageViewSize + 18 && mouseY < guiTop + storageViewSize + 94) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT))
 				dirty = true;
 			return false;
 		}
@@ -1838,7 +1838,7 @@ public class StorageOverlay extends GuiElement {
 							} else {
 								renameStorageField.mouseClicked(mouseX - guiLeft, mouseY - guiTop, Mouse.getEventButton());
 							}
-						} else if (Mouse.getEventButton() < 0 && Mouse.isButtonDown(0)) {
+						} else if (Mouse.getEventButton() < 0 && net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 							renameStorageField.mouseClickMove(mouseX - guiLeft, mouseY - guiTop, 0, 0);
 						}
 						return true;
@@ -1912,16 +1912,16 @@ public class StorageOverlay extends GuiElement {
 			switch (buttonIndex) {
 				case 0:
 					NotEnoughUpdates.INSTANCE.config.storageGUI.enableStorageGUI3 = false;
-					ChatComponentText storageMessage = new ChatComponentText(
+					ChatComponentText storageMessage = Component.literal(
 						ChatFormatting.YELLOW + "[NEU] " + ChatFormatting.YELLOW +
 							"You just disabled the custom storage gui, did you mean to do that? If not click this message to turn it back on.");
 					storageMessage.setChatStyle(Utils.createClickStyle(ClickEvent.Action.RUN_COMMAND, "/neuenablestorage"));
-					storageMessage.setChatStyle(storageMessage.getChatStyle().setChatHoverEvent(
+					storageMessage.setChatStyle(storageMessage.getStyle().setChatHoverEvent(
 						new HoverEvent(
 							HoverEvent.Action.SHOW_TEXT,
-							new ChatComponentText(ChatFormatting.YELLOW + "Click to enable the custom storage gui.")
+							Component.literal(ChatFormatting.YELLOW + "Click to enable the custom storage gui.")
 						)));
-					ChatComponentText storageChatMessage = new ChatComponentText("");
+					ChatComponentText storageChatMessage = Component.literal("");
 					storageChatMessage.appendSibling(storageMessage);
 					Minecraft.getInstance().player.addChatMessage(storageChatMessage);
 					break;

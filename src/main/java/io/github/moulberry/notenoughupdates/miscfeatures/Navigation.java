@@ -40,12 +40,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.Vec3i;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.time.Duration;
@@ -155,7 +149,6 @@ public class Navigation {
 		updateData();
 	}
 
-	@SubscribeEvent
 	public void onRepositoryReload(RepositoryReloadEvent event) {
 		JsonObject obj = Utils.getConstant("islands", neu.manager.gson);
 		List<Teleporter> teleporters = JsonUtils.getJsonArrayOrEmpty(obj, "teleporters", jsonElement -> {
@@ -191,12 +184,11 @@ public class Navigation {
 		}).stream().collect(Collectors.toMap(it -> it.warpName, it -> it));
 	}
 
-	@SubscribeEvent
 	public void onKeybindPressed(InputEvent.KeyInputEvent event) {
 		if (!Keyboard.getEventKeyState()) return;
 		int key = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
 		if (neu.config.misc.keybindWaypoint == key) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+			if (InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				if (currentlyTrackedWaypoint != null) {
 					useWarpCommand();
 				}
@@ -210,7 +202,6 @@ public class Navigation {
 		return warps;
 	}
 
-	@SubscribeEvent
 	public void onChatMessage(ClientChatReceivedEvent event) {
 		if (event.type == 2) return;
 		if (StringUtils.cleanColour(event.message.getString()).startsWith("§r§eYou may now fast travel to")) {
@@ -229,7 +220,6 @@ public class Navigation {
 		Utils.addChatMessage("§e[NEU] To reset, type /neuclearwarps");
 	}
 
-	@SubscribeEvent
 	public void onCommands(RegisterBrigadierCommandEvent event) {
 		event.command("neuclearwarps", builder -> DslKt.thenExecute(builder, context -> {
 			getNonUnlockedWarpScrolls().clear();
@@ -283,7 +273,6 @@ public class Navigation {
 		thePlayer.sendChatMessage("/warp " + closestWarp.warpName);
 	}
 
-	@SubscribeEvent
 	public void onTeleportDone(EntityJoinWorldEvent event) {
 		if (neu.config.misc.warpTwice
 			&& event.entity == Minecraft.getInstance().player
@@ -349,7 +338,6 @@ public class Navigation {
 		recalculateNextTeleporter(SBInfo.getInstance().mode);
 	}
 
-	@SubscribeEvent
 	public void onLocationChange(LocationChangeEvent event) {
 		recalculateNextTeleporter(event.newLocation);
 	}
@@ -394,7 +382,6 @@ public class Navigation {
 			new RuntimeException("[NEU-Waypoint] " + message).printStackTrace();
 	}
 
-	@SubscribeEvent
 	public void onEvent(TickEvent.ClientTickEvent event) {
 		if (event.phase == TickEvent.Phase.END && currentlyTrackedWaypoint != null
 			&& NotEnoughUpdates.INSTANCE.config.misc.untrackCloseWaypoints
@@ -407,7 +394,6 @@ public class Navigation {
 		}
 	}
 
-	@SubscribeEvent
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (currentlyTrackedWaypoint != null) {
 			if (island.equals(SBInfo.getInstance().mode)) {

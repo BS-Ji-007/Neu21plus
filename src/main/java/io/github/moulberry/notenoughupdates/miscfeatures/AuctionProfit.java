@@ -38,8 +38,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 @NEUAutoSubscribe
@@ -48,7 +46,6 @@ public class AuctionProfit {
 	public static final ResourceLocation auctionProfitImage =
 		new ResourceLocation("notenoughupdates", "notenoughupdates:auction_profit.png");
 
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (inAuctionPage()) {
 			event.blockArea(
@@ -62,7 +59,6 @@ public class AuctionProfit {
 		}
 	}
 
-	@SubscribeEvent
 	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
 		if (!inAuctionPage()) return;
 

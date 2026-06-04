@@ -204,7 +204,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 
 		if (tes != null) {
 			if (search.length() <= 15) {
-				tes.signText[0] = new ChatComponentText(search.substring(0, Math.min(search.length(), 15)));
+				tes.signText[0] = Component.literal(search.substring(0, Math.min(search.length(), 15)));
 			} else {
 				ListIterator<String> words = SPACE_SPLITTER.splitToList(search).listIterator();
 				StringBuilder line0 = new StringBuilder();
@@ -226,8 +226,8 @@ public class SearchOverlayScreen extends GuiEditSign {
 					line1.append(word).append(' ');
 				}
 
-				tes.signText[0] = new ChatComponentText(line0.toString().trim());
-				tes.signText[1] = new ChatComponentText(line1.toString().trim());
+				tes.signText[0] = Component.literal(line0.toString().trim());
+				tes.signText[1] = Component.literal(line1.toString().trim());
 			}
 		} else {
 			if (!search.isEmpty()) {

@@ -149,7 +149,7 @@ public class ItemShopRecipe implements NeuRecipe {
 			GuiNavigation.ICON_SIZE,
 			GuiNavigation.ICON_SIZE
 		)) {
-			boolean shiftPressed = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
+			boolean shiftPressed = InputConstants.isKeyDown(Keyboard.KEY_RSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_LSHIFT);
 			if (selected && !shiftPressed) {
 				NotEnoughUpdates.INSTANCE.navigation.untrackWaypoint();
 			} else {

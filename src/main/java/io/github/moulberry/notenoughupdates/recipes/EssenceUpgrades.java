@@ -364,7 +364,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	private void drawButtons(int mouseX, int mouseY) {
 		for (int i = 0; i < amountOfTiers; i++) {
 			if (i >= buttonLocations.size()) {
-				Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
+				Minecraft.getInstance().player.addChatMessage(Component.literal(
 					ChatFormatting.RED + "[NEU] Error: Item has more than " + buttonLocations.size() +
 						" possible star upgrades"));
 				break;
@@ -416,13 +416,13 @@ public class EssenceUpgrades implements NeuRecipe {
 			return;
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) && selectedTier > 1) {
+		if (InputConstants.isKeyDown(Keyboard.KEY_LEFT) && selectedTier > 1) {
 			selectedTier--;
 			slots = buildSlotList();
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && selectedTier < amountOfTiers) {
+		} else if (InputConstants.isKeyDown(Keyboard.KEY_RIGHT) && selectedTier < amountOfTiers) {
 			selectedTier++;
 			slots = buildSlotList();
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_0) || Keyboard.isKeyDown(Keyboard.KEY_NUMPAD0)) {
+		} else if (InputConstants.isKeyDown(Keyboard.KEY_0) || InputConstants.isKeyDown(Keyboard.KEY_NUMPAD0)) {
 			//cycle through tiers when pressing 0
 			if (selectedTier < amountOfTiers) {
 				selectedTier++;

@@ -39,11 +39,9 @@ import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.event.ClickEvent
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class SimpleDevCommands {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neureloadrepo") {
             thenExecute {
@@ -99,7 +97,7 @@ class SimpleDevCommands {
             }.withHelp("Disable nullzee sphere")
             thenLiteralExecute("setcenter") {
                 val p = source as EntityPlayerSP
-                NullzeeSphere.centerPos = BlockPos(p.posX, p.posY, p.posZ)
+                NullzeeSphere.centerPos = BlockPos(p.getX(), p.getY(), p.getZ())
                 NullzeeSphere.overlayVBO = null
                 reply("Set center to ${NullzeeSphere.centerPos}")
             }.withHelp("Set the center of the nullzee sphere")

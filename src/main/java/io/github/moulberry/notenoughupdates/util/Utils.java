@@ -1661,14 +1661,14 @@ public class Utils {
 		style.setChatClickEvent(new ClickEvent(action, value));
 		style.setChatHoverEvent(new HoverEvent(
 			HoverEvent.Action.SHOW_TEXT,
-			new ChatComponentText(ChatFormatting.YELLOW + value)
+			Component.literal(ChatFormatting.YELLOW + value)
 		));
 		return style;
 	}
 
 	public static ChatStyle createClickStyle(ClickEvent.Action action, String value, String message) {
 		ChatStyle style = createClickStyle(action, value);
-		style.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(message)));
+		style.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(message)));
 		return style;
 	}
 
@@ -2352,7 +2352,7 @@ public class Utils {
 	}
 
 	public static void addChatMessage(@NotNull String message) {
-		addChatMessage(new ChatComponentText(message));
+		addChatMessage(Component.literal(message));
 	}
 
 	public static void addClickableChatMessage(
@@ -2362,10 +2362,10 @@ public class Utils {
 	) {
 		if (hoverText == null)
 			hoverText = "§eClick to run §a" + command;
-		addChatMessage(new ChatComponentText(message)
+		addChatMessage(Component.literal(message)
 			.setChatStyle(new ChatStyle()
 				.setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
-				.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(hoverText)))));
+				.setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(hoverText)))));
 	}
 
 	public static void addChatMessage(@NotNull IChatComponent message) {

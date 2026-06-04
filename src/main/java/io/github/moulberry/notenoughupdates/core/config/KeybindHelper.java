@@ -49,9 +49,9 @@ public class KeybindHelper {
 		if (!isKeyValid(keyCode)) {
 			return false;
 		} else if (keyCode < 0) {
-			return Mouse.isButtonDown(keyCode + 100);
+			return net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(keyCode + 100);
 		} else {
-			return Keyboard.isKeyDown(keyCode);
+			return InputConstants.isKeyDown(keyCode);
 		}
 	}
 

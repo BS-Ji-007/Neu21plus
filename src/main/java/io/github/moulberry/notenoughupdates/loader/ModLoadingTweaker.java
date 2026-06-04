@@ -21,7 +21,6 @@ package io.github.moulberry.notenoughupdates.loader;
 
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import net.minecraftforge.fml.relauncher.CoreModManager;
 import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;

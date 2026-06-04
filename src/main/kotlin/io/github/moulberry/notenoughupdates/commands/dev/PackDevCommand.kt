@@ -38,7 +38,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.tileentity.TileEntitySkull
 import net.minecraft.ChatFormatting
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 
 @NEUAutoSubscribe
@@ -140,7 +139,6 @@ class PackDevCommand {
     }
 
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neupackdev") {
             npcListCommand("Player", "getplayer", "getplayers", AbstractClientPlayer::class.java) {

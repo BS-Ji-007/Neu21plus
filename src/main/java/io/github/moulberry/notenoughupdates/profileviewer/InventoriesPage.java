@@ -449,7 +449,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		boolean leftHovered = false;
 		boolean rightHovered = false;
-		if (Mouse.isButtonDown(0)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 			if (mouseY > staticSelectorHeight && mouseY < staticSelectorHeight + 16) {
 				if (mouseX > guiLeft + 320 - 12 && mouseX < guiLeft + 320 + 12) {
 					if (mouseX < guiLeft + 320) {

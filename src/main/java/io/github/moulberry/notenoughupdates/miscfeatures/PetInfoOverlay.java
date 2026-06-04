@@ -55,10 +55,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -772,7 +768,6 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	@SubscribeEvent
 	public void onStackClick(SlotClickEvent event) {
 		// 0 through 8 are the mouse as well as the keyboard buttons, allow all of those
 		if (event.clickedButton < 0 || event.clickedButton > 8) return;
@@ -828,7 +823,6 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen && RenderListener.inventoryLoaded) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
@@ -1177,7 +1171,6 @@ public class PetInfoOverlay extends TextOverlay {
 	private static final Pattern AUTOPET_EQUIP = Pattern.compile(
 		"§cAutopet §eequipped your §7\\[Lvl (?<level>\\d+)](?: §8\\[§6\\d+§8§.✦§8])? §(?<rarityColor>.)(?<name>.*)§e! §a§lVIEW RULE§r");
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		NEUConfig config = NotEnoughUpdates.INSTANCE.config;
 		if (config.petOverlay.enablePetInfo || config.itemOverlays.enableMonkeyCheck || config.petOverlay.petInvDisplay) {
@@ -1197,7 +1190,7 @@ public class PetInfoOverlay extends TextOverlay {
 					String pet = Utils.cleanColour(petName)
 														.replaceAll("[^\\w ]", "").trim()
 														.replace(" ", "_").toUpperCase(Locale.ROOT);
-					List<IChatComponent> siblings = event.message.getChatStyle().getChatHoverEvent().getValue().getSiblings();
+					List<IChatComponent> siblings = event.message.getStyle().getChatHoverEvent().getValue().getSiblings();
 					String petItem = "";
 					if (siblings.size() > 6) {
 						int i = -1;
@@ -1205,7 +1198,7 @@ public class PetInfoOverlay extends TextOverlay {
 							i++;
 							if (!sibling.getString().startsWith("Held Item:")) continue;
 							IChatComponent iChatComponent = siblings.get(i+1);
-							String formattedText = iChatComponent.getChatStyle().getColor() + iChatComponent.getString();
+							String formattedText = iChatComponent.getStyle().getColor() + iChatComponent.getString();
 							petItem = getInternalIdForPetItemDisplayName(formattedText);
 						}
 					} else {
@@ -1217,7 +1210,7 @@ public class PetInfoOverlay extends TextOverlay {
 							setCurrentPet(getClosestPetIndex(pet, rarity.petId - 1, petItem, lastLevelHovered));
 						if (getCurrentPet() != null && !"PET_ITEM_TIER_BOOST".equals(getCurrentPet().petItem)) {
 							PetInfoOverlay.config.selectedPet = -1;
-							Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
+							Minecraft.getInstance().player.addChatMessage(Component.literal(
 								ChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
 									ChatFormatting.RED + " try revisiting all pages of /pets."));
 						}

@@ -31,9 +31,6 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
@@ -73,7 +70,6 @@ public class ItemTooltipRngListener {
 		this.neu = neu;
 	}
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!neu.isOnSkyblock()) return;
 		if (event.toolTip == null) return;
@@ -169,7 +165,7 @@ public class ItemTooltipRngListener {
 	}
 
 	private void fractionDisplay(List<String> newToolTip, String line) {
-		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+		boolean shift = InputConstants.isKeyDown(Keyboard.KEY_LSHIFT) || InputConstants.isKeyDown(Keyboard.KEY_RSHIFT);
 		if (!pressedShiftLast && shift) {
 			showSlayerRngFractions = !showSlayerRngFractions;
 		}
@@ -211,7 +207,6 @@ public class ItemTooltipRngListener {
 	/**
 	 * This adds support for the /neureloadrepo command
 	 */
-	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onRepoReload(RepositoryReloadEvent event) {
 		repoReloadNeeded = true;
 	}
@@ -439,8 +434,8 @@ public class ItemTooltipRngListener {
 	}
 
 	private void handleArrowKeys(Map<String, Integer> runsData) {
-		boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-		boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+		boolean left = InputConstants.isKeyDown(Keyboard.KEY_LEFT);
+		boolean right = InputConstants.isKeyDown(Keyboard.KEY_RIGHT);
 		if (!pressedArrowLast && (left || right)) {
 			if (Utils.getOpenChestName().contains("Catacombs") ? right : left) {
 				currentSelected--;

@@ -30,7 +30,6 @@ import net.minecraft.ChatFormatting.LIGHT_PURPLE
 import net.minecraft.ChatFormatting.RED
 import net.minecraft.ChatFormatting.YELLOW
 import net.minecraft.network.chat.Component
-import net.minecraftforge.fml.common.Loader
 
 class EnchantsCheck {
 

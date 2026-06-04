@@ -39,13 +39,11 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.ChatFormatting.*
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
 @NEUAutoSubscribe
 class MiscCommands {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neucalc", "neucalculator") {
             thenArgumentExecute("calculation", RestArgumentType) { calculation ->

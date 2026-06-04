@@ -45,8 +45,6 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting
 import net.minecraft.resources.ResourceLocation
-import net.minecraftforge.client.event.GuiScreenEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 import kotlin.math.ceil
@@ -114,7 +112,6 @@ object MuseumCheapestItemOverlay {
     /**
      * Draw the overlay and parse items, if applicable
      */
-    @SubscribeEvent
     fun onDrawBackground(event: GuiScreenEvent.BackgroundDrawnEvent) {
         if (!shouldRender(event.gui)) return
         val chest = event.gui as ChestScreen
@@ -140,7 +137,6 @@ object MuseumCheapestItemOverlay {
     /**
      * Pass on mouse clicks to [ArrowPagesUtils], if applicable
      */
-    @SubscribeEvent
     fun onMouseClick(event: GuiScreenEvent.MouseInputEvent.Pre) {
         if (!shouldRender(event.gui)) return
         if (!Mouse.getEventButtonState()) return
@@ -151,7 +147,6 @@ object MuseumCheapestItemOverlay {
         ) { pageChange: Int -> currentPage = pageChange }
     }
 
-    @SubscribeEvent
     fun onButtonExclusionZones(event: ButtonExclusionZoneEvent) {
         if (shouldRender(event.gui)) {
             event.blockArea(
@@ -164,7 +159,6 @@ object MuseumCheapestItemOverlay {
         }
     }
 
-    @SubscribeEvent
     fun onMouseInput(event: GuiScreenEvent.MouseInputEvent.Pre) {
         if (!shouldRender(event.gui)) return
         val mouseX = Utils.getMouseX()

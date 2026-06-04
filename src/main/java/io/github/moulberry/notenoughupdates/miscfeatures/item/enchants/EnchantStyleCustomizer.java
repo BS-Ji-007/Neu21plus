@@ -25,8 +25,6 @@ import io.github.moulberry.notenoughupdates.util.LRUCache;
 import io.github.moulberry.notenoughupdates.util.LateBindingChroma;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -88,7 +86,6 @@ public class EnchantStyleCustomizer {
 		enchantLineCache.clearCache();
 	}
 
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		var nbt = event.itemStack.getTag();
 		if (nbt == null) return;

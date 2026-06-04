@@ -33,8 +33,6 @@ import io.github.moulberry.notenoughupdates.util.stripControlCodes
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.world.inventory.Slot
 import net.minecraft.ChatFormatting
-import net.minecraftforge.event.world.WorldEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File
 
 @NEUAutoSubscribe
@@ -136,7 +134,6 @@ object MuseumTooltipManager {
 
     private var previousSlots: List<Slot> = emptyList()
 
-    @SubscribeEvent
     fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val gui = event.container ?: return
         val chest = gui.menu as? ChestMenu ?: return
@@ -159,7 +156,6 @@ object MuseumTooltipManager {
         previousSlots = slots
     }
 
-    @SubscribeEvent
     fun onWorldUnload(@Suppress("UNUSED_PARAMETER") event: WorldEvent.Unload) {
         // Only save when the Museum has actually been opened
         if (loadedMuseumDataDelegate.isInitialized()) {

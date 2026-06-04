@@ -33,7 +33,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.BufferUtils;
 import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.opengl.GL11;
@@ -183,9 +182,9 @@ public class NEUCape {
 	public void createCapeNodes(EntityPlayer player) {
 		nodes = new CapeNode[HORZ_NODES * VERT_NODES];
 
-		float pX = (float) player.posX % 7789;
-		float pY = (float) player.posY;
-		float pZ = (float) player.posZ % 7789;
+		float pX = (float) player.getX() % 7789;
+		float pY = (float) player.getY();
+		float pZ = (float) player.getZ() % 7789;
 
 		float uMinTop = 48 / 1024f;
 		float uMaxTop = 246 / 1024f;
@@ -374,9 +373,9 @@ public class NEUCape {
 		ensureCapeNodesCreated(player);
 
 		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
-		double viewerX = (viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * e.partialRenderTick) % 7789;
-		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * e.partialRenderTick;
-		double viewerZ = (viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * e.partialRenderTick) % 7789;
+		double viewerX = (viewer.lastTickPosX + (viewer.getX() - viewer.lastTickPosX) * e.partialRenderTick) % 7789;
+		double viewerY = viewer.lastTickPosY + (viewer.getY() - viewer.lastTickPosY) * e.partialRenderTick;
+		double viewerZ = (viewer.lastTickPosZ + (viewer.getZ() - viewer.lastTickPosZ) * e.partialRenderTick) % 7789;
 
 		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
@@ -494,9 +493,9 @@ public class NEUCape {
 	}
 
 	private Vector3f updateFixedCapeNodes(EntityPlayer player) {
-		double pX = player.posX % 7789;//player.lastTickPosX + (player.posX - player.lastTickPosX) * partialRenderTick;
-		double pY = player.posY;//player.lastTickPosY + (player.posY - player.lastTickPosY) * partialRenderTick;
-		double pZ = player.posZ % 7789;//player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialRenderTick;
+		double pX = player.getX() % 7789;//player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialRenderTick;
+		double pY = player.getY();//player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialRenderTick;
+		double pZ = player.getZ() % 7789;//player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialRenderTick;
 		double angle = getPlayerRenderAngle(player, 0);
 
 		double vertOffset2 =
@@ -536,9 +535,9 @@ public class NEUCape {
 	}
 
 	private void updateFixedCapeNodesPartial(EntityPlayer player, float partialRenderTick) {
-		double pX = (player.lastTickPosX + (player.posX - player.lastTickPosX) * partialRenderTick) % 7789;
-		double pY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialRenderTick;
-		double pZ = (player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialRenderTick) % 7789;
+		double pX = (player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialRenderTick) % 7789;
+		double pY = player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialRenderTick;
+		double pZ = (player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialRenderTick) % 7789;
 		double angle = getPlayerRenderAngle(player, partialRenderTick);
 
 		double vertOffset2 =
@@ -945,7 +944,7 @@ public class NEUCape {
 			pointNorm.scale(1 - pointNorm.y / 1.3f);
 			Vector3f point = Vector3f.sub(capeAvgPos, pointNorm, null);
 
-			if (sphereVBO == null || Keyboard.isKeyDown(Keyboard.KEY_K)) {
+			if (sphereVBO == null || InputConstants.isKeyDown(Keyboard.KEY_K)) {
 				if (sphereVBO != null) sphereVBO.reset();
 
 				int arcSegments = 24;

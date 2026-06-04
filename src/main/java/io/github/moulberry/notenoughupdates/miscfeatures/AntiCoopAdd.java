@@ -31,7 +31,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Locale;
 
@@ -44,7 +43,6 @@ public class AntiCoopAdd {
 		return INSTANCE;
 	}
 
-	@SubscribeEvent
 	public void onMouseClick(SlotClickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.misc.coopWarning) return;
 		if (event.slotId == -999) return;
@@ -55,16 +53,16 @@ public class AntiCoopAdd {
 		if (stack.getItem() == Items.diamond && stack.getName().getString() != null && stack.getName().getString().contains(
 			"Co-op Request")) {
 			String ign = Utils.getOpenChestName().split("'s Profile")[0];
-			ChatComponentText storageMessage = new ChatComponentText(
+			ChatComponentText storageMessage = Component.literal(
 				ChatFormatting.YELLOW + "[NEU] " + ChatFormatting.YELLOW +
 					"You just clicked on the Co-op add button. If you want to coop add this person, click this chat message");
 			storageMessage.setChatStyle(Utils.createClickStyle(ClickEvent.Action.RUN_COMMAND, "/coopadd " + ign));
-			storageMessage.setChatStyle(storageMessage.getChatStyle().setChatHoverEvent(
+			storageMessage.setChatStyle(storageMessage.getStyle().setChatHoverEvent(
 				new HoverEvent(
 					HoverEvent.Action.SHOW_TEXT,
-					new ChatComponentText(ChatFormatting.YELLOW + "Click to add " + ign + " to your coop")
+					Component.literal(ChatFormatting.YELLOW + "Click to add " + ign + " to your coop")
 				)));
-			ChatComponentText storageChatMessage = new ChatComponentText("");
+			ChatComponentText storageChatMessage = Component.literal("");
 			storageChatMessage.appendSibling(storageMessage);
 			Minecraft.getInstance().player.addChatMessage(storageChatMessage);
 			event.setCanceled(true);

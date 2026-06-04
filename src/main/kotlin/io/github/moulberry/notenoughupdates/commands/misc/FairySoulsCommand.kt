@@ -25,12 +25,10 @@ import io.github.moulberry.notenoughupdates.miscfeatures.FairySouls
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.ChatFormatting.DARK_PURPLE
 import net.minecraft.ChatFormatting.RED
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class FairySoulsCommand {
 
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neusouls", "fairysouls") {
             val enable = thenLiteralExecute("enable") {

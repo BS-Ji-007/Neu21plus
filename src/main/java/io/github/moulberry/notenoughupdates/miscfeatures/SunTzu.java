@@ -24,10 +24,6 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Random;
 
@@ -81,7 +77,6 @@ public class SunTzu {
 		return quotes[quoteNum];
 	}
 
-	@SubscribeEvent
 	public void onOverlayDrawn(RenderGameOverlayEvent event) {
 		if (enabled && ((event.type == null && Loader.isModLoaded("labymod")) ||
 			event.type == RenderGameOverlayEvent.ElementType.ALL)) {
@@ -113,7 +108,6 @@ public class SunTzu {
 		}
 	}
 
-	@SubscribeEvent
 	public void switchWorld(WorldEvent.Load event) {
 		randomizeQuote();
 	}

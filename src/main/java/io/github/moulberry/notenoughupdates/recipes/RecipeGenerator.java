@@ -34,8 +34,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.IOException;
@@ -64,7 +62,6 @@ public class RecipeGenerator {
 		this.neu = neu;
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!neu.config.apiData.repositoryEditing) return;
 		Screen currentScreen = Minecraft.getInstance().currentScreen;
@@ -74,7 +71,7 @@ public class RecipeGenerator {
 	}
 
 	private boolean shouldSaveRecipe() {
-		return Keyboard.isKeyDown(Keyboard.KEY_O) && debouncer.trigger();
+		return InputConstants.isKeyDown(Keyboard.KEY_O) && debouncer.trigger();
 	}
 
 	public void analyzeUI(ChestScreen gui) {

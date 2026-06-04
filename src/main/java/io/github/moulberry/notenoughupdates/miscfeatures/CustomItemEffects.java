@@ -58,12 +58,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -118,7 +112,6 @@ public class CustomItemEffects {
 		return aoteTeleportationCurr;
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.RenderTickEvent event) {
 		if (Minecraft.getInstance().player == null) return;
 
@@ -145,9 +138,9 @@ public class CustomItemEffects {
 
 				float factor = deltaMin / (float) aoteTeleportationMillis;
 
-				float dX = aoteTeleportationCurr.x - (float) Minecraft.getInstance().player.posX;
-				float dY = aoteTeleportationCurr.y - (float) Minecraft.getInstance().player.posY;
-				float dZ = aoteTeleportationCurr.z - (float) Minecraft.getInstance().player.posZ;
+				float dX = aoteTeleportationCurr.x - (float) Minecraft.getInstance().player.getX();
+				float dY = aoteTeleportationCurr.y - (float) Minecraft.getInstance().player.getY();
+				float dZ = aoteTeleportationCurr.z - (float) Minecraft.getInstance().player.getZ();
 
 				aoteTeleportationCurr.x -= dX * factor;
 				aoteTeleportationCurr.y -= dY * factor;
@@ -161,9 +154,9 @@ public class CustomItemEffects {
 
 				aoteTeleportationMillis -= deltaMin;
 			} else {
-				aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.posX;
-				aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.posY;
-				aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.posZ;
+				aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.getX();
+				aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.getY();
+				aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.getZ();
 			}
 		} else {
 			aoteUseMillis = 0;
@@ -171,7 +164,6 @@ public class CustomItemEffects {
 		}
 	}
 
-	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR ||
 			event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
@@ -215,16 +207,15 @@ public class CustomItemEffects {
 					aoteUseMillis = System.currentTimeMillis();
 					if (aoteTeleportationCurr == null) {
 						aoteTeleportationCurr = new Vector3f();
-						aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.posX;
-						aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.posY;
-						aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.posZ;
+						aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.getX();
+						aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.getY();
+						aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.getZ();
 					}
 				}
 			}
 		}
 	}
 
-	@SubscribeEvent
 	public void onGameTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
 		EntityPlayerSP player = Minecraft.getInstance().player;
@@ -291,7 +282,6 @@ public class CustomItemEffects {
 	private int lastEtherwarpUse = 0;
 	private String denyTpReason = null;
 
-	@SubscribeEvent
 	public void onOverlayDrawn(RenderGameOverlayEvent.Post event) {
 		if (((event.type == null && Loader.isModLoaded("labymod")) ||
 			event.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS)) {
@@ -576,7 +566,7 @@ public class CustomItemEffects {
 	}
 
 	private RaycastResult raycast(EntityPlayerSP player, float partialTicks, float dist, float step) {
-		Vector3f pos = new Vector3f((float) player.posX, (float) player.posY + player.getEyeHeight(), (float) player.posZ);
+		Vector3f pos = new Vector3f((float) player.getX(), (float) player.getY() + player.getEyeHeight(), (float) player.getZ());
 
 		Vec3 lookVec3 = player.getLook(partialTicks);
 
@@ -771,7 +761,6 @@ public class CustomItemEffects {
 	List<Block> scytheBlocks = Arrays.asList(
 		Blocks.leaves, Blocks.leaves2, Blocks.red_flower, Blocks.yellow_flower, Blocks.tallgrass, Blocks.double_plant);
 
-	@SubscribeEvent
 	public void renderBlockOverlay(DrawBlockHighlightEvent event) {
 		if (aoteTeleportationCurr != null && aoteTeleportationMillis > 0) {
 			event.setCanceled(true);
@@ -789,9 +778,9 @@ public class CustomItemEffects {
 		}
 		boolean onPrivateIsland = Arrays.asList("dynamic", "garden").contains(SBInfo.getInstance().getLocation());
 		EntityPlayer player = event.player;
-		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) event.partialTicks;
-		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) event.partialTicks;
-		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) event.partialTicks;
+		double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * (double) event.partialTicks;
+		double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * (double) event.partialTicks;
+		double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * (double) event.partialTicks;
 
 		//Don't need to wait 10 ticks when zoom is disabled
 		if (tick - lastEtherwarpUse > 10 || !NotEnoughUpdates.INSTANCE.config.itemOverlays.etherwarpZoom)
@@ -1552,9 +1541,9 @@ public class CustomItemEffects {
 
 		candidatesNew.add(target.getBlockPos());
 
-		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
-		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
-		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+		double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * (double) partialTicks;
+		double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * (double) partialTicks;
+		double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * (double) partialTicks;
 
 		while (candidatesOld.size() <= MAX_BUILDERS_BLOCKS + extraMax) {
 			if (candidatesNew.isEmpty()) {
@@ -1652,9 +1641,9 @@ public class CustomItemEffects {
 
 		candidatesNew.add(target.getBlockPos());
 
-		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
-		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
-		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+		double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * (double) partialTicks;
+		double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * (double) partialTicks;
+		double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * (double) partialTicks;
 
 		while (candidatesOld.size() <= MAX_BUILDERS_BLOCKS + extraMax) {
 			if (candidatesNew.isEmpty()) {
@@ -1733,9 +1722,9 @@ public class CustomItemEffects {
 
 	public static void drawBlock(int x, int y, int z, IBlockState state, float partialTicks, float brightness) {
 		EntityPlayerSP player = Minecraft.getInstance().player;
-		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
-		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
-		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+		double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * (double) partialTicks;
+		double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * (double) partialTicks;
+		double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * (double) partialTicks;
 
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRendererDispatcher();
 

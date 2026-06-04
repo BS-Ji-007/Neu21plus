@@ -32,8 +32,6 @@ import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.Comparator;

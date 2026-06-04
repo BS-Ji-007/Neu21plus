@@ -23,7 +23,6 @@ import com.google.gson.JsonObject
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay.Rarity
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 object PetLeveling {
@@ -76,7 +75,6 @@ object PetLeveling {
 
     private val cache = mutableMapOf<Key, ExpLadder>()
 
-    @SubscribeEvent
     fun onRepoReload(event: RepositoryReloadEvent) {
         cache.clear()
     }

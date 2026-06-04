@@ -31,7 +31,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class BazaarPriceWarning : WarningPopUp() {
@@ -46,7 +45,6 @@ class BazaarPriceWarning : WarningPopUp() {
 
     val limit get() = NotEnoughUpdates.INSTANCE.config.bazaarTweaks.bazaarOverpayWarning
 
-    @SubscribeEvent
     fun onClick(event: SlotClickEvent) {
         val openSlots = Minecraft.getInstance().player?.openContainer?.menu ?: return
         if (openSlots.size < 17) return

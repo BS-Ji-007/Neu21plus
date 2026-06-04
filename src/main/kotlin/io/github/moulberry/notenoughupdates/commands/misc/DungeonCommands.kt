@@ -31,12 +31,10 @@ import net.minecraft.client.Minecraft
 import net.minecraft.world.item.ItemMap
 import net.minecraft.ChatFormatting.GREEN
 import net.minecraft.ChatFormatting.RED
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 
 @NEUAutoSubscribe
 class DungeonCommands {
-    @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("dh") {
             thenExecute {

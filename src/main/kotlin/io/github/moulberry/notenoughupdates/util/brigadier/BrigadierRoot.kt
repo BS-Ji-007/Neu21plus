@@ -27,7 +27,6 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.util.LRUCache
 import net.minecraft.command.ICommandSender
-import net.minecraftforge.client.ClientCommandHandler
 import java.lang.RuntimeException
 import java.util.*
 

@@ -126,7 +126,7 @@ public class DamageCommas {
 			newFormatted = newFormattedCrit;
 		}
 
-		ChatComponentText finalComponent = new ChatComponentText(prefix + newFormatted + suffix);
+		ChatComponentText finalComponent = Component.literal(prefix + newFormatted + suffix);
 
 		replacementMap.put(entity, finalComponent);
 		return finalComponent;
@@ -161,7 +161,7 @@ public class DamageCommas {
                         }
                     }
 
-                    ChatComponentText ret = new ChatComponentText("\u00A7f\u2727" + colouredString + "\u00a7r\u2727\u00a7r");
+                    ChatComponentText ret = Component.literal("\u00A7f\u2727" + colouredString + "\u00a7r\u2727\u00a7r");
                     replacementMap.put(hashCode, ret);
                     return ret;
                 } catch (NumberFormatException ignored) {}
@@ -196,7 +196,7 @@ public class DamageCommas {
                 builder.append(c);
             }
 
-            ChatComponentText ret = new ChatComponentText("\u00A7f\u2727" + builder.reverse().toString() + "\u2727\u00a7r");
+            ChatComponentText ret = Component.literal("\u00A7f\u2727" + builder.reverse().toString() + "\u2727\u00a7r");
             replacementMap.put(hashCode, ret);
             return ret;
         }
@@ -223,7 +223,7 @@ public class DamageCommas {
                     damageFormatted = NumberFormat.getIntegerInstance().format(damage);
                 }
 
-                ChatComponentText ret = new ChatComponentText(ChatFormatting.GRAY + damageFormatted + ChatFormatting.RESET);
+                ChatComponentText ret = Component.literal(ChatFormatting.GRAY + damageFormatted + ChatFormatting.RESET);
                 replacementMap.put(hashCode, ret);
                 return ret;
             } catch (Exception e) {

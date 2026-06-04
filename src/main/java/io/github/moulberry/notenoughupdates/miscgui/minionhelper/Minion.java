@@ -120,7 +120,7 @@ public class Minion extends OverviewLine {
 
 	@Override
 	public void onClick() {
-		if (Mouse.getEventButton() != 0 || !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+		if (Mouse.getEventButton() != 0 || !InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			NotEnoughUpdates.INSTANCE.manager.displayGuiItemRecipe(internalName);
 		} else {
 			if (minionSource instanceof CraftingSource) {

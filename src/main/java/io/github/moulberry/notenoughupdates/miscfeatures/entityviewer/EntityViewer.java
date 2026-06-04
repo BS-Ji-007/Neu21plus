@@ -228,7 +228,7 @@ public class EntityViewer extends GuiScreen {
 		EntityLivingBase stack = entity;
 		while (true) {
 			if (stack instanceof EntityDragon) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+				if (InputConstants.isKeyDown(Keyboard.KEY_SPACE)) {
 					scale = 35;
 					bottomOffset = 0F;
 				}

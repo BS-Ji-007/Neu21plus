@@ -120,11 +120,11 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 					fppOffset = fppOffset.rotateYaw(sqrtSinSwing * 0.5F);
 					fppOffset = fppOffset.rotatePitch(-sqrtSinSwing * 0.7F);
 
-					playerVecX = entity.angler.prevPosX + (entity.angler.posX - entity.angler.prevPosX) * (double) partialTicks +
+					playerVecX = entity.angler.prevPosX + (entity.angler.getX() - entity.angler.prevPosX) * (double) partialTicks +
 						fppOffset.xCoord;
-					playerVecY = entity.angler.prevPosY + (entity.angler.posY - entity.angler.prevPosY) * (double) partialTicks +
+					playerVecY = entity.angler.prevPosY + (entity.angler.getY() - entity.angler.prevPosY) * (double) partialTicks +
 						fppOffset.yCoord;
-					playerVecZ = entity.angler.prevPosZ + (entity.angler.posZ - entity.angler.prevPosZ) * (double) partialTicks +
+					playerVecZ = entity.angler.prevPosZ + (entity.angler.getZ() - entity.angler.prevPosZ) * (double) partialTicks +
 						fppOffset.zCoord;
 					startY = entity.angler.getEyeHeight();
 				} else {
@@ -133,18 +133,18 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 						180.0F;
 					double d4 = MathHelper.sin(angle);
 					double d6 = MathHelper.cos(angle);
-					playerVecX = entity.angler.prevPosX + (entity.angler.posX - entity.angler.prevPosX) * (double) partialTicks -
+					playerVecX = entity.angler.prevPosX + (entity.angler.getX() - entity.angler.prevPosX) * (double) partialTicks -
 						d6 * 0.35D - d4 * 0.8D;
 					playerVecY = entity.angler.prevPosY + entity.angler.getEyeHeight() +
-						(entity.angler.posY - entity.angler.prevPosY) * (double) partialTicks - 0.45D;
-					playerVecZ = entity.angler.prevPosZ + (entity.angler.posZ - entity.angler.prevPosZ) * (double) partialTicks -
+						(entity.angler.getY() - entity.angler.prevPosY) * (double) partialTicks - 0.45D;
+					playerVecZ = entity.angler.prevPosZ + (entity.angler.getZ() - entity.angler.prevPosZ) * (double) partialTicks -
 						d4 * 0.35D + d6 * 0.8D;
 					startY = entity.angler.isSneaking() ? -0.1875D : 0.0D;
 				}
 
-				double d13 = entity.prevPosX + (entity.posX - entity.prevPosX) * (double) partialTicks;
-				double d5 = entity.prevPosY + (entity.posY - entity.prevPosY) * (double) partialTicks + 0.25D;
-				double d7 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks;
+				double d13 = entity.prevPosX + (entity.getX() - entity.prevPosX) * (double) partialTicks;
+				double d5 = entity.prevPosY + (entity.getY() - entity.prevPosY) * (double) partialTicks + 0.25D;
+				double d7 = entity.prevPosZ + (entity.getZ() - entity.prevPosZ) * (double) partialTicks;
 				double d9 = (float) (playerVecX - d13);
 				double d11 = (double) ((float) (playerVecY - d5)) + startY;
 				double d12 = (float) (playerVecZ - d7);

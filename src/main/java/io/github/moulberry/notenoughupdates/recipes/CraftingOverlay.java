@@ -31,10 +31,6 @@ import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.function.BiConsumer;
@@ -89,12 +85,10 @@ public class CraftingOverlay {
 		block.accept(guiChest, chest);
 	}
 
-	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		currentRecipe = null;
 	}
 
-	@SubscribeEvent
 	public void onRender(ScreenEvent.DrawScreenEvent.Post event) {
 		runIfCraftingOverlayIsPresent(event.gui, (guiChest, chest) -> {
 			renderSlots(guiChest, chest);
@@ -110,7 +104,6 @@ public class CraftingOverlay {
 		});
 	}
 
-	@SubscribeEvent
 	public void onKeyDown(ScreenEvent.KeyboardInputEvent.Pre event) {
 		if (!Keyboard.getEventKeyState() ||
 			(Keyboard.getEventKey() != Keyboard.KEY_U && Keyboard.getEventKey() != Keyboard.KEY_R))

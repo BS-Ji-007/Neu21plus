@@ -39,7 +39,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -546,7 +545,6 @@ public class BetterContainers {
 		}
 	}
 
-	@SubscribeEvent
 	public void onMouseClick(SlotClickEvent event) {
 		if (!isOverriding()) return;
 		boolean isBlankStack = BetterContainers.isBlankStack(event.slot.slotNumber, event.slot.getStack());

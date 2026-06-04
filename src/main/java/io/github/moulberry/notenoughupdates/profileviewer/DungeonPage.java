@@ -195,7 +195,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				float xpF5 = 2400 * (F5 / 100 + 1);
 				float xpF6 = 4880 * (F6 / 100 + 1);
 				float xpF7 = 28000 * (F7 / 100 + 1);
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					xpF5 *= 1.1;
 					xpF6 *= 1.1;
 					xpF7 *= 1.1;
@@ -225,14 +225,14 @@ public class DungeonPage extends GuiProfileViewerPage {
 				if (hasTime) {
 					getInstance().tooltipToDisplay.add("");
 				}
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					getInstance()
 						.tooltipToDisplay.add(
 							"[Hold " + ChatFormatting.YELLOW + "SHIFT" + ChatFormatting.GRAY + " to show without Expert Ring]"
 						);
 				}
-				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) getInstance().tooltipToDisplay.add("");
+				if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
+					if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) getInstance().tooltipToDisplay.add("");
 					getInstance().tooltipToDisplay.add("Number of runs is calculated as [Remaining XP]/[XP per Run].");
 					getInstance().tooltipToDisplay.add("The [XP per Run] is the average xp gained from an S+ run");
 					getInstance()
@@ -268,7 +268,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				float xpM6 = 100000 * (M6 / 100 + 1);
 				float xpM7 = 300000 * (M7 / 100 + 1);
 				//No clue if M3 or M4 xp values are right
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					xpM3 *= 1.1;
 					xpM4 *= 1.1;
 					xpM5 *= 1.1;
@@ -308,14 +308,14 @@ public class DungeonPage extends GuiProfileViewerPage {
 				if (hasTime) {
 					getInstance().tooltipToDisplay.add("");
 				}
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					getInstance()
 						.tooltipToDisplay.add(
 							"[Hold " + ChatFormatting.YELLOW + "SHIFT" + ChatFormatting.GRAY + " to show without Expert Ring]"
 						);
 				}
-				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) getInstance().tooltipToDisplay.add("");
+				if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
+					if (!InputConstants.isKeyDown(Keyboard.KEY_LSHIFT)) getInstance().tooltipToDisplay.add("");
 					getInstance().tooltipToDisplay.add("Number of runs is calculated as [Remaining XP]/[XP per Run].");
 					getInstance().tooltipToDisplay.add("The [XP per Run] is the average xp gained from an S+ run");
 					getInstance()

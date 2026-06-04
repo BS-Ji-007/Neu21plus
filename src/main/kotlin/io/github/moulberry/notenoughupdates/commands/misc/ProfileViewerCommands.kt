@@ -30,8 +30,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.command.ICommandSender
 import net.minecraft.ChatFormatting.RED
-import net.minecraftforge.fml.common.Loader
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 class ProfileViewerCommands {
@@ -60,7 +58,6 @@ class ProfileViewerCommands {
     }
 
 
-    @SubscribeEvent
     fun onCommand(event: RegisterBrigadierCommandEvent) {
         fun pvCommand(name: String, before: () -> Unit) {
             event.command(name) {

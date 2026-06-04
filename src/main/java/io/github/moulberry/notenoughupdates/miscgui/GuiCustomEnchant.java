@@ -1342,7 +1342,7 @@ public class GuiCustomEnchant extends Gui {
 				} else {
 					searchField.setFocus(false);
 				}
-			} else if (Mouse.getEventButton() < 0 && searchField.getFocus() && Mouse.isButtonDown(0)) {
+			} else if (Mouse.getEventButton() < 0 && searchField.getFocus() && net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0)) {
 				searchField.mouseClickMove(mouseX, mouseY, 0, 0);
 			}
 		} else if (currentState == EnchantState.ADDING_ENCHANT && !enchanterEnchLevels.isEmpty()) {

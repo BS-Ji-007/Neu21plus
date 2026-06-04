@@ -168,7 +168,7 @@ public class NEUOverlayPlacements extends Screen {
 						clickedAnchorX = (int) anchorPoint.offset.x;
 						clickedAnchorY = (int) anchorPoint.offset.y;
 					} else {
-						if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+						if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
 							anchorPoint.inventoryRelative = !anchorPoint.inventoryRelative;
 						} else {
 							MBAnchorPoint.AnchorPoint[] vals = MBAnchorPoint.AnchorPoint.values();
@@ -216,7 +216,7 @@ public class NEUOverlayPlacements extends Screen {
 			MBGuiGroupFloating mainGroup = NotEnoughUpdates.INSTANCE.overlay.guiGroup;
 			MBAnchorPoint anchorPoint = mainGroup.getChildrenMap().get(clickedElement);
 
-			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+			if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
 				int dX = mouseX - clickedX;
 				int dY = mouseY - clickedY;
 				if (Math.abs(dX) > Math.abs(dY)) {

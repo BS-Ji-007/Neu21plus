@@ -25,7 +25,6 @@ import io.github.moulberry.notenoughupdates.events.SlotClickEvent
 import io.github.moulberry.notenoughupdates.util.ItemUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.ChestScreen
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /*
     We are gathered here today to mourn the death of 26m coins that Alea spent on a Cleave 6 book, while trying to take
@@ -65,7 +64,6 @@ object HexPriceWarning : WarningPopUp() {
         )
     }
 
-    @SubscribeEvent
     fun onClick(event: SlotClickEvent) {
         if (!shouldCheck()) return
         if (isShowing) return

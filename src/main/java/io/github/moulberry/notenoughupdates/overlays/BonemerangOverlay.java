@@ -96,7 +96,7 @@ public class BonemerangOverlay extends TextOverlay {
 			float stepSize = 0.15f;
 			float bonemerangDistance = 15;
 
-			Vector3f position = new Vector3f((float) p.posX, (float) p.posY + p.getEyeHeight(), (float) p.posZ);
+			Vector3f position = new Vector3f((float) p.getX(), (float) p.getY() + p.getEyeHeight(), (float) p.getZ());
 			Vec3 look = p.getLook(0);
 
 			Vector3f step = new Vector3f((float) look.xCoord, (float) look.yCoord, (float) look.zCoord);

@@ -31,7 +31,6 @@ import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 

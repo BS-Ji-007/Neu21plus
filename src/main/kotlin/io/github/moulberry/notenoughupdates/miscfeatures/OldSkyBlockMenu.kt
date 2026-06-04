@@ -30,8 +30,6 @@ import net.minecraft.client.player.inventory.ContainerLocalMenu
 import net.minecraft.init.Items
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.fml.common.eventhandler.EventPriority
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -48,7 +46,6 @@ object OldSkyBlockMenu {
         map
     }
 
-    @SubscribeEvent
     fun replaceItem(event: ReplaceItemEvent) {
         if (!isRightInventory()) return
         if (event.inventory !is ContainerLocalMenu) return
@@ -74,7 +71,6 @@ object OldSkyBlockMenu {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
     fun onStackClick(event: SlotClickEvent) {
         if (!isRightInventory()) return
         if (SBInfo.getInstance().getLocation() != null && SBInfo.getInstance().getLocation().equals("rift")) return

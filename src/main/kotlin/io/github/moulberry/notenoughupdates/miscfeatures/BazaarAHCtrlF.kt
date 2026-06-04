@@ -26,9 +26,6 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.init.Items
-import net.minecraftforge.client.event.GuiScreenEvent
-import net.minecraftforge.fml.common.eventhandler.EventPriority
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import com.mojang.blaze3d.platform.InputConstants
 
 @NEUAutoSubscribe
@@ -37,7 +34,6 @@ class BazaarAHCtrlF {
     val config: NEUConfig = NotEnoughUpdates.INSTANCE.config
 
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
     fun onGuiScreenKeyboard(event: GuiScreenEvent.KeyboardInputEvent.Pre) {
         if (event.gui !is ChestScreen) return
         val chestName = Utils.getOpenChestName()
@@ -56,7 +52,7 @@ class BazaarAHCtrlF {
         val gui = event.gui as ChestScreen
         val signStack = openSlots[slotId]?.stack ?: return
         if (signStack.item == Items.sign && signStack.displayName == "§aSearch") {
-            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            if (InputConstants.isKeyDown(Keyboard.KEY_LCONTROL) && InputConstants.isKeyDown(Keyboard.KEY_F)) {
                 Utils.sendMiddleMouseClick(gui.menu.windowId, slotId)
                 event.isCanceled = true
             }

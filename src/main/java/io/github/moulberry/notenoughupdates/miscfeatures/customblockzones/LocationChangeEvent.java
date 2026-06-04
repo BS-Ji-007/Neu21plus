@@ -19,7 +19,6 @@
 
 package io.github.moulberry.notenoughupdates.miscfeatures.customblockzones;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class LocationChangeEvent extends Event {
 	public final String newLocation;

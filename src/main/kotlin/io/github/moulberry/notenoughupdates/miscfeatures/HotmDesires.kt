@@ -30,8 +30,6 @@ import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.KSerializable
 import io.github.moulberry.notenoughupdates.util.kotlin.useMatcher
-import net.minecraftforge.event.entity.player.ItemTooltipEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe
 object HotmDesires {
@@ -58,7 +56,6 @@ object HotmDesires {
 
     val tablistPowderLine = " (.*): ([0-9,]+)".toPattern()
 
-    @SubscribeEvent
     fun onTabListChange(event: TabListChangeEvent) {
         val desireMap = desires ?: return
         if (!isEnabled()) {
@@ -89,7 +86,6 @@ object HotmDesires {
 
     fun isEnabled() = NotEnoughUpdates.INSTANCE.config.mining.powderTodo
 
-    @SubscribeEvent
     fun onClickHotmItemThatYouCannotUpgrade(event: SlotClickEvent) {
         if (Utils.getOpenChestName() != "Heart of the Mountain" || !isEnabled())
             return
@@ -111,7 +107,6 @@ object HotmDesires {
     }
 
 
-    @SubscribeEvent
     fun onAfterGuiDraw(event: ItemTooltipEvent) {
         if (Utils.getOpenChestName() != "Heart of the Mountain" || !isEnabled())
             return

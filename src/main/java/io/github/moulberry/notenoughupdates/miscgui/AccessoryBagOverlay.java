@@ -53,7 +53,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -1042,8 +1041,8 @@ public class AccessoryBagOverlay {
 	}
 
 	public static void handleAccessoryClick(ItemStack stack, String internal) {
-		if (Mouse.isButtonDown(0) && internal != null) {
-			if (!Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+		if (net.minecraft.client.Minecraft.getInstance().mouseHandler.isLeftPressed()(0) && internal != null) {
+			if (!InputConstants.isKeyDown(Keyboard.KEY_LCONTROL)) {
 				if (!NotEnoughUpdates.INSTANCE.manager.displayGuiItemRecipe(internal)) {
 					NEUOverlay.getTextField().setText("id:" + internal);
 					NotEnoughUpdates.INSTANCE.overlay.updateSearch();

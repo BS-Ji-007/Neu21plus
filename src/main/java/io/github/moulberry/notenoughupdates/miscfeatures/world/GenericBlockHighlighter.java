@@ -26,10 +26,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +39,6 @@ public abstract class GenericBlockHighlighter {
 
 	public final Set<BlockPos> highlightedBlocks = new HashSet<>();
 
-	@SubscribeEvent
 	public void onWorldRenderLast(RenderWorldLastEvent event) {
 		if (!isEnabled()) return;
 		World w = Minecraft.getInstance().level;
@@ -53,7 +48,6 @@ public abstract class GenericBlockHighlighter {
 		}
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent ev) {
 		if (ev.phase != TickEvent.Phase.END) return;
 		highlightedBlocks.removeIf(it -> !isValidHighlightSpot(it) ||
@@ -63,7 +57,7 @@ public abstract class GenericBlockHighlighter {
 	protected boolean canPlayerSeeBlock(double xCoord, double yCoord, double zCoord) {
 		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return false;
-		Vec3 playerPosition = new Vec3(p.posX, p.posY + p.eyeHeight, p.posZ);
+		Vec3 playerPosition = new Vec3(p.getX(), p.getY() + p.eyeHeight, p.getZ());
 		MovingObjectPosition hitResult = rayTraceBlocks(p.worldObj, playerPosition, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
 		return canSee(hitResult, new BlockPos(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5));
 	}
@@ -72,7 +66,7 @@ public abstract class GenericBlockHighlighter {
 		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return false;
 		World world = p.worldObj;
-		Vec3 playerPosition = new Vec3(p.posX, p.posY + p.eyeHeight, p.posZ);
+		Vec3 playerPosition = new Vec3(p.getX(), p.getY() + p.eyeHeight, p.getZ());
 		BlockPos blockPos = new BlockPos(x, y, z);
 		MovingObjectPosition hitResult1 = rayTraceBlocks(world, playerPosition, x, y, z);
 		if (canSee(hitResult1, blockPos)) return true;
@@ -105,7 +99,6 @@ public abstract class GenericBlockHighlighter {
 		return world.rayTraceBlocks(playerPosition, new Vec3(x, y, z), false, true, true);
 	}
 
-	@SubscribeEvent
 	public void onWorldChange(WorldEvent.Unload event) {
 		highlightedBlocks.clear();
 	}

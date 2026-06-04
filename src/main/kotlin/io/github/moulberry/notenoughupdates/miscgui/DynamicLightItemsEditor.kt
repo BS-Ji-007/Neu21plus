@@ -27,9 +27,6 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
-import net.minecraftforge.fml.common.registry.GameRegistry
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.io.File
@@ -225,7 +222,6 @@ class DynamicLightItemsEditor() : GuiScreen() {
     companion object {
         var hasAttemptedToLoadOptifine = false
 
-        @SubscribeEvent
         fun autoloadOptifine(event: TickEvent) {
             if (Minecraft.getInstance().player == null || hasAttemptedToLoadOptifine) return
             try {
