@@ -25,7 +25,7 @@ import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorAccordion;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorKeybind;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class WardrobeKeybinds {
 

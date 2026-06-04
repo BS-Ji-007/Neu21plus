@@ -179,7 +179,7 @@ public class DungeonWin {
 			return;
 
 		long currentTime = System.currentTimeMillis();
-		String unformatted = Utils.cleanColour(e.message.getUnformattedText());
+		String unformatted = Utils.cleanColour(e.message.getString());
 
 		//Added two more Resets, can't do Reset+Reset+Reset cause idk?
 		//hypixel please don't randomly add more
@@ -234,11 +234,11 @@ public class DungeonWin {
 							|| unformatted.contains("Ally Healing") || unformatted.contains("Enemies Killed") || unformatted.contains(
 							"Deaths") || unformatted.contains("Secrets Found")) {
 							e.setCanceled(true);
-							text.add(e.message.getFormattedText().substring(6).trim());
+							text.add(e.message.getString().substring(6).trim());
 						} else if (unformatted.trim().length() > 6) {
 							System.out.println(
 								"These messages would of showed on neu dungeon overlay but didnt, They are either bugged or i missed them: \"" +
-									e.message.getFormattedText().substring(6).trim() + "\"");
+									e.message.getString().substring(6).trim() + "\"");
 						}
 					} else {
 						e.setCanceled(true);

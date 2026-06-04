@@ -36,7 +36,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,9 +78,9 @@ public class RecipeGenerator {
 	}
 
 	public void analyzeUI(ChestScreen gui) {
-		ContainerChest container = (ContainerChest) gui.inventorySlots;
-		IInventory menu = container.getLowerChestInventory();
-		String uiTitle = menu.getName().getString().getUnformattedText();
+		ChestMenu container = (ChestMenu) gui.menu;
+		Container menu = container.getLowerChestInventory();
+		String uiTitle = menu.getName().getString().getString();
 		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (uiTitle.startsWith("Item Casting") || uiTitle.startsWith("Refine")) {
 			if (durationDebouncer.trigger())
@@ -147,14 +147,14 @@ public class RecipeGenerator {
 		"" +
 		")$");
 
-	private void attemptToSaveBestiary(IInventory menu) {
-		if (!menu.getName().getString().getUnformattedText().contains("➜")) return;
+	private void attemptToSaveBestiary(Container menu) {
+		if (!menu.getName().getString().getString().contains("➜")) return;
 		ItemStack backArrow = menu.getStackInSlot(48);
 		if (backArrow == null || backArrow.getItem() != Items.arrow) return;
 		if (!getLore(backArrow).stream().anyMatch(it -> it.startsWith("§7To Bestiary ➜"))) return;
 		List<NeuRecipe> recipes = new ArrayList<>();
 		String internalMobName =
-			menu.getName().getString().getUnformattedText().split("➜")[1].toUpperCase(Locale.ROOT).trim() + "_MONSTER";
+			menu.getName().getString().getString().split("➜")[1].toUpperCase(Locale.ROOT).trim() + "_MONSTER";
 		for (int i = 9; i < 44; i++) {
 			ItemStack mobStack = menu.getStackInSlot(i);
 			if (mobStack == null || mobStack.getItem() != Items.PLAYER_HEAD) continue;
@@ -262,7 +262,7 @@ public class RecipeGenerator {
 		return true;
 	}
 
-	public ForgeRecipe parseSingleForgeRecipe(IInventory chest) {
+	public ForgeRecipe parseSingleForgeRecipe(Container chest) {
 		int durationInSeconds = -1;
 		List<Ingredient> inputs = new ArrayList<>();
 		Ingredient output = null;
@@ -321,7 +321,7 @@ public class RecipeGenerator {
 		return timeInSeconds;
 	}
 
-	private void parseAllForgeItemMetadata(IInventory chest) {
+	private void parseAllForgeItemMetadata(Container chest) {
 		for (int i = 0; i < chest.getSizeInventory(); i++) {
 			ItemStack stack = chest.getStackInSlot(i);
 			if (stack == null) continue;

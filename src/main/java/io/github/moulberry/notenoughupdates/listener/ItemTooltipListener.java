@@ -45,7 +45,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.text.WordUtils;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.awt.datatransfer.StringSelection;
 import java.text.DecimalFormat;
@@ -478,8 +478,8 @@ public class ItemTooltipListener {
 					dungeonProfit = true;
 				} else if (k == 7 && dungeonProfit) {
 					ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-					ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-					IInventory lower = cc.getLowerChestInventory();
+					ChestMenu cc = (ChestMenu) eventGui.menu;
+					Container lower = cc.getLowerChestInventory();
 
 					int chestCost = 0;
 					try {

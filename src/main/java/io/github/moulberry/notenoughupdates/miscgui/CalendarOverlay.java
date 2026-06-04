@@ -56,7 +56,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -429,8 +429,8 @@ public class CalendarOverlay {
 		}
 
 		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+		ChestMenu cc = (ChestMenu) eventGui.menu;
+		String containerName = cc.getLowerChestInventory().getName().getString().getString();
 
 		Matcher matcher = CALENDAR_PATTERN.matcher(Utils.cleanColour(containerName));
 		if (farmingEventTypes != null && matcher.matches()) scrapeMonthlyCalendar(matcher, cc);
@@ -510,7 +510,7 @@ public class CalendarOverlay {
 		}
 	}
 
-	private void scrapeOverviewPage(ContainerChest cc) {
+	private void scrapeOverviewPage(ChestMenu cc) {
 		long currentTime = System.currentTimeMillis();
 		String lastsForText = ChatFormatting.GRAY + "Event lasts for " + ChatFormatting.YELLOW;
 		String startsInText = ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW;
@@ -558,7 +558,7 @@ public class CalendarOverlay {
 		}
 	}
 
-	private void scrapeMonthlyCalendar(Matcher matcher, ContainerChest cc) {
+	private void scrapeMonthlyCalendar(Matcher matcher, ChestMenu cc) {
 		try {
 			int year = Integer.parseInt(matcher.group(2));
 
@@ -606,8 +606,8 @@ public class CalendarOverlay {
 		}
 
 		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+		ChestMenu cc = (ChestMenu) eventGui.menu;
+		String containerName = cc.getLowerChestInventory().getName().getString().getString();
 		if (!containerName.trim().equals("Calendar and Events")) {
 			setEnabled(false);
 			return;
@@ -1039,8 +1039,8 @@ public class CalendarOverlay {
 		}
 
 		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+		ChestMenu cc = (ChestMenu) eventGui.menu;
+		String containerName = cc.getLowerChestInventory().getName().getString().getString();
 		if (!containerName.trim().equals("Calendar and Events")) {
 			setEnabled(false);
 			return;
@@ -1109,7 +1109,7 @@ public class CalendarOverlay {
 
 	@SubscribeEvent
 	public void onGuiScreenKeyboard(GuiScreenEvent.KeyboardInputEvent.Pre event) {
-		if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+		if (Keyboard.getEventKey() == InputConstants.KEY_ESCAPE) {
 			if (jfFavouriteSelect != null) {
 				jfFavouriteSelect = null;
 				event.setCanceled(true);
@@ -1124,8 +1124,8 @@ public class CalendarOverlay {
 			}
 
 			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+			ChestMenu cc = (ChestMenu) eventGui.menu;
+			String containerName = cc.getLowerChestInventory().getName().getString().getString();
 			if (!containerName.trim().equals("Calendar and Events")) {
 				setEnabled(false);
 				return;

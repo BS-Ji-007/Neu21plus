@@ -110,8 +110,8 @@ public class NotificationHandler {
 		boolean validGui = gui instanceof ContainerScreen || gui instanceof GuiItemRecipe;
 		if (gui instanceof ChestScreen) {
 			ChestScreen eventGui = (ChestScreen) gui;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+			ChestMenu cc = (ChestMenu) eventGui.menu;
+			String containerName = cc.getLowerChestInventory().getName().getString().getString();
 			if (containerName.trim().equals("Fast Travel") || containerName.trim().equals("Porhtal")) {
 				validGui = false;
 			}

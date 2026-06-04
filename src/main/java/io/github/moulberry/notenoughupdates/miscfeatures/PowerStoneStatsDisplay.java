@@ -75,7 +75,7 @@ public class PowerStoneStatsDisplay {
 
 		EntityPlayerSP p = Minecraft.getInstance().player;
 		Container openContainer = p.openContainer;
-		for (Slot slot : openContainer.inventorySlots) {
+		for (Slot slot : openContainer.menu) {
 			ItemStack stack = slot.getStack();
 			if (stack == null) continue;
 

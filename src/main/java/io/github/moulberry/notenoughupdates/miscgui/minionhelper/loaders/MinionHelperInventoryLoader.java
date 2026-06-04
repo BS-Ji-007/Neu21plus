@@ -81,7 +81,7 @@ public class MinionHelperInventoryLoader {
 
 	private void checkInventory() {
 		Container openContainer = Minecraft.getInstance().player.openContainer;
-		if (openContainer instanceof ContainerChest) {
+		if (openContainer instanceof ChestMenu) {
 			if (dirty) {
 				dirty = false;
 				checkNextSlot(openContainer);
@@ -107,7 +107,7 @@ public class MinionHelperInventoryLoader {
 	}
 
 	private void checkNextSlot(Container openContainer) {
-		Slot informationSlot = openContainer.inventorySlots.get(50);
+		Slot informationSlot = openContainer.menu.get(50);
 		if (informationSlot.getHasStack()) {
 			ItemStack informationStack = informationSlot.getStack();
 			for (String line : ItemUtils.getLore(informationStack)) {
@@ -124,7 +124,7 @@ public class MinionHelperInventoryLoader {
 	}
 
 	private void loadMinionData(Container openContainer) {
-		Slot firstSlot = openContainer.inventorySlots.get(10);
+		Slot firstSlot = openContainer.menu.get(10);
 		boolean shouldLoad = false;
 		if (firstSlot != null) {
 			if (firstSlot.getHasStack()) {
@@ -140,7 +140,7 @@ public class MinionHelperInventoryLoader {
 		if (!shouldLoad) return;
 
 		int crafted = 0;
-		for (Slot slot : openContainer.inventorySlots) {
+		for (Slot slot : openContainer.menu) {
 			if (!slot.getHasStack()) continue;
 			ItemStack stack = slot.getStack();
 			if (stack == null) continue;

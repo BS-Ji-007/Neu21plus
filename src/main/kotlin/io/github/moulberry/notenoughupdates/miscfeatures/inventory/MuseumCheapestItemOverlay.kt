@@ -119,7 +119,7 @@ object MuseumCheapestItemOverlay {
         if (!shouldRender(event.gui)) return
         val chest = event.gui as ChestScreen
 
-        val slots = chest.inventorySlots.inventorySlots
+        val slots = chest.menu.menu
         //check if there is any info to gather only when a category is currently open
         if (!slots.equals(previousSlots) && Utils.getOpenChestName().startsWith("Museum ➜")) {
             checkIfHighestPageWasVisited(slots)

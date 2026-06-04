@@ -39,7 +39,7 @@ import net.minecraft.util.StringUtils
 class ItemShopExporter : RepoExporter {
     override suspend fun export(context: RepoExportingContext) {
         val chest = context.gui as ChestScreen
-        val container = chest.inventorySlots as ContainerChest
+        val container = chest.menu as ChestMenu
         val inventory = container.lowerChestInventory
         val displayName = inventory.displayName.unformattedText
         val npcInternalName = displayName.uppercase().replace(" ", "_") + "_NPC"
@@ -135,7 +135,7 @@ class ItemShopExporter : RepoExporter {
         if (NEUDebugFlag.ALWAYS_EXPORT_SHOPS.isSet) return true
         if (gui !is ChestScreen) return false
         val buyBackSlot = 4 + 9 * 5
-        val stacks = gui.inventorySlots.inventory
+        val stacks = gui.menu.inventory
         if (buyBackSlot !in stacks.indices) return false
         val buyBackStack = stacks[buyBackSlot] ?: return false
         return Utils.cleanColour(buyBackStack.displayName) == "Sell Item" ||

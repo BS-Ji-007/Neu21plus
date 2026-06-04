@@ -209,10 +209,10 @@ public class AbiphoneFavourites {
 
 		ContainerScreen container = event.getContainer();
 
-		ItemStack checkForShowMenu = container.inventorySlots.getSlot(1*9 + 4).getStack();
+		ItemStack checkForShowMenu = container.menu.getSlot(1*9 + 4).getStack();
 		isInShowMenu = checkForShowMenu != null && checkForShowMenu.getName().getString().contains("Abiphone ");
 
-		for (Slot slot : container.inventorySlots.inventorySlots) {
+		for (Slot slot : container.menu.menu) {
 			if (slot == null) continue;
 			ItemStack stack = slot.getStack();
 			if (stack == null) continue;

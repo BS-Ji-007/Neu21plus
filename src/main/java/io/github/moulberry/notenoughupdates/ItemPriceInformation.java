@@ -31,7 +31,7 @@ import io.github.moulberry.notenoughupdates.util.hypixelapi.HypixelItemAPI;
 import lombok.val;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

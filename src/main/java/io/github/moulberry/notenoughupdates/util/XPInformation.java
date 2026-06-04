@@ -91,7 +91,7 @@ public class XPInformation {
 		JsonObject leveling = Constants.LEVELING;
 		if (leveling == null) return;
 
-		String actionBar = StringUtils.cleanColour(event.message.getUnformattedText());
+		String actionBar = StringUtils.cleanColour(event.message.getString());
 
 		if (lastActionBar != null && lastActionBar.equalsIgnoreCase(actionBar)) {
 			return;

@@ -244,7 +244,7 @@ public abstract class MixinContainerScreen extends GuiScreen {
 		}
 		if (event.usePickblockInstead) {
 			$this.mc.playerController.windowClick(
-				$this.inventorySlots.windowId,
+				$this.menu.windowId,
 				slotId, 2, 3, $this.mc.player
 			);
 			ci.cancel();

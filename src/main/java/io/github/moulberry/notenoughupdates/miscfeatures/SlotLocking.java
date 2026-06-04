@@ -54,7 +54,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
@@ -484,7 +484,7 @@ public class SlotLocking {
 		if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding
 			&& slotClickEvent.clickType == 1 &&
 			locked.boundTo != -1) {
-			Slot boundSlot = slotClickEvent.guiContainer.inventorySlots.getSlotFromInventory(
+			Slot boundSlot = slotClickEvent.guiContainer.menu.getSlotFromInventory(
 				Minecraft.getInstance().player.inventory,
 				locked.boundTo
 			);
@@ -499,7 +499,7 @@ public class SlotLocking {
 				return;
 			}
 			ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
-			int size = container.inventorySlots.inventorySlots.size();
+			int size = container.menu.menu.size();
 
 			int from, to;
 			int id = slotClickEvent.slot.getSlotIndex();
@@ -531,7 +531,7 @@ public class SlotLocking {
 			if (from == 37) from = 7;
 			if (from == 36) from = 8;
 			Minecraft.getInstance().playerController.windowClick(
-				slotClickEvent.guiContainer.inventorySlots.windowId,
+				slotClickEvent.guiContainer.menu.windowId,
 				from, to, 2, Minecraft.getInstance().player
 			);
 			slotClickEvent.setCanceled(true);
@@ -566,7 +566,7 @@ public class SlotLocking {
 				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
 				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
-				Slot boundSlot = container.inventorySlots.getSlotFromInventory(
+				Slot boundSlot = container.menu.getSlotFromInventory(
 					Minecraft.getInstance().player.inventory,
 					locked.boundTo
 				);
@@ -756,7 +756,7 @@ public class SlotLocking {
 
 	boolean setTopHalfBarrier = false;
 
-	private boolean shouldShowBarrier(int slotNumber, IInventory inventory) {
+	private boolean shouldShowBarrier(int slotNumber, Container inventory) {
 		if (!(inventory instanceof InventoryPlayer))
 			return false;
 		if (slotNumber < 9)

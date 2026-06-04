@@ -37,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 
@@ -261,7 +261,7 @@ public class GuiCosmetics extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if (unlockTextField.getFocus()) {
-			if (keyCode == Keyboard.KEY_ESCAPE || keyCode == Keyboard.KEY_RETURN) {
+			if (keyCode == InputConstants.KEY_ESCAPE || keyCode == Keyboard.KEY_RETURN) {
 				CapeManager.INSTANCE.tryUnlockCape(unlockTextField.getText().trim());
 				unlockTextField.setText("");
 				unlockTextField.setFocus(false);

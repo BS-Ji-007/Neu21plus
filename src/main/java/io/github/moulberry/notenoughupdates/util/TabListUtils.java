@@ -87,7 +87,7 @@ public class TabListUtils {
 		ArrayList<String> lines = null;
 		try {
 			String[] footer = ((AccessorGuiPlayerTabOverlay) Minecraft.getInstance().ingameGUI.getTabList())
-				.getFooter().getFormattedText()
+				.getFooter().getString()
 				.split("\n");
 			lines = new ArrayList<>();
 			boolean seenBlank = false;

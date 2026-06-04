@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @NEUAutoSubscribe
 class BazaarPriceWarning : WarningPopUp() {
     override fun shouldShow(): Boolean {
-        val openSlots = Minecraft.getInstance().player?.openContainer?.inventorySlots ?: return false
+        val openSlots = Minecraft.getInstance().player?.openContainer?.menu ?: return false
         return super.shouldShow() && openSlots.contains(clickedSlot ?: return false)
     }
 
@@ -48,7 +48,7 @@ class BazaarPriceWarning : WarningPopUp() {
 
     @SubscribeEvent
     fun onClick(event: SlotClickEvent) {
-        val openSlots = Minecraft.getInstance().player?.openContainer?.inventorySlots ?: return
+        val openSlots = Minecraft.getInstance().player?.openContainer?.menu ?: return
         if (openSlots.size < 17) return
         //both insta buy and buy order screens have this sign
         //we check the name of the buy order page and return if its that
@@ -99,7 +99,7 @@ class BazaarPriceWarning : WarningPopUp() {
     override fun confirmClick() {
         val chest = Minecraft.getInstance().currentScreen as ChestScreen
         Minecraft.getInstance().playerController.windowClick(
-            chest.inventorySlots.windowId,
+            chest.menu.windowId,
             clickedSlot?.slotNumber ?: return, 0, 0, Minecraft.getInstance().player
         )
     }

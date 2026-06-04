@@ -35,7 +35,7 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.function.BiConsumer;
 
@@ -53,17 +53,17 @@ public class CraftingOverlay {
 		currentRecipe = recipe;
 	}
 
-	private void forEachSlot(ContainerChest chest, BiConsumer<Ingredient, Slot> block) {
+	private void forEachSlot(ChestMenu chest, BiConsumer<Ingredient, Slot> block) {
 		for (int i = 0; i < 9; i++) {
 			Ingredient recipeIngredient = currentRecipe.getInputs()[i];
-			Slot slot = chest.inventorySlots.get(10 + 9 * (i / 3) + (i % 3));
+			Slot slot = chest.menu.get(10 + 9 * (i / 3) + (i % 3));
 			block.accept(recipeIngredient, slot);
 		}
 	}
 
 	private void forEachHoveredSlot(
 		ChestScreen gui,
-		ContainerChest chest,
+		ChestMenu chest,
 		int mouseX,
 		int mouseY,
 		BiConsumer<Ingredient, Slot> block
@@ -79,13 +79,13 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void runIfCraftingOverlayIsPresent(Gui gui, BiConsumer<ChestScreen, ContainerChest> block) {
+	private void runIfCraftingOverlayIsPresent(Gui gui, BiConsumer<ChestScreen, ChestMenu> block) {
 		if (currentRecipe == null) return;
 		if (!(gui instanceof ChestScreen)) return;
 		ChestScreen guiChest = (ChestScreen) gui;
-		ContainerChest chest = (ContainerChest) guiChest.inventorySlots;
-		IInventory chestInventory = chest.getLowerChestInventory();
-		if (!"Craft Item".equals(chestInventory.getName().getString().getUnformattedText())) return;
+		ChestMenu chest = (ChestMenu) guiChest.menu;
+		Container chestInventory = chest.getLowerChestInventory();
+		if (!"Craft Item".equals(chestInventory.getName().getString().getString())) return;
 		block.accept(guiChest, chest);
 	}
 
@@ -132,7 +132,7 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void renderTooltip(ChestScreen guiChest, ContainerChest chest) {
+	private void renderTooltip(ChestScreen guiChest, ChestMenu chest) {
 		int mouseX = Utils.getMouseX();
 		int mouseY = Utils.getMouseY();
 		forEachHoveredSlot(guiChest, chest, mouseX, mouseY, (recipeIngredient, slot) -> {
@@ -148,7 +148,7 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void renderSlots(ChestScreen guiChest, ContainerChest chest) {
+	private void renderSlots(ChestScreen guiChest, ChestMenu chest) {
 		forEachSlot(chest, (recipeIngredient, slot) -> {
 			ItemStack actualItem = slot.getStack();
 			if (actualItem != null && (recipeIngredient == null ||

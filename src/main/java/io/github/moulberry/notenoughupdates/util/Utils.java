@@ -2341,7 +2341,7 @@ public class Utils {
 	}
 
 	public static String getNameFromChatComponent(IChatComponent chatComponent) {
-		String unformattedText = cleanColour(chatComponent.getSiblings().get(0).getUnformattedText());
+		String unformattedText = cleanColour(chatComponent.getSiblings().get(0).getString());
 		Matcher matcher = GUILD_OR_PARTY_MESSAGE_PATTERN.matcher(unformattedText);
 		if (matcher.matches()) {
 			return matcher.group(1);

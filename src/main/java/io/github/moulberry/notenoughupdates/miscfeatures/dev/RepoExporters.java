@@ -67,8 +67,8 @@ public class RepoExporters {
 	public void essenceExporter() {
 		try {
 			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			IInventory lower = cc.getLowerChestInventory();
+			ChestMenu cc = (ChestMenu) eventGui.menu;
+			Container lower = cc.getLowerChestInventory();
 			File file = new File(
 				Minecraft.getInstance().mcDataDir.getAbsolutePath(),
 				"config/notenoughupdates/repo/constants/essencecosts.json"
@@ -213,8 +213,8 @@ public class RepoExporters {
 				JsonObject jsonObject = null;
 				String id = null;
 				ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-				IInventory lower = cc.getLowerChestInventory();
+				ChestMenu cc = (ChestMenu) eventGui.menu;
+				Container lower = cc.getLowerChestInventory();
 				ItemStack stack = lower.getStackInSlot(i);
 				if (stack == null) continue;
 				if (!stack.getName().getString().isEmpty() && stack.getItem() != Item.getItemFromBlock(Blocks.barrier) &&
@@ -302,8 +302,8 @@ public class RepoExporters {
 
 	public void essenceExporter2() {
 		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		IInventory lower = cc.getLowerChestInventory();
+		ChestMenu cc = (ChestMenu) eventGui.menu;
+		Container lower = cc.getLowerChestInventory();
 
 		for (int i = 9; i < 45; i++) {
 			ItemStack stack = lower.getStackInSlot(i);
@@ -337,6 +337,6 @@ public class RepoExporters {
 					ChatFormatting.RED + "ERROR: Failed to save item: " + ChatFormatting.AQUA + stack.getName().getString());
 			}
 		}
-		Utils.addChatMessage(ChatFormatting.AQUA + "Parsed page: " + lower.getName().getString().getUnformattedText());
+		Utils.addChatMessage(ChatFormatting.AQUA + "Parsed page: " + lower.getName().getString().getString());
 	}
 }

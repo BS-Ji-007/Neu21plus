@@ -194,9 +194,9 @@ public class AuctionProfit {
 		if (minecraft == null || minecraft.player == null) return false;
 
 		Container inventoryContainer = minecraft.player.openContainer;
-		if (!(inventoryContainer instanceof ContainerChest)) return false;
-		ContainerChest containerChest = (ContainerChest) inventoryContainer;
+		if (!(inventoryContainer instanceof ChestMenu)) return false;
+		ChestMenu containerChest = (ChestMenu) inventoryContainer;
 		return containerChest.getLowerChestInventory().getName().getString()
-												 .getUnformattedText().equalsIgnoreCase("Manage Auctions");
+												 .getString().equalsIgnoreCase("Manage Auctions");
 	}
 }

@@ -25,11 +25,11 @@ import net.minecraft.world.item.ItemStack;
 public class ReplaceItemEvent extends NEUEvent {
 
 	final ItemStack original;
-	final IInventory inventory;
+	final Container inventory;
 	final int slotNumber;
 	ItemStack replaceWith;
 
-	public ReplaceItemEvent(ItemStack original, IInventory inventory, int slotNumber) {
+	public ReplaceItemEvent(ItemStack original, Container inventory, int slotNumber) {
 		this.original = original;
 		this.inventory = inventory;
 		this.slotNumber = slotNumber;
@@ -40,7 +40,7 @@ public class ReplaceItemEvent extends NEUEvent {
 		return original;
 	}
 
-	public IInventory getInventory() {
+	public Container getInventory() {
 		return inventory;
 	}
 

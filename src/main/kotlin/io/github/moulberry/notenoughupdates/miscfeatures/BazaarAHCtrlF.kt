@@ -29,7 +29,7 @@ import net.minecraft.init.Items
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.lwjgl.input.Keyboard
+import com.mojang.blaze3d.platform.InputConstants
 
 @NEUAutoSubscribe
 class BazaarAHCtrlF {
@@ -44,7 +44,7 @@ class BazaarAHCtrlF {
         val inBZ = inBZ(chestName)
         val inAH = inAH(chestName)
         if (!inBZ && !inAH) return
-        val openSlots = Minecraft.getInstance().player?.openContainer?.inventorySlots ?: return
+        val openSlots = Minecraft.getInstance().player?.openContainer?.menu ?: return
 
         var slotId = 0;
         if (inBZ) {
@@ -57,7 +57,7 @@ class BazaarAHCtrlF {
         val signStack = openSlots[slotId]?.stack ?: return
         if (signStack.item == Items.sign && signStack.displayName == "§aSearch") {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
-                Utils.sendMiddleMouseClick(gui.inventorySlots.windowId, slotId)
+                Utils.sendMiddleMouseClick(gui.menu.windowId, slotId)
                 event.isCanceled = true
             }
         }

@@ -40,7 +40,7 @@ import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -160,7 +160,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 	@Override
 	public void onGuiClosed() {
 		if (this.tileSign == null) return;
-		if (this.tileSign.signText[0].getUnformattedText().isEmpty()) return;
+		if (this.tileSign.signText[0].getString().isEmpty()) return;
 		NetHandlerPlayClient netHandlerPlayClient = this.mc.getNetHandler();
 		if (netHandlerPlayClient != null) {
 			netHandlerPlayClient.addToSendQueue(new C12PacketUpdateSign(this.tileSign.getPos(), this.tileSign.signText));
@@ -489,7 +489,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 	protected void keyTyped(char typedChar, int keyCode) {
 		boolean ignoreKey = false;
 
-		if (keyCode == Keyboard.KEY_ESCAPE) {
+		if (keyCode == InputConstants.KEY_ESCAPE) {
 			searchStringExtra = "";
 			if (escFullClose()) {
 				Minecraft.getInstance().setScreen(null);

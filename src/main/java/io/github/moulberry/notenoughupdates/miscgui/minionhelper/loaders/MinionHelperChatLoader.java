@@ -51,7 +51,7 @@ public class MinionHelperChatLoader {
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void onChat(ClientChatReceivedEvent event) {
 		if (event.type != 0) return;
-		String message = event.message.getFormattedText();
+		String message = event.message.getString();
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 
 		try {

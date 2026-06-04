@@ -28,7 +28,7 @@ import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorDropdown;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorKeybind;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorSlider;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,8 +150,8 @@ public class TooltipTweaks {
 		name = "Show Price info Keybind",
 		desc = "Hold this key to show a price info tooltip"
 	)
-	@ConfigEditorKeybind(defaultKey = Keyboard.KEY_NONE)
-	public int disablePriceKeyKeybind = Keyboard.KEY_NONE;
+	@ConfigEditorKeybind(defaultKey = InputConstants.UNKNOWN.getValue())
+	public int disablePriceKeyKeybind = InputConstants.UNKNOWN.getValue();
 
 	@Expose
 	@ConfigOption(

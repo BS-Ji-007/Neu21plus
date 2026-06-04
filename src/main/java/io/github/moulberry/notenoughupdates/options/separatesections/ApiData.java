@@ -27,7 +27,7 @@ import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorButton;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorKeybind;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorText;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class ApiData {
 
@@ -127,8 +127,8 @@ public class ApiData {
 		name = "Instant Edit Keybind",
 		desc = "Edits the item without opening the GUI"
 	)
-	@ConfigEditorKeybind(defaultKey = Keyboard.KEY_NONE)
-	public int instantEditKeybind = Keyboard.KEY_NONE;
+	@ConfigEditorKeybind(defaultKey = InputConstants.UNKNOWN.getValue())
+	public int instantEditKeybind = InputConstants.UNKNOWN.getValue();
 
 	@Expose
 	@ConfigOption(

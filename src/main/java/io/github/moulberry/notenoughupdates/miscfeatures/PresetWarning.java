@@ -36,7 +36,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -81,7 +81,7 @@ public class PresetWarning extends GuiElement {
 
 		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
-		ItemStack clickedPreset = chest.inventorySlots.getSlot(event.slotId).getStack();
+		ItemStack clickedPreset = chest.menu.getSlot(event.slotId).getStack();
 		if (clickedPreset == null) return;
 
 		List<String> list = ItemUtils.getLore(clickedPreset);
@@ -208,7 +208,7 @@ public class PresetWarning extends GuiElement {
 	private void makeClick() {
 		if (presetSlot != -1) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+			Minecraft.getInstance().playerController.windowClick(chest.menu.windowId,
 				presetSlot, 1, 0, Minecraft.getInstance().player
 			);
 			presetSlot = -1;

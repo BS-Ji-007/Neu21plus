@@ -110,7 +110,7 @@ object MuseumUtil {
         return emptyList()
     }
 
-    fun isMuseumInventory(inventory: IInventory): Boolean {
+    fun isMuseumInventory(inventory: Container): Boolean {
         return StringUtils.cleanColour(inventory.displayName.unformattedText).startsWith("Museum ➜")
     }
 

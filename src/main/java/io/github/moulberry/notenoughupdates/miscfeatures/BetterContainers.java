@@ -93,7 +93,7 @@ public class BetterContainers {
 			int invHashcode = lastInvHashcode;
 
 			if (currentMillis - lastHashcodeCheck > 50) {
-				Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
+				Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).menu;
 				invHashcode = container.getInventory().hashCode();
 			}
 
@@ -124,8 +124,8 @@ public class BetterContainers {
 		if (!isChestOpen()) return false;
 
 		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+		ChestMenu cc = (ChestMenu) eventGui.menu;
+		String containerName = cc.getLowerChestInventory().getName().getString().getString();
 		return containerName.toLowerCase(Locale.ROOT).trim().startsWith("navigate the maze");
 	}
 
@@ -244,13 +244,13 @@ public class BetterContainers {
 		if (!hasItem()) return;
 
 		loaded = true;
-		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
-		List<Slot> inventorySlots = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots.inventorySlots;
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).menu;
+		List<Slot> menu = ((ChestScreen) Minecraft.getInstance().currentScreen).menu.menu;
 
-		if (hasNullPane() && container instanceof ContainerChest) {
-			if (lastSlots != inventorySlots) {
+		if (hasNullPane() && container instanceof ChestMenu) {
+			if (lastSlots != menu) {
 				generateBufferedImages();
-				lastSlots = inventorySlots;
+				lastSlots = menu;
 			}
 
 			try {
@@ -262,15 +262,15 @@ public class BetterContainers {
 					bufferedImageBase.isAlphaPremultiplied(),
 					null
 				);
-				IInventory lower = ((ContainerChest) container).getLowerChestInventory();
+				Container lower = ((ChestMenu) container).getLowerChestInventory();
 				int size = lower.getSizeInventory();
 				boolean[][] slots = new boolean[9][size / 9];
 				boolean[][] buttons = new boolean[9][size / 9];
 
-				boolean ultrasequencer = lower.getName().getString().getUnformattedText().startsWith("Ultrasequencer") &&
-					!lower.getName().getString().getUnformattedText().contains("Stakes");
-				boolean superpairs = lower.getName().getString().getUnformattedText().startsWith("Superpairs") &&
-					!lower.getName().getString().getUnformattedText().contains("Stakes");
+				boolean ultrasequencer = lower.getName().getString().getString().startsWith("Ultrasequencer") &&
+					!lower.getName().getString().getString().contains("Stakes");
+				boolean superpairs = lower.getName().getString().getString().startsWith("Superpairs") &&
+					!lower.getName().getString().getString().contains("Stakes");
 				for (int index = 0; index < size; index++) {
 					ItemStack stack = getStackFromInvetory(lower, index);
 					buttons[index % 9][index / 9] = isButtonStack(index, stack);
@@ -393,9 +393,9 @@ public class BetterContainers {
 
 	private static boolean hasItem() {
 		if (!isChestOpen()) return false;
-		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
-		if (container instanceof ContainerChest) {
-			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).menu;
+		if (container instanceof ChestMenu) {
+			Container lower = ((ChestMenu) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();
 			for (int index = 0; index < size; index++) {
 				if (getStackFromInvetory(lower, index) != null) return true;
@@ -404,15 +404,15 @@ public class BetterContainers {
 		return false;
 	}
 
-	private static ItemStack getStackFromInvetory(IInventory lower, int index) {
+	private static ItemStack getStackFromInvetory(Container lower, int index) {
 		return lower.getStackInSlot(index);
 	}
 
 	private static boolean hasNullPane() {
 		if (!isChestOpen()) return false;
-		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
-		if (container instanceof ContainerChest) {
-			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).menu;
+		if (container instanceof ChestMenu) {
+			Container lower = ((ChestMenu) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();
 			for (int index = 0; index < size; index++) {
 				if (isBlankStack(index, getStackFromInvetory(lower, index))) return true;

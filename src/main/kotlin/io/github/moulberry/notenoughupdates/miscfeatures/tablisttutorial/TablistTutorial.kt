@@ -93,7 +93,7 @@ object TablistTutorial {
         val task = activeTask ?: return
 
         val gui = event.gui as? ChestScreen ?: return
-        val chestInventory = gui.inventorySlots as ContainerChest
+        val chestInventory = gui.menu as ChestMenu
 
         val name = chestInventory.lowerChestInventory.displayName.unformattedText
 
@@ -111,7 +111,7 @@ object TablistTutorial {
             if (regionName == task.regionName) {
                 drawEnableEffect(gui, chestInventory, task)
             } else if (regionName != null) {
-                val backSlot = chestInventory.inventorySlots.getOrNull(5 * 9 + 3)
+                val backSlot = chestInventory.menu.getOrNull(5 * 9 + 3)
                 if (backSlot != null) {
                     Arrow.drawBigRedArrow(gui, backSlot, "Go back!")
                 }
@@ -125,8 +125,8 @@ object TablistTutorial {
         val slot: Slot,
     )
 
-    fun findWidgets(chestInventory: ContainerChest): List<WidgetStatus> {
-        return chestInventory.inventorySlots.mapNotNull {
+    fun findWidgets(chestInventory: ChestMenu): List<WidgetStatus> {
+        return chestInventory.menu.mapNotNull {
             val name = ItemUtils.getDisplayName(it.stack)?.let(StringUtils::cleanColour) ?: return@mapNotNull null
             if (!name.endsWith(" Widget")) {
                 return@mapNotNull null
@@ -140,7 +140,7 @@ object TablistTutorial {
         }
     }
 
-    private fun drawEnableEffect(gui: ChestScreen, chestInventory: ContainerChest, task: TabListWidget) {
+    private fun drawEnableEffect(gui: ChestScreen, chestInventory: ChestMenu, task: TabListWidget) {
         val widgets = findWidgets(chestInventory)
         val widget = widgets.find { it.widgetName == task.widgetName.toString() }
         if (widget == null) return
@@ -175,8 +175,8 @@ object TablistTutorial {
         },
         Damage: 3s
     }*/
-    fun drawPriorityClick(gui: ChestScreen, chestInventory: ContainerChest, widget: WidgetStatus) {
-        val prioritySlot = chestInventory.inventorySlots.getOrNull(13) ?: return
+    fun drawPriorityClick(gui: ChestScreen, chestInventory: ChestMenu, widget: WidgetStatus) {
+        val prioritySlot = chestInventory.menu.getOrNull(13) ?: return
         val leftSide = chestInventory.inventory.getOrNull(3).let(ItemUtils::getLore)
         val middle = chestInventory.inventory.getOrNull(4).let(ItemUtils::getLore)
         val rightSide = chestInventory.inventory.getOrNull(5).let(ItemUtils::getLore)
@@ -211,7 +211,7 @@ object TablistTutorial {
             .removePrefix("the ")
     }
 
-    private fun drawSelectAreaArrow(gui: ChestScreen, inventory: ContainerChest, task: TabListWidget) {
+    private fun drawSelectAreaArrow(gui: ChestScreen, inventory: ChestMenu, task: TabListWidget) {
         var regionName = task.regionName
         if (regionName == "CURRENT_REGION") {
             val infoSlot = inventory.inventory.getOrNull(4).let(ItemUtils::getLore)
@@ -226,7 +226,7 @@ object TablistTutorial {
             activeTask!!.regionName = regionName
         }
 
-        val regionSlot = inventory.inventorySlots.find {
+        val regionSlot = inventory.menu.find {
             val name = ItemUtils.getDisplayName(it.stack)?.let(StringUtils::cleanColour) ?: ""
             getRegionName(name) == regionName
         } ?: return

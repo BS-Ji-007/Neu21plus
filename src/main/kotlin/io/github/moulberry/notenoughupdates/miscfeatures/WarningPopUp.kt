@@ -29,7 +29,7 @@ import net.minecraft.client.MainWindow
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.ChatFormatting
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.lwjgl.input.Keyboard
+import com.mojang.blaze3d.platform.InputConstants
 import org.lwjgl.input.Mouse
 
 abstract class WarningPopUp : ScreenReplacer() {

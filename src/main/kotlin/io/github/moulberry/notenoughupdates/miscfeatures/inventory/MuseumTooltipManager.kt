@@ -139,11 +139,11 @@ object MuseumTooltipManager {
     @SubscribeEvent
     fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val gui = event.container ?: return
-        val chest = gui.inventorySlots as? ContainerChest ?: return
+        val chest = gui.menu as? ChestMenu ?: return
         if (!MuseumUtil.isMuseumInventory(chest.lowerChestInventory)) return
 
         val armor = Utils.getOpenChestName().stripControlCodes().endsWith("Armor Sets")
-        val slots = chest.inventorySlots
+        val slots = chest.menu
 
         if (!slots.equals(previousSlots)) {
             for (i in 0..53) {

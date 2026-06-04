@@ -55,7 +55,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;
@@ -251,7 +251,7 @@ public class GuiCustomEnchant extends Gui {
 			expectedMaxPage = 1;
 		}
 		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
-		ContainerChest cc = (ContainerChest) chest.inventorySlots;
+		ChestMenu cc = (ChestMenu) chest.menu;
 		ItemStack hexStack = cc.getLowerChestInventory().getStackInSlot(50);
 		if (hexStack != null && hexStack.getItem() == Items.experience_bottle) {
 			shouldOverrideFast = false;
@@ -264,7 +264,7 @@ public class GuiCustomEnchant extends Gui {
 
 	public void tick() {
 		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
-		ContainerChest cc = (ContainerChest) chest.inventorySlots;
+		ChestMenu cc = (ChestMenu) chest.menu;
 
 		ItemStack stack = cc.getLowerChestInventory().getStackInSlot(23);
 		ItemStack arrowStack = cc.getLowerChestInventory().getStackInSlot(45);
@@ -585,7 +585,7 @@ public class GuiCustomEnchant extends Gui {
 		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
 		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
-		ContainerChest cc = (ContainerChest) chest.inventorySlots;
+		ChestMenu cc = (ChestMenu) chest.menu;
 
 		leftScroll.tick();
 		rightScroll.tick();
@@ -882,7 +882,7 @@ public class GuiCustomEnchant extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(
-			Minecraft.getInstance().player.inventory.getName().getString().getUnformattedText(),
+			Minecraft.getInstance().player.inventory.getName().getString().getString(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
@@ -1312,9 +1312,9 @@ public class GuiCustomEnchant extends Gui {
 
 							EntityPlayerSP playerIn = Minecraft.getInstance().player;
 							short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-							ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+							ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 							Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-								chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+								chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 							cancelButtonAnimTime = System.currentTimeMillis();
 						}
@@ -1324,9 +1324,9 @@ public class GuiCustomEnchant extends Gui {
 
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(click);
+						ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(click);
 						Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-							chest.inventorySlots.windowId, click, 0, 0, stack, transactionID));
+							chest.menu.windowId, click, 0, 0, stack, transactionID));
 					}
 					return true;
 				}
@@ -1364,9 +1364,9 @@ public class GuiCustomEnchant extends Gui {
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+					ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 					Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-						chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+						chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 					cancelButtonAnimTime = System.currentTimeMillis();
 				} else if (!isChangingEnchLevel && enchanterCurrentEnch != null &&
@@ -1379,10 +1379,10 @@ public class GuiCustomEnchant extends Gui {
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(
+					ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(
 						enchanterCurrentEnch.slotIndex);
 					Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-						chest.inventorySlots.windowId,
+						chest.menu.windowId,
 						enchanterCurrentEnch.slotIndex, 0, 0, stack, transactionID
 					));
 
@@ -1554,17 +1554,17 @@ public class GuiCustomEnchant extends Gui {
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 								ItemStack stack =
-									((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(ench.slotIndex);
+									((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(ench.slotIndex);
 								Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-									chest.inventorySlots.windowId,
+									chest.menu.windowId,
 									ench.slotIndex, 0, 0, stack, transactionID
 								));
 							} else if (currentState == EnchantState.ADDING_ENCHANT) {
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-								ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+								ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 								Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-									chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+									chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 								cancelButtonAnimTime = System.currentTimeMillis();
 							}
@@ -1594,17 +1594,17 @@ public class GuiCustomEnchant extends Gui {
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 								ItemStack stack =
-									((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(ench.slotIndex);
+									((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(ench.slotIndex);
 								Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-									chest.inventorySlots.windowId,
+									chest.menu.windowId,
 									ench.slotIndex, 0, 0, stack, transactionID
 								));
 							} else if (currentState == EnchantState.ADDING_ENCHANT) {
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-								ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+								ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 								Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-									chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+									chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 								cancelButtonAnimTime = System.currentTimeMillis();
 							}
@@ -1649,9 +1649,9 @@ public class GuiCustomEnchant extends Gui {
 
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+						ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 						Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-							chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+							chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 						cancelButtonAnimTime = System.currentTimeMillis();
 					}
@@ -1670,9 +1670,9 @@ public class GuiCustomEnchant extends Gui {
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
-					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
+					ItemStack stack = ((ChestMenu) chest.menu).getLowerChestInventory().getStackInSlot(45);
 					Minecraft.getInstance().getNetHandler().addToSendQueue(new C0EPacketClickWindow(
-						chest.inventorySlots.windowId, 45, 0, 0, stack, transactionID));
+						chest.menu.windowId, 45, 0, 0, stack, transactionID));
 
 					cancelButtonAnimTime = System.currentTimeMillis();
 				}
@@ -1695,7 +1695,7 @@ public class GuiCustomEnchant extends Gui {
 			return false;
 		}
 
-		return Keyboard.getEventKey() != Keyboard.KEY_ESCAPE &&
+		return Keyboard.getEventKey() != InputConstants.KEY_ESCAPE &&
 			Keyboard.getEventKey() != Minecraft.getInstance().gameSettings.keyBindInventory.getKeyCode() &&
 			(!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking ||
 				Keyboard.getEventKey() != NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey);

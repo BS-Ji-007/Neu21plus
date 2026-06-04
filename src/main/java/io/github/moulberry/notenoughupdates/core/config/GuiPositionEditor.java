@@ -29,7 +29,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;

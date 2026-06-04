@@ -43,7 +43,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.util.Matrix4f;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec4b;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 

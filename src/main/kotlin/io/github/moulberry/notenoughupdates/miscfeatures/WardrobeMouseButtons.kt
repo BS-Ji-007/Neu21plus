@@ -68,7 +68,7 @@ class WardrobeMouseButtons {
         val totalPages = chestNameMatch.groups["total"]!!.value.toInt()
         val currentPage = chestNameMatch.groups["current"]!!.value.toInt()
         val guiChes = event.gui as ChestScreen
-        val container = guiChes.inventorySlots as ContainerChest
+        val container = guiChes.menu as ChestMenu
         var slotNum = 0
 
         if ((currentPage != totalPages) && KeybindHelper.isKeyDown(NotEnoughUpdates.INSTANCE.config.wardrobeKeybinds.wardrobePageNext)) {
@@ -100,7 +100,7 @@ class WardrobeMouseButtons {
         val thatItemStack = container.getSlot(slotNum).getStack() ?: return
         if (thatItemStack.getName().getString().isEmpty()) return
         if (slotNum < 36 || ((slotNum > 45) && (slotNum != 53))) return
-        Utils.sendLeftMouseClick(gui.inventorySlots.windowId, slotNum)
+        Utils.sendLeftMouseClick(gui.menu.windowId, slotNum)
         lastClick = System.currentTimeMillis()
         event.isCanceled = true
     }

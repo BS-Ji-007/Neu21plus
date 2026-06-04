@@ -46,7 +46,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -213,11 +213,11 @@ public class Navigation {
 	@SubscribeEvent
 	public void onChatMessage(ClientChatReceivedEvent event) {
 		if (event.type == 2) return;
-		if (StringUtils.cleanColour(event.message.getUnformattedText()).startsWith("§r§eYou may now fast travel to")) {
+		if (StringUtils.cleanColour(event.message.getString()).startsWith("§r§eYou may now fast travel to")) {
 			getNonUnlockedWarpScrolls().clear();
 			return;
 		}
-		if (!"§r§cYou haven't unlocked this fast travel destination!§r".equals(event.message.getFormattedText())) return;
+		if (!"§r§cYou haven't unlocked this fast travel destination!§r".equals(event.message.getString())) return;
 		Instant lwa = lastWarpAttemptedTime;
 		if (lwa == null) return;
 		if (Duration.between(lwa, Instant.now()).compareTo(Duration.ofSeconds(1)) > 0) return;

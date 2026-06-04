@@ -61,7 +61,7 @@ class HotmInformation {
         if (currentScreen !is ChestScreen) {
             return
         }
-        val container = currentScreen.inventorySlots as ContainerChest
+        val container = currentScreen.menu as ChestMenu
         for (i in 0 until container.lowerChestInventory.sizeInventory) {
             val stack = container.lowerChestInventory.getStackInSlot(i) ?: continue
             val displayName = ItemUtils.getDisplayName(stack) ?: continue

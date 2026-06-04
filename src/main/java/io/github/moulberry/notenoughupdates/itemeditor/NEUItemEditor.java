@@ -41,7 +41,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -390,7 +390,7 @@ public class NEUItemEditor extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) {
 		boolean hasChanges = false;
-		if (keyCode == Keyboard.KEY_ESCAPE && !hasChanges) {
+		if (keyCode == InputConstants.KEY_ESCAPE && !hasChanges) {
 			Minecraft.getInstance().setScreen(null);
 			return;
 		}

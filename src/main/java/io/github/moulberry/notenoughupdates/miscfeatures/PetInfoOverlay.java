@@ -785,11 +785,11 @@ public class PetInfoOverlay extends TextOverlay {
 		if (event.slotId >= 10 && event.slotId <= 43 && slotIdMod >= 0 && slotIdMod <= 6 &&
 			Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getName().getString().getUnformattedText();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
+			String containerName = lower.getName().getString().getString();
 
-			if (lower.getSizeInventory() >= 54 && event.guiContainer.inventorySlots.windowId == container.windowId) {
+			if (lower.getSizeInventory() >= 54 && event.guiContainer.menu.windowId == container.windowId) {
 				int page = 0;
 				boolean isPets = isPetMenu(containerName,container);
 
@@ -832,9 +832,9 @@ public class PetInfoOverlay extends TextOverlay {
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen && RenderListener.inventoryLoaded) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getName().getString().getUnformattedText();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
+			String containerName = lower.getName().getString().getString();
 
 			if (lower.getSizeInventory() >= 54) {
 				int page = 0;
@@ -961,7 +961,7 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	private boolean isPetMenu(String containerName, ContainerChest container) {
+	private boolean isPetMenu(String containerName, ChestMenu container) {
 		Matcher matcher = PET_CONTAINER.matcher(containerName);
 		if (!matcher.find()) return false;
 
@@ -1182,9 +1182,9 @@ public class PetInfoOverlay extends TextOverlay {
 		NEUConfig config = NotEnoughUpdates.INSTANCE.config;
 		if (config.petOverlay.enablePetInfo || config.itemOverlays.enableMonkeyCheck || config.petOverlay.petInvDisplay) {
 			if (event.type == 0) {
-				String chatMessage = Utils.cleanColour(event.message.getUnformattedText());
+				String chatMessage = Utils.cleanColour(event.message.getString());
 
-				Matcher autopetMatcher = AUTOPET_EQUIP.matcher(event.message.getFormattedText());
+				Matcher autopetMatcher = AUTOPET_EQUIP.matcher(event.message.getString());
 				if (autopetMatcher.matches()) {
 					try {
 						lastLevelHovered = Integer.parseInt(autopetMatcher.group("level"));
@@ -1203,9 +1203,9 @@ public class PetInfoOverlay extends TextOverlay {
 						int i = -1;
 						for (IChatComponent sibling : siblings) {
 							i++;
-							if (!sibling.getUnformattedText().startsWith("Held Item:")) continue;
+							if (!sibling.getString().startsWith("Held Item:")) continue;
 							IChatComponent iChatComponent = siblings.get(i+1);
-							String formattedText = iChatComponent.getChatStyle().getColor() + iChatComponent.getUnformattedText();
+							String formattedText = iChatComponent.getChatStyle().getColor() + iChatComponent.getString();
 							petItem = getInternalIdForPetItemDisplayName(formattedText);
 						}
 					} else {

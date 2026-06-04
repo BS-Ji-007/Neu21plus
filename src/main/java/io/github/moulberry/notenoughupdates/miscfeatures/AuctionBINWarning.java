@@ -36,7 +36,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -93,7 +93,7 @@ public class AuctionBINWarning extends GuiElement {
 
 		sellingPrice = -1;
 
-		ItemStack priceStack = event.guiContainer.inventorySlots.getSlot(31).getStack();
+		ItemStack priceStack = event.guiContainer.menu.getSlot(31).getStack();
 		if (priceStack != null) {
 			String displayName = priceStack.getName().getString();
 			Matcher priceMatcher = ITEM_PRICE_REGEX.matcher(displayName);
@@ -106,7 +106,7 @@ public class AuctionBINWarning extends GuiElement {
 			}
 		}
 
-		ItemStack sellStack = event.guiContainer.inventorySlots.getSlot(13).getStack();
+		ItemStack sellStack = event.guiContainer.menu.getSlot(13).getStack();
 		if (sellStack == null) return;
 
 		String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(sellStack);
@@ -269,7 +269,7 @@ public class AuctionBINWarning extends GuiElement {
 			if (mouseY >= height / 2 + 23 && mouseY <= height / 2 + 23 + 16) {
 				if (mouseX >= width / 2 - 43 && mouseX <= width / 2 - 3) {
 					ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-					Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+					Minecraft.getInstance().playerController.windowClick(chest.menu.windowId,
 						29, 0, 0, Minecraft.getInstance().player
 					);
 				}
@@ -290,7 +290,7 @@ public class AuctionBINWarning extends GuiElement {
 		if (!Keyboard.getEventKeyState()) {
 			if (Keyboard.getEventKey() == Keyboard.KEY_Y || Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
 				ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-				Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+				Minecraft.getInstance().playerController.windowClick(chest.menu.windowId,
 					29, 0, 0, Minecraft.getInstance().player
 				);
 			}

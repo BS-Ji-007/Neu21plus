@@ -119,13 +119,13 @@ public class DwarvenMinesWaypoints {
 
 	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent event) {
-		Matcher matcherGhast = ghastRegex.matcher(event.message.getFormattedText());
+		Matcher matcherGhast = ghastRegex.matcher(event.message.getString());
 		if (matcherGhast.find() && config.powderGhastWaypoint) {
 			dynamicLocation = Utils.cleanColour(matcherGhast.group(1).trim());
 			dynamicName = ChatFormatting.GOLD + "Powder Ghast";
 			dynamicMillis = System.currentTimeMillis();
 		} else {
-			Matcher matcherStar = fallenStarRegex.matcher(event.message.getFormattedText());
+			Matcher matcherStar = fallenStarRegex.matcher(event.message.getString());
 			if (matcherStar.find() && config.fallenStarWaypoint) {
 				dynamicLocation = Utils.cleanColour(matcherStar.group(1).trim());
 				dynamicName = ChatFormatting.DARK_PURPLE + "Fallen Star";
@@ -146,10 +146,10 @@ public class DwarvenMinesWaypoints {
 
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
 
-			if (lower.getName().getString().getFormattedText().contains("Commissions")) {
+			if (lower.getName().getString().getString().contains("Commissions")) {
 				for (int i = 0; i < lower.getSizeInventory(); i++) {
 					ItemStack stack = lower.getStackInSlot(i);
 					if (stack == null) continue;
@@ -192,7 +192,7 @@ public class DwarvenMinesWaypoints {
 		if (!SBInfo.getInstance().getLocation().equals("mining_3")) return;
 
 		if (commissionFinished && event.entity instanceof EntityArmorStand) {
-			String name = event.entity.getName().getString().getFormattedText();
+			String name = event.entity.getName().getString().getString();
 			if (emissaryRemovedDistSq > 0 && name.equals(
 				ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "CLICK" + ChatFormatting.RESET)) {
 				EntityPlayerSP p = Minecraft.getInstance().player;

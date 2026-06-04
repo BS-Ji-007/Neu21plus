@@ -202,9 +202,9 @@ public class TrophyRewardOverlay {
 	}
 
 	private void readInventory(Map<String, Integer> totalAmount, Map<String, Integer> totalExchange) {
-		if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
+		if (Minecraft.getInstance().player.openContainer instanceof ChestMenu) {
 
-			for (Slot slot : Minecraft.getInstance().player.openContainer.inventorySlots) {
+			for (Slot slot : Minecraft.getInstance().player.openContainer.menu) {
 				if (!slot.getHasStack()) continue;
 				ItemStack stack = slot.getStack();
 				if (stack != null) {
@@ -301,9 +301,9 @@ public class TrophyRewardOverlay {
 		if (minecraft == null || minecraft.player == null) return false;
 
 		Container inventoryContainer = minecraft.player.openContainer;
-		if (!(inventoryContainer instanceof ContainerChest)) return false;
-		ContainerChest containerChest = (ContainerChest) inventoryContainer;
+		if (!(inventoryContainer instanceof ChestMenu)) return false;
+		ChestMenu containerChest = (ChestMenu) inventoryContainer;
 		return containerChest.getLowerChestInventory().getName().getString()
-												 .getUnformattedText().equalsIgnoreCase("Trophy Fishing");
+												 .getString().equalsIgnoreCase("Trophy Fishing");
 	}
 }

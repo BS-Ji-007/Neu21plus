@@ -45,7 +45,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.opengl.GL11;
 
 import java.io.ByteArrayInputStream;

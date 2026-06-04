@@ -501,7 +501,7 @@ public class CrystalWishingCompassSolver {
 	}
 
 	private boolean isKingsScentPresent() {
-		if (SBInfo.getInstance().footer.getUnformattedText().contains("King's Scent I")) {
+		if (SBInfo.getInstance().footer.getString().contains("King's Scent I")) {
 			return true;
 		}
 		for (String name : TabListUtils.getTabList()) {

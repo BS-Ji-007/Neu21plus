@@ -81,7 +81,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 	private final Pattern hotmCrystalNotPlacedPattern = Pattern.compile("(?<crystal>[a-zA-Z]+) \\u2716 Not Placed");
 	private final Pattern hotmCrystalPlacedPattern = Pattern.compile("(?<crystal>[a-zA-Z]+) \\u2714 Placed");
 
-	private void updateHotmCrystalState(IInventory lower) {
+	private void updateHotmCrystalState(Container lower) {
 		NEUConfig.HiddenProfileSpecific perProfileConfig = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 		if (perProfileConfig == null) return;
 
@@ -121,9 +121,9 @@ public class CrystalHollowOverlay extends TextOverlay {
 	public void updateFrequent() {
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getName().getString().getUnformattedText();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
+			String containerName = lower.getName().getString().getString();
 
 			if (containerName.equals("Heart of the Mountain") && lower.getSizeInventory() >= 54) {
 				updateHotmCrystalState(lower);

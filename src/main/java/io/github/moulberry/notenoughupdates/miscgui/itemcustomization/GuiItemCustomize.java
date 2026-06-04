@@ -46,7 +46,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -714,7 +714,7 @@ public class GuiItemCustomize extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if (textFieldRename.getFocus()) {
-			if (keyCode == Keyboard.KEY_ESCAPE) {
+			if (keyCode == InputConstants.KEY_ESCAPE) {
 				textFieldRename.setFocus(false);
 				return;
 			} else {
@@ -724,7 +724,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		if (textFieldCustomItem.getFocus()) {
 			updateData();
-			if (keyCode == Keyboard.KEY_ESCAPE) {
+			if (keyCode == InputConstants.KEY_ESCAPE) {
 				textFieldCustomItem.setFocus(false);
 				return;
 			} else {
@@ -734,7 +734,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		if (textFieldTickSpeed.getFocus()) {
 			updateData();
-			if (keyCode == Keyboard.KEY_ESCAPE) {
+			if (keyCode == InputConstants.KEY_ESCAPE) {
 				textFieldTickSpeed.setFocus(false);
 				return;
 			} else {
@@ -748,7 +748,7 @@ public class GuiItemCustomize extends GuiScreen {
 	@Override
 	public void handleKeyboardInput() throws IOException {
 		if (editor == null || !editor.keyboardInput()) {
-			if (editor != null && Keyboard.getEventKeyState() && Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+			if (editor != null && Keyboard.getEventKeyState() && Keyboard.getEventKey() == InputConstants.KEY_ESCAPE) {
 				editor = null;
 			} else {
 				super.handleKeyboardInput();

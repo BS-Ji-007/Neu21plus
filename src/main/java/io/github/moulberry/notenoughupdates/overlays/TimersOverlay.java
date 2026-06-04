@@ -108,43 +108,43 @@ public class TimersOverlay extends TextTabOverlay {
 
 		if (event.type == 0) {
 			long currentTime = System.currentTimeMillis();
-			Matcher cakeMatcher = CAKE_PATTERN.matcher(event.message.getFormattedText());
+			Matcher cakeMatcher = CAKE_PATTERN.matcher(event.message.getString());
 			if (cakeMatcher.matches()) {
 				hidden.firstCakeAte = currentTime;
 				return;
 			}
-			if ("§r§d§lINFUSED! §r§7Used one of your free Rift charges!§r".equals(event.message.getFormattedText())) {
+			if ("§r§d§lINFUSED! §r§7Used one of your free Rift charges!§r".equals(event.message.getString())) {
 				hidden.lastFreeRiftInfusionApplied = currentTime;
 				return;
 			}
-			Matcher puzzlerMatcher = PUZZLER_PATTERN.matcher(event.message.getFormattedText());
+			Matcher puzzlerMatcher = PUZZLER_PATTERN.matcher(event.message.getString());
 			if (puzzlerMatcher.matches()) {
 				hidden.puzzlerCompleted = currentTime;
 				return;
 			}
 
-			Matcher fetchurMatcher = FETCHUR_PATTERN.matcher(event.message.getFormattedText());
+			Matcher fetchurMatcher = FETCHUR_PATTERN.matcher(event.message.getString());
 			if (fetchurMatcher.matches()) {
 				hidden.fetchurCompleted = currentTime;
 				return;
 			}
 
-			Matcher fetchur2Matcher = FETCHUR2_PATTERN.matcher(event.message.getFormattedText());
+			Matcher fetchur2Matcher = FETCHUR2_PATTERN.matcher(event.message.getString());
 			if (fetchur2Matcher.matches()) {
 				hidden.fetchurCompleted = currentTime;
 				return;
 			}
-			Matcher dailyGemstonePowder = DAILY_GEMSTONE_POWDER.matcher(event.message.getFormattedText());
+			Matcher dailyGemstonePowder = DAILY_GEMSTONE_POWDER.matcher(event.message.getString());
 			if (dailyGemstonePowder.matches()) {
 				hidden.dailyGemstonePowderCompleted = currentTime;
 				return;
 			}
-			Matcher dailyMithrilPowder = DAILY_MITHRIL_POWDER.matcher(event.message.getFormattedText());
+			Matcher dailyMithrilPowder = DAILY_MITHRIL_POWDER.matcher(event.message.getString());
 			if (dailyMithrilPowder.matches()) {
 				hidden.dailyMithrilPowerCompleted = currentTime;
 				return;
 			}
-			Matcher dailyShopLimit = DAILY_SHOP_LIMIT.matcher(event.message.getFormattedText());
+			Matcher dailyShopLimit = DAILY_SHOP_LIMIT.matcher(event.message.getString());
 			if (dailyShopLimit.matches()) {
 				hidden.dailyShopLimitCompleted = currentTime;
 			}
@@ -319,9 +319,9 @@ public class TimersOverlay extends TextTabOverlay {
 
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getName().getString().getUnformattedText();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
+			String containerName = lower.getName().getString().getString();
 			ItemStack stack = lower.getStackInSlot(0);
 			switch (containerName.intern()) {
 				case "Dimensional Infusion":

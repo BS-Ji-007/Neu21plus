@@ -414,7 +414,7 @@ public class StorageManager {
 
 		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
-		return chest.inventorySlots.windowId;
+		return chest.menu.windowId;
 	}
 
 	public void sendToPage(int page) {
@@ -454,7 +454,7 @@ public class StorageManager {
 		shouldRenderStorageOverlayCached = false;
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 
-		String windowTitle = Utils.cleanColour(packet.getWindowTitle().getUnformattedText());
+		String windowTitle = Utils.cleanColour(packet.getWindowTitle().getString());
 
 		Matcher matcher = WINDOW_REGEX.matcher(windowTitle);
 		Matcher matcherEchest = ECHEST_WINDOW_REGEX.matcher(windowTitle);
@@ -690,13 +690,13 @@ public class StorageManager {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (getCurrentWindowId() == -1 || getCurrentWindowId() != packet.getWindowId()) return;
 		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
-		ContainerChest containerChest = (ContainerChest) ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
+		ChestMenu containerChest = (ChestMenu) ((ChestScreen) Minecraft.getInstance().currentScreen).menu;
 
 		if (getCurrentPageId() != -1) {
 			StoragePage page = getCurrentPage();
 			if (page == null) return;
 
-			IInventory inv = containerChest.getLowerChestInventory();
+			Container inv = containerChest.getLowerChestInventory();
 			int max = Math.min(9 + page.rows * 9, inv.getSizeInventory());
 			for (int i = 9; i < max; i++) {
 				setItemSlot(i - 9, inv.getStackInSlot(i));

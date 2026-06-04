@@ -54,9 +54,9 @@ public class SignCalculator {
 		if (!isEnabled()) return;
 		GuiEditSign guiEditSign = (GuiEditSign) event.gui;
 		TileEntitySign tileSign = ((AccessorGuiEditSign) guiEditSign).getTileSign();
-		if (!tileSign.signText[1].getUnformattedText().equals("^^^^^^^^^^^^^^^") &&
-			!tileSign.signText[1].getUnformattedText().equals("^^^^^^")) return;
-		String source = tileSign.signText[0].getUnformattedText();
+		if (!tileSign.signText[1].getString().equals("^^^^^^^^^^^^^^^") &&
+			!tileSign.signText[1].getString().equals("^^^^^^")) return;
+		String source = tileSign.signText[0].getString();
 		refresh(source);
 
 		int calculationMode = NotEnoughUpdates.INSTANCE.config.misc.calculationMode;

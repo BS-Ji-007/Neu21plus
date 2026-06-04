@@ -56,7 +56,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -135,8 +135,8 @@ public class AccessoryBagOverlay {
 	public static boolean mouseClick() {
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+			ChestMenu cc = (ChestMenu) eventGui.menu;
+			String containerName = cc.getLowerChestInventory().getName().getString().getString();
 			if (!containerName.trim().startsWith("Accessory Bag")) {
 				return false;
 			}
@@ -582,8 +582,8 @@ public class AccessoryBagOverlay {
 		offsetButtons = false;
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+			ChestMenu cc = (ChestMenu) eventGui.menu;
+			String containerName = cc.getLowerChestInventory().getName().getString().getString();
 			if (containerName.trim().startsWith("Accessory Bag") && !containerName.contains("Thaumaturgy") &&
 				!containerName.contains("Upgrades")) {
 				inAccessoryBag = true;
@@ -605,9 +605,9 @@ public class AccessoryBagOverlay {
 						String first = containerName.trim().split("\\(")[1].split("/")[0];
 						Integer currentPageNumber = Integer.parseInt(first);
 						boolean hasStack = false;
-						if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
-							IInventory inv =
-								((ContainerChest) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
+						if (Minecraft.getInstance().player.openContainer instanceof ChestMenu) {
+							Container inv =
+								((ChestMenu) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
 							for (int i = 0; i < inv.getSizeInventory(); i++) {
 								ItemStack stack = inv.getStackInSlot(i);
 								if (stack != null) {
@@ -651,9 +651,9 @@ public class AccessoryBagOverlay {
 						}
 					} else if (pagesVisited.isEmpty()) {
 						boolean hasStack = false;
-						if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
-							IInventory inv =
-								((ContainerChest) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
+						if (Minecraft.getInstance().player.openContainer instanceof ChestMenu) {
+							Container inv =
+								((ChestMenu) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
 							for (int i = 0; i < inv.getSizeInventory(); i++) {
 								ItemStack stack = inv.getStackInSlot(i);
 								if (stack != null) {
@@ -940,7 +940,7 @@ public class AccessoryBagOverlay {
 		int guiLeft = accessor.getGuiLeft();
 		int guiTop = accessor.getGuiTop();
 
-		for (Slot slot : Minecraft.getInstance().player.openContainer.inventorySlots) {
+		for (Slot slot : Minecraft.getInstance().player.openContainer.menu) {
 			ItemStack stack = slot.getStack();
 			if (stack != null && isAccessory(stack)) {
 				if (!dupe_showPersonal && NotEnoughUpdates.INSTANCE.manager

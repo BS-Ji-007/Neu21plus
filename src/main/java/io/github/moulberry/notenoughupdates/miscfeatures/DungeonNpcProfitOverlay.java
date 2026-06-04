@@ -85,15 +85,15 @@ public class DungeonNpcProfitOverlay {
 		return NotEnoughUpdates.INSTANCE.config.dungeons.croesusProfitOverlay && !chestProfits.isEmpty();
 	}
 
-	private boolean isChestOverview(IInventory inventory) {
+	private boolean isChestOverview(Container inventory) {
 		return chestNamePattern.matcher(StringUtils.cleanColour(
 			inventory.getName().getString()
-							 .getUnformattedText())).matches();
+							 .getString())).matches();
 	}
 
 	private boolean isChestOverview(ChestScreen chest) {
-		ContainerChest inventorySlots = (ContainerChest) chest.inventorySlots;
-		return isChestOverview(inventorySlots.getLowerChestInventory());
+		ChestMenu menu = (ChestMenu) chest.menu;
+		return isChestOverview(menu.getLowerChestInventory());
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class DungeonNpcProfitOverlay {
 			chestProfits.clear();
 			return;
 		}
-		ItemStack stack = guiChest.inventorySlots.inventorySlots.get(11).getStack();
+		ItemStack stack = guiChest.menu.menu.get(11).getStack();
 		if (stack != null && stack.getItem() == Items.filled_map) {
 			chestProfits.clear();
 			return;

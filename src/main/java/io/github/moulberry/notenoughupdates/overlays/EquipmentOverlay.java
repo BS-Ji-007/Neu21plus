@@ -432,10 +432,10 @@ public class EquipmentOverlay {
 
 	@SubscribeEvent
 	public void onReceiveChatMessage(ClientChatReceivedEvent event) {
-		if (event.type == 2 || !event.message.getUnformattedText().startsWith("You equipped a ") || itemsToAdd.isEmpty()) return;
+		if (event.type == 2 || !event.message.getString().startsWith("You equipped a ") || itemsToAdd.isEmpty()) return;
 
 		for (ItemStack item : itemsToAdd.keySet()) {
-			if (event.message.getUnformattedText().contains(Utils.cleanColour(item.getName().getString()))) {
+			if (event.message.getString().contains(Utils.cleanColour(item.getName().getString()))) {
 
 				NEUConfig.HiddenProfileSpecific profileSpecific = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 				if (profileSpecific == null) return;
@@ -505,9 +505,9 @@ public class EquipmentOverlay {
 		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
-			String containerName = lower.getName().getString().getUnformattedText();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
+			String containerName = lower.getName().getString().getString();
 			wardrobeOpen = containerName.contains(guiName);
 		}
 		if (guiScreen instanceof GuiInventory) {
@@ -520,7 +520,7 @@ public class EquipmentOverlay {
 		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			return chest.inventorySlots.getSlot(slot).getStack();
+			return chest.menu.getSlot(slot).getStack();
 		} else {
 			return null;
 		}

@@ -35,7 +35,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;

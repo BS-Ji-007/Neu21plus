@@ -49,8 +49,8 @@ public class KatSitterOverlay {
 		if (!(event.gui instanceof ChestScreen)) return;
 		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.showKatSitting) return;
 		ChestScreen gui = (ChestScreen) event.gui;
-		ContainerChest container = (ContainerChest) gui.inventorySlots;
-		if (!"Pet Sitter".equals(container.getLowerChestInventory().getName().getString().getUnformattedText())) return;
+		ChestMenu container = (ChestMenu) gui.menu;
+		if (!"Pet Sitter".equals(container.getLowerChestInventory().getName().getString().getString())) return;
 		Slot slot = container.getSlot(13);
 		if (slot == null || !slot.getHasStack() || slot.getStack() == null) return;
 		ItemStack item = slot.getStack();

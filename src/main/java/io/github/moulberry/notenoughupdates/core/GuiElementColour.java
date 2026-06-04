@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -410,7 +410,7 @@ public class GuiElementColour extends GuiElement {
 
 	public boolean keyboardInput() {
 		if (Keyboard.getEventKeyState() && hexField.getFocus()) {
-			if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+			if (Keyboard.getEventKey() == InputConstants.KEY_ESCAPE) {
 				hexField.unfocus();
 				return true;
 			}

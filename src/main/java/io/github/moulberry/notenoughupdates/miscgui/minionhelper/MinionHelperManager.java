@@ -84,9 +84,9 @@ public class MinionHelperManager {
 		if (minecraft == null || minecraft.player == null) return false;
 
 		Container inventoryContainer = minecraft.player.openContainer;
-		if (!(inventoryContainer instanceof ContainerChest)) return false;
-		ContainerChest containerChest = (ContainerChest) inventoryContainer;
-		String name = containerChest.getLowerChestInventory().getName().getString().getUnformattedText();
+		if (!(inventoryContainer instanceof ChestMenu)) return false;
+		ChestMenu containerChest = (ChestMenu) inventoryContainer;
+		String name = containerChest.getLowerChestInventory().getName().getString().getString();
 		return name.equalsIgnoreCase("Crafted Minions");
 	}
 

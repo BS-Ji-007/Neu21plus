@@ -1,20 +1,5 @@
 /*
- * Copyright (C) 2022 NotEnoughUpdates contributors
- *
- * This file is part of NotEnoughUpdates.
- *
- * NotEnoughUpdates is free software: you can redistribute it
- * and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- *
- * NotEnoughUpdates is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with NotEnoughUpdates. If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2022-2026 NotEnoughUpdates contributors
  */
 
 package io.github.moulberry.notenoughupdates.mbgui;
@@ -23,9 +8,8 @@ import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.ContainerScreen;
-import org.lwjgl.util.vector.Vector2f;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import org.joml.Vector2f;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -34,10 +18,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MBGuiGroupFloating extends MBGuiGroup {
-	private GuiScreen lastScreen = null;
+	private Screen lastScreen = null;
 	private final HashMap<MBGuiElement, Vector2f> childrenPositionOffset = new HashMap<>();
 
-	//Serialized
 	private final LinkedHashMap<MBGuiElement, MBAnchorPoint> children;
 
 	public MBGuiGroupFloating(int width, int height, LinkedHashMap<MBGuiElement, MBAnchorPoint> children) {
@@ -53,16 +36,15 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 
 	@Override
 	public Map<MBGuiElement, Vector2f> getChildrenPosition() {
-		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
+		Screen currentScreen = Minecraft.getInstance().screen;
 
 		if (currentScreen instanceof ContainerScreen || currentScreen instanceof GuiItemRecipe) {
 
 			if (lastScreen != currentScreen) {
 				lastScreen = currentScreen;
 
-				ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
-				int screenWidth = scaledResolution.getScaledWidth();
-				int screenHeight = scaledResolution.getScaledHeight();
+				int screenWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+				int screenHeight = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
 				int xSize = -1;
 				int ySize = -1;
@@ -70,15 +52,11 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 				int guiTop = -1;
 
 				if (currentScreen instanceof ContainerScreen) {
-					ContainerScreen currentContainer = (ContainerScreen) currentScreen;
-
-					try {
-						xSize = (int) Utils.getField(ContainerScreen.class, currentContainer, "xSize", "field_146999_f");
-						ySize = (int) Utils.getField(ContainerScreen.class, currentContainer, "ySize", "field_147000_g");
-						guiLeft = (int) Utils.getField(ContainerScreen.class, currentContainer, "guiLeft", "field_147003_i");
-						guiTop = (int) Utils.getField(ContainerScreen.class, currentContainer, "guiTop", "field_147009_r");
-					} catch (Exception ignored) {
-					}
+					ContainerScreen<?> currentContainer = (ContainerScreen<?>) currentScreen;
+                    xSize = currentContainer.getXSize();
+                    ySize = currentContainer.getYSize();
+                    guiLeft = currentContainer.getGuiLeft();
+                    guiTop = currentContainer.getGuiTop();
 				} else {
 					xSize = ((GuiItemRecipe) currentScreen).xSize;
 					ySize = ((GuiItemRecipe) currentScreen).ySize;

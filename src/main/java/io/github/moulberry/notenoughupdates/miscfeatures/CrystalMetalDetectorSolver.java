@@ -138,14 +138,14 @@ public class CrystalMetalDetectorSolver {
 		if (SBInfo.getInstance().getLocation() == null ||
 			!NotEnoughUpdates.INSTANCE.config.mining.metalDetectorEnabled ||
 			!SBInfo.getInstance().getLocation().equals("crystal_hollows") ||
-			!message.getUnformattedText().contains("TREASURE: ")) {
+			!message.getString().contains("TREASURE: ")) {
 			return;
 		}
 
 		boolean centerNewlyDiscovered = locateMinesCenterIfNeeded();
 
 		double distToTreasure = Double.parseDouble(message
-			.getUnformattedText()
+			.getString()
 			.split("TREASURE: ")[1].split("m")[0].replaceAll("(?!\\.)\\D", ""));
 
 		// Delay to keep old chest location from being treated as the new chest location

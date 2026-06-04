@@ -40,7 +40,7 @@ public class MixinGuiEditSign {
 	public IChatComponent[] onOnGuiClosed(TileEntitySign instance) {
 		String[] x = new String[4];
 		for (int i = 0; i < 4; i++) {
-			x[i] = instance.signText[i].getUnformattedText();
+			x[i] = instance.signText[i].getString();
 		}
 		SignSubmitEvent signSubmitEvent = new SignSubmitEvent((GuiEditSign) (Object) this, x);
 		signSubmitEvent.post();

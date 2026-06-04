@@ -38,7 +38,7 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class EnchantingSolvers {
 		}
 	}
 
-	public static ItemStack overrideStack(IInventory inventory, int slotIndex, ItemStack stack) {
+	public static ItemStack overrideStack(Container inventory, int slotIndex, ItemStack stack) {
 		if (!NotEnoughUpdates.INSTANCE.config.enchantingSolvers.enableEnchantingSolvers) {
 			return null;
 		}
@@ -124,8 +124,8 @@ public class EnchantingSolvers {
 		if (stack != null && stack.getName().getString() != null) {
 			if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 				ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-				ContainerChest container = (ContainerChest) chest.inventorySlots;
-				IInventory lower = container.getLowerChestInventory();
+				ChestMenu container = (ChestMenu) chest.menu;
+				Container lower = container.getLowerChestInventory();
 
 				if (lower != inventory) {
 					return null;
@@ -228,7 +228,7 @@ public class EnchantingSolvers {
 		return null;
 	}
 
-	public static boolean onStackRender(ItemStack stack, IInventory inventory, int slotIndex, int x, int y) {
+	public static boolean onStackRender(ItemStack stack, Container inventory, int slotIndex, int x, int y) {
 		if (!NotEnoughUpdates.INSTANCE.config.enchantingSolvers.enableEnchantingSolvers) {
 			return false;
 		}
@@ -240,8 +240,8 @@ public class EnchantingSolvers {
 		if (stack != null && stack.getName().getString() != null) {
 			if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 				ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-				ContainerChest container = (ContainerChest) chest.inventorySlots;
-				IInventory lower = container.getLowerChestInventory();
+				ChestMenu container = (ChestMenu) chest.menu;
+				Container lower = container.getLowerChestInventory();
 
 				if (lower != inventory) {
 					return false;
@@ -328,8 +328,8 @@ public class EnchantingSolvers {
 			return;
 		}
 		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest container = (ContainerChest) chest.inventorySlots;
-		IInventory lower = container.getLowerChestInventory();
+		ChestMenu container = (ChestMenu) chest.menu;
+		Container lower = container.getLowerChestInventory();
 
 		if (currentSolver == SolverType.CHRONOMATRON) {
 			ItemStack timerStack = lower.getStackInSlot(lower.getSizeInventory() - 5);
@@ -409,8 +409,8 @@ public class EnchantingSolvers {
 
 		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
-			ContainerChest container = (ContainerChest) chest.inventorySlots;
-			IInventory lower = container.getLowerChestInventory();
+			ChestMenu container = (ChestMenu) chest.menu;
+			Container lower = container.getLowerChestInventory();
 
 			if (currentSolver == SolverType.CHRONOMATRON) {
 				ItemStack timerStack = lower.getStackInSlot(lower.getSizeInventory() - 5);

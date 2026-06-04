@@ -31,7 +31,7 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.NpcSour
 import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.world.item.ItemStack;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;

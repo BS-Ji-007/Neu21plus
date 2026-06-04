@@ -38,7 +38,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.core.BlockPos
 import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.lwjgl.input.Keyboard
+import com.mojang.blaze3d.platform.InputConstants
 import java.util.*
 
 @NEUAutoSubscribe

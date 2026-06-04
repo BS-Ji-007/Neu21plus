@@ -167,8 +167,8 @@ public class ItemResolutionQuery {
 	}
 
 	// <editor-fold desc="Resolution Helpers">
-	private boolean isBazaar(IInventory chest) {
-		if (chest.getName().getString().getFormattedText().startsWith("Bazaar ➜ ")) {
+	private boolean isBazaar(Container chest) {
+		if (chest.getName().getString().getString().startsWith("Bazaar ➜ ")) {
 			return true;
 		}
 		int bazaarSlot = chest.getSizeInventory() - 5;
@@ -185,9 +185,9 @@ public class ItemResolutionQuery {
 			return null;
 		}
 		ChestScreen chest = (ChestScreen) guiContext;
-		ContainerChest inventorySlots = (ContainerChest) chest.inventorySlots;
-		String guiName = inventorySlots.getLowerChestInventory().getName().getString().getUnformattedText();
-		boolean isOnBazaar = isBazaar(inventorySlots.getLowerChestInventory());
+		ChestMenu menu = (ChestMenu) chest.menu;
+		String guiName = menu.getLowerChestInventory().getName().getString().getString();
+		boolean isOnBazaar = isBazaar(menu.getLowerChestInventory());
 		String displayName = ItemUtils.getDisplayName(compound);
 		if (displayName == null) return null;
 		displayName = displayName.replaceFirst("^§6§lSELL ", "").replaceFirst("^§a§lBUY ", "");

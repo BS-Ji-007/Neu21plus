@@ -57,7 +57,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.FileUtils;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedInputStream;
@@ -875,13 +875,13 @@ public class NEUManager {
 	}
 
 	public void showRecipe(JsonObject item) {
-		ContainerChest container = null;
-		if (Minecraft.getInstance().player.openContainer instanceof ContainerChest)
-			container = (ContainerChest) Minecraft.getInstance().player.openContainer;
+		ChestMenu container = null;
+		if (Minecraft.getInstance().player.openContainer instanceof ChestMenu)
+			container = (ChestMenu) Minecraft.getInstance().player.openContainer;
 		String internalName = item.get("internalname").getAsString();
 		Set<NeuRecipe> recipesFor = getRecipesFor(internalName);
 		if (container != null &&
-			container.getLowerChestInventory().getName().getString().getUnformattedText().equals("Craft Item")) {
+			container.getLowerChestInventory().getName().getString().getString().equals("Craft Item")) {
 			Optional<NeuRecipe> recipe = recipesFor.stream().filter(it -> it instanceof CraftingRecipe).findAny();
 			if (recipe.isPresent()) {
 				craftingOverlay.setShownRecipe((CraftingRecipe) recipe.get());

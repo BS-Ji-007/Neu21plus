@@ -46,7 +46,7 @@ class HotmExporter : RepoExporter {
     override suspend fun export(context: RepoExportingContext) {
         val gui = context.gui as ChestScreen
         val jsonObject = JsonObject()
-        for (inventorySlot in gui.inventorySlots.inventorySlots) {
+        for (inventorySlot in gui.menu.menu) {
             if (inventorySlot.inventory is InventoryPlayer) continue
             val stack = inventorySlot.stack ?: continue
             val isNormalPerk = stack.item in setOf(Items.diamond, Items.coal, Items.EMERALD, Items.redstone)
@@ -95,7 +95,7 @@ class HotmExporter : RepoExporter {
     }
 
     override fun canExport(gui: GuiScreen): Boolean {
-        return gui is ChestScreen && gui.inventorySlots.inventorySlots.getOrNull(49)
+        return gui is ChestScreen && gui.menu.menu.getOrNull(49)
             ?.stack?.displayName?.let(StringUtils::cleanColour) == "Heart of the Mountain"
     }
 

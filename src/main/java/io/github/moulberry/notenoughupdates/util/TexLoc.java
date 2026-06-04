@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.util;
 
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 /**
  * Utility used for positioning GUI elements during development.

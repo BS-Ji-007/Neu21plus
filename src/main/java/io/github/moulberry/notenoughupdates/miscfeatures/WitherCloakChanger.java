@@ -49,14 +49,14 @@ public class WitherCloakChanger {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChatMessage(ClientChatReceivedEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return;
-		if (event.message.getUnformattedText().startsWith("Creeper Veil ")) {
-			if (isCloakActive && !event.message.getUnformattedText().equals("Creeper Veil Activated!")) {
+		if (event.message.getString().startsWith("Creeper Veil ")) {
+			if (isCloakActive && !event.message.getString().equals("Creeper Veil Activated!")) {
 				isCloakActive = false;
 				lastDeactivate = System.currentTimeMillis();
 			} else {
 				isCloakActive = true;
 			}
-		} else if (event.message.getUnformattedText().startsWith("Not enough mana! Creeper Veil De-activated!")) {
+		} else if (event.message.getString().startsWith("Not enough mana! Creeper Veil De-activated!")) {
 			isCloakActive = false;
 			lastDeactivate = System.currentTimeMillis();
 		}

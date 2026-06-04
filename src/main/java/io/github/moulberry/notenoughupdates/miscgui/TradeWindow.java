@@ -41,7 +41,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -310,8 +310,8 @@ public class TradeWindow {
 		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
-		ContainerChest cc = (ContainerChest) chest.inventorySlots;
-		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
+		ChestMenu cc = (ChestMenu) chest.menu;
+		String containerName = cc.getLowerChestInventory().getName().getString().getString();
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
@@ -332,7 +332,7 @@ public class TradeWindow {
 			int y = i / 4;
 			int containerIndex = y * 9 + x;
 
-			ItemStack stack = chest.inventorySlots.getInventory().get(containerIndex);
+			ItemStack stack = chest.menu.getInventory().get(containerIndex);
 			if (stack == null) continue;
 
 			String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
@@ -404,7 +404,7 @@ public class TradeWindow {
 			int y = i / 4;
 			int containerIndex = y * 9 + x + 5;
 
-			ItemStack stack = chest.inventorySlots.getInventory().get(containerIndex);
+			ItemStack stack = chest.menu.getInventory().get(containerIndex);
 			if (stack == null) continue;
 
 			CompoundTag tag = stack.getTag();
@@ -525,7 +525,7 @@ public class TradeWindow {
 
 				theirTradeIndexes[j] = index;
 
-				ItemStack stack = chest.inventorySlots.getInventory().get(index);
+				ItemStack stack = chest.menu.getInventory().get(index);
 				if (stack == null) continue;
 
 				CompoundTag tag = stack.getTag();
@@ -557,7 +557,7 @@ public class TradeWindow {
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
 
-		Utils.drawStringF(new ChatComponentTranslation("container.inventory").getUnformattedText(),
+		Utils.drawStringF(new ChatComponentTranslation("container.inventory").getString(),
 			guiLeft + 8, guiTop + 111, false, 4210752
 		);
 		Utils.drawStringF("You", guiLeft + 8, guiTop + 5, false, 421752);
@@ -614,7 +614,7 @@ public class TradeWindow {
 
 			ItemStack stack = null;
 			if (containerIndex >= 0) {
-				stack = chest.inventorySlots.getInventory().get(containerIndex);
+				stack = chest.menu.getInventory().get(containerIndex);
 				Utils.drawItemStack(stack, guiLeft + 10 + x * 18, guiTop + 15 + y * 18);
 			}
 
@@ -635,7 +635,7 @@ public class TradeWindow {
 			}
 		}
 
-		ItemStack bidStack = chest.inventorySlots.getInventory().get(36);
+		ItemStack bidStack = chest.menu.getInventory().get(36);
 		if (bidStack != null) {
 			Utils.drawItemStack(bidStack, guiLeft + 10, guiTop + 90);
 			if (mouseX > guiLeft + 10 - 1 && mouseX < guiLeft + 10 + 18) {
@@ -648,7 +648,7 @@ public class TradeWindow {
 			}
 		}
 
-		ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
+		ItemStack confirmStack = chest.menu.getInventory().get(39);
 		if (confirmStack != null) {
 			String confirmDisplay = confirmStack.getName().getString();
 			if (!confirmDisplay.equals(ChatFormatting.GREEN + "Trading!")) {
@@ -720,7 +720,7 @@ public class TradeWindow {
 			}
 		}
 
-		ItemStack theirConfirmStack = chest.inventorySlots.getInventory().get(41);
+		ItemStack theirConfirmStack = chest.menu.getInventory().get(41);
 		if (theirConfirmStack != null) {
 			String confirmDisplay = theirConfirmStack.getName().getString();
 			if (mouseX > guiLeft + 95 && mouseX < guiLeft + 95 + 51) {
@@ -755,7 +755,7 @@ public class TradeWindow {
 
 			ItemStack stack = null;
 			if (containerIndex >= 0) {
-				stack = chest.inventorySlots.getInventory().get(containerIndex);
+				stack = chest.menu.getInventory().get(containerIndex);
 				Utils.drawItemStack(stack, guiLeft + 96 + x * 18, guiTop + 15 + y * 18);
 			}
 
@@ -796,7 +796,7 @@ public class TradeWindow {
 				int y = i / 4;
 				int containerIndex = y * 9 + x;
 
-				ItemStack stack = chest.inventorySlots.getInventory().get(containerIndex);
+				ItemStack stack = chest.menu.getInventory().get(containerIndex);
 				if (stack == null) continue;
 
 				ourPrice += processTopItems(stack, ourTopItems, ourTopItemsStack, ourTopItemsCount);
@@ -810,7 +810,7 @@ public class TradeWindow {
 				int y = i / 4;
 				int containerIndex = y * 9 + x + 5;
 
-				ItemStack stack = chest.inventorySlots.getInventory().get(containerIndex);
+				ItemStack stack = chest.menu.getInventory().get(containerIndex);
 				if (stack == null) continue;
 
 				theirPrice += processTopItems(stack, theirTopItems, theirTopItemsStack, theirTopItemsCount);
@@ -1024,11 +1024,11 @@ public class TradeWindow {
 
 				if (mouseX > guiLeft + x && mouseX < guiLeft + x + 16) {
 					if (mouseY > guiTop + y && mouseY < guiTop + y + 16) {
-						Slot slot = chest.inventorySlots.getSlotFromInventory(Minecraft.getInstance().player.inventory, index);
+						Slot slot = chest.menu.getSlotFromInventory(Minecraft.getInstance().player.inventory, index);
 						if (!NotEnoughUpdates.INSTANCE.config.slotLocking.lockSlotsInTrade ||
 							!SlotLocking.getInstance().isSlotLocked(slot)) {
 							Minecraft.getInstance().playerController.windowClick(
-								chest.inventorySlots.windowId,
+								chest.menu.windowId,
 								slot.slotNumber, 0, 0, Minecraft.getInstance().player
 							);
 						}
@@ -1049,7 +1049,7 @@ public class TradeWindow {
 				if (mouseX > guiLeft + 10 + x * 18 - 1 && mouseX < guiLeft + 10 + x * 18 + 18) {
 					if (mouseY > guiTop + 15 + y * 18 - 1 && mouseY < guiTop + 15 + y * 18 + 18) {
 						Minecraft.getInstance().playerController.windowClick(
-							chest.inventorySlots.windowId,
+							chest.menu.windowId,
 							containerIndex, 2, 3, Minecraft.getInstance().player
 						);
 						return;
@@ -1060,14 +1060,14 @@ public class TradeWindow {
 			if (mouseX > guiLeft + 10 - 1 && mouseX < guiLeft + 10 + 18) {
 				if (mouseY > guiTop + 90 - 1 && mouseY < guiTop + 90 + 18) {
 					Minecraft.getInstance().playerController.windowClick(
-						chest.inventorySlots.windowId,
+						chest.menu.windowId,
 						36, 2, 3, Minecraft.getInstance().player
 					);
 					return;
 				}
 			}
 
-			ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
+			ItemStack confirmStack = chest.menu.getInventory().get(39);
 			if (confirmStack != null) {
 				String confirmDisplay = confirmStack.getName().getString();
 				if (!confirmDisplay.equals(ChatFormatting.GREEN + "Trading!")) {
@@ -1078,7 +1078,7 @@ public class TradeWindow {
 								lastTradeMillis = System.currentTimeMillis();
 							} else if (lastTradeMillis < 0 || System.currentTimeMillis() - lastTradeMillis > 2000) {
 								Minecraft.getInstance().playerController.windowClick(
-									chest.inventorySlots.windowId,
+									chest.menu.windowId,
 									39, 2, 3, Minecraft.getInstance().player
 								);
 								return;
@@ -1138,6 +1138,6 @@ public class TradeWindow {
 			}
 		}
 
-		return Keyboard.getEventKey() != Keyboard.KEY_ESCAPE;
+		return Keyboard.getEventKey() != InputConstants.KEY_ESCAPE;
 	}
 }

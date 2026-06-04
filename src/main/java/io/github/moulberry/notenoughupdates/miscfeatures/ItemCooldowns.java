@@ -275,25 +275,25 @@ public class ItemCooldowns {
 
 	@SubscribeEvent
 	public void onChatMessage(ClientChatReceivedEvent event) {
-		if (pickaxeCooldown != 0 && PICKAXE_ABILITY_ACTIVATION.matcher(event.message.getFormattedText()).matches()) {
+		if (pickaxeCooldown != 0 && PICKAXE_ABILITY_ACTIVATION.matcher(event.message.getString()).matches()) {
 			findCooldownInTooltip(Item.PICKAXES);
 			pickaxeUseCooldownMillisRemaining = pickaxeCooldown * 1000;
 		}
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.bonzoAbility && bonzoMaskCooldown != 0 &&
-			BONZO_ABILITY_ACTIVATION.matcher(event.message.getFormattedText()).matches()) {
+			BONZO_ABILITY_ACTIVATION.matcher(event.message.getString()).matches()) {
 			findCooldownInTooltip(Item.BONZO_MASK);
 			bonzomaskCooldownMillisRemaining = bonzoMaskCooldown * 1000;
 		}
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.spiritAbility && spiritMaskCooldown != 0 &&
-			SPIRIT_ABILITY_ACTIVATION.matcher(event.message.getFormattedText()).matches()) {
+			SPIRIT_ABILITY_ACTIVATION.matcher(event.message.getString()).matches()) {
 			findCooldownInTooltip(Item.SPIRIT_MASK);
 			spiritMaskCooldownMillisRemaining = spiritMaskCooldown * 1000;
 		}
 
 		if (NotEnoughUpdates.INSTANCE.config.garden.sprayonatorCooldown && sprayonatorCooldown != 0 &&
-			SPRAYONATOR_ACTIVATION.matcher(event.message.getFormattedText()).matches()) {
+			SPRAYONATOR_ACTIVATION.matcher(event.message.getString()).matches()) {
 			findCooldownInTooltip(Item.SPIRIT_MASK);
 			sprayonatorCooldownMillisRemaining = sprayonatorCooldown * 1000;
 		}

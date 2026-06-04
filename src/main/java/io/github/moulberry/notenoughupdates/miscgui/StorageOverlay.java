@@ -58,7 +58,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -349,7 +349,7 @@ public class StorageOverlay extends GuiElement {
 		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
 
 		ChestScreen guiChest = (ChestScreen) Minecraft.getInstance().currentScreen;
-		ContainerChest containerChest = (ContainerChest) guiChest.inventorySlots;
+		ChestMenu containerChest = (ChestMenu) guiChest.menu;
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
@@ -1235,7 +1235,7 @@ public class StorageOverlay extends GuiElement {
 
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
-			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + i));
+			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.menu.get(inventoryStartIndex + i));
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (!searchBar.getText().isEmpty()) {
@@ -1269,7 +1269,7 @@ public class StorageOverlay extends GuiElement {
 			//Utils.drawItemStack(playerItems[i+9], itemX, itemY);
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
-			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + 9 + i));
+			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.menu.get(inventoryStartIndex + 9 + i));
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (!searchBar.getText().isEmpty()) {
@@ -2150,7 +2150,7 @@ public class StorageOverlay extends GuiElement {
 		ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 		int keyPressed = Keyboard.getEventKey();
-		if (keyPressed == Keyboard.KEY_ESCAPE) {
+		if (keyPressed == InputConstants.KEY_ESCAPE) {
 			clearSearch();
 			return false;
 		}
@@ -2165,7 +2165,7 @@ public class StorageOverlay extends GuiElement {
 			(keyPressed == manager.keybindViewRecipe.getKeyCode() ||
 				keyPressed == manager.keybindViewUsages.getKeyCode() ||
 				keyPressed == NotEnoughUpdates.INSTANCE.config.misc.openAHKeybind)) {
-			for (Slot slot : container.inventorySlots.inventorySlots) {
+			for (Slot slot : container.menu.menu) {
 				if (slot != null && ((AccessorContainerScreen) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
 					ItemStack stack = slot.getStack();
 					String internalName =
@@ -2186,7 +2186,7 @@ public class StorageOverlay extends GuiElement {
 			if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking &&
 				KeybindHelper.isKeyPressed(NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey) && !searchBar.getFocus()) {
 
-				for (Slot slot : container.inventorySlots.inventorySlots) {
+				for (Slot slot : container.menu.menu) {
 					if (slot != null &&
 						slot.inventory == Minecraft.getInstance().player.inventory &&
 						((AccessorContainerScreen) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {

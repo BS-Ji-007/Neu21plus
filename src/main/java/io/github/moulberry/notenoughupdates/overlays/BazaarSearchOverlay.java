@@ -91,8 +91,8 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 
 		if (tes == null) return false;
 		if (tes.getPos().getY() != 0) return false;
-		if (!tes.signText[2].getUnformattedText().equals("^^^^^^^^^^^^^^^")) return false;
-		return tes.signText[3].getUnformattedText().equals("Enter query");
+		if (!tes.signText[2].getString().equals("^^^^^^^^^^^^^^^")) return false;
+		return tes.signText[3].getString().equals("Enter query");
 	}
 
 	@SubscribeEvent

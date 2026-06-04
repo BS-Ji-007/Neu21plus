@@ -48,7 +48,7 @@ public class ProfileViewerButton {
 
 	@SubscribeEvent
 	public void onSlotClick(SlotClickEvent event) {
-		if (!Utils.getOpenChestName().contains(" Profile") || event.guiContainer.inventorySlots.inventorySlots.size() < 54) {
+		if (!Utils.getOpenChestName().contains(" Profile") || event.guiContainer.menu.menu.size() < 54) {
 			username = "";
 			replaceSlot = -1;
 			return;

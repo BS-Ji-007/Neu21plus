@@ -64,7 +64,7 @@ public class DamageCommas {
 			return component;
 		}
 
-		String formatted = name.getFormattedText();
+		String formatted = name.getString();
 
 		boolean crit = false;
 		String numbers;

@@ -48,7 +48,7 @@ public class AuctionSortModeWarning {
 		if (!isAuctionBrowser()) return;
 		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
-		ItemStack stack = chest.inventorySlots.getSlot(50).getStack();
+		ItemStack stack = chest.menu.getSlot(50).getStack();
 
 		if (stack == null) return;
 		List<String> tooltip = stack.getTooltip(Minecraft.getInstance().player, false);

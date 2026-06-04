@@ -367,7 +367,7 @@ public class FairySouls {
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		if (!trackSouls || event.type == 2) return;
 
-		var cleanString = StringUtils.cleanColour(event.message.getUnformattedText());
+		var cleanString = StringUtils.cleanColour(event.message.getString());
  		if (cleanString.equals("You have already found that Fairy Soul!") || cleanString.equals("SOUL! You found a Fairy Soul!")) {
 			markClosestSoulFound();
 		}

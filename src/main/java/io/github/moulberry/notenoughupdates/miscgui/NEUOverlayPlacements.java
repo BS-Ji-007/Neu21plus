@@ -30,7 +30,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;

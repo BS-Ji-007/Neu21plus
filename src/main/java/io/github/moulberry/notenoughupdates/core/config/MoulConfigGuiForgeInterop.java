@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.commands.help.SettingsCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.fml.client.IModGuiFactory;
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.io.IOException;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class MoulConfigGuiForgeInterop implements IModGuiFactory {
 
 		@Override
 		public void handleKeyboardInput() throws IOException {
-			if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+			if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == InputConstants.KEY_ESCAPE) {
 				Minecraft.getInstance().setScreen(parent);
 				return;
 			}

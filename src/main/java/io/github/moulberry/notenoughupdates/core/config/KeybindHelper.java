@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.core.config;
 
-import org.lwjgl.input.Keyboard;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.input.Mouse;
 
 public class KeybindHelper {

@@ -78,11 +78,11 @@ object MuseumItemHighlighter {
     @SubscribeEvent
     fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val egui = event.container ?: return
-        val chest = egui.inventorySlots as? ContainerChest ?: return
+        val chest = egui.menu as? ChestMenu ?: return
         if (!config.museumItemShow) return
         if (!isMuseumInventory(chest.lowerChestInventory)) return
         val fixedHighlightColor = getHighlightColor()
-        for (slot in chest.inventorySlots) {
+        for (slot in chest.menu) {
             if (slot == null || slot.stack == null) continue
             if (isHydratedMuseumItem(slot.stack) || isCompletedRetrievedItem(slot.stack)) {
                 val left = slot.xDisplayPosition
