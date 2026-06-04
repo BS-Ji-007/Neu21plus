@@ -38,7 +38,7 @@ public class MixinRender {
 	public void bindEntityTexture(Entity entity, CallbackInfoReturnable<Boolean> cir) {
 		if (entity instanceof EntityBat && DungeonBlocks.isOverriding()) {
 			if (DungeonBlocks.bindModifiedTexture(
-				new ResourceLocation("textures/entity/bat.png"),
+				new ResourceLocation("notenoughupdates", "textures/entity/bat.png"),
 				SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeons.dungBatColour)
 			)) {
 				cir.setReturnValue(true);

@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
@@ -44,7 +44,7 @@ import org.lwjgl.opengl.GL11;
 public class InventoryStorageSelector {
 	private static final InventoryStorageSelector INSTANCE = new InventoryStorageSelector();
 
-	private static final ResourceLocation ICONS = new ResourceLocation("notenoughupdates:storage_gui/hotbar_icons.png");
+	private static final ResourceLocation ICONS = new ResourceLocation("notenoughupdates", "notenoughupdates:storage_gui/hotbar_icons.png");
 	private static final ResourceLocation STORAGE_PANE_CTM_TEXTURE = new ResourceLocation(
 		"notenoughupdates:storage_gui/storage_gui_pane_ctm.png");
 
@@ -290,11 +290,11 @@ public class InventoryStorageSelector {
 				int startX = centerX - 172 / 2;
 				int startY = height - 80 - (10 + 18 * rows);
 
-				GlStateManager.translate(0, 0, 100);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
 				GL11.glDepthMask(false);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
-				GlStateManager.color(1, 1, 1,
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1,
 					NotEnoughUpdates.INSTANCE.config.storageGUI.backpackOpacity / 100f
 				);
 				Utils.drawTexturedRect(startX, startY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
@@ -316,9 +316,9 @@ public class InventoryStorageSelector {
 
 						int paneType = StorageOverlay.getPaneType(stack, i, isPaneCache);
 						if (paneType > 0) {
-							GlStateManager.disableAlpha();
+							com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
 							Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
-							GlStateManager.enableAlpha();
+							com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
 							int ctmIndex = StorageOverlay.getCTMIndex(page, i, isPaneCache, ctmIndexCache);
 							int startCTMX = (ctmIndex % 12) * 19;
@@ -334,7 +334,7 @@ public class InventoryStorageSelector {
 									int g = (rgb >> 8) & 0xFF;
 									int b = rgb & 0xFF;
 									Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-									GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+									com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
 									Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
 										startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 									);
@@ -348,7 +348,7 @@ public class InventoryStorageSelector {
 									itemY,
 									null
 								);
-								GlStateManager.disableLighting();
+								com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 							}
 
 							page.shouldDarkenIfNotSelected[i] = false;
@@ -390,13 +390,13 @@ public class InventoryStorageSelector {
 										int r = (rgb >> 16) & 0xFF;
 										int g = (rgb >> 8) & 0xFF;
 										int b = rgb & 0xFF;
-										GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+										com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
 
-										GlStateManager.pushMatrix();
-										GlStateManager.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
-										GlStateManager.rotate(j * 90, 0, 0, 1);
-										GlStateManager.enableAlpha();
-										GlStateManager.disableLighting();
+										com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+										com.mojang.blaze3d.systems.RenderSystem.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
+										com.mojang.blaze3d.systems.RenderSystem.rotate(j * 90, 0, 0, 1);
+										com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+										com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 										boolean horzFlip = false;
 										boolean vertFlip = false;
@@ -416,15 +416,15 @@ public class InventoryStorageSelector {
 											!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 										);
 
-										GlStateManager.popMatrix();
+										com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 									}
 								}
 							}
 						}
 
-						GlStateManager.translate(0, 0, 20);
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 20);
 						Utils.drawItemStack(stack, itemX, itemY);
-						GlStateManager.translate(0, 0, -20);
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -20);
 					}
 				}
 
@@ -437,14 +437,14 @@ public class InventoryStorageSelector {
 
 				Utils.drawItemStack(held, centerX - 8, startY - 8);
 
-				GlStateManager.translate(0, 0, 100);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
 				Utils.drawStringCentered(pageTitle, centerX, height - 76, true, 0xffff0000);
 				int keyCode = NotEnoughUpdates.INSTANCE.config.storageGUI.backpackScrollKey;
 				if (KeybindHelper.isKeyValid(keyCode) && !KeybindHelper.isKeyDown(keyCode)) {
 					String keyName = KeybindHelper.getKeyName(keyCode);
 					Utils.drawStringCentered("[" + keyName + "] Scroll Backpacks", centerX, startY - 10, true, 0xff32CD32);
 				}
-				GlStateManager.translate(0, 0, -200);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -200);
 
 			} else if (page == null) {
 				Utils.drawStringCentered("Run /storage to enable this feature!", centerX, height - 80, true, 0xffff0000);
@@ -454,7 +454,7 @@ public class InventoryStorageSelector {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(ICONS);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(left + 1, top,
 			22, 22, 0, 22 / 64f, 0, 22 / 64f, GL11.GL_NEAREST
 		);
@@ -477,6 +477,6 @@ public class InventoryStorageSelector {
 
 		Utils.drawItemStackWithText(held, left + 4, top + 3, "" + index);
 
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 	}
 }

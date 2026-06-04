@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent
 import io.github.moulberry.notenoughupdates.util.ItemUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 /*
@@ -58,7 +58,7 @@ object HexPriceWarning : WarningPopUp() {
     }
 
     override fun confirmClick() {
-        val chest = Minecraft.getInstance().currentScreen as GuiChest
+        val chest = Minecraft.getInstance().currentScreen as ChestScreen
         Minecraft.getInstance().playerController.windowClick(
             chest.inventorySlots.windowId,
             lastClickedSlot, 0, 0, Minecraft.getInstance().player

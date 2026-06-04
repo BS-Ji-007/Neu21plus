@@ -30,7 +30,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.world.item.Item;
@@ -158,7 +158,7 @@ public class NEUItemEditor extends GuiScreen {
 		this.damage = addTextFieldWithSupplier(damage, NO_SPACE | NUM_ONLY);
 
 		rightOptions.add(new GuiElementButton("Close (discards changes)", Color.LIGHT_GRAY.getRGB(), () ->
-			Minecraft.getInstance().displayGuiScreen(null)));
+			Minecraft.getInstance().setScreen(null)));
 
 		rightOptions.add(new GuiElementText("", Color.WHITE.getRGB()));
 
@@ -331,7 +331,7 @@ public class NEUItemEditor extends GuiScreen {
 		int width = scaledresolution.getScaledWidth();
 		int height = scaledresolution.getScaledHeight();
 
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		Color backgroundColour = new Color(10, 10, 10, 240);
 		drawRect(0, 0, width, height, backgroundColour.getRGB());
@@ -372,7 +372,7 @@ public class NEUItemEditor extends GuiScreen {
 
 			int scaleFactor = itemSize / 16;
 			GL11.glPushMatrix();
-			GlStateManager.scale(scaleFactor, scaleFactor, 1);
+			com.mojang.blaze3d.systems.RenderSystem.scale(scaleFactor, scaleFactor, 1);
 			drawItemStack(stack, itemX / scaleFactor, itemY / scaleFactor);
 			GL11.glPopMatrix();
 		}
@@ -384,14 +384,14 @@ public class NEUItemEditor extends GuiScreen {
 
 		Utils.drawHoveringText(text, itemX - 20, itemY + itemSize + 28, width, height, -1);
 
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 	}
 
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) {
 		boolean hasChanges = false;
 		if (keyCode == Keyboard.KEY_ESCAPE && !hasChanges) {
-			Minecraft.getInstance().displayGuiScreen(null);
+			Minecraft.getInstance().setScreen(null);
 			return;
 		}
 

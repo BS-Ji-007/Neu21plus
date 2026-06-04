@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.profileviewer.SkyblockProfiles
 import io.github.moulberry.notenoughupdates.util.*
 import io.github.moulberry.notenoughupdates.util.hypixelapi.HypixelItemAPI
 import io.github.moulberry.notenoughupdates.util.kotlin.set
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.world.item.ItemStack
@@ -154,7 +154,7 @@ class SacksPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance)
             102
         )
 
-        GlStateManager.enableDepth()
+        com.mojang.blaze3d.systems.RenderSystem.enableDepth()
 
         val startIndex = page * pageSize
         val endIndex = (page + 1) * pageSize
@@ -206,7 +206,7 @@ class SacksPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance)
                     true,
                     0
                 )
-                GlStateManager.color(0f, 0f, 0f, 0f)
+                com.mojang.blaze3d.systems.RenderSystem.color(0f, 0f, 0f, 0f)
 
                 if (itemStack != null) {
                     Utils.drawItemStack(itemStack, x + 2, y + 2)
@@ -277,7 +277,7 @@ class SacksPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance)
                     0
                 )
                 Utils.drawStringCentered("§7${StringUtils.shortNumberFormat(itemInfo.amount)}", x + 10, y + 26, true, 0)
-                GlStateManager.color(1f, 1f, 1f, 1f)
+                com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
 
                 if (itemStack != null) {
                     val stackName = itemStack.displayName
@@ -318,7 +318,7 @@ class SacksPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance)
 
         renderPriceSourceAndSortButtons(mouseX, mouseY)
 
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         ArrowPagesUtils.onDraw(guiLeft, guiTop, intArrayOf(sackArrayLeft + arrowsXPos, arrowsHeight), page, maxPage + 1)
 
         if (tooltipToDisplay.isNotEmpty()) {

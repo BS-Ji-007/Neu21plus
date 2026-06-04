@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -135,7 +135,7 @@ public class GuiEnchantColour extends GuiScreen {
 		int yIndex = 0;
 		for (String str : enchantColours) {
 			Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft, guiTop + 21 + yIndex * 25, xSize, 25, 0, 1, 21 / 78f, 46 / 78f, GL11.GL_NEAREST);
 
 			List<String> colourOps = splitter.splitToList(str);
@@ -220,7 +220,7 @@ public class GuiEnchantColour extends GuiScreen {
 		}
 		renderSideBar(mouseX, mouseY, partialTicks);
 		List<String> tooltipToDisplay = null;
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTopSidebar - 18, 16, 16, GL11.GL_NEAREST);
 		if (maxedBookFound == 0) {
@@ -346,7 +346,7 @@ public class GuiEnchantColour extends GuiScreen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(
 			guiLeft + xSize + 3,
 			guiTopSidebar + 2,

@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -76,7 +76,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
 
         font.drawString("Dynamic Light Items Editor", guiLeft + 10, guiTop + 7, 4210752)
 
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Minecraft.getInstance().textureManager.bindTexture(help)
         Utils.drawTexturedRect((guiLeft + xSize + 3).toFloat(), guiTop.toFloat(), 16F, 16F, GL11.GL_NEAREST)
         if (mouseX >= guiLeft + xSize + 3 &&
@@ -116,7 +116,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
         }
 
         // Buttons
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Minecraft.getInstance().textureManager.bindTexture(enabledButton)
         Utils.drawTexturedRect(guiLeft.toFloat() + 15, (guiTop + ySize - 32).toFloat(), 88F, 20F,
             0F, 1F, 0F, 1F, GL11.GL_NEAREST)
@@ -132,7 +132,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
         font.drawString("Add Held Item", guiLeft + 27, guiTop + ySize - 26, 4210752)
         font.drawString("Remove Item", guiLeft + 130, guiTop + ySize - 26, 4210752)
 
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
 
         // Add in some part of the gui for every row
         Minecraft.getInstance().textureManager.bindTexture(background)
@@ -148,10 +148,10 @@ class DynamicLightItemsEditor() : GuiScreen() {
         for ((index, item) in NotEnoughUpdates.INSTANCE.config.hidden.dynamicLightItems.withIndex()) {
             val i = index % 9
             val j = index / 9
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
 
             Minecraft.getInstance().textureManager.bindTexture(chestGui)
-            drawTexturedModalRect(guiLeft + 27 + i % 9 * 18, guiTop + 24 + j * 18, 7, 17, 18, 18)
+            blit(guiLeft + 27 + i % 9 * 18, guiTop + 24 + j * 18, 7, 17, 18, 18)
 
             val itemStack = resolveItemStack(item) ?: return
             Utils.drawItemStack(itemStack, guiLeft + 28 + i % 9 * 18, guiTop + 25 + j * 18)
@@ -173,9 +173,9 @@ class DynamicLightItemsEditor() : GuiScreen() {
 
         stackToRender = hoveredItem
 
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Minecraft.getInstance().textureManager.bindTexture(widgets)
-        drawTexturedModalRect(selectedPosition.first, selectedPosition.second, 0, 22, 24, 24)
+        blit(selectedPosition.first, selectedPosition.second, 0, 22, 24, 24)
 
         super.drawScreen(mouseX, mouseY, partialTicks)
     }

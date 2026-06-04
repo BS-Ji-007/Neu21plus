@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
@@ -181,10 +181,10 @@ public class ItemResolutionQuery {
 	}
 
 	private String resolveContextualName() {
-		if (!(guiContext instanceof GuiChest)) {
+		if (!(guiContext instanceof ChestScreen)) {
 			return null;
 		}
-		GuiChest chest = (GuiChest) guiContext;
+		ChestScreen chest = (ChestScreen) guiContext;
 		ContainerChest inventorySlots = (ContainerChest) chest.inventorySlots;
 		String guiName = inventorySlots.getLowerChestInventory().getName().getString().getUnformattedText();
 		boolean isOnBazaar = isBazaar(inventorySlots.getLowerChestInventory());

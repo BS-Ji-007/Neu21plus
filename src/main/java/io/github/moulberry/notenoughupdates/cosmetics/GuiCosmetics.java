@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.GuiTextures;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
 import net.minecraft.init.Items;
@@ -54,7 +54,7 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer.pv_elements;
 
 public class GuiCosmetics extends GuiScreen {
-	public static final ResourceLocation cosmetics_fg = new ResourceLocation("notenoughupdates:cosmetics_fg.png");
+	public static final ResourceLocation cosmetics_fg = new ResourceLocation("notenoughupdates", "notenoughupdates:cosmetics_fg.png");
 
 	private final GuiElementTextField unlockTextField = new GuiElementTextField("", GuiElementTextField.SCALE_TEXT);
 
@@ -102,27 +102,27 @@ public class GuiCosmetics extends GuiScreen {
 		blurBackground();
 		renderBlurredBackground(width, height, guiLeft + 2, guiTop + 2, sizeX - 4, sizeY - 4);
 
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		renderTabs(true);
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.disableDepth();
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		renderTabs(false);
-		GlStateManager.translate(0, 0, 2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 2);
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableDepth();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
 		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		switch (currentPage) {
 			case CAPES:
 				drawCapesPage(mouseX, mouseY, partialTicks);
@@ -160,7 +160,7 @@ public class GuiCosmetics extends GuiScreen {
 		);
 
 		if (currentPage == CosmeticsPage.CAPES) {
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 			Utils.drawTexturedRect(
 				guiLeft + sizeX / 2f - 50,
@@ -197,7 +197,7 @@ public class GuiCosmetics extends GuiScreen {
 		unlockTextField.render(guiLeft + sizeX - 80, guiTop + sizeY + 2);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(helpX, guiTop - 20, 20, 20, GL11.GL_LINEAR);
 
 	}
@@ -218,11 +218,11 @@ public class GuiCosmetics extends GuiScreen {
 	}
 
 	private void renderTab(ItemStack stack, int xIndex, boolean pressed) {
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		int x = guiLeft + xIndex * 28;
 		int y = guiTop - 28;
@@ -245,16 +245,16 @@ public class GuiCosmetics extends GuiScreen {
 			renderBlurredBackground(width, height, x + 2, y + 4, 28 - 4, 28 - 4);
 		}
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		Utils.drawItemStack(stack, x + 6, y + 9);
 	}
 
@@ -321,7 +321,7 @@ public class GuiCosmetics extends GuiScreen {
 				CapeManager.INSTANCE.getAvailableCapes().contains(cape.capeName);
 			if (!cape.canShow() && !equipable) continue;
 
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
 				0, 81 / 256f, 216 / 256f, 236 / 256f, GL11.GL_NEAREST
 			);
@@ -469,20 +469,20 @@ public class GuiCosmetics extends GuiScreen {
 				.getUniqueID()
 				.toString()
 				.replace("-", "")))) {
-				GlStateManager.color(250 / 255f, 200 / 255f, 0 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(250 / 255f, 200 / 255f, 0 / 255f, 1);
 				Utils.drawGradientRect(guiLeft + 20 + 91 * displayIndex - (int) xOffset, guiTop + 10,
 					guiLeft + 20 + 91 * displayIndex - (int) xOffset + 81, guiTop + 10 + 108,
 					new Color(150, 100, 0, 40).getRGB(), new Color(250, 200, 0, 40).getRGB()
 				);
 			} else if (capeData.capeName.equals(wantToEquipCape)) {
-				GlStateManager.color(0, 200 / 255f, 250 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(0, 200 / 255f, 250 / 255f, 1);
 				Utils.drawGradientRect(guiLeft + 20 + 91 * displayIndex - (int) xOffset, guiTop + 10,
 					guiLeft + 20 + 91 * displayIndex - (int) xOffset + 81, guiTop + 10 + 108,
 					new Color(0, 100, 150, 40).getRGB(), new Color(0, 200, 250, 40).getRGB()
 				);
 			} else if (CapeManager.INSTANCE.localCape != null &&
 				CapeManager.INSTANCE.localCape.getRight().equals(capeData.capeName)) {
-				GlStateManager.color(100 / 255f, 250 / 255f, 150 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(100 / 255f, 250 / 255f, 150 / 255f, 1);
 				Utils.drawGradientRect(guiLeft + 20 + 91 * displayIndex - (int) xOffset, guiTop + 10,
 					guiLeft + 20 + 91 * displayIndex - (int) xOffset + 81, guiTop + 10 + 108,
 					new Color(50, 100, 75, 40).getRGB(), new Color(100, 250, 150, 40).getRGB()
@@ -492,14 +492,14 @@ public class GuiCosmetics extends GuiScreen {
 			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 10, 81, 108,
 				0, 81 / 256f, 84 / 256f, 192 / 256f, GL11.GL_NEAREST
 			);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
 				0, 81 / 256f, 216 / 256f, 236 / 256f, GL11.GL_NEAREST
 			);
 
 			boolean equipPressed = capeData.capeName.equals(wantToEquipCape);
-			if (!equipable) GlStateManager.color(1, 1, 1, 0.5f);
+			if (!equipable) com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.5f);
 			Utils.drawTexturedRect(
 				guiLeft + 20 + 91 * displayIndex - xOffset,
 				guiTop + 149,
@@ -539,7 +539,7 @@ public class GuiCosmetics extends GuiScreen {
 					new Color(200, 50, 50, 100).getRGB()
 				);
 			}
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 			ResourceLocation capeTexture = capesLocation.computeIfAbsent(
 				capeData.capeName,
@@ -642,7 +642,7 @@ public class GuiCosmetics extends GuiScreen {
 			GL11.glPushMatrix();
 			blurShaderHorz.loadShader(0);
 			blurShaderVert.loadShader(0);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			GL11.glPopMatrix();
 
 			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
@@ -660,7 +660,7 @@ public class GuiCosmetics extends GuiScreen {
 		float vMax = (height - y - blurHeight) / (float) height;
 
 		blurOutputVert.bindFramebufferTexture();
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		//Utils.setScreen(width*f, height*f, f);
 		Utils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		//Utils.setScreen(width, height, f);

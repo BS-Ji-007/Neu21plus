@@ -40,7 +40,7 @@ import java.util.Map;
 public class CrimsonIslePage extends GuiProfileViewerPage {
 
 	private static final ResourceLocation CRIMSON_ISLE =
-		new ResourceLocation("notenoughupdates:pv_crimson_isle_page.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:pv_crimson_isle_page.png");
 
 	private static final DateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy");
 	private static final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");

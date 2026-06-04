@@ -37,7 +37,7 @@ import io.github.moulberry.notenoughupdates.profileviewer.level.task.StoryTaskLe
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -49,7 +49,7 @@ import java.util.List;
 
 public class LevelPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_levels = new ResourceLocation("notenoughupdates:pv_levels.png");
+	private static final ResourceLocation pv_levels = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_levels.png");
 	private final BasicPage basicPage;
 	private final JsonObject constant;
 	private final List<GuiTaskLevel> tasks = new ArrayList<>();
@@ -150,13 +150,13 @@ public class LevelPage extends GuiProfileViewerPage {
 			}
 		}
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		GL11.glTranslatef((x), (y - 6f), 0);
 		GL11.glScalef(0.7f, 0.7f, 1);
 		Utils.drawItemStackLinear(stack, 0, 0);
 		GL11.glScalef(1 / 0.7f, 1 / 0.7f, 1);
 		GL11.glTranslatef(-(x), -(y - 6f), 0);
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 	}
 
 	private void drawMainBar(double skyblockLevel, int mouseX, int mouseY, int guiLeft, int guiTop) {

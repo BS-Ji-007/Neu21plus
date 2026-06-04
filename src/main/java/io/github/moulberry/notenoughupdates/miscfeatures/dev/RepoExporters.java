@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.itemeditor.NEUItemEditor;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -66,7 +66,7 @@ public class RepoExporters {
 
 	public void essenceExporter() {
 		try {
-			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			IInventory lower = cc.getLowerChestInventory();
 			File file = new File(
@@ -212,7 +212,7 @@ public class RepoExporters {
 				JsonObject newEntry = new JsonObject();
 				JsonObject jsonObject = null;
 				String id = null;
-				GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+				ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 				IInventory lower = cc.getLowerChestInventory();
 				ItemStack stack = lower.getStackInSlot(i);
@@ -301,7 +301,7 @@ public class RepoExporters {
 
 
 	public void essenceExporter2() {
-		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		IInventory lower = cc.getLowerChestInventory();
 

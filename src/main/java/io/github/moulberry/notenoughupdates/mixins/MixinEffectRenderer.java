@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.util.vector.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,10 +32,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class MixinEffectRenderer {
 	@Redirect(method = "renderParticles", at = @At(
 		value = "INVOKE",
-		target = "Lnet/minecraft/client/renderer/GlStateManager;enableBlend()V")
+		target = "Lnet/minecraft/client/renderer/com.mojang.blaze3d.systems.RenderSystem;enableBlend()V")
 	)
 	public void renderParticles_enableBlend() {
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
 		Vector3f currentPosition = CustomItemEffects.INSTANCE.getCurrentPosition();
 		if (currentPosition != null) {

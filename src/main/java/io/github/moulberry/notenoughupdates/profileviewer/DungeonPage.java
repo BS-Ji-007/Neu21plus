@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.Item;
@@ -54,7 +54,7 @@ import java.util.UUID;
 
 public class DungeonPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_dung = new ResourceLocation("notenoughupdates:pv_dung.png");
+	private static final ResourceLocation pv_dung = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_dung.png");
 	private static final ItemStack DEADBUSH = new ItemStack(Item.getItemFromBlock(Blocks.deadbush));
 	private static final ItemStack[] BOSS_HEADS = new ItemStack[7];
 	private static final Map<String, ItemStack> classToIcon = new HashMap<String, ItemStack>() {{
@@ -430,7 +430,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			for (int i = 1; i <= 7; i++) {
 				int w = font.getStringWidth(String.valueOf(i));
 				int bx = x + sectionWidth * i / 8 - w / 2;
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.renderShadowedString(EnumChatFormatting.WHITE.toString() + i, bx + w / 2, y3, 10);
 			}
 
@@ -504,11 +504,11 @@ public class DungeonPage extends GuiProfileViewerPage {
 					BOSS_HEADS[i - 1] = stack;
 				}
 
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(x - 4, y + 10 + 20 * (i - 1), 0);
-				GlStateManager.scale(1.3f, 1.3f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate(x - 4, y + 10 + 20 * (i - 1), 0);
+				com.mojang.blaze3d.systems.RenderSystem.scale(1.3f, 1.3f, 1);
 				Utils.drawItemStack(BOSS_HEADS[i - 1], 0, 0);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 				Utils.renderAlignedString(
 					String.format(
@@ -660,22 +660,22 @@ public class DungeonPage extends GuiProfileViewerPage {
 	}
 
 	private void drawSideButtons(int mouseX, int mouseY) {
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		if (GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("master_catacombs"), true, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("catacombs"), true, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		if (!GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("master_catacombs"), false, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("catacombs"), false, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 	}
 
 	private void calculateFloorLevelXP() {

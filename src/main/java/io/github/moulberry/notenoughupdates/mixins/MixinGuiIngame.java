@@ -68,7 +68,7 @@ public class MixinGuiIngame {
 		}
 	}
 
-	@Redirect(method = "renderTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiIngame;drawTexturedModalRect(IIIIII)V"))
+	@Redirect(method = "renderTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiIngame;blit(IIIIII)V"))
 	public void renderTooltooltip_drawTexturedModelRect(
 		GuiIngame guiIngame,
 		int x,
@@ -80,7 +80,7 @@ public class MixinGuiIngame {
 	) {
 		if (!InventoryStorageSelector.getInstance().isSlotSelected() || textureX != 0 || textureY != 22 || width != 24 ||
 			height != 22) {
-			guiIngame.drawTexturedModalRect(x, y, textureX, textureY, width, height);
+			guiIngame.blit(x, y, textureX, textureY, width, height);
 		}
 	}
 

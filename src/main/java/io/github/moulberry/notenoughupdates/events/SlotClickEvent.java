@@ -19,14 +19,14 @@
 
 package io.github.moulberry.notenoughupdates.events;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import org.jetbrains.annotations.NotNull;
 
 @Cancelable
 public class SlotClickEvent extends NEUEvent {
-	public final @NotNull GuiContainer guiContainer;
+	public final @NotNull ContainerScreen guiContainer;
 	public final @NotNull Slot slot;
 	public final int slotId;
 	public int clickedButton;
@@ -44,7 +44,7 @@ public class SlotClickEvent extends NEUEvent {
 	public int clickType;
 	public boolean usePickblockInstead = false;
 
-	public SlotClickEvent(GuiContainer guiContainer, Slot slot, int slotId, int clickedButton, int clickType) {
+	public SlotClickEvent(ContainerScreen guiContainer, Slot slot, int slotId, int clickedButton, int clickType) {
 		this.guiContainer = guiContainer;
 		this.slot = slot;
 		this.slotId = slotId;

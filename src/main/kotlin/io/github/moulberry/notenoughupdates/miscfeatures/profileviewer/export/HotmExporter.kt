@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.util.JsonUtils
 import io.github.moulberry.notenoughupdates.util.copyToClipboard
 import io.github.moulberry.notenoughupdates.util.kotlin.useMatcher
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
@@ -44,7 +44,7 @@ class HotmExporter : RepoExporter {
     fun String.clean() = StringUtils.cleanColour(this)
 
     override suspend fun export(context: RepoExportingContext) {
-        val gui = context.gui as GuiChest
+        val gui = context.gui as ChestScreen
         val jsonObject = JsonObject()
         for (inventorySlot in gui.inventorySlots.inventorySlots) {
             if (inventorySlot.inventory is InventoryPlayer) continue
@@ -95,7 +95,7 @@ class HotmExporter : RepoExporter {
     }
 
     override fun canExport(gui: GuiScreen): Boolean {
-        return gui is GuiChest && gui.inventorySlots.inventorySlots.getOrNull(49)
+        return gui is ChestScreen && gui.inventorySlots.inventorySlots.getOrNull(49)
             ?.stack?.displayName?.let(StringUtils::cleanColour) == "Heart of the Mountain"
     }
 

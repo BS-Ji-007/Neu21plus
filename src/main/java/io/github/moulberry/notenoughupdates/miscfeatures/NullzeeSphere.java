@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.util.ReverseWorldRenderer;
 import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
@@ -157,16 +157,16 @@ public class NullzeeSphere {
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
 		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;
 
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GlStateManager.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 
-		GlStateManager.translate(-viewerX, -viewerY, -viewerZ);
+		com.mojang.blaze3d.systems.RenderSystem.translate(-viewerX, -viewerY, -viewerZ);
 
 		GL11.glPolygonOffset(5, 5);
 		ReverseWorldRenderer worldRenderer = getOverlayVBO();
 		if (worldRenderer != null && worldRenderer.getVertexCount() > 0) {
-			GlStateManager.translate(centerPos.getX(), centerPos.getY(), centerPos.getZ());
+			com.mojang.blaze3d.systems.RenderSystem.translate(centerPos.getX(), centerPos.getY(), centerPos.getZ());
 
 			VertexFormat vertexformat = worldRenderer.getVertexFormat();
 			int stride = vertexformat.getNextOffset();
@@ -185,13 +185,13 @@ public class NullzeeSphere {
 				vertexformatelement.getUsage().postDraw(vertexformat, index, stride, bytebuffer);
 			}
 
-			GlStateManager.translate(-centerPos.getX(), -centerPos.getY(), -centerPos.getZ());
+			com.mojang.blaze3d.systems.RenderSystem.translate(-centerPos.getX(), -centerPos.getY(), -centerPos.getZ());
 		}
 		GL11.glPolygonOffset(0, 0);
 
-		GlStateManager.translate(viewerX, viewerY, viewerZ);
+		com.mojang.blaze3d.systems.RenderSystem.translate(viewerX, viewerY, viewerZ);
 
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
 	public static void uploadFilledBoundingBox(

@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -339,7 +339,7 @@ public class StorageManager {
 			return false;
 		}
 
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			shouldRenderStorageOverlayCached = false;
 			return false;
 		}
@@ -398,7 +398,7 @@ public class StorageManager {
 	}
 
 	public int getCurrentPageId() {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			currentStoragePage = -1;
 			return -1;
 		}
@@ -407,12 +407,12 @@ public class StorageManager {
 	}
 
 	public int getCurrentWindowId() {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			currentStoragePage = -1;
 			return -1;
 		}
 
-		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
 		return chest.inventorySlots.windowId;
 	}
@@ -689,8 +689,8 @@ public class StorageManager {
 	public void clientSendWindowClick(C0EPacketClickWindow packet) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (getCurrentWindowId() == -1 || getCurrentWindowId() != packet.getWindowId()) return;
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
-		ContainerChest containerChest = (ContainerChest) ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
+		ContainerChest containerChest = (ContainerChest) ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
 
 		if (getCurrentPageId() != -1) {
 			StoragePage page = getCurrentPage();

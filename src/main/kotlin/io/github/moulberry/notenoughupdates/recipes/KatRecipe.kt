@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.util.PetLeveling
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.toJsonArray
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.resources.ResourceLocation
 import java.time.Duration
 import kotlin.math.PI
@@ -101,7 +101,7 @@ data class KatRecipe(
             gui.guiLeft + textPosition.first.toFloat(), gui.guiTop + textPosition.second.toFloat(),
             false, 0xff00ff
         )
-        GlStateManager.color(1F, 1F, 1F, 1F)
+        com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F, 1F)
     }
 
     override fun genericMouseInput(mouseX: Int, mouseY: Int) {

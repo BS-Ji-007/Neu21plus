@@ -35,7 +35,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -497,7 +497,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		float scaleF = IMAGE_WIDTH * ZOOM_FACTOR / (float) imageW;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(imageTexture);
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		if (height - overlay.getBoxPadding() * 3 < imageHeight / scaleF) {
 			if (scrollHeight.getValue() > imageHeight / scaleF - height + overlay.getBoxPadding() * 3) {
 				scrollHeight.setValue((int) (imageHeight / scaleF - height + overlay.getBoxPadding() * 3));
@@ -528,7 +528,7 @@ public class HTMLInfoPane extends TextInfoPane {
 				(int) (imageHeight / scaleF)
 			);
 		}
-		GlStateManager.bindTexture(0);
+		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 	}
 
 	@Override

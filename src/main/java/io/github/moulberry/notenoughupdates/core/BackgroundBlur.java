@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
@@ -184,12 +184,12 @@ public class BackgroundBlur {
 		int width = Minecraft.getInstance().displayWidth;
 		int height = Minecraft.getInstance().displayHeight;
 
-		GlStateManager.matrixMode(GL11.GL_PROJECTION);
-		GlStateManager.loadIdentity();
-		GlStateManager.ortho(0.0D, width, height, 0.0D, 1000.0D, 3000.0D);
-		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-		GlStateManager.loadIdentity();
-		GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_PROJECTION);
+		com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+		com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, width, height, 0.0D, 1000.0D, 3000.0D);
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
+		com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
 		if (blurOutputHorz == null) {
 			blurOutputHorz = new Framebuffer(width, height, false);
@@ -242,7 +242,7 @@ public class BackgroundBlur {
 
 			output.blurShaderHorz.loadShader(0);
 			output.blurShaderVert.loadShader(0);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			GL11.glPopMatrix();
 		}
 		Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
@@ -285,12 +285,12 @@ public class BackgroundBlur {
 		float vMin = (screenHeight - y) / (float) screenHeight;
 		float vMax = (screenHeight - y - blurHeight) / (float) screenHeight;
 
-		GlStateManager.depthMask(false);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 		Gui.drawRect(x, y, x + blurWidth, y + blurHeight, fogColour);
 		out.framebuffer.bindFramebufferTexture();
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		RenderUtils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		out.framebuffer.unbindFramebufferTexture();
-		GlStateManager.depthMask(true);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 	}
 }

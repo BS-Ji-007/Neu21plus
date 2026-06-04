@@ -33,7 +33,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.play.client.C12PacketUpdateSign;
 import net.minecraft.tileentity.TileEntitySign;
@@ -65,10 +65,10 @@ public class SearchOverlayScreen extends GuiEditSign {
 		"notenoughupdates:auc_search/ah_search_overlay.png");
 	static final ResourceLocation SEARCH_OVERLAY_TEXTURE_TAB_COMPLETED = new ResourceLocation(
 		"notenoughupdates:auc_search/ah_search_overlay_tab_completed.png");
-	static final ResourceLocation STAR = new ResourceLocation("notenoughupdates:auc_search/star.png");
+	static final ResourceLocation STAR = new ResourceLocation("notenoughupdates", "notenoughupdates:auc_search/star.png");
 	static final ResourceLocation MASTER_STAR =
-		new ResourceLocation("notenoughupdates:auc_search/master_star.png");
-	static final ResourceLocation STAR_BOARD = new ResourceLocation("notenoughupdates:auc_search/star_board.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:auc_search/master_star.png");
+	static final ResourceLocation STAR_BOARD = new ResourceLocation("notenoughupdates", "notenoughupdates:auc_search/star_board.png");
 
 	static final GuiElementTextField textField = new GuiElementTextField("", 200, 20, 0);
 	static boolean searchFieldClicked = false;
@@ -237,7 +237,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 			}
 		}
 		if (!keepPreviousSearch()) searchString = "";
-		Minecraft.getInstance().displayGuiScreen(null);
+		Minecraft.getInstance().setScreen(null);
 	}
 
 	public void search() {
@@ -333,7 +333,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(width / 2 - 100, topY - 1, 203, 145, 0, 203 / 512f, 0, 145 / 256f, GL11.GL_NEAREST);
 
 		if (currentGuiType() == GuiType.AUCTION_HOUSE) {
@@ -341,15 +341,15 @@ public class SearchOverlayScreen extends GuiEditSign {
 			Utils.drawTexturedRect(width / 2 + 105, topY + 27, 105, 13, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().bindTexture(STAR);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			int stars = atLeast && selectedStars > 0 ? 10 : selectedStars;
 			for (int i = 0; i < stars; i++) {
 				if (i >= 5) {
 					Minecraft.getInstance().getTextureManager().bindTexture(MASTER_STAR);
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				}
 				if (i >= selectedStars) {
-					GlStateManager.color(1, 1, 1, 0.3f);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.3f);
 				}
 				Utils.drawTexturedRect(width / 2 + 108 + 10 * i, topY + 29, 9, 10, GL11.GL_NEAREST);
 			}
@@ -394,7 +394,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(obj, false, true);
 					if (i == tabCompletionIndex) {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE_TAB_COMPLETED);
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						Utils.drawTexturedRect(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,
@@ -408,7 +408,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 						);
 					} else {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						Utils.drawTexturedRect(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,
@@ -435,7 +435,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 						width / 2 - 74, topY + 35 + num * 22 + 1, 0xdddddd, true
 					);
 
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 					Utils.drawItemStack(stack, width / 2 - 94 + 2, topY + 32 + num * 22 + 1);
 
 					if (mouseX > width / 2 - 96 && mouseX < width / 2 + 96 && mouseY > topY + 30 + num * 22 &&
@@ -492,7 +492,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 		if (keyCode == Keyboard.KEY_ESCAPE) {
 			searchStringExtra = "";
 			if (escFullClose()) {
-				Minecraft.getInstance().displayGuiScreen(null);
+				Minecraft.getInstance().setScreen(null);
 			} else {
 				close(this.tileSign);
 			}

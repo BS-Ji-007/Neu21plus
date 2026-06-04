@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHumanoidHead;
 import net.minecraft.client.model.ModelSkeletonHead;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -191,7 +191,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 			}
 		};
 		this.textureMap.loadSprites(Minecraft.getInstance().getResourceManager(), iiconcreator);
-		this.sprites.put(new ResourceLocation("missingno"), this.textureMap.getMissingSprite());
+		this.sprites.put(new ResourceLocation("notenoughupdates", "missingno"), this.textureMap.getMissingSprite());
 	}
 
 	protected Set<ResourceLocation> getAllTextureLocations(Collection<CustomSkull> models) {
@@ -349,44 +349,44 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 
 		if (skull.modelBaked != null && skull.model != null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(atlas);
-			GlStateManager.pushMatrix();
-			GlStateManager.disableCull();
-			GlStateManager.enableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 
 			final float rot;
 			switch (placedDirection) {
 				case NORTH: {
-					GlStateManager.translate(xOffset + 0.5f, yOffset + 0.25f, zOffset + 0.74f);
+					com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.5f, yOffset + 0.25f, zOffset + 0.74f);
 					rot = 0f;
 					break;
 				}
 				case SOUTH: {
-					GlStateManager.translate(xOffset + 0.5f, yOffset + 0.25f, zOffset + 0.26f);
+					com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.5f, yOffset + 0.25f, zOffset + 0.26f);
 					rot = 180.0f;
 					break;
 				}
 				case WEST: {
-					GlStateManager.translate(xOffset + 0.74f, yOffset + 0.25f, zOffset + 0.5f);
+					com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.74f, yOffset + 0.25f, zOffset + 0.5f);
 					rot = 270.0f;
 					break;
 				}
 				case EAST: {
-					GlStateManager.translate(xOffset + 0.26f, yOffset + 0.25f, zOffset + 0.5f);
+					com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.26f, yOffset + 0.25f, zOffset + 0.5f);
 					rot = 90.0f;
 					break;
 				}
 				default: {
-					GlStateManager.translate(xOffset + 0.5f, yOffset, zOffset + 0.5f);
+					com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.5f, yOffset, zOffset + 0.5f);
 					rot = rotationDeg;
 				}
 			}
 
-			GlStateManager.enableRescaleNormal();
-			GlStateManager.enableAlpha();
+			com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
+			com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
-			GlStateManager.rotate(rot, 0, 1, 0);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(rot, 0, 1, 0);
 
-			GlStateManager.translate(0, 0.25f, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0.25f, 0);
 
 			if (placedDirection == EnumFacing.UP && xOffset == -0.5 && yOffset == 0 && zOffset == -0.5 && rotationDeg == 180) {
 				skull.model.getAllTransforms().applyTransform(ItemCameraTransforms.TransformType.HEAD);
@@ -394,10 +394,10 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 				skull.model.getAllTransforms().applyTransform(mostRecentTransformType);
 			}
 
-			GlStateManager.translate(-0.5f, 0, -0.5f);
+			com.mojang.blaze3d.systems.RenderSystem.translate(-0.5f, 0, -0.5f);
 
 			renderModel(skull.modelBaked, 0xffffffff);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		} else if (skull.texture != null) {
 			if (Minecraft.getInstance().getTextureManager().getTexture(skull.texture) == null) {
 				try {
@@ -426,16 +426,16 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(skull.texture);
 
-			GlStateManager.pushMatrix();
-			GlStateManager.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
-			GlStateManager.translate(xOffset + 0.5F, yOffset, zOffset + 0.5F);
+			com.mojang.blaze3d.systems.RenderSystem.translate(xOffset + 0.5F, yOffset, zOffset + 0.5F);
 
-			GlStateManager.enableRescaleNormal();
-			GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-			GlStateManager.enableAlpha();
+			com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
+			com.mojang.blaze3d.systems.RenderSystem.scale(-1.0F, -1.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 			humanoidHead.render(null, 0.0F, 0.0F, 0.0F, rotationDeg, 0.0F, 0.0625F);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		} else {
 			return false;
 		}

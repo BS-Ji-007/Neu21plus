@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.core.GuiElementTextField;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class GuiNavigation extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		this.blit(guiLeft, guiTop, 0, 0, xSize, ySize);
 		textField.render(guiLeft + SEARCH_BAR_X, guiTop + SEARCH_BAR_Y);
 
 		refreshResults();
@@ -96,8 +96,8 @@ public class GuiNavigation extends GuiScreen {
 				int baseX = guiLeft + LIST_START_X;
 				int baseY = guiTop + LIST_START_Y + LIST_OFFSET_Y * i;
 
-				GlStateManager.color(1F, 1F, 1F);
-				drawTexturedModalRect(
+				com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F);
+				blit(
 					baseX,
 					baseY,
 					selected ? TICK_POSITION_U : PIN_POSITION_U, selected ? TICK_POSITION_V : PIN_POSITION_V,

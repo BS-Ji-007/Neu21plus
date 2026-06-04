@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.core.config.KeybindHelper;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.events.ReplaceItemEvent;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
@@ -39,8 +39,8 @@ import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ContainerScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -73,8 +73,8 @@ public class SlotLocking {
 
 	private static final LockedSlot DEFAULT_LOCKED_SLOT = new LockedSlot();
 
-	private final ResourceLocation LOCK = new ResourceLocation("notenoughupdates:slotlocking/lock.png");
-	private final ResourceLocation BOUND = new ResourceLocation("notenoughupdates:slotlocking/bound.png");
+	private final ResourceLocation LOCK = new ResourceLocation("notenoughupdates", "notenoughupdates:slotlocking/lock.png");
+	private final ResourceLocation BOUND = new ResourceLocation("notenoughupdates", "notenoughupdates:slotlocking/bound.png");
 
 	public static SlotLocking getInstance() {
 		return INSTANCE;
@@ -216,13 +216,13 @@ public class SlotLocking {
 		return slot;
 	}
 
-	private Slot getFocusedSlot(GuiContainer container) {
+	private Slot getFocusedSlot(ContainerScreen container) {
 		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
 		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
 		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
-		return ((AccessorGuiContainer) container).doGetSlotAtPosition(mouseX, mouseY);
+		return ((AccessorContainerScreen) container).doGetSlotAtPosition(mouseX, mouseY);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
@@ -231,10 +231,10 @@ public class SlotLocking {
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
 			return;
 		}
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 			return;
 		}
-		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+		ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 		int key = NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey;
 		if (!lockKeyHeld && KeybindHelper.isKeyPressed(key) && !Keyboard.isRepeatEvent()) {
@@ -268,7 +268,7 @@ public class SlotLocking {
 								final float volF = vol;
 								final boolean locked = lockedSlots[slotNum].locked;
 
-								ISound sound = new PositionedSound(new ResourceLocation("random.orb")) {{
+								ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "random.orb")) {{
 									volume = volF;
 									pitch = locked ? 0.943f : 0.1f;
 									repeat = false;
@@ -306,10 +306,10 @@ public class SlotLocking {
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
 			return;
 		}
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 			return;
 		}
-		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+		ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 		if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && lockKeyHeld && pairingSlot != null) {
 			final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
@@ -318,7 +318,7 @@ public class SlotLocking {
 			int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
 			int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
-			Slot slot = ((AccessorGuiContainer) container).doGetSlotAtPosition(mouseX, mouseY);
+			Slot slot = ((AccessorContainerScreen) container).doGetSlotAtPosition(mouseX, mouseY);
 			if (slot != null && slot.getSlotIndex() != 8 && slot.inventory == Minecraft.getInstance().player.inventory) {
 				int slotNum = slot.getSlotIndex();
 				if (slotNum >= 0 && slotNum <= 39) {
@@ -378,7 +378,7 @@ public class SlotLocking {
 					final float volF = vol;
 					final boolean locked = lockedSlots[lockIndex].locked;
 
-					ISound sound = new PositionedSound(new ResourceLocation("random.orb")) {{
+					ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "random.orb")) {{
 						volume = volF;
 						pitch = locked ? 0.943f : 0.1f;
 						repeat = false;
@@ -413,10 +413,10 @@ public class SlotLocking {
 				return;
 			}
 
-			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 				return;
 			}
-			AccessorGuiContainer container = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
+			AccessorContainerScreen container = (AccessorContainerScreen) Minecraft.getInstance().currentScreen;
 
 			int x1 = container.getGuiLeft() + pairingSlot.xDisplayPosition + 8;
 			int y1 = container.getGuiTop() + pairingSlot.yDisplayPosition + 8;
@@ -436,18 +436,18 @@ public class SlotLocking {
 	}
 
 	private void drawLinkArrow(int x1, int y1, int x2, int y2) {
-		GlStateManager.color(0x33 / 255f, 0xee / 255f, 0xdd / 255f, 1f);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(0x33 / 255f, 0xee / 255f, 0xdd / 255f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 
-		GlStateManager.translate(0, 0, 500);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 500);
 		drawLine(x1, y1, x2, y2);
-		GlStateManager.translate(0, 0, -500);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -500);
 
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
 	private void drawLine(int x1, int y1, int x2, int y2) {
@@ -495,10 +495,10 @@ public class SlotLocking {
 
 			LockedSlot boundLocked = getLockedSlot(boundSlot);
 
-			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 				return;
 			}
-			GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+			ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 			int size = container.inventorySlots.inventorySlots.size();
 
 			int from, to;
@@ -545,20 +545,20 @@ public class SlotLocking {
 		LockedSlot locked = getLockedSlot(slot);
 		if (locked != null) {
 			if (locked.locked) {
-				GlStateManager.translate(0, 0, 400);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 400);
 				Minecraft.getInstance().getTextureManager().bindTexture(LOCK);
-				GlStateManager.color(1, 1, 1, 0.5f);
-				GlStateManager.depthMask(false);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.5f);
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 				RenderUtils.drawTexturedRect(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, 0, 1, 0, 1, GL11.GL_NEAREST);
-				GlStateManager.depthMask(true);
-				GlStateManager.enableBlend();
-				GlStateManager.translate(0, 0, -400);
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -400);
 			} else if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && slot.canBeHovered() &&
 				locked.boundTo >= 0 && locked.boundTo <= 39) {
-				if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+				if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 					return;
 				}
-				GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+				ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 				final int scaledWidth = scaledresolution.getScaledWidth();
@@ -574,12 +574,12 @@ public class SlotLocking {
 					return;
 				}
 
-				boolean hoverOverSlot = ((AccessorGuiContainer) container).doIsMouseOverSlot(slot, mouseX, mouseY);
+				boolean hoverOverSlot = ((AccessorContainerScreen) container).doIsMouseOverSlot(slot, mouseX, mouseY);
 
 				if (hoverOverSlot || slot.getSlotIndex() >= 9) {
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
-					GlStateManager.color(1, 1, 1, 0.7f);
-					GlStateManager.depthMask(false);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 					RenderUtils.drawTexturedRect(
 						slot.xDisplayPosition,
 						slot.yDisplayPosition,
@@ -591,8 +591,8 @@ public class SlotLocking {
 						1,
 						GL11.GL_NEAREST
 					);
-					GlStateManager.depthMask(true);
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
 					//Rerender Text over Top
 					if (slot.getStack() != null) {
@@ -605,8 +605,8 @@ public class SlotLocking {
 						);
 					}
 				} else if (pairingSlot != null && lockKeyHeld && slot.getSlotIndex() < 8) {
-					int x1 = ((AccessorGuiContainer) container).getGuiLeft() + pairingSlot.xDisplayPosition;
-					int y1 = ((AccessorGuiContainer) container).getGuiTop() + pairingSlot.yDisplayPosition;
+					int x1 = ((AccessorContainerScreen) container).getGuiLeft() + pairingSlot.xDisplayPosition;
+					int y1 = ((AccessorContainerScreen) container).getGuiTop() + pairingSlot.yDisplayPosition;
 
 					if (mouseX <= x1 || mouseX >= x1 + 16 ||
 						mouseY <= y1 || mouseY >= y1 + 16) {
@@ -629,8 +629,8 @@ public class SlotLocking {
 					}
 
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
-					GlStateManager.color(1, 1, 1, 0.7f);
-					GlStateManager.depthMask(false);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 					RenderUtils.drawTexturedRect(
 						boundSlot.xDisplayPosition,
 						boundSlot.yDisplayPosition,
@@ -642,8 +642,8 @@ public class SlotLocking {
 						1,
 						GL11.GL_NEAREST
 					);
-					GlStateManager.depthMask(true);
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
 					//Rerender Text over Top
 					if (boundSlot.getStack() != null) {
@@ -677,16 +677,16 @@ public class SlotLocking {
 						y2 -= vec.y;
 					}
 
-					GlStateManager.translate(0, 0, 200);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 200);
 					drawLinkArrow((int) x1, (int) y1, (int) x2, (int) y2);
-					GlStateManager.translate(0, 0, -200);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -200);
 				}
 			} else if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && slot.getSlotIndex() < 8 &&
 				pairingSlot != null && lockKeyHeld) {
-				if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
+				if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) {
 					return;
 				}
-				GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+				ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 				final int scaledWidth = scaledresolution.getScaledWidth();
@@ -694,8 +694,8 @@ public class SlotLocking {
 				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
 				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
-				int x1 = ((AccessorGuiContainer) container).getGuiLeft() + pairingSlot.xDisplayPosition;
-				int y1 = ((AccessorGuiContainer) container).getGuiTop() + pairingSlot.yDisplayPosition;
+				int x1 = ((AccessorContainerScreen) container).getGuiLeft() + pairingSlot.xDisplayPosition;
+				int y1 = ((AccessorContainerScreen) container).getGuiTop() + pairingSlot.yDisplayPosition;
 
 				if (mouseX <= x1 || mouseX >= x1 + 16 ||
 					mouseY <= y1 || mouseY >= y1 + 16) {
@@ -773,8 +773,8 @@ public class SlotLocking {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void afterRenderInventory(GuiScreenEvent.DrawScreenEvent.Post event) {
-		if (!(event.gui instanceof GuiContainer)) return;
-		var gui = (GuiContainer) event.gui;
+		if (!(event.gui instanceof ContainerScreen)) return;
+		var gui = (ContainerScreen) event.gui;
 		var slot = getFocusedSlot(gui);
 		if (slot == null || !shouldShowBarrier(slot.getSlotIndex(), slot.inventory))
 			return;

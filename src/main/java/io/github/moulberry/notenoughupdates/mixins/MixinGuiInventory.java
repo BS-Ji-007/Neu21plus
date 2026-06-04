@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.events.GuiInventoryBackgroundDrawnEvent;
 import io.github.moulberry.notenoughupdates.listener.RenderListener;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,16 +31,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiInventory.class)
 public class MixinGuiInventory {
-	@Inject(method = "drawGuiContainerForegroundLayer", at = @At("HEAD"), cancellable = true)
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY, CallbackInfo ci) {
+	@Inject(method = "drawContainerScreenForegroundLayer", at = @At("HEAD"), cancellable = true)
+	protected void drawContainerScreenForegroundLayer(int mouseX, int mouseY, CallbackInfo ci) {
 		if (NotEnoughUpdates.INSTANCE.config.inventoryButtons.hideCrafting ||
 			RenderListener.disableCraftingText) {
 			ci.cancel();
 		}
 	}
 
-	@Inject(method = "drawGuiContainerBackgroundLayer", at = @At("TAIL"))
-	public void onDrawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY, CallbackInfo ci) {
-		new GuiInventoryBackgroundDrawnEvent((GuiContainer) (Object) this, partialTicks).post();
+	@Inject(method = "drawContainerScreenBackgroundLayer", at = @At("TAIL"))
+	public void onDrawContainerScreenBackgroundLayer(float partialTicks, int mouseX, int mouseY, CallbackInfo ci) {
+		new GuiInventoryBackgroundDrawnEvent((ContainerScreen) (Object) this, partialTicks).post();
 	}
 }

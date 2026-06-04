@@ -19,14 +19,14 @@
 
 package io.github.moulberry.notenoughupdates.mixins;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(GuiContainer.class)
-public interface AccessorGuiContainer {
+@Mixin(ContainerScreen.class)
+public interface AccessorContainerScreen {
 
 	@Invoker("getSlotAtPosition")
 	Slot doGetSlotAtPosition(int x, int y);

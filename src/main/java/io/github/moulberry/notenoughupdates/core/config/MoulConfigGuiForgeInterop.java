@@ -60,7 +60,7 @@ public class MoulConfigGuiForgeInterop implements IModGuiFactory {
 		@Override
 		public void handleKeyboardInput() throws IOException {
 			if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-				Minecraft.getInstance().displayGuiScreen(parent);
+				Minecraft.getInstance().setScreen(parent);
 				return;
 			}
 			super.handleKeyboardInput();

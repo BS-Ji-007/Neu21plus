@@ -22,11 +22,11 @@ package io.github.moulberry.notenoughupdates.miscfeatures;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class AuctionSortModeWarning {
 
 	public void onPostGuiRender() {
 		if (!isAuctionBrowser()) return;
-		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
 		ItemStack stack = chest.inventorySlots.getSlot(50).getStack();
 
@@ -62,9 +62,9 @@ public class AuctionSortModeWarning {
 
 		if (selectedSort == null) return;
 		if (selectedSort.trim().equals("Lowest Price")) return;
-		GlStateManager.disableLighting();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0, 0, 500);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 500);
 
 		String selectedColour = "\u00a7e";
 
@@ -76,13 +76,13 @@ public class AuctionSortModeWarning {
 		int warningLength = Minecraft.getInstance().font.getStringWidth(warningText);
 
 		int centerX =
-			((AccessorGuiContainer) chest).getGuiLeft() + ((AccessorGuiContainer) chest).getXSize() / 2 + 9;
-		int centerY = ((AccessorGuiContainer) chest).getGuiTop() + 26;
+			((AccessorContainerScreen) chest).getGuiLeft() + ((AccessorContainerScreen) chest).getXSize() / 2 + 9;
+		int centerY = ((AccessorContainerScreen) chest).getGuiTop() + 26;
 
 		RenderUtils.drawFloatingRectDark(centerX - warningLength / 2 - 4, centerY - 6,
 			warningLength + 8, 12, false
 		);
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(warningText, centerX, centerY, true, chest.width / 2, 0xffffffff);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 }

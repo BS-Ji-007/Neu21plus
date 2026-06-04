@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.miscgui.util;
 import io.github.moulberry.notenoughupdates.core.util.lerp.LerpUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
@@ -33,7 +33,7 @@ import java.util.ListIterator;
 import java.util.Random;
 
 public class OrbDisplay {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("notenoughupdates:custom_enchant_gui.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("notenoughupdates", "notenoughupdates:custom_enchant_gui.png");
 	private static final int DEFAULT_COUNT = 30;
 
 	private final List<ExperienceOrb> experienceOrbList = new ArrayList<>();
@@ -98,16 +98,16 @@ public class OrbDisplay {
 
 	public void renderOrbs(float partialTicks) {
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 
 		for (ExperienceOrb orb : experienceOrbList) {
 			int orbX = Math.round(LerpUtils.lerp(orb.position.x, orb.positionLast.x, partialTicks));
 			int orbY = Math.round(LerpUtils.lerp(orb.position.y, orb.positionLast.y, partialTicks));
 
-			GlStateManager.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 
-			GlStateManager.translate(orbX, orbY, 0);
-			GlStateManager.rotate(orb.rotationDeg, 0, 0, 1);
+			com.mojang.blaze3d.systems.RenderSystem.translate(orbX, orbY, 0);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(orb.rotationDeg, 0, 0, 1);
 
 			Vector2f delta = Vector2f.sub(orb.position, orb.target, null);
 
@@ -119,7 +119,7 @@ public class OrbDisplay {
 					Math.min(2, Math.max(0.5F, length / 16))
 						* Math.min(2, Math.max(0.5F, velocitySquared / 40))
 				));
-			GlStateManager.color(1, 1, 1, opacity);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, opacity);
 
 			int orbU = (orb.type % 3) * 16;
 			int orbV = (orb.type / 3) * 16 + 217;
@@ -133,10 +133,10 @@ public class OrbDisplay {
 				GL11.GL_NEAREST
 			);
 
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 	}
 
 }

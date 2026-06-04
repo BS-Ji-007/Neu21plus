@@ -34,7 +34,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.dev.AnimatedSkullExport
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -122,38 +122,38 @@ public class ItemCustomizeManager {
 	private static void renderEffect(Consumer<Integer> renderModelCallback, int color) {
 		GL11.glPushMatrix();
 
-		GlStateManager.enableBlend();
-		GlStateManager.depthMask(false);
-		GlStateManager.depthFunc(GL11.GL_EQUAL);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+		com.mojang.blaze3d.systems.RenderSystem.depthFunc(GL11.GL_EQUAL);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Minecraft.getInstance().getTextureManager().bindTexture(getCustomGlintTexture());
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 
-		GlStateManager.matrixMode(5890);
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(8.0F, 8.0F, 8.0F);
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.scale(8.0F, 8.0F, 8.0F);
 		float f = (float) (Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
-		GlStateManager.translate(f, 0.0F, 0.0F);
-		GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.translate(f, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
 		renderModelCallback.accept(color);
-		GlStateManager.matrixMode(5890);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(8.0F, 8.0F, 8.0F);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.scale(8.0F, 8.0F, 8.0F);
 		float f1 = (float) (Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
-		GlStateManager.translate(-f1, 0.0F, 0.0F);
-		GlStateManager.rotate(10.0F, 0.0F, 0.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.translate(-f1, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(10.0F, 0.0F, 0.0F, 1.0F);
 		renderModelCallback.accept(color);
-		GlStateManager.matrixMode(5890);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-		GlStateManager.matrixMode(5888);
-		GlStateManager.blendFunc(770, 771);
-		GlStateManager.enableLighting();
-		GlStateManager.depthFunc(515);
-		GlStateManager.depthMask(true);
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+		com.mojang.blaze3d.systems.RenderSystem.blendFunc(770, 771);
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.depthFunc(515);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 		Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 
 		GL11.glPopMatrix();
@@ -163,42 +163,42 @@ public class ItemCustomizeManager {
 		Minecraft.getInstance().getTextureManager().bindTexture(getCustomGlintTexture());
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-		GlStateManager.enableBlend();
-		GlStateManager.depthFunc(514);
-		GlStateManager.depthMask(false);
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.depthFunc(514);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 		float f1 = 0.5F;
-		GlStateManager.color(f1, f1, f1, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.color(f1, f1, f1, 1.0F);
 
 		for (int i = 0; i < 2; ++i) {
-			GlStateManager.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 			float red = ((color >> 16) & 0xFF) / 255f;
 			float green = ((color >> 8) & 0xFF) / 255f;
 			float blue = (color & 0xFF) / 255f;
 			float alpha = ((color >> 24) & 0xFF) / 255f;
 
-			GlStateManager.color(red, green, blue, alpha);
-			GlStateManager.matrixMode(5890);
-			GlStateManager.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
 			float f3 = 0.33333334F;
-			GlStateManager.scale(f3, f3, f3);
-			GlStateManager.rotate(30.0F - (float) i * 60.0F, 0.0F, 0.0F, 1.0F);
-			GlStateManager.translate(0.0F, existed * (0.001F + (float) i * 0.003F) * 20.0F, 0.0F);
-			GlStateManager.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.scale(f3, f3, f3);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(30.0F - (float) i * 60.0F, 0.0F, 0.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, existed * (0.001F + (float) i * 0.003F) * 20.0F, 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
 			renderModelCallback.run();
 		}
 
-		GlStateManager.matrixMode(5890);
-		GlStateManager.loadIdentity();
-		GlStateManager.matrixMode(5888);
-		GlStateManager.enableLighting();
-		GlStateManager.depthMask(true);
-		GlStateManager.depthFunc(515);
-		GlStateManager.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+		com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+		com.mojang.blaze3d.systems.RenderSystem.depthFunc(515);
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 	}
 
 	public static void pre() {
-		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 	}
 
 	public static boolean render3DGlint(String customEnchantGlint, float existed, Runnable renderModelCallback) {
@@ -208,7 +208,7 @@ public class ItemCustomizeManager {
 			float[] hsv = Color.RGBtoHSB((colour >> 16) & 0xff, (colour >> 8) & 0xff, colour & 0xff, null);
 			GL14.glBlendColor(1, 1, 1, hsv[2]);
 
-			GlStateManager.tryBlendFuncSeparate(
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(
 				GL11.GL_ZERO,
 				GL11.GL_ONE_MINUS_SRC_ALPHA,
 				GL11.GL_ZERO,
@@ -216,7 +216,7 @@ public class ItemCustomizeManager {
 			);
 			int alphaValue = (int) ((1 - hsv[2] * hsv[2]) * 0xff) * ((colour >> 24) & 0xff) / 0xff;
 			renderArmorGlint(renderModelCallback, existed, alphaValue << 24);
-			GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ONE);
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ONE);
 			renderArmorGlint(renderModelCallback, existed, colour);
 
 			return true;
@@ -233,7 +233,7 @@ public class ItemCustomizeManager {
 
 			GL11.glPushMatrix();
 
-			GlStateManager.tryBlendFuncSeparate(
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(
 				GL11.GL_ZERO,
 				GL11.GL_ONE_MINUS_SRC_ALPHA,
 				GL11.GL_ZERO,
@@ -241,7 +241,7 @@ public class ItemCustomizeManager {
 			);
 			int alphaValue = (int) ((1 - hsv[2] * hsv[2]) * 0xff) * ((colour >> 24) & 0xff) / 0xff;
 			renderEffect(renderModelCallback, alphaValue << 24);
-			GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ONE);
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ONE);
 			renderEffect(renderModelCallback, colour);
 
 			GL11.glPopMatrix();
@@ -255,7 +255,7 @@ public class ItemCustomizeManager {
 		if (!loadedCustomGlintTexture) {
 			loadedCustomGlintTexture = true;
 
-			final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+			final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("notenoughupdates", "textures/misc/enchanted_item_glint.png");
 
 			try {
 				BufferedImage originalGlint = ImageIO.read(Minecraft

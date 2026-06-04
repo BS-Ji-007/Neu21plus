@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.core.util.ArrowPagesUtils
 import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent
 import io.github.moulberry.notenoughupdates.miscfeatures.inventory.MuseumTooltipManager.isItemDonated
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen
 import io.github.moulberry.notenoughupdates.options.separatesections.Museum
 import io.github.moulberry.notenoughupdates.util.Constants
 import io.github.moulberry.notenoughupdates.util.ItemUtils
@@ -36,8 +36,8 @@ import io.github.moulberry.notenoughupdates.util.stripControlCodes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.MainWindow
-import net.minecraft.client.gui.inventory.GuiChest
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.gui.inventory.ChestScreen
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
@@ -117,7 +117,7 @@ object MuseumCheapestItemOverlay {
     @SubscribeEvent
     fun onDrawBackground(event: GuiScreenEvent.BackgroundDrawnEvent) {
         if (!shouldRender(event.gui)) return
-        val chest = event.gui as GuiChest
+        val chest = event.gui as ChestScreen
 
         val slots = chest.inventorySlots.inventorySlots
         //check if there is any info to gather only when a category is currently open
@@ -128,9 +128,9 @@ object MuseumCheapestItemOverlay {
         }
         previousSlots = slots
 
-        val xSize = (event.gui as AccessorGuiContainer).xSize
-        val guiLeft = (event.gui as AccessorGuiContainer).guiLeft
-        val guiTop = (event.gui as AccessorGuiContainer).guiTop
+        val xSize = (event.gui as AccessorContainerScreen).xSize
+        val guiLeft = (event.gui as AccessorContainerScreen).guiLeft
+        val guiTop = (event.gui as AccessorContainerScreen).guiTop
 
         drawBackground(guiLeft, xSize, guiTop)
         drawLines(guiLeft, guiTop)
@@ -144,8 +144,8 @@ object MuseumCheapestItemOverlay {
     fun onMouseClick(event: GuiScreenEvent.MouseInputEvent.Pre) {
         if (!shouldRender(event.gui)) return
         if (!Mouse.getEventButtonState()) return
-        val guiLeft = (event.gui as AccessorGuiContainer).guiLeft
-        val guiTop = (event.gui as AccessorGuiContainer).guiTop
+        val guiLeft = (event.gui as AccessorContainerScreen).guiLeft
+        val guiTop = (event.gui as AccessorContainerScreen).guiTop
         ArrowPagesUtils.onPageSwitchMouse(
             guiLeft, guiTop, topLeft, currentPage, totalPages
         ) { pageChange: Int -> currentPage = pageChange }
@@ -289,7 +289,7 @@ object MuseumCheapestItemOverlay {
                 height,
                 -1
             )
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         }
 
         // Coins per xp button
@@ -640,7 +640,7 @@ object MuseumCheapestItemOverlay {
     private fun drawBackground(guiLeft: Int, xSize: Int, guiTop: Int) {
         Minecraft.getInstance().textureManager.bindTexture(backgroundResource)
         GL11.glColor4f(1F, 1F, 1F, 1F)
-        GlStateManager.disableLighting()
+        com.mojang.blaze3d.systems.RenderSystem.disableLighting()
         Utils.drawTexturedRect(
             (guiLeft + xSize + 4).toFloat(),
             guiTop.toFloat(),
@@ -655,10 +655,10 @@ object MuseumCheapestItemOverlay {
     }
 
     /**
-     * Determine if the overlay should be active based on the config option and the currently open GuiChest, if applicable
+     * Determine if the overlay should be active based on the config option and the currently open ChestScreen, if applicable
      */
     private fun shouldRender(gui: GuiScreen): Boolean =
-        config.museumCheapestItemOverlay && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() && (gui is GuiChest && Utils.getOpenChestName()
+        config.museumCheapestItemOverlay && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() && (gui is ChestScreen && Utils.getOpenChestName()
             .startsWith("Museum ➜") || Utils.getOpenChestName() == "Your Museum")
 
     /**

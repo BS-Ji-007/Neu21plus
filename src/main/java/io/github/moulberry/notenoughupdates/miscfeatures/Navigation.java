@@ -201,7 +201,7 @@ public class Navigation {
 					useWarpCommand();
 				}
 			} else {
-				Minecraft.getInstance().displayGuiScreen(new GuiNavigation());
+				Minecraft.getInstance().setScreen(new GuiNavigation());
 			}
 		}
 	}

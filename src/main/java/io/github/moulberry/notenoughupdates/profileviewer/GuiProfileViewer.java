@@ -40,7 +40,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
@@ -73,18 +73,18 @@ import java.util.concurrent.CompletableFuture;
 
 public class GuiProfileViewer extends GuiScreen {
 
-	public static final ResourceLocation pv_dropdown = new ResourceLocation("notenoughupdates:pv_dropdown.png");
-	public static final ResourceLocation pv_bg = new ResourceLocation("notenoughupdates:pv_bg.png");
-	public static final ResourceLocation pv_elements = new ResourceLocation("notenoughupdates:pv_elements.png");
+	public static final ResourceLocation pv_dropdown = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_dropdown.png");
+	public static final ResourceLocation pv_bg = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_bg.png");
+	public static final ResourceLocation pv_elements = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_elements.png");
 	private static final Map<String, ResourceLocation> gamemodeToIcon = new HashMap<String, ResourceLocation>() {{
-		put("ironman", new ResourceLocation("notenoughupdates:pv_ironman.png"));
-		put("bingo", new ResourceLocation("notenoughupdates:pv_bingo.png"));
-		put("island", new ResourceLocation("notenoughupdates:pv_stranded.png")); // Stranded
+		put("ironman", new ResourceLocation("notenoughupdates", "notenoughupdates:pv_ironman.png"));
+		put("bingo", new ResourceLocation("notenoughupdates", "notenoughupdates:pv_bingo.png"));
+		put("island", new ResourceLocation("notenoughupdates", "notenoughupdates:pv_stranded.png")); // Stranded
 	}};
-	private static final ResourceLocation gamemodeIconUnknown = new ResourceLocation("notenoughupdates:pv_unknown.png");
+	private static final ResourceLocation gamemodeIconUnknown = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_unknown.png");
 	public static final ResourceLocation resource_packs =
-		new ResourceLocation("minecraft:textures/gui/resource_packs.png");
-	public static final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
+		new ResourceLocation("notenoughupdates", "minecraft:textures/gui/resource_packs.png");
+	public static final ResourceLocation icons = new ResourceLocation("notenoughupdates", "textures/gui/icons.png");
 	public static final HashMap<String, HashMap<String, Float>> PET_STAT_BOOSTS =
 		new HashMap<String, HashMap<String, Float>>() {
 			{
@@ -299,24 +299,24 @@ public class GuiProfileViewer extends GuiScreen {
 		blurBackground();
 		renderBlurredBackground(width, height, guiLeft + 2, guiTop + 2, sizeX - 4, sizeY - 4);
 
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		renderTabs(true);
 		renderRecentPlayers(true);
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.disableDepth();
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		renderTabs(false);
 		renderRecentPlayers(false);
-		GlStateManager.translate(0, 0, 2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 2);
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableDepth();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
 		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
@@ -340,7 +340,7 @@ public class GuiProfileViewer extends GuiScreen {
 				);
 
 				if (selectedProfile != null && selectedProfile.getGamemode() != null) {
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					ResourceLocation gamemodeIcon = gamemodeToIcon.getOrDefault(
 						selectedProfile.getGamemode(),
 						gamemodeIconUnknown
@@ -415,7 +415,7 @@ public class GuiProfileViewer extends GuiScreen {
 						);
 
 						if (selectedProfile != null && selectedProfile.getGamemode() != null) {
-							GlStateManager.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							ResourceLocation gamemodeIcon = gamemodeToIcon.getOrDefault(
 								selectedProfile.getGamemode(),
 								gamemodeIconUnknown
@@ -434,7 +434,7 @@ public class GuiProfileViewer extends GuiScreen {
 			}
 		}
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 		if (pages.containsKey(page)) {
 			try {
@@ -671,11 +671,11 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	private void renderTab(ItemStack stack, int xIndex, boolean pressed) {
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		int x = guiLeft + xIndex * 28;
 		int y = guiTop - 28;
@@ -698,16 +698,16 @@ public class GuiProfileViewer extends GuiScreen {
 			renderBlurredBackground(width, height, x + 2, y + 4, 28 - 4, 28 - 4);
 		}
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		Utils.drawItemStack(stack, x + 6, y + 9);
 	}
 
@@ -738,11 +738,11 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	private void renderRecentPlayer(String name, int yIndex, boolean selected) {
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 
 		int x = guiLeft + sizeX;
 		int y = guiTop + yIndex * 28;
@@ -766,16 +766,16 @@ public class GuiProfileViewer extends GuiScreen {
 			renderBlurredBackground(width, height, x, y + 2, 28 - 2, 28 - 4);
 		}
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.enableAlpha();
-		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x - 3, y, 32, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 		ItemStack playerHead = ProfileViewerUtils.getPlayerData(name);
 
@@ -960,7 +960,7 @@ public class GuiProfileViewer extends GuiScreen {
 							profile.resetCache();
 							ProfileViewerUtils.saveSearch(name);
 						}
-						Minecraft.getInstance().displayGuiScreen(new GuiProfileViewer(profile));
+						Minecraft.getInstance().setScreen(new GuiProfileViewer(profile));
 					}
 				);
 			}
@@ -1095,7 +1095,7 @@ public class GuiProfileViewer extends GuiScreen {
 
 		completed = Math.round(completed / 0.05f) * 0.05f;
 		float notCompleted = 1 - completed;
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		float width;
 
 		if (completed < 0.5f) {
@@ -1232,7 +1232,7 @@ public class GuiProfileViewer extends GuiScreen {
 			GL11.glPushMatrix();
 			blurShaderHorz.loadShader(0);
 			blurShaderVert.loadShader(0);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			GL11.glPopMatrix();
 
 			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
@@ -1275,7 +1275,7 @@ public class GuiProfileViewer extends GuiScreen {
 		float vMax = (height - y - blurHeight) / (float) height;
 
 		blurOutputVert.bindFramebufferTexture();
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		//Utils.setScreen(width*f, height*f, f);
 		Utils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		//Utils.setScreen(width, height, f);

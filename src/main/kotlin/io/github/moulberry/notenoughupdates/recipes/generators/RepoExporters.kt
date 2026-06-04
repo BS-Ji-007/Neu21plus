@@ -21,13 +21,13 @@ package io.github.moulberry.notenoughupdates.recipes.generators
 
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
-import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer
+import io.github.moulberry.notenoughupdates.events.ContainerScreenBackgroundDrawnEvent
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton
-import net.minecraft.client.gui.inventory.GuiContainer
+import net.minecraft.client.gui.inventory.ContainerScreen
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Mouse
@@ -40,15 +40,15 @@ object RepoExporters {
         it.toList()
     }
     private var lastRenderedButtons = listOf<Pair<GuiButton, RepoExporter>>()
-    private var lastGui: GuiContainer? = null
+    private var lastGui: ContainerScreen? = null
 
     @SubscribeEvent
-    fun onGuiRender(event: GuiContainerBackgroundDrawnEvent) {
+    fun onGuiRender(event: ContainerScreenBackgroundDrawnEvent) {
         if (!NotEnoughUpdates.INSTANCE.config.apiData.repositoryEditing) return
         val mouseX = Utils.getMouseX()
         val mouseY = Utils.getMouseY()
         val gui = event.container
-        if (gui !is AccessorGuiContainer) return
+        if (gui !is AccessorContainerScreen) return
         val exporters = allRepoExporters.filter { it.canExport(gui) }
         synchronized(this) {
             lastGui = gui
@@ -72,7 +72,7 @@ object RepoExporters {
     @SubscribeEvent
     fun onGuiClick(event: GuiScreenEvent.MouseInputEvent.Pre) {
         if (!Mouse.getEventButtonState()) return
-        val accessor = event.gui as? AccessorGuiContainer ?: return
+        val accessor = event.gui as? AccessorContainerScreen ?: return
 
         val mouseX = Utils.getMouseX() - accessor.guiLeft
         val mouseY = Utils.getMouseY() - accessor.guiTop

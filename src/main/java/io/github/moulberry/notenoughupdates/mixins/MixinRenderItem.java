@@ -32,7 +32,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -110,10 +110,10 @@ public abstract class MixinRenderItem {
 					float blue = (color & 0xFF) / 255f;
 					float alpha = ((color >> 24) & 0xFF) / 255f;
 
-					GlStateManager.color(red, green, blue, alpha);
+					com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
 
-					GlStateManager.scale(1 / 8f, 1 / 8f, 1 / 8f);
-					GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+					com.mojang.blaze3d.systems.RenderSystem.scale(1 / 8f, 1 / 8f, 1 / 8f);
+					com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 					GL11.glPushMatrix();
 					ItemCustomizeManager.disableTextureBinding = true;
 					tileEntityItemStackRenderer.renderByItem(stack);
@@ -169,12 +169,12 @@ public abstract class MixinRenderItem {
 				}
 			}
 			if (matches) {
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
-				GlStateManager.depthMask(false);
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 				Gui.drawRect(x, y, x + 16, y + 16, NEUOverlay.overlayColourLight);
-				GlStateManager.depthMask(true);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 		}
 	}
@@ -195,10 +195,10 @@ public abstract class MixinRenderItem {
 				}
 			}
 			if (!matches) {
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
 				Gui.drawRect(x, y, x + 16, y + 16, NEUOverlay.overlayColourDark);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 		}
 	}
@@ -226,12 +226,12 @@ public abstract class MixinRenderItem {
 					}
 				}
 				if (!matches) {
-					GlStateManager.pushMatrix();
-					GlStateManager.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
-					GlStateManager.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 					Gui.drawRect(xPosition, yPosition, xPosition + 16, yPosition + 16, NEUOverlay.overlayColourDark);
-					GlStateManager.enableDepth();
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
 		}
@@ -241,28 +241,28 @@ public abstract class MixinRenderItem {
 		float damageOverride = ItemCooldowns.getDurabilityOverride(stack);
 
 		if (damageOverride >= 0) {
-			GlStateManager.disableLighting();
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			if (NotEnoughUpdates.INSTANCE.config.itemOverlays.oldCooldowns) {
 				float barX = 13.0f - damageOverride * 13.0f;
 				int col = (int) Math.round(255.0D - damageOverride * 255.0D);
-				GlStateManager.disableTexture2D();
-				GlStateManager.disableAlpha();
-				GlStateManager.disableBlend();
+				com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+				com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+				com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				Tessellator tessellator = Tessellator.getInstance();
 				WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 				func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
 				func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, 12, 1, (255 - col) / 4, 64, 0, 255);
 				func_181565_a(worldrenderer, xPosition + 2, yPosition + 13, barX, 1, 255 - col, col, 0, 255);
-				GlStateManager.enableAlpha();
-				GlStateManager.enableTexture2D();
+				com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+				com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 			} else {
-				GlStateManager.enableAlpha();
+				com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
 				Utils.drawRect(xPosition, yPosition + 16.0f * (1.0f - damageOverride), xPosition + 16, yPosition + 16, Integer.MAX_VALUE);
 			}
-			GlStateManager.enableLighting();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 	}
 

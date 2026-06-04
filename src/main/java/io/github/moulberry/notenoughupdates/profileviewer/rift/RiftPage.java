@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.util.PetLeveling;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.Item;
@@ -59,13 +59,13 @@ import java.util.Locale;
 
 public class RiftPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_rift = new ResourceLocation("notenoughupdates:pv_rift.png");
+	private static final ResourceLocation pv_rift = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_rift.png");
 
 	int pages = 0;
 
 	int onPage = 0;
 	private static final ResourceLocation CHEST_GUI_TEXTURE =
-		new ResourceLocation("textures/gui/container/generic_54.png");
+		new ResourceLocation("notenoughupdates", "textures/gui/container/generic_54.png");
 
 	boolean inInventory = true; // false = in enderchest
 
@@ -118,7 +118,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		}
 
 		// pet
-		GlStateManager.color(1,1,1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1,1,1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 		Utils.drawTexturedRect(guiLeft + 35, guiTop + 156, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
@@ -289,7 +289,7 @@ public class RiftPage extends GuiProfileViewerPage {
 			addInventoryButton(156, 16, guiLeft, guiTop, mouseX, mouseY, "§7Inventory", "CHEST");
 			addInventoryButton(222, 16, guiLeft, guiTop, mouseX, mouseY, "§7Ender Chest", "ENDER_CHEST");
 
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 			Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 			int inventoryRows = inInventory ? 4 : 5;
@@ -297,8 +297,8 @@ public class RiftPage extends GuiProfileViewerPage {
 
 			int inventoryX = guiLeft + 203 - 176 / 2;
 			int inventoryY = guiTop + 130 - invSizeY / 2;
-			getInstance().drawTexturedModalRect(inventoryX, inventoryY, 0, 0, 176, inventoryRows * 18 + 17);
-			getInstance().drawTexturedModalRect(inventoryX, inventoryY + inventoryRows * 18 + 17, 0, 215, 176, 7);
+			getInstance().blit(inventoryX, inventoryY, 0, 0, 176, inventoryRows * 18 + 17);
+			getInstance().blit(inventoryX, inventoryY + inventoryRows * 18 + 17, 0, 215, 176, 7);
 
 			Utils.drawStringF(
 				inInventory ? "Inventory" : "Ender Chest",
@@ -508,10 +508,10 @@ public class RiftPage extends GuiProfileViewerPage {
 	}
 
 	public void renderItem(ItemStack itemStack, int x, int y, int guiLeft, int guiTop) {
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.enableGUIStandardItemLighting();
 		Utils.drawItemStack(itemStack, guiLeft + x, guiTop + y);
-		GlStateManager.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 		RenderHelper.disableStandardItemLighting();
 	}
 

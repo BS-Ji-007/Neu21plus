@@ -21,28 +21,28 @@ package io.github.moulberry.notenoughupdates.mixins;
 
 import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin({GuiChest.class})
-public class MixinGuiChest {
+@Mixin({ChestScreen.class})
+public class MixinChestScreen {
 	private static final String TARGET = "Lnet/minecraft/client/renderer/texture/TextureManager;" +
 		"bindTexture(Lnet.minecraft.resources.ResourceLocation;)V";
 
-	@Redirect(method = "drawGuiContainerBackgroundLayer", at = @At(value = "INVOKE", target = TARGET))
-	public void drawGuiContainerBackgroundLayer_bindTexture(TextureManager textureManager, ResourceLocation location) {
+	@Redirect(method = "drawContainerScreenBackgroundLayer", at = @At(value = "INVOKE", target = TARGET))
+	public void drawContainerScreenBackgroundLayer_bindTexture(TextureManager textureManager, ResourceLocation location) {
 		BetterContainers.bindHook(textureManager, location);
 	}
 
 	private static final String TARGET_DRAWSTRING =
 		"Lnet/minecraft/client/gui/FontRenderer;drawString(Ljava/lang/String;III)I";
 
-	@Redirect(method = "drawGuiContainerForegroundLayer", at = @At(value = "INVOKE", target = TARGET_DRAWSTRING))
-	public int drawGuiContainerForegroundLayer_drawString(
+	@Redirect(method = "drawContainerScreenForegroundLayer", at = @At(value = "INVOKE", target = TARGET_DRAWSTRING))
+	public int drawContainerScreenForegroundLayer_drawString(
 		FontRenderer fontRenderer,
 		String text,
 		int x,
@@ -57,11 +57,11 @@ public class MixinGuiChest {
 		);
 	}
 
-	private static final String TARGET_SBADRAWSTRING = "Lcodes/biscuit/skyblockaddons/asm/hooks/GuiChestHook;" +
+	private static final String TARGET_SBADRAWSTRING = "Lcodes/biscuit/skyblockaddons/asm/hooks/ChestScreenHook;" +
 		"drawString(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;III)I";
 
-	@Redirect(method = "drawGuiContainerForegroundLayer", at = @At(value = "INVOKE", target = TARGET_SBADRAWSTRING, remap = false), expect = 0)
-	public int drawGuiContainerForegroundLayer_SBA_drawString(
+	@Redirect(method = "drawContainerScreenForegroundLayer", at = @At(value = "INVOKE", target = TARGET_SBADRAWSTRING, remap = false), expect = 0)
+	public int drawContainerScreenForegroundLayer_SBA_drawString(
 		FontRenderer fontRenderer,
 		String text,
 		int x,
@@ -69,7 +69,7 @@ public class MixinGuiChest {
 		int color
 	) {
 		try {
-			return (int) Class.forName("codes.biscuit.skyblockaddons.asm.hooks.GuiChestHook")
+			return (int) Class.forName("codes.biscuit.skyblockaddons.asm.hooks.ChestScreenHook")
 												.getDeclaredMethod(
 													"drawString",
 													FontRenderer.class,

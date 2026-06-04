@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -77,9 +77,9 @@ public abstract class MixinEntityRenderer {
 			double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
 			double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
 
-			GlStateManager.translate(-currentPosition.x + d0, -currentPosition.y + d1, -currentPosition.z + d2);
+			com.mojang.blaze3d.systems.RenderSystem.translate(-currentPosition.x + d0, -currentPosition.y + d1, -currentPosition.z + d2);
 			ForgeHooksClient.dispatchRenderLast(context, partialTicks);
-			GlStateManager.translate(currentPosition.x - d0, currentPosition.y - d1, currentPosition.z - d2);
+			com.mojang.blaze3d.systems.RenderSystem.translate(currentPosition.x - d0, currentPosition.y - d1, currentPosition.z - d2);
 		} else {
 			ForgeHooksClient.dispatchRenderLast(context, partialTicks);
 		}

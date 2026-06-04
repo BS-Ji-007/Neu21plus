@@ -25,8 +25,8 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
-import io.github.moulberry.notenoughupdates.mixins.AccessorGlStateManager
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer
+import io.github.moulberry.notenoughupdates.mixins.Accessorcom.mojang.blaze3d.systems.RenderSystem
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen
 import io.github.moulberry.notenoughupdates.util.ItemUtils
 import io.github.moulberry.notenoughupdates.util.StateManagerUtils
 import io.github.moulberry.notenoughupdates.util.brigadier.thenArgument
@@ -34,9 +34,9 @@ import io.github.moulberry.notenoughupdates.util.brigadier.thenExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import io.github.moulberry.notenoughupdates.util.stripControlCodes
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiChest
-import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.gui.inventory.ChestScreen
+import net.minecraft.client.gui.inventory.ContainerScreen
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.world.inventory.Slot
 import net.minecraft.resources.ResourceLocation
@@ -65,20 +65,20 @@ object TablistTutorial {
             val textX = imgX + Arrow.labelXOffset
             val textY = imgY + Arrow.labelYOffset
 
-            GlStateManager.pushMatrix()
-            GlStateManager.translate(0f, 0f, 300f)
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.pushMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.translate(0f, 0f, 300f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
             Minecraft.getInstance().textureManager.bindTexture(imageLocation)
             RenderUtils.drawTexturedRect(imgX.toFloat(), imgY.toFloat(), textureSize.toFloat(), textureSize.toFloat())
-            GlStateManager.translate(textX.toFloat(), textY.toFloat(), 0F)
-            GlStateManager.scale(textScale, textScale, 1F)
+            com.mojang.blaze3d.systems.RenderSystem.translate(textX.toFloat(), textY.toFloat(), 0F)
+            com.mojang.blaze3d.systems.RenderSystem.scale(textScale, textScale, 1F)
             val fr = Minecraft.getInstance().font
             fr.drawString(label, 0, -fr.FONT_HEIGHT / 2, -1)
-            GlStateManager.popMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.popMatrix()
         }
 
-        fun drawBigRedArrow(gui: GuiContainer, slot: Slot, label: String) {
-            gui as AccessorGuiContainer
+        fun drawBigRedArrow(gui: ContainerScreen, slot: Slot, label: String) {
+            gui as AccessorContainerScreen
             drawBigRedArrow(gui.guiLeft + slot.xDisplayPosition + 9, gui.guiTop + slot.yDisplayPosition, label)
         }
     }
@@ -92,13 +92,13 @@ object TablistTutorial {
         }
         val task = activeTask ?: return
 
-        val gui = event.gui as? GuiChest ?: return
+        val gui = event.gui as? ChestScreen ?: return
         val chestInventory = gui.inventorySlots as ContainerChest
 
         val name = chestInventory.lowerChestInventory.displayName.unformattedText
 
-        StateManagerUtils.withSavedState(AccessorGlStateManager.getLightingState()) {
-            GlStateManager.disableLighting()
+        StateManagerUtils.withSavedState(Accessorcom.mojang.blaze3d.systems.RenderSystem.getLightingState()) {
+            com.mojang.blaze3d.systems.RenderSystem.disableLighting()
             if (name == "Tablist Widgets") {
                 drawSelectAreaArrow(gui, chestInventory, task)
             }
@@ -140,7 +140,7 @@ object TablistTutorial {
         }
     }
 
-    private fun drawEnableEffect(gui: GuiChest, chestInventory: ContainerChest, task: TabListWidget) {
+    private fun drawEnableEffect(gui: ChestScreen, chestInventory: ContainerChest, task: TabListWidget) {
         val widgets = findWidgets(chestInventory)
         val widget = widgets.find { it.widgetName == task.widgetName.toString() }
         if (widget == null) return
@@ -175,7 +175,7 @@ object TablistTutorial {
         },
         Damage: 3s
     }*/
-    fun drawPriorityClick(gui: GuiChest, chestInventory: ContainerChest, widget: WidgetStatus) {
+    fun drawPriorityClick(gui: ChestScreen, chestInventory: ContainerChest, widget: WidgetStatus) {
         val prioritySlot = chestInventory.inventorySlots.getOrNull(13) ?: return
         val leftSide = chestInventory.inventory.getOrNull(3).let(ItemUtils::getLore)
         val middle = chestInventory.inventory.getOrNull(4).let(ItemUtils::getLore)
@@ -211,7 +211,7 @@ object TablistTutorial {
             .removePrefix("the ")
     }
 
-    private fun drawSelectAreaArrow(gui: GuiChest, inventory: ContainerChest, task: TabListWidget) {
+    private fun drawSelectAreaArrow(gui: ChestScreen, inventory: ContainerChest, task: TabListWidget) {
         var regionName = task.regionName
         if (regionName == "CURRENT_REGION") {
             val infoSlot = inventory.inventory.getOrNull(4).let(ItemUtils::getLore)

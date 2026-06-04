@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.Collection;
@@ -55,7 +55,7 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 	public Map<MBGuiElement, Vector2f> getChildrenPosition() {
 		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
 
-		if (currentScreen instanceof GuiContainer || currentScreen instanceof GuiItemRecipe) {
+		if (currentScreen instanceof ContainerScreen || currentScreen instanceof GuiItemRecipe) {
 
 			if (lastScreen != currentScreen) {
 				lastScreen = currentScreen;
@@ -69,14 +69,14 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 				int guiLeft = -1;
 				int guiTop = -1;
 
-				if (currentScreen instanceof GuiContainer) {
-					GuiContainer currentContainer = (GuiContainer) currentScreen;
+				if (currentScreen instanceof ContainerScreen) {
+					ContainerScreen currentContainer = (ContainerScreen) currentScreen;
 
 					try {
-						xSize = (int) Utils.getField(GuiContainer.class, currentContainer, "xSize", "field_146999_f");
-						ySize = (int) Utils.getField(GuiContainer.class, currentContainer, "ySize", "field_147000_g");
-						guiLeft = (int) Utils.getField(GuiContainer.class, currentContainer, "guiLeft", "field_147003_i");
-						guiTop = (int) Utils.getField(GuiContainer.class, currentContainer, "guiTop", "field_147009_r");
+						xSize = (int) Utils.getField(ContainerScreen.class, currentContainer, "xSize", "field_146999_f");
+						ySize = (int) Utils.getField(ContainerScreen.class, currentContainer, "ySize", "field_147000_g");
+						guiLeft = (int) Utils.getField(ContainerScreen.class, currentContainer, "guiLeft", "field_147003_i");
+						guiTop = (int) Utils.getField(ContainerScreen.class, currentContainer, "guiTop", "field_147009_r");
 					} catch (Exception ignored) {
 					}
 				} else {

@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -214,14 +214,14 @@ public class EntityViewer extends GuiScreen {
 		this.guiTop = (height - this.ySize) / 2;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-		drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
+		blit(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
 
 		Utils.drawStringScaledMaxWidth(label, guiLeft + 10, guiTop + 10, false, 100, 0xFF00FF);
 		renderEntity(entity, guiLeft + 90, guiTop + 75, mouseX, mouseY);
 	}
 
 	public static void renderEntity(EntityLivingBase entity, int posX, int posY, int mouseX, int mouseY) {
-		GlStateManager.color(1F, 1F, 1F, 1F);
+		com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F, 1F);
 
 		int scale = 30;
 		float bottomOffset = 0F;
@@ -265,26 +265,26 @@ public class EntityViewer extends GuiScreen {
 
 	// Need this to flip the ender dragon and make it follow mouse correctly
 	public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY, EntityLivingBase ent) {
-		GlStateManager.enableColorMaterial();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float)posX, (float)posY, 50.0F);
-		GlStateManager.scale((float)(-scale), (float)scale, (float)scale);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.enableColorMaterial();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate((float)posX, (float)posY, 50.0F);
+		com.mojang.blaze3d.systems.RenderSystem.scale((float)(-scale), (float)scale, (float)scale);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F, 0.0F, 0.0F, 1.0F);
 		float f = ent.renderYawOffset;
 		float g = ent.rotationYaw;
 		float h = ent.rotationPitch;
 		float i = ent.prevRotationYawHead;
 		float j = ent.rotationYawHead;
-		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(135.0F, 0.0F, 1.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
-		GlStateManager.rotate((ent instanceof EntityDragon) ? 45.0F : -135.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate((ent instanceof EntityDragon) ? ((float)Math.atan(mouseY / 40.0F)) * 20.0F : -((float)Math.atan(mouseY / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate((ent instanceof EntityDragon) ? 45.0F : -135.0F, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate((ent instanceof EntityDragon) ? ((float)Math.atan(mouseY / 40.0F)) * 20.0F : -((float)Math.atan(mouseY / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
 		ent.renderYawOffset = (float)Math.atan(mouseX / 40.0F) * 20.0F;
 		ent.rotationYaw = (float)Math.atan(mouseX / 40.0F) * 40.0F;
 		ent.rotationPitch = -((float)Math.atan(mouseY / 40.0F)) * 20.0F;
 		ent.rotationYawHead = ent.rotationYaw;
 		ent.prevRotationYawHead = ent.rotationYaw;
-		GlStateManager.translate(0.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, 0.0F);
 		RenderManager renderManager = Minecraft.getInstance().getRenderManager();
 		renderManager.setPlayerViewY(180.0F);
 		renderManager.setRenderShadow(false);
@@ -295,11 +295,11 @@ public class EntityViewer extends GuiScreen {
 		ent.rotationPitch = h;
 		ent.prevRotationYawHead = i;
 		ent.rotationYawHead = j;
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-		GlStateManager.disableTexture2D();
-		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
+		com.mojang.blaze3d.systems.RenderSystem.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 }

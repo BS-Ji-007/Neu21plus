@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +48,7 @@ public class GuiElementColour extends GuiElement {
 	public static final ResourceLocation colour_selector_chroma = new ResourceLocation(
 		"notenoughupdates:core/colour_selector_chroma.png");
 
-	private static final ResourceLocation colourPickerLocation = new ResourceLocation("mbcore:dynamic/colourpicker");
+	private static final ResourceLocation colourPickerLocation = new ResourceLocation("notenoughupdates", "mbcore:dynamic/colourpicker");
 	private static final ResourceLocation colourPickerBarValueLocation = new ResourceLocation(
 		"mbcore:dynamic/colourpickervalue");
 	private static final ResourceLocation colourPickerBarOpacityLocation = new ResourceLocation(
@@ -181,7 +181,7 @@ public class GuiElementColour extends GuiElement {
 				new DynamicTexture(bufferedImageValue)
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarValueLocation);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
@@ -190,7 +190,7 @@ public class GuiElementColour extends GuiElement {
 			opacityOffset = 15;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar_alpha);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().loadTexture(
@@ -198,7 +198,7 @@ public class GuiElementColour extends GuiElement {
 				new DynamicTexture(bufferedImageOpacity)
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarOpacityLocation);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
@@ -220,7 +220,7 @@ public class GuiElementColour extends GuiElement {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		if (valueSlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		if (opacitySlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
@@ -247,11 +247,11 @@ public class GuiElementColour extends GuiElement {
 
 		Minecraft.getInstance().getTextureManager().loadTexture(colourPickerLocation, new DynamicTexture(bufferedImage));
 		Minecraft.getInstance().getTextureManager().bindTexture(colourPickerLocation);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(x + 1, y + 1, 72, 72, GL11.GL_LINEAR);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_dot);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(EnumChatFormatting.GRAY.toString() + Math.round(hsv[2] * 100) + "",

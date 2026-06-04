@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent;
 import io.github.moulberry.notenoughupdates.events.DrawSlotReturnEvent;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
@@ -35,8 +35,8 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
 public class DungeonNpcProfitOverlay {
 
 	private static final ResourceLocation dungeonProfitResource =
-		new ResourceLocation("notenoughupdates:dungeon_chest_worth.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_chest_worth.png");
 
 	private static final Pattern chestNamePattern = Pattern.compile(".+ Catacombs - Flo.*");
 	private static final Pattern essencePattern = Pattern.compile(
@@ -91,15 +91,15 @@ public class DungeonNpcProfitOverlay {
 							 .getUnformattedText())).matches();
 	}
 
-	private boolean isChestOverview(GuiChest chest) {
+	private boolean isChestOverview(ChestScreen chest) {
 		ContainerChest inventorySlots = (ContainerChest) chest.inventorySlots;
 		return isChestOverview(inventorySlots.getLowerChestInventory());
 	}
 
 	/**
-	 * Highlight the slot that is being drawn if applicable. Called by MixinGuiContainer
+	 * Highlight the slot that is being drawn if applicable. Called by MixinContainerScreen
 	 *
-	 * @see io.github.moulberry.notenoughupdates.mixins.MixinGuiContainer#drawSlotRet(Slot, CallbackInfo)
+	 * @see io.github.moulberry.notenoughupdates.mixins.MixinContainerScreen#drawSlotRet(Slot, CallbackInfo)
 	 */
 	@SubscribeEvent
 	public void onDrawSlot(DrawSlotReturnEvent event) {
@@ -137,11 +137,11 @@ public class DungeonNpcProfitOverlay {
 
 	@SubscribeEvent
 	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
-		if (!NotEnoughUpdates.INSTANCE.config.dungeons.croesusProfitOverlay || !(event.gui instanceof GuiChest)) {
+		if (!NotEnoughUpdates.INSTANCE.config.dungeons.croesusProfitOverlay || !(event.gui instanceof ChestScreen)) {
 			chestProfits.clear();
 			return;
 		}
-		GuiChest guiChest = (GuiChest) event.gui;
+		ChestScreen guiChest = (ChestScreen) event.gui;
 		if (!isChestOverview(guiChest)) {
 			chestProfits.clear();
 			return;
@@ -241,13 +241,13 @@ public class DungeonNpcProfitOverlay {
 			it.shouldHighlight = true);
 	}
 
-	public void render(GuiChest guiChest) {
-		int xSize = ((AccessorGuiContainer) guiChest).getXSize();
-		int guiLeft = ((AccessorGuiContainer) guiChest).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) guiChest).getGuiTop();
+	public void render(ChestScreen guiChest) {
+		int xSize = ((AccessorContainerScreen) guiChest).getXSize();
+		int guiLeft = ((AccessorContainerScreen) guiChest).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) guiChest).getGuiTop();
 		Minecraft.getInstance().getTextureManager().bindTexture(dungeonProfitResource);
 		GL11.glColor4f(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
 
 		for (int i = 0; i < orderedChestProfits.size(); i++) {

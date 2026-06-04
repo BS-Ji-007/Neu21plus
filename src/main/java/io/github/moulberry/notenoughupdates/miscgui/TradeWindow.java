@@ -25,12 +25,12 @@ import io.github.moulberry.notenoughupdates.auction.APIManager;
 import io.github.moulberry.notenoughupdates.core.config.KeybindHelper;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ContainerScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
@@ -307,9 +307,9 @@ public class TradeWindow {
 	}
 
 	public static void render(int mouseX, int mouseY) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 
@@ -553,7 +553,7 @@ public class TradeWindow {
 			}
 		}
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
 
@@ -575,7 +575,7 @@ public class TradeWindow {
 			int y = 104 + 18 * (index / 9);
 			if (index < 9) y = 180;
 
-			((AccessorGuiContainer) chest).doDrawSlot(new Slot(
+			((AccessorContainerScreen) chest).doDrawSlot(new Slot(
 				Minecraft.getInstance().player.inventory,
 				index,
 				guiLeft + x,
@@ -591,15 +591,15 @@ public class TradeWindow {
 				if (mouseY > guiTop + y - 1 && mouseY < guiTop + y + 18) {
 					if (stack != null) stackToRender = stack;
 
-					GlStateManager.disableLighting();
-					GlStateManager.disableDepth();
-					GlStateManager.colorMask(true, true, true, false);
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 					Utils.drawGradientRect(guiLeft + x, guiTop + y,
 						guiLeft + x + 16, guiTop + y + 16, col, col
 					);
-					GlStateManager.colorMask(true, true, true, true);
-					GlStateManager.enableLighting();
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+					com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 
@@ -622,15 +622,15 @@ public class TradeWindow {
 				if (mouseY > guiTop + 15 + y * 18 - 1 && mouseY < guiTop + 15 + y * 18 + 18) {
 					if (stack != null) stackToRender = stack;
 
-					GlStateManager.disableLighting();
-					GlStateManager.disableDepth();
-					GlStateManager.colorMask(true, true, true, false);
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 					Utils.drawGradientRect(guiLeft + 10 + x * 18, guiTop + 15 + y * 18,
 						guiLeft + 10 + x * 18 + 16, guiTop + 15 + y * 18 + 16, -2130706433, -2130706433
 					);
-					GlStateManager.colorMask(true, true, true, true);
-					GlStateManager.enableLighting();
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+					com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 		}
@@ -732,7 +732,7 @@ public class TradeWindow {
 				}
 			}
 
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft + 95, guiTop + 91, 51, 14,
 				0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
@@ -760,28 +760,28 @@ public class TradeWindow {
 			}
 
 			if (currentTime % 400 > 200 && theirTradeChangesMillis[i] != null && theirTradeChangesMillis[i] > 0) {
-				GlStateManager.translate(0, 0, 200);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 200);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(location);
 				Utils.drawTexturedRect(guiLeft + 96 + x * 18, guiTop + 15 + y * 18, 16, 16,
 					51 / 256f, 67 / 256f, 204 / 256f, 220 / 256f, GL11.GL_NEAREST
 				);
-				GlStateManager.translate(0, 0, -200);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -200);
 			}
 
 			if (mouseX > guiLeft + 96 + x * 18 - 1 && mouseX < guiLeft + 96 + x * 18 + 18) {
 				if (mouseY > guiTop + 15 + y * 18 - 1 && mouseY < guiTop + 15 + y * 18 + 18) {
 					if (stack != null) stackToRender = stack;
 
-					GlStateManager.disableLighting();
-					GlStateManager.disableDepth();
-					GlStateManager.colorMask(true, true, true, false);
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 					Utils.drawGradientRect(guiLeft + 96 + x * 18, guiTop + 15 + y * 18,
 						guiLeft + 96 + x * 18 + 16, guiTop + 15 + y * 18 + 16, -2130706433, -2130706433
 					);
-					GlStateManager.colorMask(true, true, true, true);
-					GlStateManager.enableLighting();
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+					com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 		}
@@ -816,8 +816,8 @@ public class TradeWindow {
 				theirPrice += processTopItems(stack, theirTopItems, theirTopItemsStack, theirTopItemsCount);
 			}
 
-			GlStateManager.disableLighting();
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft - 80 - 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
@@ -851,16 +851,16 @@ public class TradeWindow {
 
 						Utils.drawItemStackWithText(stack, guiLeft - 75 - 3, guiTop + 49 + 18 * ourTopIndex, countS);
 
-						GlStateManager.disableLighting();
-						GlStateManager.disableBlend();
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						drawStringShadow(
 							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft - 29 - 3,
 							guiTop + 57 + 18 * ourTopIndex,
 							52
 						);
-						GlStateManager.enableBlend();
+						com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					} else {
 						drawStringShadow(
 							stack.getName().getString() + EnumChatFormatting.GRAY + "x" + ourTopItemsCount.get(ourTopItemInternal),
@@ -880,7 +880,7 @@ public class TradeWindow {
 				}
 			}
 
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
@@ -914,16 +914,16 @@ public class TradeWindow {
 
 						Utils.drawItemStackWithText(stack, guiLeft + xSize + 25 + 3 - 16, guiTop + 49 + 18 * theirTopIndex, countS);
 
-						GlStateManager.disableLighting();
-						GlStateManager.disableBlend();
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						drawStringShadow(
 							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft + xSize + 3 + 51,
 							guiTop + 57 + 18 * theirTopIndex,
 							52
 						);
-						GlStateManager.enableBlend();
+						com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					} else {
 						drawStringShadow(stack.getName().getString(),
 							guiLeft + xSize + 3 + 40, guiTop + 46 + 20 * theirTopIndex, 72
@@ -945,7 +945,7 @@ public class TradeWindow {
 		boolean button2 = NotEnoughUpdates.INSTANCE.config.tradeMenu.customTradePrices;
 		boolean button3 = NotEnoughUpdates.INSTANCE.config.tradeMenu.enableCustomTrade;
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop + ySize - 19, 17, 17,
 			(button3 ? 17 : 0) / 256f, (button3 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST
@@ -999,7 +999,7 @@ public class TradeWindow {
 	}
 
 	public static void handleMouseInput() {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
@@ -1008,7 +1008,7 @@ public class TradeWindow {
 		int mouseX = Mouse.getEventX() * width / Minecraft.getInstance().displayWidth;
 		int mouseY = height - Mouse.getEventY() * height / Minecraft.getInstance().displayHeight - 1;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 		if (Mouse.getEventButtonState() && Mouse.isButtonDown(0)) {
 			int index = 0;

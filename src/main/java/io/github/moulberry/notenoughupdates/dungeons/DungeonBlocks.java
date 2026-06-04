@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -102,26 +102,26 @@ public class DungeonBlocks {
 
 			GL11.glPushMatrix();
 
-			GlStateManager.matrixMode(GL11.GL_PROJECTION);
-			GlStateManager.loadIdentity();
-			GlStateManager.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
-			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-			GlStateManager.loadIdentity();
-			GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_PROJECTION);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
 			to.bindFramebuffer(true);
-			GlStateManager.clearColor(0, 1, 0, 1);
-			GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT);
+			com.mojang.blaze3d.systems.RenderSystem.clearColor(0, 1, 0, 1);
+			com.mojang.blaze3d.systems.RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT);
 
-			GlStateManager.disableBlend();
-			GlStateManager.disableLighting();
-			GlStateManager.disableFog();
+			com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableFog();
 
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
-			GlStateManager.enableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 			GL14.glBlendFuncSeparate(
 				GL11.GL_SRC_ALPHA,
 				GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -149,9 +149,9 @@ public class DungeonBlocks {
 				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			}
 
-			GlStateManager.matrixMode(GL11.GL_PROJECTION);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadMatrix(projectionMatrixOld);
-			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 			GL11.glLoadMatrix(modelviewMatrixOld);
 
 			Framebuffer from = checkFramebufferSizes(framebuffersDynamicFrom.get(id), w, h);
@@ -161,34 +161,34 @@ public class DungeonBlocks {
 			to.bindFramebufferTexture();
 
 			Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
-			GlStateManager.disableBlend();
-			GlStateManager.enableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
-		GlStateManager.disableBlend();
-		GlStateManager.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 		return false;
 	}
 
 	private static final HashMap<ResourceLocation, String> dynamicPreloadMap = new HashMap<ResourceLocation, String>() {{
-		put(new ResourceLocation("textures/entity/bat.png"), NotEnoughUpdates.INSTANCE.config.dungeons.dungBatColour);
+		put(new ResourceLocation("notenoughupdates", "textures/entity/bat.png"), NotEnoughUpdates.INSTANCE.config.dungeons.dungBatColour);
 		put(
-			new ResourceLocation("textures/entity/chest/normal.png"),
+			new ResourceLocation("notenoughupdates", "textures/entity/chest/normal.png"),
 			NotEnoughUpdates.INSTANCE.config.dungeons.dungChestColour
 		);
 		put(
-			new ResourceLocation("textures/entity/chest/normal_double.png"),
+			new ResourceLocation("notenoughupdates", "textures/entity/chest/normal_double.png"),
 			NotEnoughUpdates.INSTANCE.config.dungeons.dungChestColour
 		);
 		put(
-			new ResourceLocation("textures/entity/chest/trapped.png"),
+			new ResourceLocation("notenoughupdates", "textures/entity/chest/trapped.png"),
 			NotEnoughUpdates.INSTANCE.config.dungeons.dungTrappedChestColour
 		);
 		put(
-			new ResourceLocation("textures/entity/chest/trapped_double.png"),
+			new ResourceLocation("notenoughupdates", "textures/entity/chest/trapped_double.png"),
 			NotEnoughUpdates.INSTANCE.config.dungeons.dungTrappedChestColour
 		);
 	}};
@@ -213,22 +213,22 @@ public class DungeonBlocks {
 		try {
 			GL11.glPushMatrix();
 
-			GlStateManager.matrixMode(5889);
-			GlStateManager.loadIdentity();
-			GlStateManager.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
-			GlStateManager.matrixMode(5888);
-			GlStateManager.loadIdentity();
-			GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
 			to.bindFramebuffer(true);
-			GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT);
+			com.mojang.blaze3d.systems.RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT);
 
-			GlStateManager.disableBlend();
-			GlStateManager.disableLighting();
-			GlStateManager.disableFog();
+			com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableFog();
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
 			HashMap<TextureAtlasSprite, Integer> spriteMap = new HashMap<TextureAtlasSprite, Integer>() {{
@@ -260,14 +260,14 @@ public class DungeonBlocks {
 			}
 
 			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
-			GlStateManager.matrixMode(5889);
-			GlStateManager.loadIdentity();
-			GlStateManager.ortho(0.0D, scaledResolution.getScaledWidth_double(), scaledResolution.getScaledHeight_double(),
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, scaledResolution.getScaledWidth_double(), scaledResolution.getScaledHeight_double(),
 				0.0D, 1000.0D, 3000.0D
 			);
-			GlStateManager.matrixMode(5888);
-			GlStateManager.loadIdentity();
-			GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
 			GL11.glPopMatrix();
 
@@ -295,7 +295,7 @@ public class DungeonBlocks {
 			e.printStackTrace();
 		}
 		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 	}
 
 	private static Framebuffer checkFramebufferSizes(Framebuffer framebuffer, int width, int height) {

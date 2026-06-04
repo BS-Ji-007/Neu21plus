@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.set
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraft.world.item.ItemStack
 import net.minecraft.nbt.CompoundTag
@@ -38,7 +38,7 @@ import net.minecraft.util.StringUtils
 @AutoService(RepoExporter::class)
 class ItemShopExporter : RepoExporter {
     override suspend fun export(context: RepoExportingContext) {
-        val chest = context.gui as GuiChest
+        val chest = context.gui as ChestScreen
         val container = chest.inventorySlots as ContainerChest
         val inventory = container.lowerChestInventory
         val displayName = inventory.displayName.unformattedText
@@ -133,7 +133,7 @@ class ItemShopExporter : RepoExporter {
 
     override fun canExport(gui: GuiScreen): Boolean {
         if (NEUDebugFlag.ALWAYS_EXPORT_SHOPS.isSet) return true
-        if (gui !is GuiChest) return false
+        if (gui !is ChestScreen) return false
         val buyBackSlot = 4 + 9 * 5
         val stacks = gui.inventorySlots.inventory
         if (buyBackSlot !in stacks.indices) return false

@@ -19,11 +19,11 @@
 
 package io.github.moulberry.notenoughupdates.mixins;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(GlStateManager.BooleanState.class)
+@Mixin(com.mojang.blaze3d.systems.RenderSystem.BooleanState.class)
 public interface AccessorBooleanState {
 	@Accessor("currentState")
 	boolean getCurrentState();

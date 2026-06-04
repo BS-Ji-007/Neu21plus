@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -131,7 +131,7 @@ public class WitherCloakChanger {
 			);
 		}
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.tryBlendFuncSeparate(
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(
 			GL11.GL_SRC_ALPHA,
 			GL11.GL_ONE_MINUS_SRC_ALPHA,
 			GL11.GL_ONE,

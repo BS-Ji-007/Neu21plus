@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.cosmetics;
 
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -378,17 +378,17 @@ public class NEUCape {
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * e.partialRenderTick;
 		double viewerZ = (viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * e.partialRenderTick) % 7789;
 
-		GlStateManager.pushMatrix();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA,
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA,
 			GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO
 		);
 		bindTexture();
-		GlStateManager.enableTexture2D();
-		GlStateManager.enableDepth();
-		GlStateManager.disableCull();
-		GlStateManager.disableLighting();
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 		if (shaderName.equals("mcworld_cape")) {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
@@ -410,12 +410,12 @@ public class NEUCape {
 
 		GL20.glUseProgram(0);
 
-		GlStateManager.enableCull();
-		GlStateManager.enableTexture2D();
-		GlStateManager.disableBlend();
-		GlStateManager.enableDepth();
-		GlStateManager.enableLighting();
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 		lastRender = System.currentTimeMillis();
 	}
@@ -890,7 +890,7 @@ public class NEUCape {
 		GL11.glStencilOp(GL11.GL_ZERO, GL11.GL_ZERO, GL11.GL_REPLACE);
 		GL11.glStencilMask(0xFF);
 		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 		GL11.glColorMask(false, false, false, false);
 		for (int y = 0; y < VERT_NODES; y++) {
@@ -1105,53 +1105,53 @@ public class NEUCape {
 			while (nepDelta < 0) nepDelta += 360;
 			if (nepDelta > 250 || nepDelta < 110) orbitals.put(neptuneDist, 4);
 
-			GlStateManager.disableDepth();
-			GlStateManager.enableCull();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableCull();
 
 			for (int planetId : orbitals.descendingMap().values()) {
-				GlStateManager.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				switch (planetId) {
 					case 0: {
-						GlStateManager.translate(point.x, point.y, point.z);
-						GlStateManager.scale(0.2f, 0.2f, 0.2f);
+						com.mojang.blaze3d.systems.RenderSystem.translate(point.x, point.y, point.z);
+						com.mojang.blaze3d.systems.RenderSystem.scale(0.2f, 0.2f, 0.2f);
 						break;
 					}
 					case 1: {
 						Vector3f sunVec = new Vector3f((float) earthX, (float) earthY, (float) earthZ);
 						ShaderManager.getInstance().loadData(shaderId, "sunVec", sunVec);
-						GlStateManager.translate(point.x + earthX, point.y + earthY, point.z + earthZ);
-						GlStateManager.scale(0.1f, 0.1f, 0.1f);
+						com.mojang.blaze3d.systems.RenderSystem.translate(point.x + earthX, point.y + earthY, point.z + earthZ);
+						com.mojang.blaze3d.systems.RenderSystem.scale(0.1f, 0.1f, 0.1f);
 						break;
 					}
 					case 2: {
 						Vector3f sunVec = new Vector3f((float) mercuryX, 0, (float) mercuryZ);
 						ShaderManager.getInstance().loadData(shaderId, "sunVec", sunVec);
-						GlStateManager.translate(point.x + mercuryX, point.y, point.z + mercuryZ);
-						GlStateManager.scale(0.05f, 0.05f, 0.05f);
+						com.mojang.blaze3d.systems.RenderSystem.translate(point.x + mercuryX, point.y, point.z + mercuryZ);
+						com.mojang.blaze3d.systems.RenderSystem.scale(0.05f, 0.05f, 0.05f);
 						break;
 					}
 					case 3: {
 						Vector3f sunVec = new Vector3f((float) jupiterX, (float) jupiterY, (float) jupiterZ);
 						ShaderManager.getInstance().loadData(shaderId, "sunVec", sunVec);
-						GlStateManager.translate(point.x + jupiterX, point.y + jupiterY, point.z + jupiterZ);
-						GlStateManager.scale(0.3f, 0.3f, 0.3f);
+						com.mojang.blaze3d.systems.RenderSystem.translate(point.x + jupiterX, point.y + jupiterY, point.z + jupiterZ);
+						com.mojang.blaze3d.systems.RenderSystem.scale(0.3f, 0.3f, 0.3f);
 						break;
 					}
 					case 4: {
 						Vector3f sunVec = new Vector3f((float) neptuneX, (float) neptuneY, (float) neptuneZ);
 						ShaderManager.getInstance().loadData(shaderId, "sunVec", sunVec);
-						GlStateManager.translate(point.x + neptuneX, point.y + neptuneY, point.z + neptuneZ);
-						GlStateManager.scale(0.15f, 0.15f, 0.15f);
+						com.mojang.blaze3d.systems.RenderSystem.translate(point.x + neptuneX, point.y + neptuneY, point.z + neptuneZ);
+						com.mojang.blaze3d.systems.RenderSystem.scale(0.15f, 0.15f, 0.15f);
 						break;
 					}
 				}
 				ShaderManager.getInstance().loadData(shaderId, "planetType", planetId);
 				renderVBO(sphereVBO);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 
-			GlStateManager.disableCull();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 		} else if (capeName.equalsIgnoreCase("parallax")) {
@@ -1184,10 +1184,10 @@ public class NEUCape {
 			Vector3f point2Edge = getPoint(point2, negPointNorm, negPointNorm);
 			Vector3f point3Edge = getPoint(point3, negPointNorm, negPointNorm);
 
-			GlStateManager.disableDepth();
-			GlStateManager.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 			Tessellator tessellator = Tessellator.getInstance();
 			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -1217,8 +1217,8 @@ public class NEUCape {
 
 			tessellator.draw();
 
-			GlStateManager.disableCull();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 		} else if (capeName.equalsIgnoreCase("tunnel")) {
@@ -1263,8 +1263,8 @@ public class NEUCape {
 				edgeCoords.add(new Vector2f((float) x / (topSize - 1), 0));
 			}
 
-			GlStateManager.disableDepth();
-			GlStateManager.enableCull();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableCull();
 			CapeNode last = null;
 			for (int i = 0; i < edgeNodes.size(); i++) {
 				CapeNode node = edgeNodes.get(i);
@@ -1302,8 +1302,8 @@ public class NEUCape {
 				}
 				last = node;
 			}
-			GlStateManager.disableCull();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 		} else {

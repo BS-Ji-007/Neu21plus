@@ -22,13 +22,13 @@ package io.github.moulberry.notenoughupdates.miscgui;
 import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.PetLeveling;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.inventory.Slot;
@@ -46,9 +46,9 @@ public class KatSitterOverlay {
 
 	@SubscribeEvent
 	public void onGuiDrawn(GuiScreenEvent.DrawScreenEvent.Post event) {
-		if (!(event.gui instanceof GuiChest)) return;
+		if (!(event.gui instanceof ChestScreen)) return;
 		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.showKatSitting) return;
-		GuiChest gui = (GuiChest) event.gui;
+		ChestScreen gui = (ChestScreen) event.gui;
 		ContainerChest container = (ContainerChest) gui.inventorySlots;
 		if (!"Pet Sitter".equals(container.getLowerChestInventory().getName().getString().getUnformattedText())) return;
 		Slot slot = container.getSlot(13);
@@ -83,24 +83,24 @@ public class KatSitterOverlay {
 		);
 	}
 
-	public void renderPetInformation(int currentLevel, Integer upgradedLevel, GuiChest gui) {
+	public void renderPetInformation(int currentLevel, Integer upgradedLevel, ChestScreen gui) {
 		FontRenderer font = Minecraft.getInstance().font;
 		String currentText = "Current pet level: " + currentLevel;
 		int currentWidth = font.getStringWidth(currentText);
 		String upgradedText = "Upgraded pet level: " + upgradedLevel;
 		int upgradedWidth = font.getStringWidth(upgradedText);
-		int left = ((AccessorGuiContainer) gui).getGuiLeft() - 30 - (upgradedLevel == null ? Math.max(
+		int left = ((AccessorContainerScreen) gui).getGuiLeft() - 30 - (upgradedLevel == null ? Math.max(
 			upgradedWidth,
 			currentWidth
 		) : currentWidth);
-		GlStateManager.disableLighting();
-		GlStateManager.color(1F, 1F, 1F, 1F);
-		Utils.drawStringScaled(currentText, left, ((AccessorGuiContainer) gui).getGuiTop() + 25, false, 0xFFD700, 1F);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F, 1F);
+		Utils.drawStringScaled(currentText, left, ((AccessorContainerScreen) gui).getGuiTop() + 25, false, 0xFFD700, 1F);
 		if (upgradedLevel != null)
 			Utils.drawStringScaled(
 				upgradedText,
 				left,
-				((AccessorGuiContainer) gui).getGuiTop() + 45,
+				((AccessorContainerScreen) gui).getGuiTop() + 45,
 				false,
 				0xFFD700,
 				1F

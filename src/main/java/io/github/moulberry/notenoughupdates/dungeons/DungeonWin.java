@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -68,13 +68,13 @@ public class DungeonWin {
 		}
 	}
 
-	public static ResourceLocation CONFETTI = new ResourceLocation("notenoughupdates:dungeon_win/confetti.png");
-	public static ResourceLocation SPLUS = new ResourceLocation("notenoughupdates:dungeon_win/splus.png");
-	public static ResourceLocation S = new ResourceLocation("notenoughupdates:dungeon_win/s.png");
-	public static ResourceLocation A = new ResourceLocation("notenoughupdates:dungeon_win/a.png");
-	public static ResourceLocation B = new ResourceLocation("notenoughupdates:dungeon_win/b.png");
-	public static ResourceLocation C = new ResourceLocation("notenoughupdates:dungeon_win/c.png");
-	public static ResourceLocation D = new ResourceLocation("notenoughupdates:dungeon_win/d.png");
+	public static ResourceLocation CONFETTI = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/confetti.png");
+	public static ResourceLocation SPLUS = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/splus.png");
+	public static ResourceLocation S = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/s.png");
+	public static ResourceLocation A = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/a.png");
+	public static ResourceLocation B = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/b.png");
+	public static ResourceLocation C = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/c.png");
+	public static ResourceLocation D = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_win/d.png");
 	public static ResourceLocation TEAM_SCORE = SPLUS;
 
 	private static final int SCALE_FACTOR = 3;
@@ -280,7 +280,7 @@ public class DungeonWin {
 				float textCenterY = sr.getScaledHeight() / 6f + HEIGHT / 2 + 7 + i * 10;
 				if (textCenterY > bottom) {
 					int textAlpha = (int) (alpha * (deltaTime > 1000 ? 255 : Math.min(255, (textCenterY - bottom) / 30f * 255)));
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
 					if (textAlpha > 150) {
 						for (int xOff = -2; xOff <= 2; xOff++) {
@@ -305,9 +305,9 @@ public class DungeonWin {
 
 		for (Confetti c : confetti) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			if (c.life >= 15) {
-				GlStateManager.color(1, 1, 1, Math.min(1, c.life / 4f));
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
 				Utils.drawTexturedRect(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,
@@ -323,61 +323,61 @@ public class DungeonWin {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(TEAM_SCORE);
-		GlStateManager.color(1, 1, 1, alpha);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, alpha);
 
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		if (deltaTime < 1600) {
-			GlStateManager.translate(sr.getScaledWidth() / 2, 0, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(sr.getScaledWidth() / 2, 0, 0);
 			if (deltaTime < 500) {
-				GlStateManager.translate(
+				com.mojang.blaze3d.systems.RenderSystem.translate(
 					0,
 					sr.getScaledHeight() / 2f - Math.sin(deltaTime / 1000f * Math.PI) * sr.getScaledHeight() / 9,
 					0
 				);
 			} else if (deltaTime < 1000) {
-				GlStateManager.translate(
+				com.mojang.blaze3d.systems.RenderSystem.translate(
 					0,
 					sr.getScaledHeight() / 6f + Math.sin(deltaTime / 1000f * Math.PI) * sr.getScaledHeight() * 4 / 18,
 					0
 				);
 			} else {
-				GlStateManager.translate(0, sr.getScaledHeight() / 6f, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, sr.getScaledHeight() / 6f, 0);
 			}
 			if (deltaTime < 200) {
 				float scale = deltaTime / 200f;
-				GlStateManager.scale(scale, scale, 1);
+				com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, 1);
 			} else if (deltaTime < 1000) {
 				float scale = 1 + (float) Math.sin((deltaTime - 200) / 800f * Math.PI) * 0.8f;
-				GlStateManager.scale(scale, scale, 1);
+				com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, 1);
 			} else if (deltaTime < 1100) {
 				float scale = 1 + (float) Math.sin((deltaTime - 1000) / 100f * Math.PI) * 0.15f;
-				GlStateManager.scale(scale, scale, 1);
+				com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, 1);
 			}
 
 			if (deltaTime < 600) {
-				GlStateManager.rotate(180 + deltaTime / 600f * 180, 0, 1, 0);
-				GlStateManager.rotate(180 - deltaTime / 600f * 180, 1, 0, 0);
-				GlStateManager.rotate(-180 - deltaTime / 600f * 165, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(180 + deltaTime / 600f * 180, 0, 1, 0);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(180 - deltaTime / 600f * 180, 1, 0, 0);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(-180 - deltaTime / 600f * 165, 0, 0, 1);
 			} else if (deltaTime < 1000) {
-				GlStateManager.rotate(15 - (deltaTime - 600) / 400f * 11, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(15 - (deltaTime - 600) / 400f * 11, 0, 0, 1);
 			} else {
 				float logFac = 1 - (float) Math.log((deltaTime - 1000) / 600f * 1.7f + 1);
 				logFac = logFac * logFac;
 
-				GlStateManager.rotate(4f * logFac, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(4f * logFac, 0, 0, 1);
 				float x = (deltaTime - 1000) / 300f;
-				GlStateManager.rotate((float) (40 * (1 - Math.log(x * 0.85f + 1)) * Math.sin(10 * x * x)), 0, 1, 0);
+				com.mojang.blaze3d.systems.RenderSystem.rotate((float) (40 * (1 - Math.log(x * 0.85f + 1)) * Math.sin(10 * x * x)), 0, 1, 0);
 			}
 		} else {
-			GlStateManager.translate(sr.getScaledWidth() / 2, sr.getScaledHeight() / 6f, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(sr.getScaledWidth() / 2, sr.getScaledHeight() / 6f, 0);
 		}
 
-		GlStateManager.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
 		Utils.drawTexturedRect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
-		GlStateManager.translate(0, 0, -SCALE_FACTOR * 2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -SCALE_FACTOR * 2);
 		Utils.drawTexturedRect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
-		GlStateManager.translate(0, 0, SCALE_FACTOR * 2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, SCALE_FACTOR * 2);
 
 		if (deltaTime < 1600) {
 			float epsilon = 0.01f;
@@ -391,8 +391,8 @@ public class DungeonWin {
 					int x = -WIDTH / 2 + xIndex * SCALE_FACTOR;
 					int y = -HEIGHT / 2 + yIndex * SCALE_FACTOR;
 
-					GlStateManager.enableTexture2D();
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					GL14.glBlendFuncSeparate(
 						GL11.GL_SRC_ALPHA,
 						GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -469,18 +469,18 @@ public class DungeonWin {
 					GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 					GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
-					GlStateManager.disableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				}
 			}
 		}
 
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 		for (Confetti c : confetti) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			if (c.life > 0 && c.life < 15) {
-				GlStateManager.color(1, 1, 1, Math.min(1, c.life / 4f));
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
 				Utils.drawTexturedRect(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,
@@ -497,6 +497,6 @@ public class DungeonWin {
 
 		Utils.pushGuiScale(-1);
 
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 	}
 }

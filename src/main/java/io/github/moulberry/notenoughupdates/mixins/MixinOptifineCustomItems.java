@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.miscfeatures.StorageManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -36,6 +36,6 @@ public class MixinOptifineCustomItems {
 	@Inject(method = "getCustomItemProperties", at = @At(value = "HEAD"), cancellable = true)
 	private static void getCustomItemProperties(ItemStack itemStack, int type, CallbackInfoReturnable<?> cir) {
 		if (NotEnoughUpdates.INSTANCE.config.storageGUI.disableCIT &&	StorageManager.getInstance().isStorageOpen &&
-			Minecraft.getInstance().currentScreen instanceof GuiChest) cir.setReturnValue(null);
+			Minecraft.getInstance().currentScreen instanceof ChestScreen) cir.setReturnValue(null);
 	}
 }

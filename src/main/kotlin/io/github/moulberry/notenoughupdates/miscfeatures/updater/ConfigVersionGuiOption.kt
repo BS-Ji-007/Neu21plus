@@ -24,7 +24,7 @@ import io.github.notenoughupdates.moulconfig.processor.ProcessedOption
 import io.github.moulberry.notenoughupdates.core.util.render.TextRenderUtils
 import io.github.moulberry.notenoughupdates.itemeditor.GuiElementButton
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.ChatFormatting.*
 
 import org.lwjgl.input.Mouse
@@ -33,8 +33,8 @@ class ConfigVersionGuiOption(option: ProcessedOption) : GuiOptionEditor(option) 
     val button = GuiElementButton("", -1) { }
     override fun render(x: Int, y: Int, width: Int) {
         val fr = Minecraft.getInstance().font
-        GlStateManager.pushMatrix()
-        GlStateManager.translate(x.toFloat() + 10, y.toFloat(), 1F)
+        com.mojang.blaze3d.systems.RenderSystem.pushMatrix()
+        com.mojang.blaze3d.systems.RenderSystem.translate(x.toFloat() + 10, y.toFloat(), 1F)
         val width = width - 20
         val nextVersion = AutoUpdater.getNextVersion()
 
@@ -59,7 +59,7 @@ class ConfigVersionGuiOption(option: ProcessedOption) : GuiOptionEditor(option) 
 
         val widthRemaining = width - button.width - 10
 
-        GlStateManager.scale(2F, 2F, 1F)
+        com.mojang.blaze3d.systems.RenderSystem.scale(2F, 2F, 1F)
         TextRenderUtils.drawStringCenteredScaledMaxWidth(
             "${if (AutoUpdater.updateState == AutoUpdater.UpdateState.NONE) GREEN else RED}${AutoUpdater.getCurrentVersion()}" +
                     if (nextVersion != null && AutoUpdater.updateState != AutoUpdater.UpdateState.NONE) "➜ ${GREEN}${nextVersion}" else "",
@@ -70,7 +70,7 @@ class ConfigVersionGuiOption(option: ProcessedOption) : GuiOptionEditor(option) 
             -1
         )
 
-        GlStateManager.popMatrix()
+        com.mojang.blaze3d.systems.RenderSystem.popMatrix()
     }
 
     fun getButtonPosition(width: Int) = width - button.width

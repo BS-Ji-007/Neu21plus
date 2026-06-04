@@ -28,10 +28,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.world.WorldSettings;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -64,7 +60,6 @@ public class TabListUtils {
 	public static List<String> tabList = new ArrayList<>();
 	public static List<String> tabListLastTick = new ArrayList<>();
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (Minecraft.getInstance().player == null) return;
 		if (event.phase != TickEvent.Phase.END) return;

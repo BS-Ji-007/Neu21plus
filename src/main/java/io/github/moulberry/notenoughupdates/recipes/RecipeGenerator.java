@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
@@ -69,15 +69,15 @@ public class RecipeGenerator {
 		if (!neu.config.apiData.repositoryEditing) return;
 		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
 		if (currentScreen == null) return;
-		if (!(currentScreen instanceof GuiChest)) return;
-		analyzeUI((GuiChest) currentScreen);
+		if (!(currentScreen instanceof ChestScreen)) return;
+		analyzeUI((ChestScreen) currentScreen);
 	}
 
 	private boolean shouldSaveRecipe() {
 		return Keyboard.isKeyDown(Keyboard.KEY_O) && debouncer.trigger();
 	}
 
-	public void analyzeUI(GuiChest gui) {
+	public void analyzeUI(ChestScreen gui) {
 		ContainerChest container = (ContainerChest) gui.inventorySlots;
 		IInventory menu = container.getLowerChestInventory();
 		String uiTitle = menu.getName().getString().getUnformattedText();

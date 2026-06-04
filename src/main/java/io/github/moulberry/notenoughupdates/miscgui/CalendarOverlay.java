@@ -38,9 +38,9 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.gui.inventory.ContainerScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -83,9 +83,9 @@ import static io.github.moulberry.notenoughupdates.util.GuiTextures.help;
 
 @NEUAutoSubscribe
 public class CalendarOverlay {
-	private static final ResourceLocation BACKGROUND = new ResourceLocation("notenoughupdates:calendar/background.png");
-	private static final ResourceLocation DISPLAYBAR = new ResourceLocation("notenoughupdates:calendar/displaybar.png");
-	private static final ResourceLocation TOAST = new ResourceLocation("notenoughupdates:calendar/toast.png");
+	private static final ResourceLocation BACKGROUND = new ResourceLocation("notenoughupdates", "notenoughupdates:calendar/background.png");
+	private static final ResourceLocation DISPLAYBAR = new ResourceLocation("notenoughupdates", "notenoughupdates:calendar/displaybar.png");
+	private static final ResourceLocation TOAST = new ResourceLocation("notenoughupdates", "notenoughupdates:calendar/toast.png");
 
 	private static JsonObject farmingEventTypes = null;
 
@@ -200,17 +200,17 @@ public class CalendarOverlay {
 		if (jingleIndex == 0) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
 				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
-					new ResourceLocation("notenoughupdates:calendar_notif_jingle")
+					new ResourceLocation("notenoughupdates", "notenoughupdates:calendar_notif_jingle")
 				));
 				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
-					new ResourceLocation("notenoughupdates:calendar_notif_in")
+					new ResourceLocation("notenoughupdates", "notenoughupdates:calendar_notif_in")
 				));
 			}
 			jingleIndex = -15 * 20;
 		} else if (jingleIndex >= 1) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
 				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
-					new ResourceLocation("notenoughupdates:calendar_notif_in")
+					new ResourceLocation("notenoughupdates", "notenoughupdates:calendar_notif_in")
 				));
 			}
 			jingleIndex = -15 * 20;
@@ -220,7 +220,7 @@ public class CalendarOverlay {
 		if (jingleIndex == -20 * 6 - 10) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
 				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
-					new ResourceLocation("notenoughupdates:calendar_notif_out")
+					new ResourceLocation("notenoughupdates", "notenoughupdates:calendar_notif_out")
 				));
 			}
 		}
@@ -422,13 +422,13 @@ public class CalendarOverlay {
 
 		getFarmingEventTypes();
 
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			jfFavouriteSelect = null;
 			populateDefaultEvents();
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 
@@ -597,7 +597,7 @@ public class CalendarOverlay {
 
 	@SubscribeEvent
 	public void onGuiDraw(GuiScreenEvent.DrawScreenEvent.Pre event) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			return;
 		}
 
@@ -605,7 +605,7 @@ public class CalendarOverlay {
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
@@ -639,7 +639,7 @@ public class CalendarOverlay {
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, GL11.GL_NEAREST);
 
-		GlStateManager.translate(0, 0, 10);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 10);
 
 		FontRenderer fr = Minecraft.getInstance().font;
 
@@ -745,11 +745,11 @@ public class CalendarOverlay {
 						timeUntilNext = timeUntilMillis;
 					}
 
-					GlStateManager.depthMask(false);
-					GlStateManager.translate(0, 0, -2);
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 					Gui.drawRect(x, y, x + 16, y + 16, 0xcfffbf49);
-					GlStateManager.translate(0, 0, 2);
-					GlStateManager.depthMask(true);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 2);
+					com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 				}
 
 				Utils.drawItemStackWithText(sbEvent.stack, x, y, "" + (index + 1));
@@ -809,11 +809,11 @@ public class CalendarOverlay {
 			int y = guiTop + 44 + 17 * (i / 3);
 
 			if (eventFavourites.contains(sbEvent.id)) {
-				GlStateManager.depthMask(false);
-				GlStateManager.translate(0, 0, -2);
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 				Gui.drawRect(x, y, x + 16, y + 16, 0xcfffbf49);
-				GlStateManager.translate(0, 0, 2);
-				GlStateManager.depthMask(true);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 2);
+				com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 			}
 
 			Utils.drawItemStackWithText(stack, x, y, "" + (i + 1));
@@ -901,7 +901,7 @@ public class CalendarOverlay {
 			}
 		}
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.drawTexturedRect(guiLeft + xSize - 18, guiTop + ySize + 2, 16, 16, GL11.GL_LINEAR);
 
@@ -942,14 +942,14 @@ public class CalendarOverlay {
 			}
 			selectSizeX += +10;
 
-			GlStateManager.translate(0, 0, 19);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 19);
 
 			Gui.drawRect(jfFavouriteSelectX + 2, jfFavouriteSelectY + 2, jfFavouriteSelectX + selectSizeX + 2,
 				jfFavouriteSelectY + 18 + jfFavouriteSelect.size() * 10 + 2, 0xa0000000
 			);
 
-			GlStateManager.depthFunc(GL11.GL_LESS);
-			GlStateManager.translate(0, 0, 1);
+			com.mojang.blaze3d.systems.RenderSystem.depthFunc(GL11.GL_LESS);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 1);
 			Gui.drawRect(jfFavouriteSelectX + 1, jfFavouriteSelectY + 1, jfFavouriteSelectX + selectSizeX - 1,
 				jfFavouriteSelectY + 18 + jfFavouriteSelect.size() * 10 - 1, 0xffc0c0c0
 			);
@@ -959,7 +959,7 @@ public class CalendarOverlay {
 			Gui.drawRect(jfFavouriteSelectX, jfFavouriteSelectY, jfFavouriteSelectX + selectSizeX,
 				jfFavouriteSelectY + 18 + jfFavouriteSelect.size() * 10, 0xff909090
 			);
-			GlStateManager.depthFunc(GL11.GL_LEQUAL);
+			com.mojang.blaze3d.systems.RenderSystem.depthFunc(GL11.GL_LEQUAL);
 
 			String all = (NotEnoughUpdates.INSTANCE.config.hidden.eventFavourites.contains("jacob_farming") ?
 				EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_GRAY) + "All";
@@ -987,12 +987,12 @@ public class CalendarOverlay {
 				fr.drawString(s, jfFavouriteSelectX + 5, jfFavouriteSelectY + 10 * selectStringIndex + 15, 0xff000000);
 				selectStringIndex++;
 			}
-			GlStateManager.translate(0, 0, -20);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -20);
 		} else if (tooltipToDisplay != null) {
 			Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
 		}
 
-		GlStateManager.translate(0, 0, -10);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -10);
 
 	}
 
@@ -1018,7 +1018,7 @@ public class CalendarOverlay {
 
 		if (!enabled) {
 			if (Mouse.getEventButtonState() && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory &&
-				Minecraft.getInstance().currentScreen instanceof GuiContainer) {
+				Minecraft.getInstance().currentScreen instanceof ContainerScreen) {
 				xSize = 168;
 				ySize = 20;
 
@@ -1034,11 +1034,11 @@ public class CalendarOverlay {
 			return;
 		}
 
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
@@ -1119,11 +1119,11 @@ public class CalendarOverlay {
 				return;
 			}
 
-			if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 				return;
 			}
 
-			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (!containerName.trim().equals("Calendar and Events")) {
@@ -1272,17 +1272,17 @@ public class CalendarOverlay {
 	public void onGuiDraw(RenderGameOverlayEvent.Post event) {
 		if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotifications &&
 			event.type == RenderGameOverlayEvent.ElementType.ALL) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(0, 0, 10);
-			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer) &&
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 10);
+			if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen) &&
 				NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
 				var nextFavouriteEvent = getNextFavouriteEvent(false);
 				nextFavouriteEvent.ifPresent((nextEvent) -> {
 					renderToast(nextEvent.component1(), nextEvent.component2());
 				});
 			}
-			GlStateManager.translate(0, 0, -10);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -10);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
 
@@ -1343,13 +1343,13 @@ public class CalendarOverlay {
 			offset = -(ySize + 5) * factor;
 			float y = guiTop + offset;
 
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(TOAST);
 			Utils.drawTexturedRect(guiLeft, y, xSize, ySize, GL11.GL_NEAREST);
 
-			GlStateManager.translate(0, y, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, y, 0);
 			Utils.drawItemStack(event.stack, guiLeft + 6, 8);
-			GlStateManager.translate(0, -y, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, -y, 0);
 
 			if (preNotification) {
 				String starting = EnumChatFormatting.YELLOW + "Event Starting in " + prettyTime(preNotificationTime, true) +
@@ -1373,8 +1373,8 @@ public class CalendarOverlay {
 		if (!drawTimerForeground) {
 			drawTimer();
 		}
-		GlStateManager.color(1, 1, 1, 1);
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 	}
 
 	@SubscribeEvent
@@ -1386,9 +1386,9 @@ public class CalendarOverlay {
 	}
 
 	public void drawTimer() {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0, 0, 10);
-		if (Minecraft.getInstance().currentScreen instanceof GuiContainer && NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 10);
+		if (Minecraft.getInstance().currentScreen instanceof ContainerScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
 			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
@@ -1467,18 +1467,18 @@ public class CalendarOverlay {
 			}
 
 			if (nextEvent != null) {
-				GlStateManager.translate(0, 0, 50);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 50);
 				boolean toastRendered = renderToast(nextEvent, timeUntilNext);
-				GlStateManager.translate(0, 0, -50);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -50);
 				if (!toastRendered && !enabled && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory) {
 					isTimerRendered = true;
 					List<String> tooltipToDisplay = null;
 					FontRenderer fr = Minecraft.getInstance().font;
 
-					GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-					GlStateManager.disableFog();
-					GlStateManager.disableLighting();
-					GlStateManager.disableColorMaterial();
+					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.disableFog();
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();
 
 					renderBlurredBackground(10, width, height, guiLeft + 3, guiTop + 3, xSize - 6, ySize - 6);
 
@@ -1570,18 +1570,18 @@ public class CalendarOverlay {
 					drawTimerForeground = false;
 					if (tooltipToDisplay != null) {
 						drawTimerForeground = true;
-						GlStateManager.translate(0, 0, 100);
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
 						Utils.drawHoveringText(tooltipToDisplay, mouseX, Math.max(17, mouseY), width, height, -1);
-						GlStateManager.translate(0, 0, -100);
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -100);
 					}
 				}
 			} else if (!enabled && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory) {
 				FontRenderer fr = Minecraft.getInstance().font;
 
-				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-				GlStateManager.disableFog();
-				GlStateManager.disableLighting();
-				GlStateManager.disableColorMaterial();
+				com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+				com.mojang.blaze3d.systems.RenderSystem.disableFog();
+				com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+				com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();
 
 				renderBlurredBackground(10, width, height, guiLeft + 3, guiTop + 3, xSize - 6, ySize - 6);
 
@@ -1592,8 +1592,8 @@ public class CalendarOverlay {
 				fr.drawString(nextS, guiLeft + 8, guiTop + 6, -1, false);
 			}
 		}
-		GlStateManager.translate(0, 0, -10);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -10);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	private void renderBlurredBackground(
@@ -1607,7 +1607,7 @@ public class CalendarOverlay {
 	) {
 		BackgroundBlur.renderBlurredBackground(blurStrength, screenWidth, screenHeight, x, y, blurWidth, blurHeight);
 		Gui.drawRect(x, y, x + blurWidth, y + blurHeight, 0xc8101010);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 	}
 
 	private static class SBEvent implements Comparable<SBEvent> {

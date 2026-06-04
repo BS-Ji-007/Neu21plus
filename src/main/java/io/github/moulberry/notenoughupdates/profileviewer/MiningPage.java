@@ -55,7 +55,7 @@ public class MiningPage extends GuiProfileViewerPage {
 
 	private static final ResourceLocation miningPageTexture = new ResourceLocation(
 		"notenoughupdates:profile_viewer/mining/background.png");
-	private static final ResourceLocation FORGE_SLOT_BACKGROUND = new ResourceLocation("notenoughupdates:profile_viewer/mining/perk_background.png");
+	private static final ResourceLocation FORGE_SLOT_BACKGROUND = new ResourceLocation("notenoughupdates", "notenoughupdates:profile_viewer/mining/perk_background.png");
 
 	private static final ItemStack hotmSkillIcon = new ItemStack(Items.iron_pickaxe);
 	private static final Map<String, EnumChatFormatting> crystalToColor =

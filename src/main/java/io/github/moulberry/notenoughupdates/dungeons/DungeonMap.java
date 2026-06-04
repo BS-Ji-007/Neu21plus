@@ -35,7 +35,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -79,8 +79,8 @@ public class DungeonMap {
 		"notenoughupdates:dungeon_map/green_check.png");
 	private static final ResourceLocation WHITE_CHECK = new ResourceLocation(
 		"notenoughupdates:dungeon_map/white_check.png");
-	private static final ResourceLocation QUESTION = new ResourceLocation("notenoughupdates:dungeon_map/question.png");
-	private static final ResourceLocation CROSS = new ResourceLocation("notenoughupdates:dungeon_map/cross.png");
+	private static final ResourceLocation QUESTION = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_map/question.png");
+	private static final ResourceLocation CROSS = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_map/cross.png");
 
 	private static final ResourceLocation ROOM_RED = new ResourceLocation(
 		"notenoughupdates:dungeon_map/rooms_default/red_room.png");
@@ -251,22 +251,22 @@ public class DungeonMap {
 							y += (roomSize + connectorSize) / 2f * Math.sin(Math.toRadians(rotation));
 						}
 					}
-					GlStateManager.translate(x, y, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 					if (!NotEnoughUpdates.INSTANCE.config.dungeonMap.dmOrientCheck) {
-						GlStateManager.rotate(-rotation + 180, 0, 0, 1);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(-rotation + 180, 0, 0, 1);
 					}
 
-					GlStateManager.pushMatrix();
-					GlStateManager.scale(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale,
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.scale(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale,
 						NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale, 1
 					);
 					Utils.drawTexturedRect(-5, -5, 10, 10, GL11.GL_NEAREST);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 					if (!NotEnoughUpdates.INSTANCE.config.dungeonMap.dmOrientCheck) {
-						GlStateManager.rotate(rotation - 180, 0, 0, 1);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(rotation - 180, 0, 0, 1);
 					}
-					GlStateManager.translate(-x, -y, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(-x, -y, 0);
 				}
 			}
 		}
@@ -293,14 +293,14 @@ public class DungeonMap {
 
 			if (roomTex != null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(roomTex);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(0, 0, roomSize, roomSize, GL11.GL_LINEAR);
 			} else {
 				Gui.drawRect(0, 0, roomSize, roomSize, colour.getRGB());
 			}
 
 			if (fillCorner) {
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(CORNER_BROWN);
 				Utils.drawTexturedRect(roomSize, roomSize, connectorSize, connectorSize, GL11.GL_NEAREST);
 			}
@@ -366,22 +366,22 @@ public class DungeonMap {
 
 					Gui.drawRect(xOffset, yOffset, xOffset + width, yOffset + height, connection.colour.getRGB());
 				} else {
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					Minecraft.getInstance().getTextureManager().bindTexture(corridorTex);
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					if (connection == right) {
-						GlStateManager.translate(roomSize / 2f, roomSize / 2f, 0);
-						GlStateManager.rotate(-90, 0, 0, 1);
-						GlStateManager.translate(-roomSize / 2f, -roomSize / 2f, 0);
+						com.mojang.blaze3d.systems.RenderSystem.translate(roomSize / 2f, roomSize / 2f, 0);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(-90, 0, 0, 1);
+						com.mojang.blaze3d.systems.RenderSystem.translate(-roomSize / 2f, -roomSize / 2f, 0);
 					}
 					Utils.drawTexturedRect(0, roomSize, roomSize, connectorSize, GL11.GL_NEAREST);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
 		}
 	}
 
-	private static final ResourceLocation mapIcons = new ResourceLocation("textures/map/map_icons.png");
+	private static final ResourceLocation mapIcons = new ResourceLocation("notenoughupdates", "textures/map/map_icons.png");
 
 	public static Framebuffer mapFramebuffer1 = null;
 	public static Framebuffer mapFramebuffer2 = null;
@@ -546,21 +546,21 @@ public class DungeonMap {
 				mapFramebuffer2.framebufferClear();
 			}
 
-			GlStateManager.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			{
 				if (useFb) {
-					GlStateManager.matrixMode(5889);
-					GlStateManager.loadIdentity();
-					GlStateManager.ortho(0.0D, mapSizeX * scaleFactor, mapSizeY * scaleFactor, 0.0D, 1000.0D, 3000.0D);
-					GlStateManager.matrixMode(5888);
-					GlStateManager.loadIdentity();
-					GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+					com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+					com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+					com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, mapSizeX * scaleFactor, mapSizeY * scaleFactor, 0.0D, 1000.0D, 3000.0D);
+					com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+					com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+					com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
-					GlStateManager.scale(scaleFactor, scaleFactor, 1);
+					com.mojang.blaze3d.systems.RenderSystem.scale(scaleFactor, scaleFactor, 1);
 					mapFramebuffer1.bindFramebuffer(true);
 
-					GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-					GlStateManager.disableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				} else {
 					GL11.glEnable(GL11.GL_SCISSOR_TEST);
 					GL11.glScissor(
@@ -570,26 +570,26 @@ public class DungeonMap {
 						mapSizeY * 2
 					);
 
-					GlStateManager.translate(centerX - mapSizeX / 2, centerY - mapSizeY / 2, 100);
+					com.mojang.blaze3d.systems.RenderSystem.translate(centerX - mapSizeX / 2, centerY - mapSizeY / 2, 100);
 				}
 
 				if (NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBackgroundBlur > 0.1 &&
 					NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBackgroundBlur < 100 &&
 					NotEnoughUpdates.INSTANCE.config.dungeonMap.dmEnable) {
-					GlStateManager.translate(-centerX + mapSizeX / 2, -centerY + mapSizeY / 2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(-centerX + mapSizeX / 2, -centerY + mapSizeY / 2, 0);
 					BackgroundBlur.renderBlurredBackground(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBackgroundBlur,
 						scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(),
 						centerX - mapSizeX / 2, centerY - mapSizeY / 2, mapSizeX, mapSizeY
 					);
 					BackgroundBlur.markDirty();
-					GlStateManager.translate(centerX - mapSizeX / 2, centerY - mapSizeY / 2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(centerX - mapSizeX / 2, centerY - mapSizeY / 2, 0);
 				}
 
-				GlStateManager.translate(mapCenterX, mapCenterY, 10);
+				com.mojang.blaze3d.systems.RenderSystem.translate(mapCenterX, mapCenterY, 10);
 
 				if (!useFb || NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBackgroundBlur > 0.1 &&
 					NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBackgroundBlur < 100) {
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					GL14.glBlendFuncSeparate(
 						GL11.GL_SRC_ALPHA,
 						GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -599,7 +599,7 @@ public class DungeonMap {
 				}
 				Utils.drawRectNoBlend(-mapCenterX, -mapCenterY, mapCenterX, mapCenterY, backgroundColour);
 
-				GlStateManager.rotate(-rotation + 180, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(-rotation + 180, 0, 0, 1);
 
 				if (NotEnoughUpdates.INSTANCE.config.dungeonMap.dmCenterPlayer && playerPos != null) {
 					float x = playerPos.getRenderX();
@@ -607,9 +607,9 @@ public class DungeonMap {
 					x -= minRoomX * (renderRoomSize + renderConnSize);
 					y -= minRoomY * (renderRoomSize + renderConnSize);
 
-					GlStateManager.translate(-x, -y, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(-x, -y, 0);
 				} else {
-					GlStateManager.translate(-roomsSizeX / 2, -roomsSizeY / 2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(-roomsSizeX / 2, -roomsSizeY / 2, 0);
 				}
 
 				for (Map.Entry<RoomOffset, Room> entry : roomMap.entrySet()) {
@@ -619,22 +619,22 @@ public class DungeonMap {
 					int x = (roomOffset.x - minRoomX) * (renderRoomSize + renderConnSize);
 					int y = (roomOffset.y - minRoomY) * (renderRoomSize + renderConnSize);
 
-					GlStateManager.pushMatrix();
-					GlStateManager.translate(x, y, 0);
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 
 					room.render(renderRoomSize, renderConnSize);
 
-					GlStateManager.translate(-x, -y, 0);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.translate(-x, -y, 0);
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 
-				GlStateManager.translate(-mapCenterX + roomsSizeX / 2f, -mapCenterY + roomsSizeY / 2f, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(-mapCenterX + roomsSizeX / 2f, -mapCenterY + roomsSizeY / 2f, 0);
 
-				GlStateManager.translate(mapCenterX, mapCenterY, 0);
-				GlStateManager.rotate(rotation - 180, 0, 0, 1);
-				GlStateManager.translate(-mapCenterX, -mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(mapCenterX, mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(rotation - 180, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.translate(-mapCenterX, -mapCenterY, 0);
 
-				GlStateManager.translate(mapCenterX, mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(mapCenterX, mapCenterY, 0);
 
 				for (Map.Entry<RoomOffset, Room> entry : roomMap.entrySet()) {
 					RoomOffset roomOffset = entry.getKey();
@@ -647,23 +647,23 @@ public class DungeonMap {
 					float x2 = (float) (-x * Math.cos(Math.toRadians(-rotation)) + y * Math.sin(Math.toRadians(-rotation)));
 					float y2 = (float) (-x * Math.sin(Math.toRadians(-rotation)) - y * Math.cos(Math.toRadians(-rotation)));
 
-					GlStateManager.pushMatrix();
-					GlStateManager.translate(x2, y2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.translate(x2, y2, 0);
 
-					GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 					room.renderNoRotate(renderRoomSize, renderConnSize, rotation);
 
-					GlStateManager.translate(-x2, -y2, 0);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.translate(-x2, -y2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 
-				GlStateManager.translate(-mapCenterX, -mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(-mapCenterX, -mapCenterY, 0);
 
-				GlStateManager.translate(mapCenterX, mapCenterY, 0);
-				GlStateManager.rotate(-rotation + 180, 0, 0, 1);
-				GlStateManager.translate(-mapCenterX, -mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(mapCenterX, mapCenterY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(-rotation + 180, 0, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.translate(-mapCenterX, -mapCenterY, 0);
 
-				GlStateManager.translate(mapCenterX - roomsSizeX / 2f, mapCenterY - roomsSizeY / 2f, 0);
+				com.mojang.blaze3d.systems.RenderSystem.translate(mapCenterX - roomsSizeX / 2f, mapCenterY - roomsSizeY / 2f, 0);
 
 				Tessellator tessellator = Tessellator.getInstance();
 				WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -729,7 +729,7 @@ public class DungeonMap {
 					if (renderRoomSize >= 24) {
 						pixelWidth = pixelHeight = 12;
 					}
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					if ((!NotEnoughUpdates.INSTANCE.config.dungeons.showOwnHeadAsMarker ||
 						playerMarkerMapPositions.size() < 1 || minU != 1 / 4f) &&
 						NotEnoughUpdates.INSTANCE.config.dungeonMap.dmPlayerHeads >= 1 &&
@@ -752,10 +752,10 @@ public class DungeonMap {
 					x -= minRoomX * (renderRoomSize + renderConnSize);
 					y -= minRoomY * (renderRoomSize + renderConnSize);
 
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 
-					GlStateManager.disableDepth();
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					GL14.glBlendFuncSeparate(
 						GL11.GL_SRC_ALPHA,
 						GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -763,12 +763,12 @@ public class DungeonMap {
 						GL11.GL_ONE_MINUS_SRC_ALPHA
 					);
 
-					GlStateManager.translate(x, y, -0.02F);
-					GlStateManager.scale(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale,
+					com.mojang.blaze3d.systems.RenderSystem.translate(x, y, -0.02F);
+					com.mojang.blaze3d.systems.RenderSystem.scale(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale,
 						NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale, 1
 					);
-					GlStateManager.rotate(angle, 0.0F, 0.0F, 1.0F);
-					GlStateManager.translate(-0.5F, 0.5F, 0.0F);
+					com.mojang.blaze3d.systems.RenderSystem.rotate(angle, 0.0F, 0.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.translate(-0.5F, 0.5F, 0.0F);
 
 					if (blackBorder) {
 						Gui.drawRect(
@@ -778,7 +778,7 @@ public class DungeonMap {
 							pixelHeight / 2 + 1,
 							0xff111111
 						);
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					}
 
 					worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -811,12 +811,12 @@ public class DungeonMap {
 						).endVertex();
 						tessellator.draw();
 					}
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 					k--;
 				}
 
 				if (useFb) {
-					GlStateManager.enableBlend();
+					com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					GL14.glBlendFuncSeparate(
 						GL11.GL_SRC_ALPHA,
 						GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -827,12 +827,12 @@ public class DungeonMap {
 					GL11.glDisable(GL11.GL_SCISSOR_TEST);
 				}
 			}
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (useFb) {
 				Framebuffer renderFromBuffer = mapFramebuffer1;
 				if (useShd) {
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					{
 						try {
 							upload(mapShader, mapSizeX, mapSizeY, scaleFactor, getBorderRadius());
@@ -842,27 +842,27 @@ public class DungeonMap {
 						} catch (Exception ignored) {
 						}
 					}
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 
 				Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 
 				Utils.pushGuiScale(2);
 
-				GlStateManager.translate(centerX, centerY, 100);
+				com.mojang.blaze3d.systems.RenderSystem.translate(centerX, centerY, 100);
 
 				renderFromBuffer.bindFramebufferTexture();
 				Utils.drawTexturedRect(-mapSizeX / 2, -mapSizeY / 2, mapSizeX, mapSizeY,
 					0, 1, 1, 0, GL11.GL_NEAREST
 				);
-				GlStateManager.bindTexture(0);
+				com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
-				GlStateManager.translate(-centerX, -centerY, -100);
+				com.mojang.blaze3d.systems.RenderSystem.translate(-centerX, -centerY, -100);
 
 				Utils.pushGuiScale(-1);
 			}
 
-			GlStateManager.translate(centerX, centerY, 100);
+			com.mojang.blaze3d.systems.RenderSystem.translate(centerX, centerY, 100);
 
 			if (NotEnoughUpdates.INSTANCE.config.dungeonMap.dmChromaBorder) {
 				int colour = SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBorderColour);
@@ -923,13 +923,13 @@ public class DungeonMap {
 				NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBorderStyle + ".png");
 			if (Minecraft.getInstance().getTextureManager().getTexture(rl) != TextureUtil.missingTexture) {
 				Minecraft.getInstance().getTextureManager().bindTexture(rl);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 				int size = borderSizeOption == 0 ? 165 : borderSizeOption == 1 ? 220 : borderSizeOption == 2 ? 300 : 440;
 				Utils.drawTexturedRect(-size / 2, -size / 2, size, size, GL11.GL_NEAREST);
 			}
 
-			GlStateManager.translate(-centerX, -centerY, -100);
+			com.mojang.blaze3d.systems.RenderSystem.translate(-centerX, -centerY, -100);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
@@ -938,10 +938,10 @@ public class DungeonMap {
 
 		Utils.pushGuiScale(-1);
 
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GlStateManager.enableDepth();
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 	}
 
 	public void updateRoomConnections(RoomOffset roomOffset) {

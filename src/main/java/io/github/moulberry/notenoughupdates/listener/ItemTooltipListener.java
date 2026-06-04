@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.PetLeveling;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -473,11 +473,11 @@ public class ItemTooltipListener {
 			}
 
 			if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 2 &&
-				Minecraft.getInstance().currentScreen instanceof GuiChest) {
+				Minecraft.getInstance().currentScreen instanceof ChestScreen) {
 				if (line.contains(EnumChatFormatting.GREEN + "Open Reward Chest")) {
 					dungeonProfit = true;
 				} else if (k == 7 && dungeonProfit) {
-					GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+					ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 					ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 					IInventory lower = cc.getLowerChestInventory();
 

@@ -397,7 +397,7 @@ public class FishingSkillOverlay
                     String.format("%.2f", yaw)+EnumChatFormatting.BOLD+"\u00b0");*/
 			int key = NotEnoughUpdates.INSTANCE.config.skillOverlays.fishKey;
 
-			ISound sound = new PositionedSound(new ResourceLocation("random.orb")) {{
+			ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "random.orb")) {{
 				volume = 50;
 				repeat = false;
 				repeatDelay = 0;

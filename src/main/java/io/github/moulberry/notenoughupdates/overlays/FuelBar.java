@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 @NEUAutoSubscribe
 public class FuelBar {
-	public static final ResourceLocation FUEL_BAR = new ResourceLocation("notenoughupdates:fuel_bar.png");
+	public static final ResourceLocation FUEL_BAR = new ResourceLocation("notenoughupdates", "notenoughupdates:fuel_bar.png");
 	private static final Pattern FUEL_PATTERN = Pattern.compile("§7§7Fuel: .*/([0-9km]+)");
 	private int currentFuel = -1;
 	private int maxFuel = -1;
@@ -94,7 +94,7 @@ public class FuelBar {
 			currentFuel = 300;
 		}
 		if (event.type == RenderGameOverlayEvent.ElementType.ALL) {
-			GlStateManager.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			ScaledResolution scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 			Position position = NotEnoughUpdates.INSTANCE.config.mining.drillFuelBarPosition;
@@ -107,14 +107,14 @@ public class FuelBar {
 
 			String str = String.format("§2%d§7/§2%d §6(%d%%)", currentFuel, maxFuel, (int) (fuelPercentage * 100));
 
-			GlStateManager.enableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 			GL14.glBlendFuncSeparate(
 				GL11.GL_SRC_ALPHA,
 				GL11.GL_ONE_MINUS_SRC_ALPHA,
 				GL11.GL_ONE,
 				GL11.GL_ONE_MINUS_SRC_ALPHA
 			);
-			GlStateManager.tryBlendFuncSeparate(
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(
 				GL11.GL_SRC_ALPHA,
 				GL11.GL_ONE_MINUS_SRC_ALPHA,
 				GL11.GL_ONE,
@@ -137,18 +137,18 @@ public class FuelBar {
 			}
 			Minecraft.getInstance().font.drawString(str, x + 2, y, 0xffffff, false);
 			Utils.pushGuiScale(0);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
 
 	private void renderBar(float x, float y, float xSize, float completed) {
 		Minecraft.getInstance().getTextureManager().bindTexture(FUEL_BAR);
 
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y, 0);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 
 		Color c = Color.getHSBColor(148 / 360f * completed - 20 / 360f, 0.9f, 1 - 0.5f * completed);
-		GlStateManager.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, 1);
 
 		Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
@@ -164,6 +164,6 @@ public class FuelBar {
 			}
 		}
 
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 }

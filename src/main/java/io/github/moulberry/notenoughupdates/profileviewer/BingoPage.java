@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -41,7 +41,7 @@ import java.util.List;
 
 public class BingoPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation BINGO_GUI_TEXTURE = new ResourceLocation("notenoughupdates:pv_bingo_tab.png");
+	private static final ResourceLocation BINGO_GUI_TEXTURE = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_bingo_tab.png");
 	private long lastResourceRequest;
 	private List<JsonObject> bingoGoals = null;
 	private int currentEventId;
@@ -85,8 +85,8 @@ public class BingoPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(BINGO_GUI_TEXTURE);
 		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
-		GlStateManager.color(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		int row = 0;
 		int col = 0;
@@ -162,7 +162,7 @@ public class BingoPage extends GuiProfileViewerPage {
 		Utils.drawStringF(totalPointsString, guiLeft + 22, guiTop + 19, true, 0);
 		Utils.drawStringF(personalGoalsString, guiLeft + 22, guiTop + 31, true, 0);
 
-		GlStateManager.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 	}
 
 	private boolean isCommunityGoalFinished(JsonObject goal) {

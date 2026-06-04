@@ -39,7 +39,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -77,7 +77,7 @@ import static io.github.moulberry.notenoughupdates.util.Utils.roundToNearestInt;
 
 public class BasicPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_basic = new ResourceLocation("notenoughupdates:pv_basic.png");
+	private static final ResourceLocation pv_basic = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_basic.png");
 
 	public static final ItemStack skull = Utils.createSkull(
 		"egirlefe",
@@ -560,7 +560,7 @@ public class BasicPage extends GuiProfileViewerPage {
 			}
 		}
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		SkyblockProfiles.SkyblockProfile currentProfile = profile.getProfile(profileName);
 		JsonObject petsInfo = currentProfile.getPetsInfo();
 		if (petsInfo != null) {
@@ -614,7 +614,7 @@ public class BasicPage extends GuiProfileViewerPage {
 								82 +
 								15 *
 									(float) Math.sin(((getInstance().currentTime - getInstance().startTime) / 800f) % (2 * Math.PI));
-						GlStateManager.translate(x, y, 0);
+						com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 						ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(item, false);
 
 						// Remove extra attributes so no CIT
@@ -622,11 +622,11 @@ public class BasicPage extends GuiProfileViewerPage {
 						stackTag.removeTag("ExtraAttributes");
 						stack.setTag(stackTag);
 
-						GlStateManager.scale(1.5f, 1.5f, 1);
-						GlStateManager.enableDepth();
+						com.mojang.blaze3d.systems.RenderSystem.scale(1.5f, 1.5f, 1);
+						com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 						Utils.drawItemStack(stack, 0, 0);
-						GlStateManager.scale(1 / 1.5f, 1 / 1.5f, 1);
-						GlStateManager.translate(-x, -y, 0);
+						com.mojang.blaze3d.systems.RenderSystem.scale(1 / 1.5f, 1 / 1.5f, 1);
+						com.mojang.blaze3d.systems.RenderSystem.translate(-x, -y, 0);
 						break;
 					}
 				}
@@ -651,11 +651,11 @@ public class BasicPage extends GuiProfileViewerPage {
 		double skyblockLevel = currentProfile.getSkyblockLevel();
 		EnumChatFormatting skyblockLevelColour = currentProfile.getSkyblockLevelColour();
 
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(sbLevelX, sbLevelY, 0);
-		GlStateManager.scale(1.5f, 1.5f, 1);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(sbLevelX, sbLevelY, 0);
+		com.mojang.blaze3d.systems.RenderSystem.scale(1.5f, 1.5f, 1);
 		Utils.drawItemStack(skull, 0, 0);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		Utils.drawStringCenteredScaled(skyblockLevelColour.toString() + (int) skyblockLevel,
 			sbLevelX + 9, sbLevelY - 12, true, 1.5f
 		);
@@ -1000,20 +1000,20 @@ public class BasicPage extends GuiProfileViewerPage {
 
 		ent.onUpdate();
 
-		GlStateManager.enableColorMaterial();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) posX, (float) posY, 50.0F);
-		GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.enableColorMaterial();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate((float) posX, (float) posY, 50.0F);
+		com.mojang.blaze3d.systems.RenderSystem.scale((float) (-scale), (float) scale, (float) scale);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F, 0.0F, 0.0F, 1.0F);
 		float renderYawOffset = ent.renderYawOffset;
 		float f1 = ent.rotationYaw;
 		float f2 = ent.rotationPitch;
 		float f3 = ent.prevRotationYawHead;
 		float f4 = ent.rotationYawHead;
-		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(135.0F, 0.0F, 1.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
-		GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(25, 1.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(25, 1.0F, 0.0F, 0.0F);
 		ent.renderYawOffset = (float) Math.atan(mouseX / 40.0F) * 20.0F;
 		ent.rotationYaw = (float) Math.atan(mouseX / 40.0F) * 40.0F;
 		ent.rotationPitch = -((float) Math.atan(mouseY / 40.0F)) * 20.0F;
@@ -1029,12 +1029,12 @@ public class BasicPage extends GuiProfileViewerPage {
 		ent.rotationPitch = f2;
 		ent.prevRotationYawHead = f3;
 		ent.rotationYawHead = f4;
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-		GlStateManager.disableTexture2D();
-		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
+		com.mojang.blaze3d.systems.RenderSystem.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	@Override
@@ -1060,21 +1060,21 @@ public class BasicPage extends GuiProfileViewerPage {
 	}
 
 	public void drawSideButtons(int mouseX, int mouseY) {
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		if (GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("second_page"), true, guiProfileViewer, mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("first_page"), true, guiProfileViewer, mouseX, mouseY);
 		}
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		if (!GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("second_page"), false, guiProfileViewer, mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("first_page"), false, guiProfileViewer, mouseX, mouseY);
 		}
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 	}
 }

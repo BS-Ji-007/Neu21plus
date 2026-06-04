@@ -103,7 +103,7 @@ public class NEUConfig extends Config {
 			overlayPositions.put(overlay, overlay.getPosition());
 		}
 		GuiScreen savedGui = Minecraft.getInstance().currentScreen;
-		Minecraft.getInstance().displayGuiScreen(new GuiPositionEditor(overlayPositions, () -> {
+		Minecraft.getInstance().setScreen(new GuiPositionEditor(overlayPositions, () -> {
 		}, () -> NotEnoughUpdates.INSTANCE.openGui = savedGui));
 	}
 
@@ -242,7 +242,7 @@ public class NEUConfig extends Config {
 					.userFacingRepositoryReload()
 					.thenAccept(strings ->
 						NotificationHandler.displayNotification(strings, true, true));
-				Minecraft.getInstance().displayGuiScreen(null);
+				Minecraft.getInstance().setScreen(null);
 				return;
 			case 23:
 				NotEnoughUpdates.INSTANCE.config.apiData.repoUser = "NotEnoughUpdates";

@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -109,7 +109,7 @@ public class GuiPositionEditor extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		this.width = scaledResolution.getScaledWidth();
@@ -142,7 +142,7 @@ public class GuiPositionEditor extends GuiScreen {
 			"R to Reset - Arrow keys/mouse to move",
 			scaledResolution.getScaledWidth() / 2, 18, true, 0xffffff
 		);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	@Override

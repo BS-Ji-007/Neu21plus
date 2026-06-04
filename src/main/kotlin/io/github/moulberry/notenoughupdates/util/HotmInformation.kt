@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraftforge.client.event.GuiOpenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -38,7 +38,7 @@ class HotmInformation {
     @SubscribeEvent
     fun onGuiOpen(event: GuiOpenEvent) {
         val gui = event.gui
-        if (gui !is GuiChest) return
+        if (gui !is ChestScreen) return
 
         if (Utils.getOpenChestName() == "Heart of the Mountain") {
             ticksTillReload = 5
@@ -58,7 +58,7 @@ class HotmInformation {
     private fun loadDataFromInventory() {
         val profileSpecific = NotEnoughUpdates.INSTANCE.config.profileSpecific ?: return
         val currentScreen = Minecraft.getInstance().currentScreen
-        if (currentScreen !is GuiChest) {
+        if (currentScreen !is ChestScreen) {
             return
         }
         val container = currentScreen.inventorySlots as ContainerChest

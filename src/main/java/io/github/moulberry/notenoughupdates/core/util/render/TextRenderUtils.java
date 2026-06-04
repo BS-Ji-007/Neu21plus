@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.core.util.render;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
@@ -125,9 +125,9 @@ public class TextRenderUtils {
 		int colour,
 		float factor
 	) {
-		GlStateManager.scale(factor, factor, 1);
+		com.mojang.blaze3d.systems.RenderSystem.scale(factor, factor, 1);
 		fr.drawString(str, x / factor, y / factor, colour, shadow);
-		GlStateManager.scale(1 / factor, 1 / factor, 1);
+		com.mojang.blaze3d.systems.RenderSystem.scale(1 / factor, 1 / factor, 1);
 	}
 
 	public static void drawStringCenteredScaledMaxWidth(
@@ -196,10 +196,10 @@ public class TextRenderUtils {
 		FontRenderer font
 	) {
 		if (!textLines.isEmpty()) {
-			GlStateManager.disableRescaleNormal();
+			com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
 			RenderHelper.disableStandardItemLighting();
-			GlStateManager.disableLighting();
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			int tooltipTextWidth = 0;
 
 			for (String textLine : textLines) {
@@ -362,7 +362,7 @@ public class TextRenderUtils {
 
 			for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
 				String line = textLines.get(lineNumber);
-				font.drawStringWithShadow(line, (float) tooltipX, (float) tooltipY, -1);
+				font.drawShadow(line, (float) tooltipX, (float) tooltipY, -1);
 
 				if (lineNumber + 1 == titleLinesCount) {
 					tooltipY += 2;
@@ -371,11 +371,11 @@ public class TextRenderUtils {
 				tooltipY += 10;
 			}
 
-			GlStateManager.enableLighting();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			RenderHelper.enableStandardItemLighting();
-			GlStateManager.enableRescaleNormal();
+			com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
 		}
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 	}
 }

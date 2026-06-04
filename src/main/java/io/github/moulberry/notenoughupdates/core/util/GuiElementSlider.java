@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.core.GuiElement;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -87,7 +87,7 @@ public class GuiElementSlider extends GuiElement {
 		float sliderAmount = Math.max(0, Math.min(1, (value - minValue) / (maxValue - minValue)));
 		int sliderAmountI = (int) (width * sliderAmount);
 
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_cap);
 		Utils.drawTexturedRect(x, y, 4, HEIGHT, GL11.GL_NEAREST);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_off_cap);

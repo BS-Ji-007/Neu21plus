@@ -34,7 +34,7 @@ import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
@@ -56,7 +56,7 @@ import java.util.TreeMap;
 
 public class ExtraPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_extra = new ResourceLocation("notenoughupdates:pv_extra.png");
+	private static final ResourceLocation pv_extra = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_extra.png");
 	private static final List<String> skills = Arrays.asList(
 		"taming",
 		"mining",
@@ -669,21 +669,21 @@ public class ExtraPage extends GuiProfileViewerPage {
 	}
 
 	private void drawSideButtons(int mouseX, int mouseY) {
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		if (GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("hoppity"), true, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("stats"), true, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		if (!GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("hoppity"), false, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("stats"), false, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 	}
 }

@@ -31,7 +31,7 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S23PacketBlockChange;
@@ -129,12 +129,12 @@ public class MiningStuff {
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
 
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate((float) (width / 2), (float) (height / 2), 0.0F);
-			GlStateManager.scale(4.0F, 4.0F, 4.0F);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate((float) (width / 2), (float) (height / 2), 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.scale(4.0F, 4.0F, 4.0F);
 
 			int colour1 = 0xcc;
 			int colour2 = 0xff;
@@ -156,7 +156,7 @@ public class MiningStuff {
 				);
 			}
 
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
 
@@ -178,10 +178,10 @@ public class MiningStuff {
 			overlayLoc.getZ() + 1 - viewerZ
 		).expand(0.01f, 0.01f, 0.01f);
 
-		GlStateManager.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
 		CustomItemEffects.drawFilledBoundingBox(bb, 1f, SpecialColour.special(0, 100, 0xff0000));
-		GlStateManager.enableCull();
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
 	@SubscribeEvent

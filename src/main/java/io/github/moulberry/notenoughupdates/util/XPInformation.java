@@ -26,10 +26,6 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.miscfeatures.tablisttutorial.TablistAPI;
 import lombok.var;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -88,7 +84,6 @@ public class XPInformation {
 
 	private String lastActionBar = null;
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		if (event.type != 2) {
 			return;
@@ -197,7 +192,6 @@ public class XPInformation {
 			" (?<type>[^ ]+) (?<level>\\d+): (?:(?<percentage>\\d+(\\.\\d+)?)%|(?<amount>[0-9,]+(\\.\\d+)?)/.*|(?<max>MAX))");
 
 	// Car Pentry
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
 		var widgetLines = TablistAPI.getOptionalWidgetLines(TablistAPI.WidgetNames.SKILLS);

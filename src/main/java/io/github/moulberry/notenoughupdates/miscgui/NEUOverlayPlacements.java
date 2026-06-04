@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
@@ -51,13 +51,13 @@ public class NEUOverlayPlacements extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
 
-		/*GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		/*com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(icons);
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
-		GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
-		GlStateManager.enableAlpha();
-		this.drawTexturedModalRect(width / 2 - 7, height / 2 - 7, 0, 0, 16, 16);*/
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(775, 769, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		this.blit(width / 2 - 7, height / 2 - 7, 0, 0, 16, 16);*/
 
 		if (mouseX < 300 && mouseY < 300 && clickedElement != null) {
 			guiButton.yPosition = height - 5 - guiButton.height;
@@ -78,7 +78,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 
 		MBGuiGroupFloating mainGroup = NotEnoughUpdates.INSTANCE.overlay.guiGroup;
 		mainGroup.render(0, 0);
-		GlStateManager.translate(0, 0, 500);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 500);
 		for (MBGuiElement element : mainGroup.getChildren()) {
 			MBAnchorPoint anchorPoint = mainGroup.getChildrenMap().get(element);
 			Vector2f position = mainGroup.getChildrenPosition().get(element);
@@ -144,7 +144,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 				);
 			}
 		}
-		GlStateManager.translate(0, 0, -500);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -500);
 	}
 
 	@Override

@@ -35,7 +35,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
@@ -309,7 +309,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	 * @param y     y location
 	 */
 	private void drawSlot(int x, int y) {
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		Utils.drawTexturedRect(
 			x,
@@ -380,7 +380,7 @@ public class EssenceUpgrades implements NeuRecipe {
 			}
 
 			Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			drawButton(x, y, i + 1 == selectedTier);
 			Utils.drawStringCentered(String.valueOf(i + 1), x + 8, y + 9, false, 0x2d4ffc);
 		}

@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.profileviewer.info.QuiverInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.Item;
@@ -59,9 +59,9 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 
 public class InventoriesPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_invs = new ResourceLocation("notenoughupdates:pv_invs.png");
+	private static final ResourceLocation pv_invs = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_invs.png");
 	private static final ResourceLocation CHEST_GUI_TEXTURE =
-		new ResourceLocation("textures/gui/container/generic_54.png");
+		new ResourceLocation("notenoughupdates", "textures/gui/container/generic_54.png");
 	private static final Pattern FISHING_SPEED_PATTERN = Pattern.compile("^Fishing Speed: \\+(\\d+)");
 	private static final LinkedHashMap<String, ItemStack> invNameToDisplayMap = new LinkedHashMap<String, ItemStack>() {
 		{
@@ -435,7 +435,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		int inventoryRows = inventory.length;
 
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int invSizeY = inventoryRows * 18 + 17 + 7;
@@ -444,8 +444,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		int y = guiTop + 101 - invSizeY / 2;
 		int staticSelectorHeight = guiTop + 177;
 
-		getInstance().drawTexturedModalRect(x, y, 0, 0, 176, inventoryRows * 18 + 17);
-		getInstance().drawTexturedModalRect(x, y + inventoryRows * 18 + 17, 0, 215, 176, 7);
+		getInstance().blit(x, y, 0, 0, 176, inventoryRows * 18 + 17);
+		getInstance().blit(x, y + inventoryRows * 18 + 17, 0, 215, 176, 7);
 
 		boolean leftHovered = false;
 		boolean rightHovered = false;
@@ -529,7 +529,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 								)
 						)
 				) {
-					GlStateManager.translate(0, 0, 50);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 50);
 					GuiScreen.drawRect(
 						x + 8 + xIndex * 18,
 						y + 18 + yIndex * 18,
@@ -537,7 +537,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 						y + 18 + yIndex * 18 + 16,
 						overlay
 					);
-					GlStateManager.translate(0, 0, -50);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -50);
 				}
 
 				if (stack == null || stack == fillerStack) continue;
@@ -911,21 +911,21 @@ public class InventoriesPage extends GuiProfileViewerPage {
 	}
 
 	private void drawSideButtons(int mouseX, int mouseY) {
-		GlStateManager.enableDepth();
-		GlStateManager.translate(0, 0, 5);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 5);
 		if (GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("sacks"), true, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("inventories"), true, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.translate(0, 0, -3);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -3);
 
-		GlStateManager.translate(0, 0, -2);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -2);
 		if (!GuiProfileViewer.onSecondPage) {
 			Utils.drawPvSideButton(1, pageModeIcon.get("sacks"), false, getInstance(), mouseX, mouseY);
 		} else {
 			Utils.drawPvSideButton(0, pageModeIcon.get("inventories"), false, getInstance(), mouseX, mouseY);
 		}
-		GlStateManager.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 	}
 }

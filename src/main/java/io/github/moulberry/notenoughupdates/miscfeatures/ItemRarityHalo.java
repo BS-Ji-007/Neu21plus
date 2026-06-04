@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.util.NEUResourceManager;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -122,7 +122,7 @@ public class ItemRarityHalo {
 				int texture1 = TextureUtil.glGenTextures();
 				int texture2 = TextureUtil.glGenTextures();
 
-				GlStateManager.bindTexture(texture1);
+				com.mojang.blaze3d.systems.RenderSystem.bindTexture(texture1);
 				GL11.glTexImage2D(
 					GL11.GL_TEXTURE_2D,
 					0,
@@ -143,7 +143,7 @@ public class ItemRarityHalo {
 					0
 				);
 
-				GlStateManager.bindTexture(texture2);
+				com.mojang.blaze3d.systems.RenderSystem.bindTexture(texture2);
 				GL11.glTexImage2D(
 					GL11.GL_TEXTURE_2D,
 					0,
@@ -167,14 +167,14 @@ public class ItemRarityHalo {
 				itemFramebuffer1.framebufferClear();
 				itemFramebuffer2.framebufferClear();
 
-				GlStateManager.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				{
-					GlStateManager.matrixMode(5889);
-					GlStateManager.loadIdentity();
-					GlStateManager.ortho(0.0D, size, size, 0.0D, 1000.0D, 3000.0D);
-					GlStateManager.matrixMode(5888);
-					GlStateManager.loadIdentity();
-					GlStateManager.translate(0.0F, 0.0F, -2000.0F);
+					com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+					com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+					com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, size, size, 0.0D, 1000.0D, 3000.0D);
+					com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+					com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+					com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.0F, -2000.0F);
 
 					GL11.glScalef(scaledresolution.getScaleFactor(), scaledresolution.getScaleFactor(), 1);
 
@@ -188,9 +188,9 @@ public class ItemRarityHalo {
 					itemRender.zLevel = zLevel;
 					RenderHelper.disableStandardItemLighting();
 				}
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-				GlStateManager.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				{
 					GL45.glTextureBarrier();
 					GL11.glFlush();
@@ -202,11 +202,11 @@ public class ItemRarityHalo {
 					//executeShader(blurShaderVert);
 					//GL45.glTextureBarrier(); GL11.glFlush(); GL11.glFinish();
 				}
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-				GlStateManager.matrixMode(5889);
-				GlStateManager.loadIdentity();
-				GlStateManager.ortho(
+				com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+				com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+				com.mojang.blaze3d.systems.RenderSystem.ortho(
 					0.0D,
 					scaledresolution.getScaledWidth_double(),
 					scaledresolution.getScaledHeight_double(),
@@ -214,10 +214,10 @@ public class ItemRarityHalo {
 					1000.0D,
 					3000.0D
 				);
-				GlStateManager.matrixMode(5888);
+				com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
 
 				OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, currentBuffer);
-				GlStateManager.viewport(
+				com.mojang.blaze3d.systems.RenderSystem.viewport(
 					currentViewport.get(),
 					currentViewport.get(),
 					currentViewport.get(),
@@ -229,25 +229,25 @@ public class ItemRarityHalo {
 			}
 
 			OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, currentBuffer);
-			GlStateManager.viewport(
+			com.mojang.blaze3d.systems.RenderSystem.viewport(
 				currentViewport.get(),
 				currentViewport.get(),
 				currentViewport.get(),
 				currentViewport.get()
 			);
 
-			GlStateManager.bindTexture(itemHaloTexMap.get(stack));
+			com.mojang.blaze3d.systems.RenderSystem.bindTexture(itemHaloTexMap.get(stack));
 			Color color = Utils.getPrimaryColour(stack.getName().getString());
-			//GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f,
+			//com.mojang.blaze3d.systems.RenderSystem.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f,
 			//        NotEnoughUpdates.INSTANCE.manager.config.itemHighlightOpacity.value.floatValue()/255f);
 			Utils.drawTexturedRect(x, y, 16, 16,
 				0, 1, 1, 0, GL11.GL_NEAREST
 			);
-			GlStateManager.bindTexture(0);
+			com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, currentBuffer);
-			GlStateManager.viewport(
+			com.mojang.blaze3d.systems.RenderSystem.viewport(
 				currentViewport.get(),
 				currentViewport.get(),
 				currentViewport.get(),
@@ -294,19 +294,19 @@ public class ItemRarityHalo {
 	}
 
 	private static void executeShader(Shader shader) {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.disableBlend();
-		GlStateManager.disableDepth();
-		GlStateManager.disableAlpha();
-		GlStateManager.disableFog();
-		GlStateManager.disableLighting();
-		GlStateManager.disableColorMaterial();
-		GlStateManager.enableTexture2D();
-		GlStateManager.bindTexture(0);
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableFog();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
 		float f = (float) shader.framebufferOut.framebufferTextureWidth;
 		float f1 = (float) shader.framebufferOut.framebufferTextureHeight;
-		GlStateManager.viewport(0, 0, (int) f, (int) f1);
+		com.mojang.blaze3d.systems.RenderSystem.viewport(0, 0, (int) f, (int) f1);
 
 		shader.getShaderManager().useShader();
 		shader.getShaderManager().addSamplerTexture("DiffuseSampler", shader.framebufferIn);
@@ -314,10 +314,10 @@ public class ItemRarityHalo {
 		shader.framebufferOut.framebufferClear();
 		shader.framebufferOut.bindFramebuffer(false);
 
-		GlStateManager.depthMask(false);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		Tessellator tessellator = Tessellator.getInstance();
@@ -329,7 +329,7 @@ public class ItemRarityHalo {
 		worldrenderer.pos(0.0D, 0.0D, 500.0D).color(255, 255, 255, 255).endVertex();
 		tessellator.draw();
 
-		GlStateManager.depthMask(true);
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 
 		shader.getShaderManager().endShader();
 

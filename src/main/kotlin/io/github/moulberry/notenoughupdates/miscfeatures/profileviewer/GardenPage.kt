@@ -39,7 +39,7 @@ import io.github.moulberry.notenoughupdates.util.UrsaClient
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.init.Blocks
 import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
@@ -184,7 +184,7 @@ class GardenPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance
     private fun renderPlots() {
         val top = guiTop + 79
         val left = guiLeft + 192
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         for (value in repoData.plots) {
             Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
             val x = left + value.value.x * 22

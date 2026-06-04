@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +51,7 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 
 public class PetsPage extends GuiProfileViewerPage {
 
-	public static final ResourceLocation pv_pets = new ResourceLocation("notenoughupdates:pv_pets.png");
+	public static final ResourceLocation pv_pets = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_pets.png");
 	private static final int COLLS_XCOUNT = 5;
 	private static final int COLLS_YCOUNT = 4;
 	private static final float COLLS_XPADDING = (190 - COLLS_XCOUNT * 20) / (float) (COLLS_XCOUNT + 1);
@@ -128,7 +128,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		Utils.drawStringCentered(EnumChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 		JsonElement activePetElement = petsInfo.get("active_pet");
 		if (selectedPet == -1 && activePetElement != null && activePetElement.isJsonObject()) {
@@ -203,9 +203,9 @@ public class PetsPage extends GuiProfileViewerPage {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 				if (i == selectedPet) {
-					GlStateManager.color(1, 185 / 255f, 0, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
 				} else {
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				}
 				Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
@@ -236,18 +236,18 @@ public class PetsPage extends GuiProfileViewerPage {
 			int displayLen = Minecraft.getInstance().font.getStringWidth(display);
 			int halfDisplayLen = displayLen / 2;
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(x, y, 0);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 
 			GuiScreen.drawRect(-halfDisplayLen - 1 - 28, -1, halfDisplayLen + 1 - 28, 8, new Color(0, 0, 0, 100).getRGB());
 
 			Minecraft.getInstance().font.drawString(display, -halfDisplayLen - 28, 0, 0, true);
 
-			GlStateManager.enableDepth();
-			GlStateManager.translate(-55, 0, 0);
-			GlStateManager.scale(3.5f, 3.5f, 1);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.translate(-55, 0, 0);
+			com.mojang.blaze3d.systems.RenderSystem.scale(3.5f, 3.5f, 1);
 			Utils.drawItemStack(petStack, 0, 0);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			float level = pet.get("level").getAsFloat();
 			float currentLevelRequirement = pet.get("currentLevelRequirement").getAsFloat();

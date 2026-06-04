@@ -36,8 +36,8 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.StarCultCalculator;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -78,8 +78,8 @@ public class MiningOverlay extends TextTabOverlay {
 
 	@Override
 	public void updateFrequent() {
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getName().getString().getUnformattedText();
@@ -823,7 +823,7 @@ public class MiningOverlay extends TextTabOverlay {
 	@Override
 	protected void renderLine(String line, Vector2f position, boolean dummy) {
 		if (!NotEnoughUpdates.INSTANCE.config.mining.dwarvenOverlayIcons) return;
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 		// No icon for the tip line
 		if (line.contains(">")) return;
@@ -873,11 +873,11 @@ public class MiningOverlay extends TextTabOverlay {
 		}
 
 		if (icon != null) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(position.x, position.y, 0);
-			GlStateManager.scale(0.5f, 0.5f, 1f);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(position.x, position.y, 0);
+			com.mojang.blaze3d.systems.RenderSystem.scale(0.5f, 0.5f, 1f);
 			Utils.drawItemStack(icon, 0, 0);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			position.x += 12;
 		}

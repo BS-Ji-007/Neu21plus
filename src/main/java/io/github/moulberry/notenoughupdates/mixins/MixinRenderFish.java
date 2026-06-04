@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.miscfeatures.FishingHelper;
 import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
@@ -75,12 +75,12 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 			if (!internalname.equals("GRAPPLING_HOOK") && !internalname.endsWith("_WHIP")) {
 				ci.cancel();
 
-				GlStateManager.pushMatrix();
-				GlStateManager.translate((float) x, (float) y, (float) z);
-				GlStateManager.enableRescaleNormal();
-				GlStateManager.scale(0.5F, 0.5F, 0.5F);
-				GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-				GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate((float) x, (float) y, (float) z);
+				com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
+				com.mojang.blaze3d.systems.RenderSystem.scale(0.5F, 0.5F, 0.5F);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+				com.mojang.blaze3d.systems.RenderSystem.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
 				this.bindEntityTexture(entity);
 
 				Tessellator tessellator = Tessellator.getInstance();
@@ -94,8 +94,8 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 
 				FishingHelper.getInstance().onRenderBobber(entity);
 
-				GlStateManager.disableRescaleNormal();
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 				double playerVecX;
 				double playerVecY;
@@ -148,9 +148,9 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 				double d9 = (float) (playerVecX - d13);
 				double d11 = (double) ((float) (playerVecY - d5)) + startY;
 				double d12 = (float) (playerVecZ - d7);
-				GlStateManager.disableTexture2D();
-				GlStateManager.disableLighting();
-				GlStateManager.enableBlend();
+				com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+				com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 				GL14.glBlendFuncSeparate(
 					GL11.GL_SRC_ALPHA,
 					GL11.GL_ONE_MINUS_SRC_ALPHA,
@@ -183,9 +183,9 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 				}
 
 				tessellator.draw();
-				GlStateManager.disableBlend();
-				GlStateManager.enableLighting();
-				GlStateManager.enableTexture2D();
+				com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+				com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+				com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 			}
 		}
 	}

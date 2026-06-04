@@ -89,7 +89,7 @@ public class ItemUtils {
 			uuid,
 			texture
 		);
-		CompoundTag extraAttributes = skull.getTag().getCompoundTag("ExtraAttributes");
+		CompoundTag extraAttributes = skull.getTag().getCompound("ExtraAttributes");
 		extraAttributes.setString("id", "SKYBLOCK_COIN");
 		skull.getTag().setTag("ExtraAttributes", extraAttributes);
 		return skull;
@@ -115,7 +115,7 @@ public class ItemUtils {
 		if (tagCompound == null) {
 			tagCompound = new CompoundTag();
 		}
-		CompoundTag display = tagCompound.getCompoundTag("display");
+		CompoundTag display = tagCompound.getCompound("display");
 		ListTag lore = display.getTagList("Lore", 8);
 		for (String s : moreLore) {
 			lore.appendTag(new StringTag(s));
@@ -131,7 +131,7 @@ public class ItemUtils {
 			tagCompound = new CompoundTag();
 		}
 
-		CompoundTag display = tagCompound.getCompoundTag("display");
+		CompoundTag display = tagCompound.getCompound("display");
 		ListTag lore = new ListTag();
 		for (String s : newLore) {
 			lore.appendTag(new StringTag(s));
@@ -150,7 +150,7 @@ public class ItemUtils {
 		if (tagCompound == null) {
 			return Collections.emptyList();
 		}
-		ListTag tagList = tagCompound.getCompoundTag("display").getTagList("Lore", 8);
+		ListTag tagList = tagCompound.getCompound("display").getTagList("Lore", 8);
 		List<String> list = new ArrayList<>();
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			list.add(tagList.getStringTagAt(i));
@@ -165,7 +165,7 @@ public class ItemUtils {
 
 	public static @Nullable String getDisplayName(@Nullable CompoundTag compound) {
 		if (compound == null) return null;
-		String string = compound.getCompoundTag("display").getString("Name");
+		String string = compound.getCompound("display").getString("Name");
 		if (string == null || string.isEmpty())
 			return null;
 		return string;
@@ -218,7 +218,7 @@ public class ItemUtils {
 
 	public static @NotNull CompoundTag getExtraAttributes(ItemStack itemStack) {
 		CompoundTag tag = getOrCreateTag(itemStack);
-		CompoundTag extraAttributes = tag.getCompoundTag("ExtraAttributes");
+		CompoundTag extraAttributes = tag.getCompound("ExtraAttributes");
 		tag.setTag("ExtraAttributes", extraAttributes);
 		return extraAttributes;
 	}
@@ -277,7 +277,7 @@ public class ItemUtils {
 
 		CompoundTag tag = getOrCreateTag(petItemstack);
 		if (tag.hasKey("display", 10)) {
-			CompoundTag displayTag = tag.getCompoundTag("display");
+			CompoundTag displayTag = tag.getCompound("display");
 			if (displayTag.hasKey("Lore", 9)) {
 				List<String> newLore = new ArrayList<>();
 				ListTag lore = displayTag.getTagList("Lore", 8);
@@ -368,7 +368,7 @@ public class ItemUtils {
 		CompoundTag extraAttributes = new CompoundTag();
 		JsonObject petInfo = new JsonObject();
 		if (tag.hasKey("ExtraAttributes", 10)) {
-			extraAttributes = tag.getCompoundTag("ExtraAttributes");
+			extraAttributes = tag.getCompound("ExtraAttributes");
 			if (extraAttributes.hasKey("petInfo", 8)) {
 				petInfo = new JsonParser().parse(extraAttributes.getString("petInfo")).getAsJsonObject();
 			}
@@ -393,7 +393,7 @@ public class ItemUtils {
 	public static ItemStack petToolTipXPExtendPetOverlay(ItemStack stack) {
 		CompoundTag tag = stack.getTag() == null ? new CompoundTag() : stack.getTag();
 		if (tag.hasKey("display", 10)) {
-			CompoundTag display = tag.getCompoundTag("display");
+			CompoundTag display = tag.getCompound("display");
 			if (display.hasKey("Lore", 9)) {
 				ListTag lore = display.getTagList("Lore", 8);
 				if (ItemTooltipListener.petToolTipRegex.matcher(Utils.cleanColour(lore.getStringTagAt(0))).matches() &&

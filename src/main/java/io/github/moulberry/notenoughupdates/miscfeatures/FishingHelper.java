@@ -31,7 +31,7 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
@@ -130,18 +130,18 @@ public class FishingHelper {
 
 	public void onRenderBobber(EntityFishHook hook) {
 		if (Minecraft.getInstance().player.fishEntity != hook) return;
-		GlStateManager.pushMatrix();
-		GlStateManager.disableCull();
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		GL11.glDepthFunc(GL11.GL_ALWAYS);
-		GlStateManager.scale(1, -1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.scale(1, -1, 1);
 		boolean isExclamationMarkPresent = renderWarning();
-		GlStateManager.scale(0.1, 0.1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.scale(0.1, 0.1, 1);
 		drawFishingTimer(hook, isExclamationMarkPresent);
 		GL11.glDepthFunc(GL11.GL_LEQUAL);
-		GlStateManager.enableLighting();
-		GlStateManager.enableCull();
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	private void drawFishingTimer(EntityFishHook hook, boolean isExclamationMarkPresent) {
@@ -164,7 +164,7 @@ public class FishingHelper {
 		if (seconds >= maxSlugTime) {
 			color = ChromaColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.fishing.fishingTimerColor30SecPlus);
 			if (NotEnoughUpdates.INSTANCE.config.fishing.fishingSound30Sec && !playedSound) {
-				ISound sound = new PositionedSound(new ResourceLocation("random.orb")) {{
+				ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "random.orb")) {{
 					volume = 50;
 					pitch = 2f;
 					repeat = false;
@@ -494,7 +494,7 @@ public class FishingHelper {
 														if (vol > 1) vol = 1;
 														final float volF = vol;
 
-														ISound sound = new PositionedSound(new ResourceLocation("note.pling")) {{
+														ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "note.pling")) {{
 															volume = volF;
 															pitch = 2f;
 															repeat = false;
@@ -519,7 +519,7 @@ public class FishingHelper {
 														if (vol > 1) vol = 1;
 														final float volF = vol;
 
-														ISound sound = new PositionedSound(new ResourceLocation("note.pling")) {{
+														ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "note.pling")) {{
 															volume = volF;
 															pitch = calculatePitchFromDistance((float) newDistance - (0.3f + 0.1f * pingDelayTicks));
 															repeat = false;

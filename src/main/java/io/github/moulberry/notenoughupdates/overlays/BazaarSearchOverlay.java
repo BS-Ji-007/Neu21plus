@@ -124,7 +124,7 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 		TileEntitySign tileSign = ((AccessorGuiEditSign) guiEditSign).getTileSign();
 		if (tileSign != null) {
 			event.setCanceled(true);
-			Minecraft.getInstance().displayGuiScreen(new BazaarSearchOverlay(tileSign));
+			Minecraft.getInstance().setScreen(new BazaarSearchOverlay(tileSign));
 		}
 	}
 

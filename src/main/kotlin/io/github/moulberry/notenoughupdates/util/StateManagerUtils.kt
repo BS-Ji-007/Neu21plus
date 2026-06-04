@@ -20,15 +20,15 @@
 package io.github.moulberry.notenoughupdates.util
 
 import io.github.moulberry.notenoughupdates.mixins.AccessorBooleanState
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 
 object StateManagerUtils {
-    fun readState(state: GlStateManager.BooleanState): Boolean {
+    fun readState(state: com.mojang.blaze3d.systems.RenderSystem.BooleanState): Boolean {
         state as AccessorBooleanState
         return state.currentState
     }
 
-    inline fun withSavedState(state: GlStateManager.BooleanState, block: () -> Unit) {
+    inline fun withSavedState(state: com.mojang.blaze3d.systems.RenderSystem.BooleanState, block: () -> Unit) {
         val savedState = readState(state)
         block()
         state.setState(savedState)

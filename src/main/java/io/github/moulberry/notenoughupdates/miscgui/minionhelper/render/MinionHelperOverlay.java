@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.render.renderab
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.render.renderables.OverviewText;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.MinionSource;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.NpcSource;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.NotificationHandler;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
@@ -42,8 +42,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
@@ -63,9 +63,9 @@ import java.util.Map;
 
 public class MinionHelperOverlay {
 
-	private final ResourceLocation minionOverlayImage = new ResourceLocation("notenoughupdates:minion_overlay.png");
-	private final ResourceLocation greenCheckImage = new ResourceLocation("notenoughupdates:dungeon_map/green_check.png");
-	private final ResourceLocation whiteCheckImage = new ResourceLocation("notenoughupdates:dungeon_map/white_check.png");
+	private final ResourceLocation minionOverlayImage = new ResourceLocation("notenoughupdates", "notenoughupdates:minion_overlay.png");
+	private final ResourceLocation greenCheckImage = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_map/green_check.png");
+	private final ResourceLocation whiteCheckImage = new ResourceLocation("notenoughupdates", "notenoughupdates:dungeon_map/white_check.png");
 
 	private final MinionHelperManager manager;
 	private final MinionHelperOverlayHover hover;
@@ -146,8 +146,8 @@ public class MinionHelperOverlay {
 
 	private void renderArrows() {
 		GuiScreen gui = Minecraft.getInstance().currentScreen;
-		if (gui instanceof AccessorGuiContainer) {
-			AccessorGuiContainer container = (AccessorGuiContainer) gui;
+		if (gui instanceof AccessorContainerScreen) {
+			AccessorContainerScreen container = (AccessorContainerScreen) gui;
 			int guiLeft = container.getGuiLeft();
 			int guiTop = container.getGuiTop();
 			int totalPages = getTotalPages();
@@ -169,9 +169,9 @@ public class MinionHelperOverlay {
 		}
 
 		int totalPages = getTotalPages();
-		if (event.gui instanceof AccessorGuiContainer) {
-			int guiLeft = ((AccessorGuiContainer) event.gui).getGuiLeft();
-			int guiTop = ((AccessorGuiContainer) event.gui).getGuiTop();
+		if (event.gui instanceof AccessorContainerScreen) {
+			int guiLeft = ((AccessorContainerScreen) event.gui).getGuiLeft();
+			int guiTop = ((AccessorContainerScreen) event.gui).getGuiTop();
 			if (ArrowPagesUtils.onPageSwitchMouse(guiLeft, guiTop, topLeft, currentPage, totalPages, pageChange -> {
 				currentPage = pageChange;
 				resetCache();
@@ -184,11 +184,11 @@ public class MinionHelperOverlay {
 
 	private void checkButtonClick() {
 		GuiScreen gui = Minecraft.getInstance().currentScreen;
-		if (!(gui instanceof GuiChest)) return;
+		if (!(gui instanceof ChestScreen)) return;
 
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 
 		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
@@ -242,13 +242,13 @@ public class MinionHelperOverlay {
 	private void render(Map<String, OverviewLine> renderMap) {
 		Minecraft minecraft = Minecraft.getInstance();
 		Gui gui = Minecraft.getInstance().currentScreen;
-		if (!(gui instanceof GuiChest)) return;
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		if (!(gui instanceof ChestScreen)) return;
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 		minecraft.getTextureManager().bindTexture(minionOverlayImage);
 		GL11.glColor4f(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 1f, 0, 1f, GL11.GL_NEAREST);
 
 		if (filterEnabled) {
@@ -257,7 +257,7 @@ public class MinionHelperOverlay {
 			minecraft.getTextureManager().bindTexture(whiteCheckImage);
 		}
 		Utils.drawTexturedRect(guiLeft + xSize + 4 + 149, guiTop + 109, 10, 10, 0, 1f, 0, 1f, GL11.GL_NEAREST);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		RenderHelper.enableGUIStandardItemLighting();
 		ItemStack itemStack;
@@ -461,11 +461,11 @@ public class MinionHelperOverlay {
 
 	OverviewLine getObjectOverMouse(LinkedHashMap<String, OverviewLine> renderMap) {
 		GuiScreen gui = Minecraft.getInstance().currentScreen;
-		if (!(gui instanceof GuiChest)) return null;
+		if (!(gui instanceof ChestScreen)) return null;
 
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 
 		int x = guiLeft + xSize + 9;
 		int y = guiTop + 5;

@@ -21,12 +21,12 @@ package io.github.moulberry.notenoughupdates.recipes;
 
 import io.github.moulberry.notenoughupdates.NEUManager;
 import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
@@ -62,7 +62,7 @@ public class CraftingOverlay {
 	}
 
 	private void forEachHoveredSlot(
-		GuiChest gui,
+		ChestScreen gui,
 		ContainerChest chest,
 		int mouseX,
 		int mouseY,
@@ -71,18 +71,18 @@ public class CraftingOverlay {
 		forEachSlot(chest, (recipeIngredient, slot) -> {
 			if (Utils.isWithinRect(
 				mouseX, mouseY,
-				slot.xDisplayPosition + ((AccessorGuiContainer) gui).getGuiLeft(),
-				slot.yDisplayPosition + ((AccessorGuiContainer) gui).getGuiTop(),
+				slot.xDisplayPosition + ((AccessorContainerScreen) gui).getGuiLeft(),
+				slot.yDisplayPosition + ((AccessorContainerScreen) gui).getGuiTop(),
 				16, 16
 			))
 				block.accept(recipeIngredient, slot);
 		});
 	}
 
-	private void runIfCraftingOverlayIsPresent(Gui gui, BiConsumer<GuiChest, ContainerChest> block) {
+	private void runIfCraftingOverlayIsPresent(Gui gui, BiConsumer<ChestScreen, ContainerChest> block) {
 		if (currentRecipe == null) return;
-		if (!(gui instanceof GuiChest)) return;
-		GuiChest guiChest = (GuiChest) gui;
+		if (!(gui instanceof ChestScreen)) return;
+		ChestScreen guiChest = (ChestScreen) gui;
 		ContainerChest chest = (ContainerChest) guiChest.inventorySlots;
 		IInventory chestInventory = chest.getLowerChestInventory();
 		if (!"Craft Item".equals(chestInventory.getName().getString().getUnformattedText())) return;
@@ -100,10 +100,10 @@ public class CraftingOverlay {
 			renderSlots(guiChest, chest);
 			if (currentRecipe.getCraftText() != null) {
 				FontRenderer fontRenderer = Minecraft.getInstance().font;
-				fontRenderer.drawStringWithShadow(
+				fontRenderer.drawShadow(
 					currentRecipe.getCraftText(),
 					Utils.peekGuiScale().getScaledWidth() / 2f - fontRenderer.getStringWidth(currentRecipe.getCraftText()) / 2f,
-					((AccessorGuiContainer) guiChest).getGuiTop() - 15f, 0x808080
+					((AccessorContainerScreen) guiChest).getGuiTop() - 15f, 0x808080
 				);
 			}
 			renderTooltip(guiChest, chest);
@@ -132,7 +132,7 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void renderTooltip(GuiChest guiChest, ContainerChest chest) {
+	private void renderTooltip(ChestScreen guiChest, ContainerChest chest) {
 		int mouseX = Utils.getMouseX();
 		int mouseY = Utils.getMouseY();
 		forEachHoveredSlot(guiChest, chest, mouseX, mouseY, (recipeIngredient, slot) -> {
@@ -148,7 +148,7 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void renderSlots(GuiChest guiChest, ContainerChest chest) {
+	private void renderSlots(ChestScreen guiChest, ContainerChest chest) {
 		forEachSlot(chest, (recipeIngredient, slot) -> {
 			ItemStack actualItem = slot.getStack();
 			if (actualItem != null && (recipeIngredient == null ||
@@ -162,9 +162,9 @@ public class CraftingOverlay {
 		});
 	}
 
-	private void drawItemStack(GuiChest gui, Slot slot, ItemStack item) {
-		int slotX = slot.xDisplayPosition + ((AccessorGuiContainer) gui).getGuiLeft();
-		int slotY = slot.yDisplayPosition + ((AccessorGuiContainer) gui).getGuiTop();
+	private void drawItemStack(ChestScreen gui, Slot slot, ItemStack item) {
+		int slotX = slot.xDisplayPosition + ((AccessorContainerScreen) gui).getGuiLeft();
+		int slotY = slot.yDisplayPosition + ((AccessorContainerScreen) gui).getGuiTop();
 		Gui.drawRect(slotX, slotY, slotX + 16, slotY + 16, 0x64ff0000);
 		if (item != null)
 			Utils.drawItemStack(item, slotX, slotY);

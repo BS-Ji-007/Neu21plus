@@ -30,8 +30,8 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
@@ -79,7 +79,7 @@ public class PresetWarning extends GuiElement {
 		if (event.slotId == -999) return;
 		if (event.clickedButton == 0) return;
 
-		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 
 		ItemStack clickedPreset = chest.inventorySlots.getSlot(event.slotId).getStack();
 		if (clickedPreset == null) return;
@@ -108,10 +108,10 @@ public class PresetWarning extends GuiElement {
 		final int width = scaledResolution.getScaledWidth();
 		final int height = scaledResolution.getScaledHeight();
 
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0, 0, 500);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 500);
 
 		Gui.drawRect(0, 0, width, height, 0x80000000);
 
@@ -167,7 +167,7 @@ public class PresetWarning extends GuiElement {
 			0xffff0000
 		);
 
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class PresetWarning extends GuiElement {
 
 	private void makeClick() {
 		if (presetSlot != -1) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
 				presetSlot, 1, 0, Minecraft.getInstance().player
 			);

@@ -26,7 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -131,12 +131,12 @@ public class RenderUtils {
 		float vMax,
 		int filter
 	) {
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		drawTexturedRectNoBlend(x, y, width, height, uMin, uMax, vMin, vMax, filter);
 
-		GlStateManager.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 	}
 
 	public static void drawTexturedRectNoBlend(
@@ -150,7 +150,7 @@ public class RenderUtils {
 		float vMax,
 		int filter
 	) {
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter);
@@ -194,11 +194,11 @@ public class RenderUtils {
 		float endGreen = (float) (endColor >> 8 & 255) / 255.0F;
 		float endBlue = (float) (endColor & 255) / 255.0F;
 
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GlStateManager.shadeModel(7425);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.shadeModel(7425);
 
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -209,13 +209,13 @@ public class RenderUtils {
 		worldrenderer.pos(right, bottom, zLevel).color(endRed, endGreen, endBlue, endAlpha).endVertex();
 		tessellator.draw();
 
-		GlStateManager.shadeModel(7424);
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.shadeModel(7424);
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 	}
 
-	private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
+	private static final ResourceLocation beaconBeam = new ResourceLocation("notenoughupdates", "textures/entity/beacon_beam.png");
 
 	private static void renderBeaconBeam(
 		double x, double y, double z, int rgb, float alphaMult,
@@ -229,18 +229,18 @@ public class RenderUtils {
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
 		if (disableDepth) {
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(beaconBeam);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
-		GlStateManager.disableLighting();
-		GlStateManager.enableCull();
-		GlStateManager.enableTexture2D();
-		GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE, GL11.GL_ZERO);
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
 		double time = Minecraft.getInstance().level.getTotalWorldTime() + (double) partialTicks;
 		double d1 = MathHelper.func_181162_h(-time * 0.2D - (double) MathHelper.floor_double(-time * 0.1D));
@@ -278,7 +278,7 @@ public class RenderUtils {
 		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
 		tessellator.draw();
 
-		GlStateManager.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
 		double d12 = -1.0D + d1;
 		double d13 = height + d12;
 
@@ -301,10 +301,10 @@ public class RenderUtils {
 		worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F * alphaMult).endVertex();
 		tessellator.draw();
 
-		GlStateManager.disableLighting();
-		GlStateManager.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 		if (disableDepth) {
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 	}
 
@@ -327,13 +327,13 @@ public class RenderUtils {
 	private static void renderBoundingBoxInViewSpace(double x, double y, double z, int rgb, boolean disableDepth) {
 		AxisAlignedBB bb = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1);
 
-		if (disableDepth) GlStateManager.disableDepth();
-		GlStateManager.disableCull();
-		GlStateManager.disableTexture2D();
+		if (disableDepth) com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		CustomItemEffects.drawFilledBoundingBox(bb, 1f, SpecialColour.special(0, (rgb >> 24) & 0xFF, rgb));
-		GlStateManager.enableTexture2D();
-		GlStateManager.enableCull();
-		if (disableDepth) GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		if (disableDepth) com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 	}
 
 	public static void renderBeaconBeam(BlockPos block, int rgb, float alphaMult, float partialTicks) {
@@ -425,7 +425,7 @@ public class RenderUtils {
 		float alpha,
 		ResourceLocation texture
 	) {
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		Entity v = Minecraft.getInstance().getRenderViewEntity();
 		double vX = v.lastTickPosX + (v.posX - v.lastTickPosX);
 		double vY = v.lastTickPosY + (v.posY - v.lastTickPosY);
@@ -434,10 +434,10 @@ public class RenderUtils {
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-		GlStateManager.enableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.disableCull();
-		GlStateManager.color(1.0f, 1.0f, 1.0f, alpha);
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0f, 1.0f, 1.0f, alpha);
 		Minecraft.getInstance().getTextureManager().bindTexture(texture);
 		worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		worldrenderer.pos(p1.xCoord - vX, p1.yCoord - vY, p1.zCoord - vZ).tex(0, 0).endVertex(); //Top Left
@@ -445,14 +445,14 @@ public class RenderUtils {
 		worldrenderer.pos(p3.xCoord - vX, p3.yCoord - vY, p3.zCoord - vZ).tex(1, 1).endVertex(); //Bottom Right
 		worldrenderer.pos(p4.xCoord - vX, p4.yCoord - vY, p4.zCoord - vZ).tex(0, 1).endVertex(); //Bottom Left
 		tessellator.draw();
-		GlStateManager.enableCull();
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	public static void renderWayPoint(List<String> lines, Vector3f loc, float partialTicks, boolean onlyShowDistance) {
-		GlStateManager.alphaFunc(516, 0.1F);
+		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 
 		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
@@ -470,16 +470,16 @@ public class RenderUtils {
 			y *= 12 / dist;
 			z *= 12 / dist;
 		}
-		GlStateManager.translate(x, y, z);
-		GlStateManager.translate(0, viewer.getEyeHeight(), 0);
+		com.mojang.blaze3d.systems.RenderSystem.translate(x, y, z);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, viewer.getEyeHeight(), 0);
 
 		lines = onlyShowDistance ? new ArrayList<>() : new ArrayList<>(lines);
 		lines.add(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m");
 		renderNametag(lines);
 
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 	}
 
 	public static void renderNametag(String str) {
@@ -490,16 +490,16 @@ public class RenderUtils {
 		FontRenderer fontrenderer = Minecraft.getInstance().font;
 		float f = 1.6F;
 		float f1 = 0.016666668F * f;
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-Minecraft.getInstance().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(Minecraft.getInstance().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
-		GlStateManager.scale(-f1, -f1, f1);
-		GlStateManager.disableLighting();
-		GlStateManager.depthMask(false);
-		GlStateManager.disableDepth();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(-Minecraft.getInstance().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(Minecraft.getInstance().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.scale(-f1, -f1, f1);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		int i = 0;
@@ -507,34 +507,34 @@ public class RenderUtils {
 		for (String str : lines) {
 			int j = fontrenderer.getStringWidth(str) / 2;
 
-			GlStateManager.disableTexture2D();
+			com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 			worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
 			worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 			worldrenderer.pos(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 			worldrenderer.pos(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 			worldrenderer.pos(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 			tessellator.draw();
-			GlStateManager.enableTexture2D();
+			com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
 			fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, 553648127);
-			GlStateManager.depthMask(true);
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 
 			fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, -1);
-			GlStateManager.translate(0, 10f, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 10f, 0);
 		}
-		GlStateManager.enableDepth();
-		GlStateManager.enableBlend();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	public static void highlightSlot(Slot slot, Color color) {
 		boolean lightingState = GL11.glIsEnabled(GL11.GL_LIGHTING);
 
-		GlStateManager.disableLighting();
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0f, 0f, 110 + Minecraft.getInstance().getRenderItem().zLevel);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0f, 0f, 110 + Minecraft.getInstance().getRenderItem().zLevel);
 		Gui.drawRect(
 			slot.xDisplayPosition,
 			slot.yDisplayPosition,
@@ -542,9 +542,9 @@ public class RenderUtils {
 			slot.yDisplayPosition + 16,
 			color.getRGB()
 		);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
-		if (lightingState) GlStateManager.enableLighting();
+		if (lightingState) com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 	}
 
 	public static void renderLineToBlock(BlockPos block, int rgb, float partialTicks) {
@@ -555,17 +555,17 @@ public class RenderUtils {
 		double cameraY = renderViewEntity.lastTickPosY + (renderViewEntity.posY - renderViewEntity.lastTickPosY);
 		double cameraZ = renderViewEntity.lastTickPosZ + (renderViewEntity.posZ - renderViewEntity.lastTickPosZ);
 
-		GlStateManager.disableTexture2D();
-		GlStateManager.disableDepth();
-		GlStateManager.disableLighting();
-		GlStateManager.disableCull();
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableCull();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
 		GL11.glLineWidth(3.0F);
 
-		GlStateManager.color(
+		com.mojang.blaze3d.systems.RenderSystem.color(
 			((rgb >> 16) & 0xFF) / 255.0f,
 			((rgb >> 8) & 0xFF) / 255.0f,
 			(rgb & 0xFF) / 255.0f,
@@ -579,11 +579,11 @@ public class RenderUtils {
 		worldRenderer.pos(block.getX() + 0.5 - cameraX, block.getY() - cameraY, block.getZ() + 0.5 - cameraZ).endVertex();
 		tessellator.draw();
 
-		GlStateManager.enableTexture2D();
-		GlStateManager.enableDepth();
-		GlStateManager.enableCull();
-		GlStateManager.disableBlend();
-		GlStateManager.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableTexture2D();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableCull();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 	}
 
 }

@@ -33,12 +33,12 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.requirements.Re
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.CraftingSource;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.MinionSource;
 import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.NpcSource;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class MinionHelperOverlayHover {
 	}
 
 	void renderHover(LinkedHashMap<String, OverviewLine> renderMap) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
 
 		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
@@ -77,11 +77,11 @@ public class MinionHelperOverlayHover {
 
 	private void renderButtons() {
 		GuiScreen gui = Minecraft.getInstance().currentScreen;
-		if (!(gui instanceof GuiChest)) return;
+		if (!(gui instanceof ChestScreen)) return;
 
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 
 		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();

@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.core.util;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.MathHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
@@ -41,7 +41,7 @@ public class ArrowPagesUtils {
 	public static final int BUTTON_WIDTH = 7;
 	public static final int BUTTON_HEIGHT = 11;
 
-	public static final ResourceLocation resourcePacksTexture = new ResourceLocation("textures/gui/resource_packs.png");
+	public static final ResourceLocation resourcePacksTexture = new ResourceLocation("notenoughupdates", "textures/gui/resource_packs.png");
 
 	public static void onDraw(int guiLeft, int guiTop, int[] topLeftButton, int currentPage, int totalPages) {
 		if (totalPages < 2) return;
@@ -75,7 +75,7 @@ public class ArrowPagesUtils {
 			BUTTON_HEIGHT
 		);
 		Minecraft.getInstance().getTextureManager().bindTexture(resourcePacksTexture);
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 
 		if (currentPage != 0)
 			Utils.drawTexturedRect(

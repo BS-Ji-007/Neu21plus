@@ -35,7 +35,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
@@ -129,7 +129,7 @@ public class GuiItemRecipe extends GuiScreen {
 												.addAll(getCurrentRecipe().getSlots()).build();
 	}
 
-	private static final ResourceLocation EDITOR = new ResourceLocation("notenoughupdates:invbuttons/editor.png");
+	private static final ResourceLocation EDITOR = new ResourceLocation("notenoughupdates", "notenoughupdates:invbuttons/editor.png");
 
 	List<String> tooltipToDisplay = null;
 
@@ -137,12 +137,12 @@ public class GuiItemRecipe extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		NeuRecipe currentRecipe = getCurrentRecipe();
 
 		Minecraft.getInstance().getTextureManager().bindTexture(currentRecipe.getBackground());
-		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
+		this.blit(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
 
 		drawTabs();
 
@@ -163,13 +163,13 @@ public class GuiItemRecipe extends GuiScreen {
 				}
 
 				//i just stole the code for how an itemstack renders its stack count
-				GlStateManager.disableLighting();
-				GlStateManager.disableDepth();
-				GlStateManager.disableBlend();
-				font.drawStringWithShadow(stackSize, (slot.getX(this) + 17 - font.getStringWidth(stackSize)), (slot.getY(this) + 9), 16777215);
-				GlStateManager.enableLighting();
-				GlStateManager.enableDepth();
-				GlStateManager.enableBlend();
+				com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+				com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+				font.drawShadow(stackSize, (slot.getX(this) + 17 - font.getStringWidth(stackSize)), (slot.getY(this) + 9), 16777215);
+				com.mojang.blaze3d.systems.RenderSystem.enableLighting();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 			}
 		}
 
@@ -201,7 +201,7 @@ public class GuiItemRecipe extends GuiScreen {
 				int x = guiLeft + 123;
 				int y = guiTop + 105;
 				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(x - 1, y - 1, 18, 18,
 					0 / 256f, 18 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 				);
@@ -252,7 +252,7 @@ public class GuiItemRecipe extends GuiScreen {
 				textureOffset = 30;
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(tabsTexture);
-			drawTexturedModalRect(
+			blit(
 				tabPosX, tabPosY,
 				0, textureOffset,
 				TAB_TEXTURE_SIZE_X, TAB_SIZE_Y

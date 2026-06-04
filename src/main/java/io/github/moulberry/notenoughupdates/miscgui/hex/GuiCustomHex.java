@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.HexPriceWarning;
 import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
 import io.github.moulberry.notenoughupdates.miscgui.CalendarOverlay;
 import io.github.moulberry.notenoughupdates.miscgui.util.OrbDisplay;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.options.NEUConfig;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
@@ -44,9 +44,9 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.client.model.ModelBook;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -80,7 +80,7 @@ import java.util.regex.Pattern;
 
 public class GuiCustomHex extends Gui {
 	private static final GuiCustomHex INSTANCE = new GuiCustomHex();
-	private static final ResourceLocation TEXTURE = new ResourceLocation("notenoughupdates:custom_enchant_gui.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("notenoughupdates", "notenoughupdates:custom_enchant_gui.png");
 	private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation(
 		"textures/entity/enchanting_table_book.png");
 	private static final ModelBook MODEL_BOOK = new ModelBook();
@@ -302,7 +302,7 @@ public class GuiCustomHex extends Gui {
 				containerName.substring(0, "Bottles of Enchanting".length())
 			)) &&
 			NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard();
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 		ItemStack hexStack = cc.getLowerChestInventory().getStackInSlot(50);
 		ItemStack bookStack = cc.getLowerChestInventory().getStackInSlot(32);
@@ -343,7 +343,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickEnchants() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		//ItemStack hexStack = cc.getLowerChestInventory().getStackInSlot(12);
@@ -697,7 +697,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickBooks() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(19);
@@ -988,7 +988,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickHex() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(22);
@@ -1107,7 +1107,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickGemstones() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(19);
@@ -1304,11 +1304,11 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderEnchantment(float partialTicks) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
@@ -1349,7 +1349,7 @@ public class GuiCustomHex extends Gui {
 
 			//Page Arrows
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
@@ -1367,14 +1367,14 @@ public class GuiCustomHex extends Gui {
 
 		//Can't be enchanted text
 		if (currentState == EnchantState.INVALID_ITEM) {
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			Utils.drawStringCentered("This item can't",
 				guiLeft + X_SIZE / 2, guiTop + 88, true, 0xffff5555
 			);
 			Utils.drawStringCentered("be enchanted",
 				guiLeft + X_SIZE / 2, guiTop + 98, true, 0xffff5555
 			);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
 		renderArrow();
@@ -1416,7 +1416,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -1459,7 +1459,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -1497,7 +1497,7 @@ public class GuiCustomHex extends Gui {
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		for (int i = 0; i < 36; i++) {
 			int itemX = guiLeft + 102 + 18 * (i % 9);
 			int itemY = guiTop + 133 + 18 * (i / 9);
@@ -1506,11 +1506,11 @@ public class GuiCustomHex extends Gui {
 				itemY += 4;
 			}
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
 			Slot slot = cc.getSlot(inventoryStartIndex + i);
-			((AccessorGuiContainer) chest).doDrawSlot(slot);
-			GlStateManager.popMatrix();
+			((AccessorContainerScreen) chest).doDrawSlot(slot);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (mouseX >= itemX && mouseX < itemX + 18 &&
 				mouseY >= itemY && mouseY < itemY + 18) {
@@ -1550,7 +1550,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = enchanterCurrentEnch.conflicts ? 112 : 0;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
@@ -1610,7 +1610,7 @@ public class GuiCustomHex extends Gui {
 
 			if (isChangingEnchLevel) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -1640,7 +1640,7 @@ public class GuiCustomHex extends Gui {
 			}
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentEnch.xpCost)) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1649,7 +1649,7 @@ public class GuiCustomHex extends Gui {
 				);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1665,7 +1665,7 @@ public class GuiCustomHex extends Gui {
 			//Cancel button
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1674,7 +1674,7 @@ public class GuiCustomHex extends Gui {
 				);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1715,7 +1715,7 @@ public class GuiCustomHex extends Gui {
 
 				int bSize = before.size();
 				int aSize = after.size();
-				GlStateManager.disableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 				for (int i = 0; i < bSize + aSize; i++) {
 					Enchantment ench;
 					int yIndex;
@@ -1728,7 +1728,7 @@ public class GuiCustomHex extends Gui {
 					}
 
 					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 					int type = 0;
 					if (i == bSize) {
@@ -1760,7 +1760,7 @@ public class GuiCustomHex extends Gui {
 					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4 + 1, 0x2d2102, false);
 					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4, 0xea82ff, false);
 				}
-				GlStateManager.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			}
 
 			if (mouseX > left + 96 && mouseX <= left + 96 + 16 &&
@@ -1793,7 +1793,7 @@ public class GuiCustomHex extends Gui {
 
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -1816,31 +1816,31 @@ public class GuiCustomHex extends Gui {
 		}
 
 		if (!isChangingEnchLevel && itemHoverX >= 0 && itemHoverY >= 0) {
-			GlStateManager.disableDepth();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 			Gui.drawRect(itemHoverX, itemHoverY, itemHoverX + 16, itemHoverY + 16,
 				hoverLocked ? 0x80ff8080 : 0x80ffffff
 			);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
-		GlStateManager.translate(0, 0, 300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 300);
 
 		renderOrbAnim(partialTicks);
 
 		renderMouseStack(stackOnMouse, disallowClick, mouseX, mouseY,
 			width, height, tooltipToDisplay
 		);
-		GlStateManager.translate(0, 0, -300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -300);
 	}
 
 	private void renderBooks(float partialTicks) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
@@ -1881,7 +1881,7 @@ public class GuiCustomHex extends Gui {
 
 			//Page Arrows
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
@@ -1899,14 +1899,14 @@ public class GuiCustomHex extends Gui {
 
 		//Can't be enchanted text
 		/*if (currentState == EnchantState.INVALID_ITEM) {
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			Utils.drawStringCentered("This item can't",
 				guiLeft + X_SIZE / 2, guiTop + 88, true, 0xffff5555
 			);
 			Utils.drawStringCentered("be enchanted",
 				guiLeft + X_SIZE / 2, guiTop + 98, true, 0xffff5555
 			);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}*/
 
 		renderArrow();
@@ -1977,7 +1977,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2020,7 +2020,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2057,7 +2057,7 @@ public class GuiCustomHex extends Gui {
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		for (int i = 0; i < 36; i++) {
 			int itemX = guiLeft + 102 + 18 * (i % 9);
 			int itemY = guiTop + 133 + 18 * (i / 9);
@@ -2066,11 +2066,11 @@ public class GuiCustomHex extends Gui {
 				itemY += 4;
 			}
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
 			Slot slot = cc.getSlot(inventoryStartIndex + i);
-			((AccessorGuiContainer) chest).doDrawSlot(slot);
-			GlStateManager.popMatrix();
+			((AccessorContainerScreen) chest).doDrawSlot(slot);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (mouseX >= itemX && mouseX < itemX + 18 &&
 				mouseY >= itemY && mouseY < itemY + 18) {
@@ -2110,7 +2110,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
@@ -2153,7 +2153,7 @@ public class GuiCustomHex extends Gui {
 			}
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentItem.price)) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2162,7 +2162,7 @@ public class GuiCustomHex extends Gui {
 				);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2178,7 +2178,7 @@ public class GuiCustomHex extends Gui {
 			//Cancel button
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2187,7 +2187,7 @@ public class GuiCustomHex extends Gui {
 				);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2229,7 +2229,7 @@ public class GuiCustomHex extends Gui {
 
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -2252,31 +2252,31 @@ public class GuiCustomHex extends Gui {
 		}
 
 		if (!isChangingEnchLevel && itemHoverX >= 0 && itemHoverY >= 0) {
-			GlStateManager.disableDepth();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 			Gui.drawRect(itemHoverX, itemHoverY, itemHoverX + 16, itemHoverY + 16,
 				hoverLocked ? 0x80ff8080 : 0x80ffffff
 			);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
-		GlStateManager.translate(0, 0, 300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 300);
 
 		renderOrbAnim(partialTicks);
 
 		renderMouseStack(stackOnMouse, disallowClick, mouseX, mouseY,
 			width, height, tooltipToDisplay
 		);
-		GlStateManager.translate(0, 0, -300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -300);
 	}
 
 	private void renderHex(float partialTicks) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
@@ -2316,14 +2316,14 @@ public class GuiCustomHex extends Gui {
 
 		//Can't be enchanted text
 		if (currentState == EnchantState.INVALID_ITEM_HEX) {
-			GlStateManager.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			Utils.drawStringCentered("This item can't",
 				guiLeft + X_SIZE / 2, guiTop + 88, true, 0xffff5555
 			);
 			Utils.drawStringCentered("be enchanted",
 				guiLeft + X_SIZE / 2, guiTop + 98, true, 0xffff5555
 			);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
 		renderArrow();
@@ -2342,7 +2342,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2385,7 +2385,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2421,7 +2421,7 @@ public class GuiCustomHex extends Gui {
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		for (int i = 0; i < 36; i++) {
 			int itemX = guiLeft + 102 + 18 * (i % 9);
 			int itemY = guiTop + 133 + 18 * (i / 9);
@@ -2430,11 +2430,11 @@ public class GuiCustomHex extends Gui {
 				itemY += 4;
 			}
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
 			Slot slot = cc.getSlot(inventoryStartIndex + i);
-			((AccessorGuiContainer) chest).doDrawSlot(slot);
-			GlStateManager.popMatrix();
+			((AccessorContainerScreen) chest).doDrawSlot(slot);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (mouseX >= itemX && mouseX < itemX + 18 &&
 				mouseY >= itemY && mouseY < itemY + 18) {
@@ -2459,7 +2459,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
@@ -2505,7 +2505,7 @@ public class GuiCustomHex extends Gui {
 
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -2528,31 +2528,31 @@ public class GuiCustomHex extends Gui {
 		}
 
 		if (!isChangingEnchLevel && itemHoverX >= 0 && itemHoverY >= 0) {
-			GlStateManager.disableDepth();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 			Gui.drawRect(itemHoverX, itemHoverY, itemHoverX + 16, itemHoverY + 16,
 				hoverLocked ? 0x80ff8080 : 0x80ffffff
 			);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
-		GlStateManager.translate(0, 0, 300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 300);
 
 		renderOrbAnim(partialTicks);
 
 		renderMouseStack(stackOnMouse, disallowClick, mouseX, mouseY,
 			width, height, tooltipToDisplay
 		);
-		GlStateManager.translate(0, 0, -300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -300);
 	}
 
 	private void renderGemstones(float partialTicks) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return;
 
 		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+		ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
@@ -2593,7 +2593,7 @@ public class GuiCustomHex extends Gui {
 
 			//Page Arrows
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
@@ -2618,7 +2618,7 @@ public class GuiCustomHex extends Gui {
 				}
 				if (System.currentTimeMillis() - confirmButtonAnimTime < 500) {
 					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 						0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 					);
@@ -2627,7 +2627,7 @@ public class GuiCustomHex extends Gui {
 					);
 				} else {
 					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 						0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 					);
@@ -2641,7 +2641,7 @@ public class GuiCustomHex extends Gui {
 
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2650,7 +2650,7 @@ public class GuiCustomHex extends Gui {
 				);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -2683,7 +2683,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2726,7 +2726,7 @@ public class GuiCustomHex extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -2763,7 +2763,7 @@ public class GuiCustomHex extends Gui {
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		for (int i = 0; i < 36; i++) {
 			int itemX = guiLeft + 102 + 18 * (i % 9);
 			int itemY = guiTop + 133 + 18 * (i / 9);
@@ -2772,11 +2772,11 @@ public class GuiCustomHex extends Gui {
 				itemY += 4;
 			}
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft + 102 - 8, guiTop + 191 - (inventoryStartIndex / 9 * 18 + 89), 0);
 			Slot slot = cc.getSlot(inventoryStartIndex + i);
-			((AccessorGuiContainer) chest).doDrawSlot(slot);
-			GlStateManager.popMatrix();
+			((AccessorContainerScreen) chest).doDrawSlot(slot);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (mouseX >= itemX && mouseX < itemX + 18 &&
 				mouseY >= itemY && mouseY < itemY + 18) {
@@ -2801,7 +2801,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
@@ -2847,7 +2847,7 @@ public class GuiCustomHex extends Gui {
 
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -2904,7 +2904,7 @@ public class GuiCustomHex extends Gui {
 
 			if (isChangingEnchLevel) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -2921,23 +2921,23 @@ public class GuiCustomHex extends Gui {
 		}
 
 		if (!isChangingEnchLevel && itemHoverX >= 0 && itemHoverY >= 0) {
-			GlStateManager.disableDepth();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 			Gui.drawRect(itemHoverX, itemHoverY, itemHoverX + 16, itemHoverY + 16,
 				hoverLocked ? 0x80ff8080 : 0x80ffffff
 			);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
-		GlStateManager.translate(0, 0, 300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 300);
 
 		renderOrbAnim(partialTicks);
 
 		renderMouseStack(stackOnMouse, disallowClick, mouseX, mouseY,
 			width, height, tooltipToDisplay
 		);
-		GlStateManager.translate(0, 0, -300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -300);
 	}
 
 	private String getIconStr(HexItem item) {
@@ -3108,7 +3108,7 @@ public class GuiCustomHex extends Gui {
 	private void renderBaseTexture() {
 		//Base Texture
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(guiLeft, guiTop, X_SIZE, Y_SIZE,
 			0, X_SIZE / 512f, 0, Y_SIZE / 512f, GL11.GL_NEAREST
 		);
@@ -3117,7 +3117,7 @@ public class GuiCustomHex extends Gui {
 	private List<String> renderSettings(int mouseX, int mouseY, List<String> tooltipToDisplay) {
 		//Settings Buttons
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		//On Settings Button
 		Utils.drawTexturedRect(guiLeft + 295, guiTop + 147, 16, 16,
 			0, 16 / 512f, 387 / 512f, (387 + 16) / 512f, GL11.GL_NEAREST
@@ -3190,7 +3190,7 @@ public class GuiCustomHex extends Gui {
 				offset = Math.round((96 - 15) * (leftScroll.getValue() / (float) ((applicable.size() - 6) * 16)));
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 104, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
@@ -3208,7 +3208,7 @@ public class GuiCustomHex extends Gui {
 				offset = Math.round((96 - 15) * (rightScroll.getValue() / (float) ((removable.size() - 6) * 16)));
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 344, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
@@ -3219,7 +3219,7 @@ public class GuiCustomHex extends Gui {
 		//Enchant arrow
 		if (arrowAmount.getValue() > 0) {
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			float w = 22 * arrowAmount.getValue();
 			if (removingEnchantPlayerLevel < 0) {
 				Utils.drawTexturedRect(guiLeft + 134, guiTop + 58, w, 16,
@@ -3238,14 +3238,14 @@ public class GuiCustomHex extends Gui {
 		//Cancel button
 		if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 				0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 			);
 			Utils.drawStringCentered("Cancel", guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040);
 		} else {
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 				0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 			);
@@ -3255,10 +3255,10 @@ public class GuiCustomHex extends Gui {
 
 	private void renderOrbAnim(float partialTicks) {
 		//Orb animation
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(guiLeft, guiTop, 0);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft, guiTop, 0);
 		orbDisplay.renderOrbs(partialTicks);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 	private void renderMouseStack(
@@ -3278,34 +3278,34 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderEnchantBook(ScaledResolution scaledresolution, float partialTicks) {
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
-		GlStateManager.pushMatrix();
-		GlStateManager.matrixMode(5889);
-		GlStateManager.pushMatrix();
-		GlStateManager.loadIdentity();
-		GlStateManager.viewport((scaledresolution.getScaledWidth() - 320) / 2 * scaledresolution.getScaleFactor(),
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+		com.mojang.blaze3d.systems.RenderSystem.viewport((scaledresolution.getScaledWidth() - 320) / 2 * scaledresolution.getScaleFactor(),
 			(scaledresolution.getScaledHeight() - 240) / 2 * scaledresolution.getScaleFactor(),
 			320 * scaledresolution.getScaleFactor(), 240 * scaledresolution.getScaleFactor()
 		);
-		GlStateManager.translate(0.0F, 0.33F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 0.33F, 0.0F);
 		Project.gluPerspective(90.0F, 1.3333334F, 9.0F, 80.0F);
-		GlStateManager.matrixMode(5888);
-		GlStateManager.loadIdentity();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+		com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
 		RenderHelper.enableStandardItemLighting();
-		GlStateManager.translate(0.0F, 3.3F, -16.0F);
-		GlStateManager.scale(5, 5, 5);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0.0F, 3.3F, -16.0F);
+		com.mojang.blaze3d.systems.RenderSystem.scale(5, 5, 5);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F, 0.0F, 0.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(ENCHANTMENT_TABLE_BOOK_TEXTURE);
-		GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(20.0F, 1.0F, 0.0F, 0.0F);
 		float bookOpenAngle = this.bookOpenLast + (this.bookOpen - this.bookOpenLast) * partialTicks;
-		GlStateManager.translate(
+		com.mojang.blaze3d.systems.RenderSystem.translate(
 			(1.0F - bookOpenAngle) * 0.2F,
 			(1.0F - bookOpenAngle) * 0.1F,
 			(1.0F - bookOpenAngle) * 0.25F
 		);
-		GlStateManager.rotate(-(1.0F - bookOpenAngle) * 90.0F - 90.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(-(1.0F - bookOpenAngle) * 90.0F - 90.0F, 0.0F, 1.0F, 0.0F);
+		com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F, 1.0F, 0.0F, 0.0F);
 		float pageAngle1 = this.pageOpenLast + (this.pageOpen - this.pageOpenLast) * partialTicks + 0.25F;
 		float pageAngle2 = this.pageOpenLast + (this.pageOpen - this.pageOpenLast) * partialTicks + 0.75F;
 		pageAngle1 = (pageAngle1 - (float) MathHelper.truncateDoubleToInt(pageAngle1)) * 1.6F - 0.3F;
@@ -3316,19 +3316,19 @@ public class GuiCustomHex extends Gui {
 		if (pageAngle2 < 0.0F) pageAngle2 = 0.0F;
 		if (pageAngle2 > 1.0F) pageAngle2 = 1.0F;
 
-		GlStateManager.enableRescaleNormal();
+		com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
 		MODEL_BOOK.render(null, 0.0F, pageAngle1, pageAngle2, bookOpenAngle, 0.0F, 0.0625F);
-		GlStateManager.disableRescaleNormal();
+		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.matrixMode(5889);
-		GlStateManager.viewport(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getInstance().displayHeight);
-		GlStateManager.popMatrix();
-		GlStateManager.matrixMode(5888);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+		com.mojang.blaze3d.systems.RenderSystem.viewport(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getInstance().displayHeight);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 	}
 
 	private boolean isInEnchanting() {
@@ -3397,8 +3397,8 @@ public class GuiCustomHex extends Gui {
 				if (click >= 0) {
 					if (currentState == EnchantState.ADDING_ENCHANT || currentState == EnchantState.ADDING_BOOK) {
 						if (Mouse.getEventButtonState()) {
-							if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-							GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+							if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+							ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 							EntityPlayerSP playerIn = Minecraft.getInstance().player;
 							short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3409,8 +3409,8 @@ public class GuiCustomHex extends Gui {
 							cancelButtonAnimTime = System.currentTimeMillis();
 						}
 					} else {
-						if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-						GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+						if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+						ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3431,10 +3431,10 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
 					leftScroll.setValue(0);
 					rightScroll.setValue(0);
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					if (currentState != EnchantState.ADDING_BOOK) {
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
@@ -3477,8 +3477,8 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3492,8 +3492,8 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3576,8 +3576,8 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					/*GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					/*ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3593,8 +3593,8 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3676,8 +3676,8 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					/*if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					/*if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3693,8 +3693,8 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -3776,8 +3776,8 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					if (currentState != EnchantState.APPLYING_GEMSTONE) {
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
@@ -3798,8 +3798,8 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14) && currentState == EnchantState.APPLYING_GEMSTONE) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -4011,8 +4011,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								Enchantment ench = applicable.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM) {
 									EntityPlayerSP playerIn = Minecraft.getInstance().player;
@@ -4046,8 +4046,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM_IN_BOOKS) {
 									currentState = EnchantState.ADDING_BOOK;
@@ -4082,8 +4082,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								currentState = EnchantState.HAS_ITEM_IN_BOOKS;
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
@@ -4110,8 +4110,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.ADDING_GEMSTONE) {
 									currentState = EnchantState.APPLYING_GEMSTONE;
@@ -4148,8 +4148,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -4184,8 +4184,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								Enchantment ench = removable.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM || currentState == EnchantState.HAS_ITEM_IN_HEX) {
 									EntityPlayerSP playerIn = Minecraft.getInstance().player;
@@ -4219,8 +4219,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = removableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.ADDING_GEMSTONE) {
 									currentState = EnchantState.APPLYING_GEMSTONE;
@@ -4256,8 +4256,8 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = removableItem.get(index);
 
-								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+								ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM_IN_BOOKS) {
 									currentState = EnchantState.ADDING_BOOK;
@@ -4319,8 +4319,8 @@ public class GuiCustomHex extends Gui {
 				(mouseY > guiTop + 133 + 54 + 4 && mouseY < guiTop + 133 + 54 + 4 + 18)) {
 				if (currentState == EnchantState.ADDING_ENCHANT) {
 					if (Mouse.getEventButtonState()) {
-						if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-						GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+						if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+						ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -4340,8 +4340,8 @@ public class GuiCustomHex extends Gui {
 			mouseY >= guiTop + 57 && mouseY < guiTop + 57 + 18) {
 			if (currentState == EnchantState.ADDING_ENCHANT) {
 				if (Mouse.getEventButtonState()) {
-					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+					ContainerScreen chest = ((ContainerScreen) Minecraft.getInstance().currentScreen);
 
 					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
@@ -4362,7 +4362,7 @@ public class GuiCustomHex extends Gui {
 	public void onClick(C0EPacketClickWindow packet) {
 		var cont = Minecraft.getInstance().player.openContainer;
 		var clickEvent = new SlotClickEvent(
-			(GuiContainer) Minecraft.getInstance().currentScreen,
+			(ContainerScreen) Minecraft.getInstance().currentScreen,
 			cont.getSlot(packet.getSlotId()),
 			packet.getSlotId(),
 			packet.getUsedButton(),

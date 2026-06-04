@@ -24,8 +24,8 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.Blocks;
@@ -52,8 +52,8 @@ import java.util.Locale;
 
 @NEUAutoSubscribe
 public class BetterContainers {
-	private static final ResourceLocation TOGGLE_OFF = new ResourceLocation("notenoughupdates:dynamic_54/toggle_off.png");
-	private static final ResourceLocation TOGGLE_ON = new ResourceLocation("notenoughupdates:dynamic_54/toggle_on.png");
+	private static final ResourceLocation TOGGLE_OFF = new ResourceLocation("notenoughupdates", "notenoughupdates:dynamic_54/toggle_off.png");
+	private static final ResourceLocation TOGGLE_ON = new ResourceLocation("notenoughupdates", "notenoughupdates:dynamic_54/toggle_on.png");
 
 	private static final ResourceLocation DYNAMIC_54_BASE = new ResourceLocation(
 		"notenoughupdates:dynamic_54/style1/dynamic_54.png");
@@ -61,7 +61,7 @@ public class BetterContainers {
 		"notenoughupdates:dynamic_54/style1/dynamic_54_slot_ctm.png");
 	private static final ResourceLocation DYNAMIC_54_BUTTON = new ResourceLocation(
 		"notenoughupdates:dynamic_54/style1/dynamic_54_button_ctm.png");
-	private static final ResourceLocation rl = new ResourceLocation("notenoughupdates:dynamic_chest_inventory.png");
+	private static final ResourceLocation rl = new ResourceLocation("notenoughupdates", "notenoughupdates:dynamic_chest_inventory.png");
 	private static boolean loaded = false;
 	private static DynamicTexture texture = null;
 	private static int textColour = 4210752;
@@ -93,7 +93,7 @@ public class BetterContainers {
 			int invHashcode = lastInvHashcode;
 
 			if (currentMillis - lastHashcodeCheck > 50) {
-				Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
+				Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
 				invHashcode = container.getInventory().hashCode();
 			}
 
@@ -105,25 +105,25 @@ public class BetterContainers {
 			if (texture != null && loaded) {
 				lastRenderMillis = currentMillis;
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				textureManager.loadTexture(rl, texture);
 				textureManager.bindTexture(rl);
 				return;
 			}
 		} else if (currentMillis - lastRenderMillis < 200 && texture != null) {
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			textureManager.loadTexture(rl, texture);
 			textureManager.bindTexture(rl);
 			return;
 		}
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		textureManager.bindTexture(location);
 	}
 
 	public static boolean isBlacklistedInventory() {
 		if (!isChestOpen()) return false;
 
-		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 		return containerName.toLowerCase(Locale.ROOT).trim().startsWith("navigate the maze");
@@ -244,8 +244,8 @@ public class BetterContainers {
 		if (!hasItem()) return;
 
 		loaded = true;
-		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
-		List<Slot> inventorySlots = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots.inventorySlots;
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
+		List<Slot> inventorySlots = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots.inventorySlots;
 
 		if (hasNullPane() && container instanceof ContainerChest) {
 			if (lastSlots != inventorySlots) {
@@ -386,14 +386,14 @@ public class BetterContainers {
 	}
 
 	private static boolean isChestOpen() {
-		return Minecraft.getInstance().currentScreen instanceof GuiChest &&
+		return Minecraft.getInstance().currentScreen instanceof ChestScreen &&
 			NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() &&
 			NotEnoughUpdates.INSTANCE.config.improvedSBMenu.enableSbMenus;
 	}
 
 	private static boolean hasItem() {
 		if (!isChestOpen()) return false;
-		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
 		if (container instanceof ContainerChest) {
 			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();
@@ -410,7 +410,7 @@ public class BetterContainers {
 
 	private static boolean hasNullPane() {
 		if (!isChestOpen()) return false;
-		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
+		Container container = ((ChestScreen) Minecraft.getInstance().currentScreen).inventorySlots;
 		if (container instanceof ContainerChest) {
 			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();

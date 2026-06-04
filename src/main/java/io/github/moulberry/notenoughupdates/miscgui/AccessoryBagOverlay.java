@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.auction.APIManager;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.ArrowPagesUtils;
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.options.NEUConfig;
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer;
 import io.github.moulberry.notenoughupdates.profileviewer.PlayerStats;
@@ -40,8 +40,8 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -133,8 +133,8 @@ public class AccessoryBagOverlay {
 	private static Tabs currentTab = Tabs.TAB_BASIC;
 
 	public static boolean mouseClick() {
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (!containerName.trim().startsWith("Accessory Bag")) {
@@ -146,7 +146,7 @@ public class AccessoryBagOverlay {
 
 		if (!Mouse.getEventButtonState()) return false;
 		try {
-			AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
+			AccessorContainerScreen accessor = (AccessorContainerScreen) Minecraft.getInstance().currentScreen;
 			int xSize = accessor.getXSize();
 			int guiLeft = accessor.getGuiLeft();
 			int guiTop = accessor.getGuiTop();
@@ -310,7 +310,7 @@ public class AccessoryBagOverlay {
 
 		statsPagesTotal = (int) Math.ceil(statPairs.size() / 8.0);
 		if (statPairs.size() > 9) {
-			GlStateManager.color(1f, 1f, 1f, 1f);
+			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 			ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, statsPageActive, statsPagesTotal);
 		}
 	}
@@ -344,7 +344,7 @@ public class AccessoryBagOverlay {
 
 			dupePagesTotal = (int) Math.ceil(sortedDupes.size() / 8.0);
 			if (sortedDupes.size() > 9) {
-				GlStateManager.color(1f, 1f, 1f, 1f);
+				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 				ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, dupePageActive, dupePagesTotal);
 			}
 		}
@@ -513,7 +513,7 @@ public class AccessoryBagOverlay {
 
 			missingPagesTotal = (int) Math.ceil(missing.size() / 8.0);
 			if (missing.size() > 9) {
-				GlStateManager.color(1f, 1f, 1f, 1f);
+				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 				ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, missingPageActive, missingPagesTotal);
 			}
 
@@ -580,15 +580,15 @@ public class AccessoryBagOverlay {
 	public static void renderOverlay() {
 		inAccessoryBag = false;
 		offsetButtons = false;
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (containerName.trim().startsWith("Accessory Bag") && !containerName.contains("Thaumaturgy") &&
 				!containerName.contains("Upgrades")) {
 				inAccessoryBag = true;
 				try {
-					AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
+					AccessorContainerScreen accessor = (AccessorContainerScreen) Minecraft.getInstance().currentScreen;
 					int xSize = accessor.getXSize();
 					int guiLeft = accessor.getGuiLeft();
 					int guiTop = accessor.getGuiTop();
@@ -641,9 +641,9 @@ public class AccessoryBagOverlay {
 						}
 
 						if (secondInt > pagesVisited.size()) {
-							GlStateManager.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
-							GlStateManager.disableLighting();
+							com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 							Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
 							renderVisitOverlay(guiLeft + xSize + 3, guiTop);
@@ -668,12 +668,12 @@ public class AccessoryBagOverlay {
 						if (hasStack) pagesVisited.add(1);
 					}
 
-					GlStateManager.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 					offsetButtons = true;
 
 					for (int i = 0; i <= Tabs.values().length - 1; i++) {
 						if (i != currentTab.ordinal()) {
-							GlStateManager.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							Utils.drawTexturedRect(guiLeft + xSize + 168, guiTop + 20 * i, 25, 22,
 								168 / 196f, 193f / 196f, 0f, 22 / 128f, GL11.GL_NEAREST
@@ -683,7 +683,7 @@ public class AccessoryBagOverlay {
 						}
 					}
 
-					GlStateManager.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 					Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
@@ -918,9 +918,9 @@ public class AccessoryBagOverlay {
 	}
 
 	public static void renderButton(ItemStack stack, int x, int y, List<String> tooltip) {
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Utils.drawTexturedRect(x, y, 17, 17, 168f / 196f, 184f / 196f, 112f / 128f, 1f, GL11.GL_NEAREST); // slot
 		RenderHelper.enableGUIStandardItemLighting();
 		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(stack, x, y); // item
@@ -936,7 +936,7 @@ public class AccessoryBagOverlay {
 	}
 
 	public static void highlightDuplicates() {
-		AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
+		AccessorContainerScreen accessor = (AccessorContainerScreen) Minecraft.getInstance().currentScreen;
 		int guiLeft = accessor.getGuiLeft();
 		int guiTop = accessor.getGuiTop();
 
@@ -953,7 +953,7 @@ public class AccessoryBagOverlay {
 					.map(ItemStack::getDisplayName)
 					.collect(Collectors.toList())
 					.contains(stack.getName().getString())) {
-					GlStateManager.translate(0, 0, 50);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 50);
 					GuiScreen.drawRect(
 						guiLeft + slot.xDisplayPosition,
 						guiTop + slot.yDisplayPosition,
@@ -961,7 +961,7 @@ public class AccessoryBagOverlay {
 						guiTop + slot.yDisplayPosition + 16,
 						0xBBFF0000
 					);
-					GlStateManager.translate(0, 0, -50);
+					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -50);
 				}
 			}
 		}

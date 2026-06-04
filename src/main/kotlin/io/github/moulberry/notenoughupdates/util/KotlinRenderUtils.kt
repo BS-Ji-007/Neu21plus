@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.util
 
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
@@ -34,7 +34,7 @@ object KotlinRenderUtils {
     @JvmStatic
     fun renderItemStackButton(x: Int, y: Int, item: ItemStack, texture: ResourceLocation) {
         MC.textureManager.bindTexture(texture)
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Utils.drawTexturedRect(
             x.toFloat(),
             y.toFloat(),

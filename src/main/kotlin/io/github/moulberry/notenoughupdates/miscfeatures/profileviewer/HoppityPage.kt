@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.util.PetLeveling
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.roundToDecimals
 import io.github.moulberry.notenoughupdates.util.toRoman
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.world.item.ItemStack
@@ -123,7 +123,7 @@ class HoppityPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstanc
         Utils.renderShadowedString("§eChocolate Factory", (guiLeft + 214).toFloat(), (guiTop + 12).toFloat(), 105)
         Utils.renderShadowedString("§eStats", (guiLeft + 214).toFloat(), (guiTop + 28).toFloat(), 105)
 
-        GlStateManager.enableDepth()
+        com.mojang.blaze3d.systems.RenderSystem.enableDepth()
 
         drawAlignedStringWithHover(
             "§eChocolate:",

@@ -86,7 +86,7 @@ public class DwarvenMinesTextures implements IslandZoneSubdivider {
 
 	private void loadIgnoredChunks() {
 		ignoredChunks = new HashSet<>();
-		try (Reader reader = getUTF8Resource(new ResourceLocation("notenoughupdates:dwarven_data/all.json"))) {
+		try (Reader reader = getUTF8Resource(new ResourceLocation("notenoughupdates", "notenoughupdates:dwarven_data/all.json"))) {
 			JsonObject json = NotEnoughUpdates.INSTANCE.manager.gson.fromJson(reader, JsonObject.class);
 			for (Map.Entry<String, JsonElement> entry : json.entrySet()) {
 				String coord = entry.getKey();

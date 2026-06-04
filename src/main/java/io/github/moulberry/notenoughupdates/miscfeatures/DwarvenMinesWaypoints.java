@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
@@ -144,8 +144,8 @@ public class DwarvenMinesWaypoints {
 		NEUConfig.HiddenProfileSpecific hidden = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 		if (hidden == null) return;
 
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 

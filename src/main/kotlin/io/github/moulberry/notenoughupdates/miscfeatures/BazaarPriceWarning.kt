@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.events.SlotClickEvent
 import io.github.moulberry.notenoughupdates.util.ItemUtils
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.world.inventory.Slot
@@ -97,7 +97,7 @@ class BazaarPriceWarning : WarningPopUp() {
     }
 
     override fun confirmClick() {
-        val chest = Minecraft.getInstance().currentScreen as GuiChest
+        val chest = Minecraft.getInstance().currentScreen as ChestScreen
         Minecraft.getInstance().playerController.windowClick(
             chest.inventorySlots.windowId,
             clickedSlot?.slotNumber ?: return, 0, 0, Minecraft.getInstance().player

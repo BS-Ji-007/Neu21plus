@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.util.vector.Vector2f;
@@ -128,14 +128,14 @@ public abstract class TextOverlay {
 	}
 
 	protected Vector2f getPosition(int overlayWidth, int overlayHeight, boolean scaled) {
-		GlStateManager.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		ScaledResolution scaledResolution;
 		if (!scaled) scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		else scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 		int x = position.getAbsX(scaledResolution, overlayWidth);
 		int y = position.getAbsY(scaledResolution, overlayHeight);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		return new Vector2f(x, y);
 	}
 
@@ -160,9 +160,9 @@ public abstract class TextOverlay {
 		TextOverlayStyle style = styleSupplier.get();
 		if (style == TextOverlayStyle.BACKGROUND) Gui.drawRect(x, y, x + overlayWidth, y + overlayHeight, 0x80000000);
 
-		GlStateManager.enableBlend();
+		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GlStateManager.tryBlendFuncSeparate(
+		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(
 			GL11.GL_SRC_ALPHA,
 			GL11.GL_ONE_MINUS_SRC_ALPHA,
 			GL11.GL_ONE,

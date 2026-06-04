@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 
 import java.awt.*;
 
@@ -109,7 +109,7 @@ public class FlipperInfoPane extends InfoPane {
 	}
 
 	private void drawButton(int x, int y, boolean enabled) {
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture((enabled) ? on : off);
 		Utils.drawTexturedRect(x, y, 48, 16);
 	}

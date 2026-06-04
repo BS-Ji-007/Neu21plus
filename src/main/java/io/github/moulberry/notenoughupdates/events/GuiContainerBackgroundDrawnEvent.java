@@ -20,10 +20,10 @@
 package io.github.moulberry.notenoughupdates.events;
 
 import lombok.Value;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 
 @Value
-public class GuiContainerBackgroundDrawnEvent extends NEUEvent {
-	public GuiContainer container;
+public class ContainerScreenBackgroundDrawnEvent extends NEUEvent {
+	public ContainerScreen container;
 	public float partialTicks;
 }

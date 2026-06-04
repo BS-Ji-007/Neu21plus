@@ -292,7 +292,7 @@ class CustomTodoEditor(
 
     @Bind
     fun close() {
-        Minecraft.getInstance().displayGuiScreen(
+        Minecraft.getInstance().setScreen(
             CustomTodoList(
                 todos, xmlUniverse
             ).open()
@@ -301,7 +301,7 @@ class CustomTodoEditor(
 
     @Bind
     fun edit() {
-        Minecraft.getInstance().displayGuiScreen(
+        Minecraft.getInstance().setScreen(
             xmlUniverse.loadResourceLocation(this, ResourceLocation("notenoughupdates:gui/customtodos/edit.xml"))
         )
     }

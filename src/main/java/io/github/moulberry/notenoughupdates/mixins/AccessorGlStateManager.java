@@ -19,12 +19,12 @@
 
 package io.github.moulberry.notenoughupdates.mixins;
 
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(GlStateManager.class)
-public interface AccessorGlStateManager {
+@Mixin(com.mojang.blaze3d.systems.RenderSystem.class)
+public interface Accessorcom.mojang.blaze3d.systems.RenderSystem {
 	@Accessor("lightingState")
-	static GlStateManager.BooleanState getLightingState() {throw new AssertionError();}
+	static com.mojang.blaze3d.systems.RenderSystem.BooleanState getLightingState() {throw new AssertionError();}
 }

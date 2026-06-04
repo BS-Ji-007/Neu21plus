@@ -24,8 +24,8 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -122,8 +122,8 @@ public class EnchantingSolvers {
 		}
 
 		if (stack != null && stack.getName().getString() != null) {
-			if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-				GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+			if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+				ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 				ContainerChest container = (ContainerChest) chest.inventorySlots;
 				IInventory lower = container.getLowerChestInventory();
 
@@ -238,8 +238,8 @@ public class EnchantingSolvers {
 		}
 
 		if (stack != null && stack.getName().getString() != null) {
-			if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-				GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+			if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+				ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 				ContainerChest container = (ContainerChest) chest.inventorySlots;
 				IInventory lower = container.getLowerChestInventory();
 
@@ -275,9 +275,9 @@ public class EnchantingSolvers {
 									if (NotEnoughUpdates.INSTANCE.config.enchantingSolvers.seqNumbers &&
 										solveIndex >= ultrasequencerReplayIndex) {
 										int w = Minecraft.getInstance().font.getStringWidth((solveIndex + 1) + "");
-										GlStateManager.disableDepth();
-										GlStateManager.enableBlend();
-										GlStateManager.disableLighting();
+										com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+										com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+										com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 										Utils.drawStringScaled((solveIndex + 1) + "",
 											x + 8.5f - w / 2f, y + 8.5f - 4, true, 0xffc0c0c0, 1f
 										);
@@ -324,10 +324,10 @@ public class EnchantingSolvers {
 			return;
 		}
 		String displayName = stack.getName().getString();
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			return;
 		}
-		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest container = (ContainerChest) chest.inventorySlots;
 		IInventory lower = container.getLowerChestInventory();
 
@@ -407,8 +407,8 @@ public class EnchantingSolvers {
 			return;
 		}
 
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 
@@ -576,7 +576,7 @@ public class EnchantingSolvers {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) {
 			currentSolver = SolverType.NONE;
 		}
 

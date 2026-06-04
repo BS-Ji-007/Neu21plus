@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
@@ -51,8 +51,8 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 
 public class MuseumPage extends GuiProfileViewerPage {
 	private static final ResourceLocation pv_inventories =
-		new ResourceLocation("notenoughupdates:pv_inventories.png");
-	private static final ResourceLocation pv_museum = new ResourceLocation("notenoughupdates:pv_museum.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:pv_inventories.png");
+	private static final ResourceLocation pv_museum = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_museum.png");
 	private static final LinkedHashMap<String, ItemStack> museumCategories = new LinkedHashMap<String, ItemStack>() {
 		{
 			put("weapons", Utils.createItemStack(Items.diamond_sword, EnumChatFormatting.GOLD + "Weapons"));
@@ -68,7 +68,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		}
 	};
 	private static final ResourceLocation CHEST_GUI_TEXTURE =
-		new ResourceLocation("textures/gui/container/generic_54.png");
+		new ResourceLocation("notenoughupdates", "textures/gui/container/generic_54.png");
 	private static String selectedMuseumCategory = "weapons";
 	JsonObject museum = Constants.MUSEUM;
 	int pageArrowsHeight = 34;
@@ -265,7 +265,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			);
 		}
 
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int inventoryRows = 4;
@@ -273,8 +273,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		int inventoryX = guiLeft + 251 - 176 / 2;
 		int inventoryY = guiTop + 101 - invSizeY / 2;
-		getInstance().drawTexturedModalRect(inventoryX, inventoryY, 0, 0, 176, inventoryRows * 18 + 17);
-		getInstance().drawTexturedModalRect(inventoryX, inventoryY + inventoryRows * 18 + 17, 0, 215, 176, 7);
+		getInstance().blit(inventoryX, inventoryY, 0, 0, 176, inventoryRows * 18 + 17);
+		getInstance().blit(inventoryX, inventoryY + inventoryRows * 18 + 17, 0, 215, 176, 7);
 
 		JsonArray categoryItems = new JsonArray();
 		Map<String, JsonArray> categoryDonated = new HashMap<>();
@@ -585,7 +585,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 						)
 				)
 		) {
-			GlStateManager.translate(0, 0, 50);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 50);
 			GuiScreen.drawRect(
 				x,
 				y,
@@ -593,7 +593,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				y + 16,
 				overlay
 			);
-			GlStateManager.translate(0, 0, -50);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -50);
 		}
 	}
 }

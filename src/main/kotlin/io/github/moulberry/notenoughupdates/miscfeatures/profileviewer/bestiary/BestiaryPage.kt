@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.util.Constants
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.MainWindow
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting
@@ -183,7 +183,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
 
         Minecraft.getInstance().textureManager.bindTexture(bestiaryTexture)
         Utils.drawTexturedRect(guiLeft.toFloat(), guiTop.toFloat(), 431f, 202f, GL11.GL_NEAREST)
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         val color = Color(128, 128, 128, 255)
         Utils.renderAlignedString(
             EnumChatFormatting.RED.toString() + "Milestone: ",
@@ -203,7 +203,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             Utils.renderShadowedString(
                 "${EnumChatFormatting.RED}Subcategories", (guiLeft + 317).toFloat(), (guiTop + 165).toFloat(), 1000
             )
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
 
             val xStart = (guiLeft + 280).toFloat()
             val y = (guiTop + 175).toFloat()
@@ -325,9 +325,9 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             val x = 23 + mobListXPadding + (mobListXPadding + 20) * xIndex
             val y = 30 + mobListYPadding + (mobListYPadding + 20) * yIndex
 
-            GlStateManager.disableLighting()
+            com.mojang.blaze3d.systems.RenderSystem.disableLighting()
             RenderHelper.enableGUIStandardItemLighting()
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
             Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
             Utils.drawTexturedRect(
                 guiLeft + x,
@@ -401,7 +401,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
                     )
                 }
             }
-            GlStateManager.color(1f, 1f, 1f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
             Utils.drawStringCentered(
                 if (mob.mobLevelData.maxLevel) {
                     "${EnumChatFormatting.GOLD}${mob.mobLevelData.level}"

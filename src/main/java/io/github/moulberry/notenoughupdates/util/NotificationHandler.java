@@ -24,8 +24,8 @@ import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 
 import java.util.List;
@@ -107,9 +107,9 @@ public class NotificationHandler {
 	}
 
 	public static boolean shouldRenderOverlay(Gui gui) {
-		boolean validGui = gui instanceof GuiContainer || gui instanceof GuiItemRecipe;
-		if (gui instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) gui;
+		boolean validGui = gui instanceof ContainerScreen || gui instanceof GuiItemRecipe;
+		if (gui instanceof ChestScreen) {
+			ChestScreen eventGui = (ChestScreen) gui;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getName().getString().getUnformattedText();
 			if (containerName.trim().equals("Fast Travel") || containerName.trim().equals("Porhtal")) {

@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.core.util.lerp.LerpUtils;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.util.GuiTextures;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
@@ -62,7 +62,7 @@ public class GuiElementBoolean extends GuiElement {
 
 	@Override
 	public void render() {
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.BAR);
 		RenderUtils.drawTexturedRect(x, y, xSize, ySize);
 

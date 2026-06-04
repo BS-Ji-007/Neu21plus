@@ -137,7 +137,7 @@ public class ForgeRecipe implements NeuRecipe {
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		for (int i = 0; i < inputs.size(); i++) {
 			int[] slotCoordinates = getSlotCoordinates(i, inputs.size());
-			gui.drawTexturedModalRect(
+			gui.blit(
 				gui.guiLeft + slotCoordinates[0] - SLOT_PADDING, gui.guiTop + slotCoordinates[1] - SLOT_PADDING,
 				SLOT_IMAGE_U, SLOT_IMAGE_V,
 				SLOT_IMAGE_SIZE, SLOT_IMAGE_SIZE

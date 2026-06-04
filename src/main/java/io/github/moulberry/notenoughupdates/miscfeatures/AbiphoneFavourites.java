@@ -24,13 +24,13 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.config.KeybindHelper;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
-import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent;
+import io.github.moulberry.notenoughupdates.events.ContainerScreenBackgroundDrawnEvent;
 import io.github.moulberry.notenoughupdates.events.ReplaceItemEvent;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.options.NEUConfig;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.ContainerScreen;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.Slot;
@@ -204,10 +204,10 @@ public class AbiphoneFavourites {
 	}
 
 	@SubscribeEvent
-	public void onDrawBackground(GuiContainerBackgroundDrawnEvent event) {
+	public void onDrawBackground(ContainerScreenBackgroundDrawnEvent event) {
 		if (isWrongInventory()) return;
 
-		GuiContainer container = event.getContainer();
+		ContainerScreen container = event.getContainer();
 
 		ItemStack checkForShowMenu = container.inventorySlots.getSlot(1*9 + 4).getStack();
 		isInShowMenu = checkForShowMenu != null && checkForShowMenu.getName().getString().contains("Abiphone ");

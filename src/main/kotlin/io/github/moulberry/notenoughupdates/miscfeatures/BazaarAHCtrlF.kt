@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.options.NEUConfig
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.init.Items
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
@@ -39,7 +39,7 @@ class BazaarAHCtrlF {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onGuiScreenKeyboard(event: GuiScreenEvent.KeyboardInputEvent.Pre) {
-        if (event.gui !is GuiChest) return
+        if (event.gui !is ChestScreen) return
         val chestName = Utils.getOpenChestName()
         val inBZ = inBZ(chestName)
         val inAH = inAH(chestName)
@@ -53,7 +53,7 @@ class BazaarAHCtrlF {
             slotId = 48
         }
 
-        val gui = event.gui as GuiChest
+        val gui = event.gui as ChestScreen
         val signStack = openSlots[slotId]?.stack ?: return
         if (signStack.item == Items.sign && signStack.displayName == "§aSearch") {
             if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {

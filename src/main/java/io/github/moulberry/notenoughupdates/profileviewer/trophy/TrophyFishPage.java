@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewerPage;
 import io.github.moulberry.notenoughupdates.profileviewer.SkyblockProfiles;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.world.item.ItemStack;
@@ -124,7 +124,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			put(17, Pair.of(277, 142));
 		}
 	};
-	private static final ResourceLocation TROPHY_FISH_TEXTURE = new ResourceLocation("notenoughupdates:pv_trophy_fish_tab.png");
+	private static final ResourceLocation TROPHY_FISH_TEXTURE = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_trophy_fish_tab.png");
 	private static final String checkX = "§c✖";
 	private static final String check = "§a✔";
 	private final Map<String, Integer> total = new HashMap<>();
@@ -160,8 +160,8 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(TROPHY_FISH_TEXTURE);
 		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
-		GlStateManager.color(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.enableGUIStandardItemLighting();
 
 		int thunderKills = Utils.getElementAsInt(Utils.getElement(
@@ -213,19 +213,19 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			TrophyFish.TrophyFishRarity highestRarity = getHighestRarity(trophyFishRarityIntegerMap).orElse(null);
 
 			if (highestRarity == TrophyFish.TrophyFishRarity.BRONZE) {
-				GlStateManager.color(255 / 255f, 130 / 255f, 0 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(255 / 255f, 130 / 255f, 0 / 255f, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.SILVER) {
-				GlStateManager.color(192 / 255f, 192 / 255f, 192 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(192 / 255f, 192 / 255f, 192 / 255f, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.GOLD) {
-				GlStateManager.color(1, 0.82F, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 0.82F, 0, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.DIAMOND) {
-				GlStateManager.color(31 / 255f, 216 / 255f, 241 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(31 / 255f, 216 / 255f, 241 / 255f, 1);
 			}
 			Utils.drawTexturedRect(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(getItem(value.getName(), highestRarity), x, y);
 
 			if (mouseX >= x && mouseX < x + 24) {
@@ -250,7 +250,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 					if (mouseY >= y && mouseY <= y + 24) {
 						tooltipToDisplay = new ArrayList<>();
 						tooltipToDisplay.addAll(getTooltip(difference, null));
-						GlStateManager.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					}
 				}
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
@@ -301,7 +301,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			tooltipToDisplay = null;
 		}
 
-		GlStateManager.enableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 	}
 
 	private int[] getTrophiesPerTier(JsonObject trophyFish) {

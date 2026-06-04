@@ -23,14 +23,14 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ import org.lwjgl.opengl.GL11;
 public class AuctionProfit {
 
 	public static final ResourceLocation auctionProfitImage =
-		new ResourceLocation("notenoughupdates:auction_profit.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:auction_profit.png");
 
 	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
@@ -69,14 +69,14 @@ public class AuctionProfit {
 		Minecraft minecraft = Minecraft.getInstance();
 		Container inventoryContainer = minecraft.player.openContainer;
 
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
 		Gui gui = event.gui;
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 		minecraft.getTextureManager().bindTexture(auctionProfitImage);
 		GL11.glColor4f(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
 
 		double coinsToCollect = 0;

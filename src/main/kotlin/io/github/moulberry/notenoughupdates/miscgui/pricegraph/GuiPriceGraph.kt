@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.roundToDecimals
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting
 import net.minecraft.resources.ResourceLocation
@@ -108,7 +108,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
             if (mouseX < guiLeft + 17) guiLeft + 17 else mouseX.coerceAtMost(guiLeft + 315)
 
         Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Utils.drawTexturedRect( // Draw main background
             guiLeft.toFloat(), guiTop.toFloat(), X_SIZE.toFloat(), Y_SIZE.toFloat(),
             0f, X_SIZE / 512f, 0f, Y_SIZE / 512f, GL11.GL_NEAREST
@@ -279,7 +279,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
                     2, 0x4D8b8b8b
                 )
                 Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
-                GlStateManager.color(1f, 1f, 1f, 1f)
+                com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
                 Utils.drawTexturedRect(
                     x.toFloat() - 2.5f, y.toFloat() - 2.5f, 5f, 5f,
                     0f, 5 / 512f, 247 / 512f, 252 / 512f, GL11.GL_NEAREST
@@ -540,7 +540,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
 
     private fun drawCoveringQuad(x: Double, y: Double, prevX: Double, prevY: Double) {
         Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
-        GlStateManager.color(1f, 1f, 1f, 1f)
+        com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         Utils.drawTexturedQuad(
             prevX.toFloat(), prevY.toFloat(),
             x.toFloat(), y.toFloat(),

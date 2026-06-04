@@ -34,7 +34,6 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent;
 import io.github.moulberry.notenoughupdates.recipes.EssenceUpgrades;
 import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -93,7 +92,6 @@ public class Constants {
 
 	private static final ReentrantLock lock = new ReentrantLock();
 
-	@SubscribeEvent
 	public void reload(RepositoryReloadEvent event) {
 		try {
 			lock.lock();

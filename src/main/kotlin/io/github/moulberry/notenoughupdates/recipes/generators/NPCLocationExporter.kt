@@ -31,7 +31,7 @@ import io.github.moulberry.notenoughupdates.util.kotlin.set
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.world.item.ItemStack
@@ -73,14 +73,14 @@ class NPCLocationExporter {
             drawDefaultBackground()
             RenderUtils.drawFloatingRect(left, top, 250, 100)
             nameField.render(left + 25, top + 60)
-            GlStateManager.pushMatrix()
-            GlStateManager.translate((left + 5).toDouble(), (top + 5).toDouble(), 0.0)
-            GlStateManager.scale(3.0, 3.0, 1.0)
-            GlStateManager.translate(8F, 8F, 0F)
+            com.mojang.blaze3d.systems.RenderSystem.pushMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.translate((left + 5).toDouble(), (top + 5).toDouble(), 0.0)
+            com.mojang.blaze3d.systems.RenderSystem.scale(3.0, 3.0, 1.0)
+            com.mojang.blaze3d.systems.RenderSystem.translate(8F, 8F, 0F)
 
-            GlStateManager.rotate(((System.currentTimeMillis() / 5000.0) % 1 * 360).toFloat(), 0F, 0F, 1F)
+            com.mojang.blaze3d.systems.RenderSystem.rotate(((System.currentTimeMillis() / 5000.0) % 1 * 360).toFloat(), 0F, 0F, 1F)
             Utils.drawItemStack(itemStack, -8, -8, false)
-            GlStateManager.popMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.popMatrix()
         }
 
         fun save() {
@@ -98,7 +98,7 @@ class NPCLocationExporter {
             json["island"] = island
             NotEnoughUpdates.INSTANCE.manager.writeJsonDefaultDir(json, "$id.json")
             Utils.addChatMessage("§a[NEU] Saved to file")
-            Minecraft.getInstance().displayGuiScreen(null)
+            Minecraft.getInstance().setScreen(null)
         }
 
         override fun keyTyped(typedChar: Char, keyCode: Int) {
@@ -139,7 +139,7 @@ class NPCLocationExporter {
             return
         }
         if (pointedEntity is EntityVillager) {
-            Minecraft.getInstance().displayGuiScreen(
+            Minecraft.getInstance().setScreen(
                 NPCNamePrompt(
                     // Just use jerry pet skin, idk, this will probably cause texture packs to overwrite us, but uhhhhh uhhhhhhh
                     UUID.fromString("c9540683-51e4-3942-ad17-4f2c3f3ae4b7"),
@@ -152,7 +152,7 @@ class NPCLocationExporter {
         }
         if (pointedEntity !is AbstractClientPlayer) {
             if (pointedEntity is EntityLivingBase) {
-                Minecraft.getInstance().displayGuiScreen(
+                Minecraft.getInstance().setScreen(
                     NPCNamePrompt(
                         pointedEntity.uniqueID,
                         pointedEntity.position,
@@ -173,6 +173,6 @@ class NPCLocationExporter {
             Utils.addChatMessage("§c[NEU] Could not load skin")
             return
         }
-        Minecraft.getInstance().displayGuiScreen(NPCNamePrompt(uuid, position, location, skin))
+        Minecraft.getInstance().setScreen(NPCNamePrompt(uuid, position, location, skin))
     }
 }

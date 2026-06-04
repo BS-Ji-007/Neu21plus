@@ -39,7 +39,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.world.item.ItemArmor;
 import net.minecraft.world.item.ItemStack;
@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GuiItemCustomize extends GuiScreen {
-	private static final ResourceLocation PLUS = new ResourceLocation("notenoughupdates:itemcustomize/plus.png");
+	private static final ResourceLocation PLUS = new ResourceLocation("notenoughupdates", "notenoughupdates:itemcustomize/plus.png");
 
 	private final ItemStack stack;
 	ItemStack customItemStack;
@@ -311,7 +311,7 @@ public class GuiItemCustomize extends GuiScreen {
 		int yTopText = yTop;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		int helpX = xCenter + textFieldRename.getWidth() / 2 - 5 + 10;
 		Utils.drawTexturedRect(helpX, yTop, 20, 20, GL11.GL_LINEAR);
 
@@ -321,7 +321,7 @@ public class GuiItemCustomize extends GuiScreen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(ItemCustomizationUtils.RESET);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		int resetX = xCenter + textFieldRename.getWidth() / 2 - 15;
 		Utils.drawTexturedRect(resetX, yTop + 5, 10, 11, GL11.GL_LINEAR);
 
@@ -364,11 +364,11 @@ public class GuiItemCustomize extends GuiScreen {
 				scaledResolution.getScaledHeight(),
 				scaledResolution
 			);
-			GlStateManager.translate(0, enchantGlintCustomColourAnimation.getValue() - 17, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, enchantGlintCustomColourAnimation.getValue() - 17, 0);
 
 			ItemCustomizationUtils.renderColourBlob(xCenter, yTop, glintColour, "§a§lCustom Glint Colour", true, false);
 
-			GlStateManager.translate(0, -enchantGlintCustomColourAnimation.getValue() + 17, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, -enchantGlintCustomColourAnimation.getValue() + 17, 0);
 			GlScissorStack.pop(scaledResolution);
 
 			yTop += enchantGlintCustomColourAnimation.getValue() + 3;
@@ -407,7 +407,7 @@ public class GuiItemCustomize extends GuiScreen {
 		List<String> animatedSkullHelp = ItemCustomizeManager.getAnimatedSkullHelp(textFieldCustomItem.getText());
 		if (animatedSkullHelp != null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			int skullHelpX = xCenter + textFieldRename.getWidth() / 2;
 			Utils.drawTexturedRect(skullHelpX, yTop -1, 20, 20, GL11.GL_LINEAR);
 
@@ -480,7 +480,7 @@ public class GuiItemCustomize extends GuiScreen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(PLUS);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 4, 10, 10, GL11.GL_NEAREST);
 
 		int xOffset = xCenter - textFieldCustomItem.getWidth() / 2 - 10 + 11;
@@ -593,12 +593,12 @@ public class GuiItemCustomize extends GuiScreen {
 			if (itemStack != null) {
 				if (displayName == null) displayName = itemStack.getName().getString();
 				//Utils.drawItemStack(itemStack, xCenter - 90, yTop);
-				GlStateManager.enableDepth();
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(xCenter - 89, yTop, 0);
-				GlStateManager.scale(.9, .9, 1);
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate(xCenter - 89, yTop, 0);
+				com.mojang.blaze3d.systems.RenderSystem.scale(.9, .9, 1);
 				Utils.drawItemStack(itemStack, 0, 0);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 			if (color == null && colours == null) {
 				if (displayName == null) displayName = itemId;
@@ -1106,13 +1106,13 @@ public class GuiItemCustomize extends GuiScreen {
 
 	private void renderBigStack(int xCenter, int yTop) {
 		RenderUtils.drawFloatingRectDark(xCenter - 90, yTop, 180, 110);
-		GlStateManager.enableDepth();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(xCenter - 48, yTop + 7, 0);
-		GlStateManager.scale(6, 6, 1);
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(xCenter - 48, yTop + 7, 0);
+		com.mojang.blaze3d.systems.RenderSystem.scale(6, 6, 1);
 		this.customItemStack = ItemCustomizationUtils.copy(stack, this);
 		Utils.drawItemStack(customItemStack, 0, 0);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
 }

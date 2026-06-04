@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.ScreenReplacer
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.MainWindow
-import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.ChatFormatting
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
@@ -55,10 +55,10 @@ abstract class WarningPopUp : ScreenReplacer() {
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 
-        GlStateManager.disableLighting()
+        com.mojang.blaze3d.systems.RenderSystem.disableLighting()
 
-        GlStateManager.pushMatrix()
-        GlStateManager.translate(0f, 0f, 500f)
+        com.mojang.blaze3d.systems.RenderSystem.pushMatrix()
+        com.mojang.blaze3d.systems.RenderSystem.translate(0f, 0f, 500f)
 
         drawRect(0, 0, width, height, -0x80000000)
 
@@ -115,7 +115,7 @@ abstract class WarningPopUp : ScreenReplacer() {
             }
         }
 
-        GlStateManager.popMatrix()
+        com.mojang.blaze3d.systems.RenderSystem.popMatrix()
     }
 
     abstract fun confirmClick()

@@ -119,7 +119,7 @@ public class ItemShopRecipe implements NeuRecipe {
 		if (rowSize > 4) rowSize = 4;
 		int startY = RESULT_SLOT_Y + 8 - (SLOT_IMAGE_SIZE * rowSize + COST_SLOT_SPACING * (rowSize - 1)) / 2;
 		for (int i = 0; i < cost.size(); i++) {
-			gui.drawTexturedModalRect(
+			gui.blit(
 				gui.guiLeft + startX + (i / 4) * ROW_SPACING,
 				gui.guiTop + startY + (i % 4) * (SLOT_IMAGE_SIZE + COST_SLOT_SPACING),
 				SLOT_IMAGE_U, SLOT_IMAGE_V,
@@ -129,7 +129,7 @@ public class ItemShopRecipe implements NeuRecipe {
 		if (!hasWaypoint) return;
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiNavigation.BACKGROUND);
 		selected = npcIngredient.getInternalItemId().equals(NotEnoughUpdates.INSTANCE.navigation.getInternalname());
-		gui.drawTexturedModalRect(
+		gui.blit(
 			gui.guiLeft + BUTTON_X,
 			gui.guiTop + BUTTON_Y,
 			selected ? GuiNavigation.TICK_POSITION_U : GuiNavigation.PIN_POSITION_U,

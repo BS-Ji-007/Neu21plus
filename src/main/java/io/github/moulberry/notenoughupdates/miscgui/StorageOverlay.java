@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.AhBzKeybind;
 import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
 import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
 import io.github.moulberry.notenoughupdates.miscfeatures.StorageManager;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.NotificationHandler;
 import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import io.github.moulberry.notenoughupdates.util.Utils;
@@ -41,9 +41,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.gui.inventory.ContainerScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.shader.Framebuffer;
@@ -81,7 +81,7 @@ public class StorageOverlay extends GuiElement {
 	private static final ResourceLocation[] NOT_RICKROLL_SEQ = new ResourceLocation[19];
 	private static final StorageOverlay INSTANCE = new StorageOverlay();
 	private static final String CHROMA_STR = "230:255:255:0:0";
-	private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+	private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("notenoughupdates", "textures/misc/enchanted_item_glint.png");
 	private static final NEUManager manager = NotEnoughUpdates.INSTANCE.manager;
 
 	static {
@@ -346,9 +346,9 @@ public class StorageOverlay extends GuiElement {
 
 	@Override
 	public void render() {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return;
 
-		GuiChest guiChest = (GuiChest) Minecraft.getInstance().currentScreen;
+		ChestScreen guiChest = (ChestScreen) Minecraft.getInstance().currentScreen;
 		ContainerChest containerChest = (ContainerChest) guiChest.inventorySlots;
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
@@ -431,13 +431,13 @@ public class StorageOverlay extends GuiElement {
 		Utils.drawGradientRect(0, 0, width, height, 0xc0101010, 0xd0101010);
 
 		GL11.glPushMatrix();
-		GlStateManager.translate(guiLeft, guiTop, 0);
+		com.mojang.blaze3d.systems.RenderSystem.translate(guiLeft, guiTop, 0);
 
 		boolean hoveringOtherBackpack = false;
 
 		//Gui
 		Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(0, 0, sizeX, 10, 0, sizeX / 600f, 0, 10 / 400f, GL11.GL_NEAREST);
 		Utils.drawTexturedRect(0, 10, sizeX, storageViewSize - 20, 0, sizeX / 600f, 10 / 400f, 94 / 400f, GL11.GL_NEAREST);
 		Utils.drawTexturedRect(
@@ -496,20 +496,20 @@ public class StorageOverlay extends GuiElement {
 			//Render from framebuffer
 			if (framebuffer != null) {
 				GlScissorStack.push(0, guiTop + 3, width, guiTop + 3 + storageViewSize, scaledResolution);
-				GlStateManager.enableDepth();
-				GlStateManager.translate(0, startY, 107.0001f);
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, startY, 107.0001f);
 				framebuffer.bindFramebufferTexture();
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
-				GlStateManager.enableAlpha();
-				GlStateManager.alphaFunc(GL11.GL_GREATER, 0F);
+				com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+				com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0F);
 				Utils.drawTexturedRect(0, 0, w, h, 0, 1, 1, 0, GL11.GL_NEAREST);
-				GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
+				com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 
 				renderEnchOverlay(enchantGlintRenderLocations);
 
-				GlStateManager.translate(0, -startY, -107.0001f);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, -startY, -107.0001f);
 				GlScissorStack.pop(scaledResolution);
 			}
 
@@ -527,13 +527,13 @@ public class StorageOverlay extends GuiElement {
 				framebuffer.framebufferClear();
 				framebuffer.bindFramebuffer(true);
 
-				GlStateManager.matrixMode(GL11.GL_PROJECTION);
-				GlStateManager.loadIdentity();
-				GlStateManager.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
-				GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+				com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_PROJECTION);
+				com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+				com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, w, h, 0.0D, 1000.0D, 3000.0D);
+				com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 
-				GlStateManager.pushMatrix();
-				GlStateManager.translate(-guiLeft, -guiTop - startY, 0);
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.translate(-guiLeft, -guiTop - startY, 0);
 
 				doRenderFramebuffer = true;
 			} else {
@@ -580,9 +580,9 @@ public class StorageOverlay extends GuiElement {
 						if (stack != null) {
 							int paneType = getPaneType(stack, k, isPaneCache);
 							if (paneType > 0) {
-								GlStateManager.disableAlpha();
+								com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
 								Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
-								GlStateManager.enableAlpha();
+								com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
 								int ctmIndex = getCTMIndex(page, k, isPaneCache, ctmIndexCache);
 								int startCTMX = (ctmIndex % 12) * 19;
@@ -598,7 +598,7 @@ public class StorageOverlay extends GuiElement {
 										int g = (rgb >> 8) & 0xFF;
 										int b = rgb & 0xFF;
 										Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-										GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+										com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
 										Utils.drawTexturedRect(
 											itemX - 1,
 											itemY - 1,
@@ -662,8 +662,8 @@ public class StorageOverlay extends GuiElement {
 										}
 									}
 
-									GlStateManager.pushMatrix();
-									GlStateManager.translate(itemX - 1, itemY - 1, 0);
+									com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+									com.mojang.blaze3d.systems.RenderSystem.translate(itemX - 1, itemY - 1, 0);
 									Tessellator tessellator = Tessellator.getInstance();
 									WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 									worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -704,13 +704,13 @@ public class StorageOverlay extends GuiElement {
 												.color((col1 >> 16) & 0xFF, (col1 >> 8) & 0xFF, col1 & 0xFF, (col1 >> 24) & 0xFF).endVertex();
 										}
 									}
-									GlStateManager.disableDepth();
-									GlStateManager.color(1, 1, 1, 1);
-									GlStateManager.shadeModel(GL11.GL_SMOOTH);
+									com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+									com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+									com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_SMOOTH);
 									tessellator.draw();
-									GlStateManager.shadeModel(GL11.GL_FLAT);
-									GlStateManager.enableDepth();
-									GlStateManager.popMatrix();*/
+									com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_FLAT);
+									com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+									com.mojang.blaze3d.systems.RenderSystem.popMatrix();*/
 
 									RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 									itemRender.renderItemOverlayIntoGUI(
@@ -720,7 +720,7 @@ public class StorageOverlay extends GuiElement {
 										itemY,
 										null
 									);
-									GlStateManager.disableLighting();
+									com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 								}
 
 								page.shouldDarkenIfNotSelected[k] = false;
@@ -730,16 +730,16 @@ public class StorageOverlay extends GuiElement {
 						page.shouldDarkenIfNotSelected[k] = true;
 
 						//Render item
-						GlStateManager.translate(0, 0, 20);
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 20);
 						if (doRenderFramebuffer) {
-							GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+							com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 							GL14.glBlendFuncSeparate(GL11.GL_ONE, GL11.GL_ZERO, GL11.GL_ONE, GL11.GL_ZERO);
 
 							if (storageId == currentPage) {
 								Utils.hasEffectOverride = true;
-								GlStateManager.translate(storageX - 7, storageY - 17 - 18, 0);
-								((AccessorGuiContainer) guiChest).doDrawSlot(containerChest.getSlot(k + 9));
-								GlStateManager.translate(-storageX + 7, -storageY + 17 + 18, 0);
+								com.mojang.blaze3d.systems.RenderSystem.translate(storageX - 7, storageY - 17 - 18, 0);
+								((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.getSlot(k + 9));
+								com.mojang.blaze3d.systems.RenderSystem.translate(-storageX + 7, -storageY + 17 + 18, 0);
 								Utils.hasEffectOverride = false;
 							} else {
 								Utils.drawItemStackWithoutGlint(stack, itemX, itemY);
@@ -752,33 +752,33 @@ public class StorageOverlay extends GuiElement {
 							}
 						} else if (storageId == currentPage) {
 							Utils.hasEffectOverride = true;
-							GlStateManager.translate(storageX - 7, storageY - 17 - 18, 0);
-							((AccessorGuiContainer) guiChest).doDrawSlot(containerChest.getSlot(k + 9));
-							GlStateManager.translate(-storageX + 7, -storageY + 17 + 18, 0);
+							com.mojang.blaze3d.systems.RenderSystem.translate(storageX - 7, storageY - 17 - 18, 0);
+							((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.getSlot(k + 9));
+							com.mojang.blaze3d.systems.RenderSystem.translate(-storageX + 7, -storageY + 17 + 18, 0);
 							Utils.hasEffectOverride = false;
 						} else {
 							Utils.drawItemStack(stack, itemX, itemY);
 						}
-						GlStateManager.disableLighting();
-						GlStateManager.translate(0, 0, -20);
+						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -20);
 					}
 
-					GlStateManager.disableLighting();
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 		}
 
 		if (OpenGlHelper.isFramebufferEnabled() && doRenderFramebuffer) {
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 
-			GlStateManager.matrixMode(GL11.GL_PROJECTION);
-			GlStateManager.loadIdentity();
-			GlStateManager.ortho(0.0D, scaledResolution.getScaledWidth_double(), scaledResolution.getScaledHeight_double(),
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_PROJECTION);
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.ortho(0.0D, scaledResolution.getScaledWidth_double(), scaledResolution.getScaledHeight_double(),
 				0.0D, 1000.0D, 3000.0D
 			);
-			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 		}
 
 		GlScissorStack.push(0, guiTop + 3, width, guiTop + 3 + storageViewSize, scaledResolution);
@@ -818,7 +818,7 @@ public class StorageOverlay extends GuiElement {
 
 			if (page == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
 				Utils.drawTexturedRect(
@@ -846,7 +846,7 @@ public class StorageOverlay extends GuiElement {
 				}
 			} else if (page.rows <= 0) {
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
 				Utils.drawTexturedRect(
@@ -872,7 +872,7 @@ public class StorageOverlay extends GuiElement {
 				int storageW = 162;
 				int storageH = 18 * rows;
 
-				GlStateManager.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 				boolean[] shouldLimitBorder = new boolean[rows * 9];
 				boolean hasCaches = isPaneCaches[storageId] != null && isPaneCaches[storageId].length == rows * 9 &&
@@ -902,16 +902,16 @@ public class StorageOverlay extends GuiElement {
 								int g = (rgb >> 8) & 0xFF;
 								int b = rgb & 0xFF;
 								Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-								GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
-								GlStateManager.translate(0, 0, 110);
+								com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+								com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 110);
 								Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
 									startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 								);
-								GlStateManager.translate(0, 0, -110);
+								com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -110);
 
 								RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 								itemRender.renderItemOverlayIntoGUI(Minecraft.getInstance().font, stack, itemX, itemY, null);
-								GlStateManager.enableDepth();
+								com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 							} else if (isPaneCache[k] < 0) {
 								boolean hasConnection = false;
 
@@ -952,13 +952,13 @@ public class StorageOverlay extends GuiElement {
 											int r = (rgb >> 16) & 0xFF;
 											int g = (rgb >> 8) & 0xFF;
 											int b = rgb & 0xFF;
-											GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+											com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
 
-											GlStateManager.pushMatrix();
-											GlStateManager.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
-											GlStateManager.rotate(j * 90, 0, 0, 1);
-											GlStateManager.enableAlpha();
-											GlStateManager.disableLighting();
+											com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+											com.mojang.blaze3d.systems.RenderSystem.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
+											com.mojang.blaze3d.systems.RenderSystem.rotate(j * 90, 0, 0, 1);
+											com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+											com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 											boolean horzFlip = false;
 											boolean vertFlip = false;
@@ -969,19 +969,19 @@ public class StorageOverlay extends GuiElement {
 												vertFlip = true;
 											}
 
-											GlStateManager.enableDepth();
+											com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 											Utils.drawTexturedRect(0, -9, 8, 18,
 												!horzFlip ? 209 / 227f : 219 / 227f, horzFlip ? 227 / 227f : 217 / 227f,
 												!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 											);
-											GlStateManager.translate(0, 0, 120);
+											com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 120);
 											Utils.drawTexturedRect(8, -9, 10, 18,
 												!horzFlip ? 217 / 227f : 209 / 227f, horzFlip ? 219 / 227f : 227 / 227f,
 												!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 											);
-											GlStateManager.translate(0, 0, -120);
+											com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -120);
 
-											GlStateManager.popMatrix();
+											com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 										}
 									}
 								}
@@ -989,11 +989,11 @@ public class StorageOverlay extends GuiElement {
 								if (hasConnection) {
 									page.shouldDarkenIfNotSelected[k] = false;
 
-									GlStateManager.disableAlpha();
-									GlStateManager.translate(0, 0, 10);
+									com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+									com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 10);
 									Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
-									GlStateManager.translate(0, 0, -10);
-									GlStateManager.enableAlpha();
+									com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -10);
+									com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 								}
 							}
 						}
@@ -1001,7 +1001,7 @@ public class StorageOverlay extends GuiElement {
 				}
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(
 					storageX,
 					storageY,
@@ -1023,13 +1023,13 @@ public class StorageOverlay extends GuiElement {
 
 					if (!searchBar.getText().isEmpty()) {
 						if (stack == null || !manager.doesStackMatchSearch(stack, searchBar.getText())) {
-							GlStateManager.disableDepth();
+							com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 							Gui.drawRect(itemX, itemY, itemX + 16, itemY + 16, 0x80000000);
-							GlStateManager.enableDepth();
+							com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 						}
 					}
 
-					GlStateManager.disableLighting();
+					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 					if (mouseInsideStorages && mouseX >= guiLeft + itemX && mouseX < guiLeft + itemX + 18 &&
 						mouseY >= guiTop + itemY && mouseY < guiTop + itemY + 18) {
@@ -1054,7 +1054,7 @@ public class StorageOverlay extends GuiElement {
 					}
 				}
 
-				GlStateManager.disableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 				if (storageId == currentPage) {
 					if (isPaneCaches[storageId] != null && isPaneCaches[storageId].length == rows * 9 &&
 						ctmIndexCaches[storageId] != null && ctmIndexCaches[storageId].length == rows * 9) {
@@ -1155,7 +1155,7 @@ public class StorageOverlay extends GuiElement {
 								loc = NOT_RICKROLL_SEQ[NOT_RICKROLL_SEQ.length * 2 - rollIndex - 1];
 							}
 							Minecraft.getInstance().getTextureManager().bindTexture(loc);
-							GlStateManager.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							Utils.drawTexturedRect(storageX, storageY, storageW, storageH, GL11.GL_LINEAR);
 						}
 					} else {
@@ -1194,7 +1194,7 @@ public class StorageOverlay extends GuiElement {
 					}
 				}
 
-				GlStateManager.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			}
 		}
 		GlScissorStack.pop(scaledResolution);
@@ -1228,24 +1228,24 @@ public class StorageOverlay extends GuiElement {
 		//Player Inventory
 		ItemStack[] playerItems = Minecraft.getInstance().player.inventory.mainInventory;
 		int inventoryStartIndex = containerChest.getLowerChestInventory().getSizeInventory();
-		GlStateManager.enableDepth();
+		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		for (int i = 0; i < 9; i++) {
 			int itemX = 181 + 18 * i;
 			int itemY = storageViewSize + 76;
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
-			((AccessorGuiContainer) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + i));
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
+			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + i));
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (!searchBar.getText().isEmpty()) {
 				if (playerItems[i] == null || !manager.doesStackMatchSearch(
 					playerItems[i],
 					searchBar.getText()
 				)) {
-					GlStateManager.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 					Gui.drawRect(itemX, itemY, itemX + 16, itemY + 16, 0x80000000);
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 
@@ -1267,19 +1267,19 @@ public class StorageOverlay extends GuiElement {
 			int itemY = storageViewSize + 18 + 18 * (i / 9);
 
 			//Utils.drawItemStack(playerItems[i+9], itemX, itemY);
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
-			((AccessorGuiContainer) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + 9 + i));
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
+			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.inventorySlots.get(inventoryStartIndex + 9 + i));
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			if (!searchBar.getText().isEmpty()) {
 				if (playerItems[i + 9] == null || !manager.doesStackMatchSearch(
 					playerItems[i + 9],
 					searchBar.getText()
 				)) {
-					GlStateManager.disableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 					Gui.drawRect(itemX, itemY, itemX + 16, itemY + 16, 0x80000000);
-					GlStateManager.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				}
 			}
 
@@ -1413,7 +1413,7 @@ public class StorageOverlay extends GuiElement {
 
 		//Buttons
 		Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_ICONS_TEXTURE);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		for (int i = 0; i < 10; i++) {
 			int buttonX = 388 + (i % 5) * 18;
 			int buttonY = getStorageViewSize() + 35 + (i / 5) * 18;
@@ -1579,7 +1579,7 @@ public class StorageOverlay extends GuiElement {
 
 		if (!StorageManager.getInstance().onStorageMenu) {
 			Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(
 				171 - 36,
 				41 + storageViewSize,
@@ -1594,18 +1594,18 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		if (itemHoverX >= 0 && itemHoverY >= 0) {
-			GlStateManager.disableDepth();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 			Gui.drawRect(itemHoverX, itemHoverY, itemHoverX + 16, itemHoverY + 16, 0x80ffffff);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
-		GlStateManager.popMatrix();
-		GlStateManager.translate(0, 0, 300);
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 300);
 		allowTypingInSearchBar = false;
 		if (stackOnMouse != null) {
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			if (hoveringOtherBackpack) {
 				Utils.drawItemStack(new ItemStack(Item.getItemFromBlock(Blocks.barrier)), mouseX - 8, mouseY - 8);
 			} else {
@@ -1616,29 +1616,29 @@ public class StorageOverlay extends GuiElement {
 			if (page != null && page.rows > 0) {
 				int rows = page.rows;
 
-				GlStateManager.translate(0, 0, 100);
-				GlStateManager.disableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
+				com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 				BackgroundBlur.renderBlurredBackground(7, width, height, mouseX + 2, mouseY + 2, 172, 10 + 18 * rows);
 				Utils.drawGradientRect(mouseX + 2, mouseY + 2, mouseX + 174, mouseY + 12 + 18 * rows, 0xc0101010, 0xd0101010);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(mouseX, mouseY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
 				for (int i = 0; i < rows; i++) {
 					Utils.drawTexturedRect(mouseX, mouseY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
 				}
 				Utils.drawTexturedRect(mouseX, mouseY + 7 + 18 * rows, 176, 7, 0, 1, 25 / 32f, 1, GL11.GL_NEAREST);
-				GlStateManager.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 				for (int i = 0; i < rows * 9; i++) {
 					ItemStack stack = page.items[i];
 					if (stack != null) {
-						GlStateManager.enableDepth();
+						com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 						Utils.drawItemStack(stack, mouseX + 8 + 18 * (i % 9), mouseY + 8 + 18 * (i / 9));
-						GlStateManager.disableDepth();
+						com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 					}
 				}
-				GlStateManager.translate(0, 0, -100);
+				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -100);
 			} else {
 				Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
 			}
@@ -1647,7 +1647,7 @@ public class StorageOverlay extends GuiElement {
 		} else {
 			allowTypingInSearchBar = true;
 		}
-		GlStateManager.translate(0, 0, -300);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -300);
 	}
 
 	private List<String> createTooltip(String title, int selectedOption, String... options) {
@@ -1701,7 +1701,7 @@ public class StorageOverlay extends GuiElement {
 
 	@Override
 	public boolean mouseInput(int mouseX, int mouseY) {
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return false;
+		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return false;
 
 		int dWheel = Mouse.getEventDWheel();
 		if (!(NotEnoughUpdates.INSTANCE.config.storageGUI.cancelScrollKey != 0 &&
@@ -2146,8 +2146,8 @@ public class StorageOverlay extends GuiElement {
 		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
 		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
-		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
-		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
+		if (!(Minecraft.getInstance().currentScreen instanceof ContainerScreen)) return true;
+		ContainerScreen container = (ContainerScreen) Minecraft.getInstance().currentScreen;
 
 		int keyPressed = Keyboard.getEventKey();
 		if (keyPressed == Keyboard.KEY_ESCAPE) {
@@ -2166,7 +2166,7 @@ public class StorageOverlay extends GuiElement {
 				keyPressed == manager.keybindViewUsages.getKeyCode() ||
 				keyPressed == NotEnoughUpdates.INSTANCE.config.misc.openAHKeybind)) {
 			for (Slot slot : container.inventorySlots.inventorySlots) {
-				if (slot != null && ((AccessorGuiContainer) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
+				if (slot != null && ((AccessorContainerScreen) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
 					ItemStack stack = slot.getStack();
 					String internalName =
 						manager.createItemResolutionQuery().withItemStack(stack).resolveInternalName();
@@ -2189,7 +2189,7 @@ public class StorageOverlay extends GuiElement {
 				for (Slot slot : container.inventorySlots.inventorySlots) {
 					if (slot != null &&
 						slot.inventory == Minecraft.getInstance().player.inventory &&
-						((AccessorGuiContainer) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
+						((AccessorContainerScreen) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
 						SlotLocking.getInstance().toggleLock(slot.getSlotIndex());
 						return true;
 					}
@@ -2242,50 +2242,50 @@ public class StorageOverlay extends GuiElement {
 
 		GL11.glPushMatrix();
 		for (Vector2f loc : locations) {
-			GlStateManager.pushMatrix();
-			GlStateManager.enableRescaleNormal();
-			GlStateManager.enableAlpha();
-			GlStateManager.alphaFunc(516, 0.1F);
-			GlStateManager.enableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.enableRescaleNormal();
+			com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
+			com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
+			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 
-			GlStateManager.disableLighting();
+			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
-			GlStateManager.translate(loc.x, loc.y, 0);
+			com.mojang.blaze3d.systems.RenderSystem.translate(loc.x, loc.y, 0);
 
-			GlStateManager.depthMask(false);
-			GlStateManager.depthFunc(GL11.GL_EQUAL);
-			GlStateManager.blendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+			com.mojang.blaze3d.systems.RenderSystem.depthFunc(GL11.GL_EQUAL);
+			com.mojang.blaze3d.systems.RenderSystem.blendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
 			GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
-			GlStateManager.matrixMode(5890);
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(8.0F, 8.0F, 8.0F);
-			GlStateManager.translate(f, 0.0F, 0.0F);
-			GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.scale(8.0F, 8.0F, 8.0F);
+			com.mojang.blaze3d.systems.RenderSystem.translate(f, 0.0F, 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
 
-			GlStateManager.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, 16, 16, 0, 1 / 16f, 0, 1 / 16f, GL11.GL_NEAREST);
 
-			GlStateManager.popMatrix();
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(8.0F, 8.0F, 8.0F);
-			GlStateManager.translate(-f1, 0.0F, 0.0F);
-			GlStateManager.rotate(10.0F, 0.0F, 0.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.scale(8.0F, 8.0F, 8.0F);
+			com.mojang.blaze3d.systems.RenderSystem.translate(-f1, 0.0F, 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(10.0F, 0.0F, 0.0F, 1.0F);
 
-			GlStateManager.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, 16, 16, 0, 1 / 16f, 0, 1 / 16f, GL11.GL_NEAREST);
 
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(5888);
-			GlStateManager.blendFunc(770, 771);
-			GlStateManager.depthFunc(515);
-			GlStateManager.depthMask(true);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.blendFunc(770, 771);
+			com.mojang.blaze3d.systems.RenderSystem.depthFunc(515);
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
-		GlStateManager.disableRescaleNormal();
+		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
 		GL11.glPopMatrix();
 
-		GlStateManager.bindTexture(0);
+		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 	}
 
 	public void fastRenderCheck() {

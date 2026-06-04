@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.profileviewer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -103,48 +103,48 @@ public class Panorama {
 		{
 			Tessellator tessellator = Tessellator.getInstance();
 			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-			GlStateManager.matrixMode(5889);
-			GlStateManager.pushMatrix();
-			GlStateManager.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
 			Project.gluPerspective(fov, (float) height / width, 0.05F, 10.0F);
-			GlStateManager.matrixMode(5888);
-			GlStateManager.pushMatrix();
-			GlStateManager.loadIdentity();
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.rotate(180F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(90, 0.0F, 0.0F, 1.0F);
-			GlStateManager.rotate(19, 1.0F, 0.0F, 0.0F);
-			//GlStateManager.rotate(tl.x, 0.0F, 0.0F, 1.0F);
-			GlStateManager.enableBlend();
-			GlStateManager.disableAlpha();
-			GlStateManager.disableCull();
-			GlStateManager.depthMask(false);
-			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
+			com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(180F, 1.0F, 0.0F, 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(90, 0.0F, 0.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(19, 1.0F, 0.0F, 0.0F);
+			//com.mojang.blaze3d.systems.RenderSystem.rotate(tl.x, 0.0F, 0.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+			com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+			com.mojang.blaze3d.systems.RenderSystem.disableCull();
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 
-			GlStateManager.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 
-			GlStateManager.translate(0, yOffset, zOffset);
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, yOffset, zOffset);
 
-			GlStateManager.rotate(angle, 0.0F, 1.0F, 0.0F);
+			com.mojang.blaze3d.systems.RenderSystem.rotate(angle, 0.0F, 1.0F, 0.0F);
 
 			for (int k = 0; k < 6; ++k) {
-				GlStateManager.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 
 				switch (k) {
 					case 1:
-						GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(90.0F, 0.0F, 1.0F, 0.0F);
 						break;
 					case 2:
-						GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 						break;
 					case 3:
-						GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
 						break;
 					case 4:
-						GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 						break;
 					case 5:
-						GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+						com.mojang.blaze3d.systems.RenderSystem.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
 						break;
 				}
 
@@ -171,21 +171,21 @@ public class Panorama {
 					}
 				}
 
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 
-			GlStateManager.popMatrix();
-			GlStateManager.colorMask(true, true, true, false);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, false);
 
 			worldrenderer.setTranslation(0.0D, 0.0D, 0.0D);
-			GlStateManager.colorMask(true, true, true, true);
-			GlStateManager.matrixMode(5889);
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(5888);
-			GlStateManager.popMatrix();
-			GlStateManager.depthMask(true);
-			GlStateManager.enableCull();
-			GlStateManager.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true);
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5889);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+			com.mojang.blaze3d.systems.RenderSystem.enableCull();
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		}
 
 		if (

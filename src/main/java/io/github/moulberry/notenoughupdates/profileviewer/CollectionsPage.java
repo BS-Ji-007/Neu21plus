@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import io.github.moulberry.notenoughupdates.util.hypixelapi.ProfileCollectionInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +45,7 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 
 public class CollectionsPage extends GuiProfileViewerPage {
 
-	private static final ResourceLocation pv_cols = new ResourceLocation("notenoughupdates:pv_cols.png");
+	private static final ResourceLocation pv_cols = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_cols.png");
 	private static final int COLLS_XCOUNT = 5;
 	private static final int COLLS_YCOUNT = 4;
 	private static final float COLLS_XPADDING = (190 - COLLS_XCOUNT * 20) / (float) (COLLS_XCOUNT + 1);
@@ -241,7 +241,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					tierStringColour = new Color(255, 215, 0).getRGB();
 				}
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
@@ -254,7 +254,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					20 * (1 - completedness) / 256f,
 					GL11.GL_NEAREST
 				);
-				GlStateManager.color(1, 185 / 255f, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
@@ -285,7 +285,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					}
 				}
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Utils.drawStringCentered(tierString, guiLeft + x + 10, guiTop + y - 4, true, tierStringColour);
 
 				Utils.drawStringCentered(
@@ -339,7 +339,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					tierStringColour = new Color(255, 215, 0).getRGB();
 				}
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
@@ -352,7 +352,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					20 * (1 - completedness) / 256f,
 					GL11.GL_NEAREST
 				);
-				GlStateManager.color(1, 185 / 255f, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
@@ -381,7 +381,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					}
 				}
 
-				GlStateManager.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				if (tier >= 0) {
 					Utils.drawStringCentered(tierString, guiLeft + x + 10, guiTop + y - 4, true, tierStringColour);
 				}

@@ -45,8 +45,8 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.SkyBlockTime;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.init.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
@@ -588,12 +588,12 @@ public class PetInfoOverlay extends TextOverlay {
 			int y = (int) position.y;
 
 			ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
-			GlStateManager.enableDepth();
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(x - 2, y - 2, 0);
-			GlStateManager.scale(2, 2, 1);
+			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
+			com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
 			Utils.drawItemStack(stack, 0, 0);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
 
@@ -628,18 +628,18 @@ public class PetInfoOverlay extends TextOverlay {
 
 				ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
 				getAnimatedSkin(stack, currentPet);
-				GlStateManager.enableDepth();
-				GlStateManager.pushMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 				if (firstPetLines == 1) y -= 9;
 				if (firstPetLines == 2) y -= 3;
 
-				GlStateManager.translate(x - 2, y - 2, 0);
-				GlStateManager.scale(2, 2, 1);
+				com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
+				com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
 				Utils.drawItemStack(stack, 0, 0);
 				Utils.pushGuiScale(0);
-				GlStateManager.popMatrix();
+				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 
 			Pet currentPet2 = getCurrentPet2();
@@ -653,18 +653,18 @@ public class PetInfoOverlay extends TextOverlay {
 
 					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem2);
 					getAnimatedSkin(stack, currentPet2);
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 					if (secondPetLines == 1) y -= 9;
 					if (secondPetLines == 2) y -= 3;
 
-					GlStateManager.translate(x - 2, y - 2, 0);
-					GlStateManager.scale(2, 2, 1);
+					com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
+					com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
 					Utils.drawItemStack(stack, 0, 0);
 					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
 		}
@@ -693,13 +693,13 @@ public class PetInfoOverlay extends TextOverlay {
 						return;
 					}
 
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
 					Utils.drawItemStack(stack, 0, 0);
 					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
 
@@ -725,13 +725,13 @@ public class PetInfoOverlay extends TextOverlay {
 						return;
 					}
 
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
+					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
+					com.mojang.blaze3d.systems.RenderSystem.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
 					Utils.drawItemStack(stack, 0, 0);
 					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
+					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
 		}
@@ -783,8 +783,8 @@ public class PetInfoOverlay extends TextOverlay {
 
 		int slotIdMod = (event.slotId - 10) % 9;
 		if (event.slotId >= 10 && event.slotId <= 43 && slotIdMod >= 0 && slotIdMod <= 6 &&
-			Minecraft.getInstance().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+			Minecraft.getInstance().currentScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getName().getString().getUnformattedText();
@@ -830,8 +830,8 @@ public class PetInfoOverlay extends TextOverlay {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (Minecraft.getInstance().currentScreen instanceof GuiChest && RenderListener.inventoryLoaded) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof ChestScreen && RenderListener.inventoryLoaded) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getName().getString().getUnformattedText();

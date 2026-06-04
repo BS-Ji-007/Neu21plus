@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.ChromaColour
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
-import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent
+import io.github.moulberry.notenoughupdates.events.ContainerScreenBackgroundDrawnEvent
 import io.github.moulberry.notenoughupdates.events.ReplaceItemEvent
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent
 import io.github.moulberry.notenoughupdates.util.ItemUtils
@@ -76,7 +76,7 @@ object MuseumItemHighlighter {
     }
 
     @SubscribeEvent
-    fun onBackgroundDrawn(event: GuiContainerBackgroundDrawnEvent) {
+    fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val egui = event.container ?: return
         val chest = egui.inventorySlots as? ContainerChest ?: return
         if (!config.museumItemShow) return

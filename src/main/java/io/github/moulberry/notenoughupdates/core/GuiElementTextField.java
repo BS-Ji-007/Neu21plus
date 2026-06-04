@@ -27,7 +27,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -484,7 +484,7 @@ public class GuiElementTextField {
 		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		String renderText = prependText + textField.getText();
 
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		/*
 		 * Search bar

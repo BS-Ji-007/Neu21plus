@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent;
 import io.github.moulberry.notenoughupdates.events.GuiInventoryBackgroundDrawnEvent;
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
 import io.github.moulberry.notenoughupdates.miscgui.GuiInvButtonEditor;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.options.NEUConfig;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
@@ -37,9 +37,9 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -82,7 +82,7 @@ public class EquipmentOverlay {
 	private static final ResourceLocation ARMOR_DISPLAY_TRANSPARENT_PET = new ResourceLocation(
 		"notenoughupdates:armordisplay/armordisplay_transparent_pet.png");
 
-	private static final ResourceLocation QUESTION_MARK = new ResourceLocation("notenoughupdates:pv_unknown.png");
+	private static final ResourceLocation QUESTION_MARK = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_unknown.png");
 
 	private static final ResourceLocation PET_DISPLAY = new ResourceLocation(
 		"notenoughupdates:petdisplay/petdisplaysolo.png");
@@ -227,7 +227,7 @@ public class EquipmentOverlay {
 	// Draws Backgrounds
 	public void renderHudBackground(GuiScreen inventory) {
 		GL11.glColor4f(1F, 1F, 1F, 1F);
-		AccessorGuiContainer container = ((AccessorGuiContainer) inventory);
+		AccessorContainerScreen container = ((AccessorContainerScreen) inventory);
 		final int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
 		final int overlayTop = container.getGuiTop();
 		if (shouldRenderArmorHud) {
@@ -240,15 +240,15 @@ public class EquipmentOverlay {
 		if (shouldRenderPets) {
 			ResourceLocation customPetTexture = getCustomPetTexture(shouldRenderArmorHud);
 			Minecraft.getInstance().getTextureManager().bindTexture(customPetTexture);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 			Utils.drawTexturedRect(overlayLeft, overlayTop + PET_OVERLAY_OFFSET_Y, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 		}
-		GlStateManager.bindTexture(0);
+		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 	}
 
 	public void renderEquipmentGui(GuiInventory guiScreen, int mouseX, int mouseY, int width, int height) {
-		AccessorGuiContainer container = (AccessorGuiContainer) guiScreen;
+		AccessorContainerScreen container = (AccessorContainerScreen) guiScreen;
 
 		int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
 		int overlayTop = container.getGuiTop();
@@ -261,7 +261,7 @@ public class EquipmentOverlay {
 
 		if (slot1 == null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(QUESTION_MARK);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			for (int i = 0; i < 4; i++) {
 				Utils.drawTexturedRect(overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 18 * i, 16, 16, GL11.GL_NEAREST);
 			}
@@ -316,7 +316,7 @@ public class EquipmentOverlay {
 			slot4 = getWardrobeSlot(37);
 		}
 
-		if ((screen instanceof GuiChest || screen instanceof GuiInventory) &&
+		if ((screen instanceof ChestScreen || screen instanceof GuiInventory) &&
 			NotEnoughUpdates.INSTANCE.config.petOverlay.petInvDisplay) {
 			petStack = getRepoPetStack();
 		}
@@ -356,12 +356,12 @@ public class EquipmentOverlay {
 		);
 		ItemStack petInfo = petStack;
 
-		AccessorGuiContainer container = ((AccessorGuiContainer) inventory);
+		AccessorContainerScreen container = ((AccessorContainerScreen) inventory);
 
 		int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
 		int overlayTop = container.getGuiTop() + PET_OVERLAY_OFFSET_Y;
 
-		GlStateManager.bindTexture(0);
+		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
 		Utils.drawItemStack(petInfo, overlayLeft + 8, overlayTop + 8, true);
 
@@ -503,8 +503,8 @@ public class EquipmentOverlay {
 
 	private boolean isInNamedGui(String guiName) {
 		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
-		if (guiScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (guiScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getName().getString().getUnformattedText();
@@ -518,8 +518,8 @@ public class EquipmentOverlay {
 
 	private ItemStack getChestSlotsAsItemStack(int slot) {
 		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
-		if (guiScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+		if (guiScreen instanceof ChestScreen) {
+			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			return chest.inventorySlots.getSlot(slot).getStack();
 		} else {
 			return null;

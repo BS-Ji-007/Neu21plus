@@ -22,7 +22,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.config.KeybindHelper
 import io.github.moulberry.notenoughupdates.util.Utils
-import net.minecraft.client.gui.inventory.GuiChest
+import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.world.inventory.AbstractContainerMenuChest
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -59,7 +59,7 @@ class WardrobeMouseButtons {
     @Suppress("InvalidSubscribeEvent")
     private fun checkKeybinds(event: GuiScreenEvent) {
         if (!NotEnoughUpdates.INSTANCE.config.wardrobeKeybinds.enableWardrobeKeybinds || !NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return
-        val gui = event.gui as? GuiChest ?: return
+        val gui = event.gui as? ChestScreen ?: return
         if (!Utils.getOpenChestName().contains("Wardrobe")) return
         val chestName = Utils.getOpenChestName()
         val chestNameRegex = "Wardrobe (\\((?<current>[0-9]+)\\/(?<total>[0-9]+)\\))".toRegex()
@@ -67,7 +67,7 @@ class WardrobeMouseButtons {
         if (chestNameMatch == null) return
         val totalPages = chestNameMatch.groups["total"]!!.value.toInt()
         val currentPage = chestNameMatch.groups["current"]!!.value.toInt()
-        val guiChes = event.gui as GuiChest
+        val guiChes = event.gui as ChestScreen
         val container = guiChes.inventorySlots as ContainerChest
         var slotNum = 0
 

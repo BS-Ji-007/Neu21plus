@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.val;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.init.Bootstrap;
 
@@ -74,8 +74,8 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 
 	@Override
 	public void drawPage(int mouseX, int mouseY, float partialTicks) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.translate(
 			GuiProfileViewer.getGuiLeft() + getInstance().sizeX / 2f,
 			GuiProfileViewer.getGuiTop() + 20,
 			0
@@ -101,7 +101,7 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 			drawString(stackTraceElement.toString());
 		}
 
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 		val buttonCoords = getButtonCoordinates();
 		RenderUtils.drawFloatingRectWithAlpha(
@@ -139,17 +139,17 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 	private void drawString(String text) {
 		Utils.drawStringCenteredScaledMaxWidth(text, 0, 0, false, getInstance().sizeX - 20, -1);
 		val spacing = Minecraft.getInstance().font.FONT_HEIGHT + 2;
-		GlStateManager.translate(0, spacing, 0);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, spacing, 0);
 		offset += spacing;
 	}
 
 	private void drawTitle() {
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(2, 2, 2);
+		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 2);
 		Utils.drawStringCenteredScaledMaxWidth("§cKA-BOOM!", 0, 0, false, getInstance().sizeX / 2, -1);
-		GlStateManager.popMatrix();
+		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		val spacing = Minecraft.getInstance().font.FONT_HEIGHT * 2 + 6;
-		GlStateManager.translate(0, spacing, 0);
+		com.mojang.blaze3d.systems.RenderSystem.translate(0, spacing, 0);
 		offset += spacing;
 	}
 }

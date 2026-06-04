@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 
 import com.mojang.authlib.GameProfile;
 import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.entity.EntityLivingBase;
@@ -82,10 +82,10 @@ public class MixinLayerCustomHead {
 				float blue = (color & 0xFF) / 255f;
 				float alpha = ((color >> 24) & 0xFF) / 255f;
 
-				GlStateManager.color(red, green, blue, alpha);
+				com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
 
-				GlStateManager.scale(1 / 8f, 1 / 8f, 1 / 8f);
-				GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+				com.mojang.blaze3d.systems.RenderSystem.scale(1 / 8f, 1 / 8f, 1 / 8f);
+				com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
 				GL11.glPushMatrix();
 				ItemCustomizeManager.disableTextureBinding = true;
 				tileEntitySkullRenderer.renderSkull(p_180543_1_, p_180543_2_, p_180543_3_, p_180543_4_, p_180543_5_,

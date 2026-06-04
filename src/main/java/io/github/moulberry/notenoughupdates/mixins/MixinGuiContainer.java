@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 import io.github.moulberry.notenoughupdates.NEUOverlay;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.events.DrawSlotReturnEvent;
-import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent;
+import io.github.moulberry.notenoughupdates.events.ContainerScreenBackgroundDrawnEvent;
 import io.github.moulberry.notenoughupdates.events.IsSlotBeingHoveredEvent;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.listener.RenderListener;
@@ -41,8 +41,8 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ContainerScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -59,8 +59,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Set;
 
-@Mixin(value = GuiContainer.class, priority = 500)
-public abstract class MixinGuiContainer extends GuiScreen {
+@Mixin(value = ContainerScreen.class, priority = 500)
+public abstract class MixinContainerScreen extends GuiScreen {
 
 	@Inject(method = "drawSlot", at = @At("RETURN"))
 	public void drawSlotRet(Slot slotIn, CallbackInfo ci) {
@@ -74,14 +74,14 @@ public abstract class MixinGuiContainer extends GuiScreen {
 
 		if (slot.getStack() == null && NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen &&
 			NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
-			GlStateManager.depthMask(false);
+			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 			Gui.drawRect(slot.xDisplayPosition, slot.yDisplayPosition,
 				slot.xDisplayPosition + 16, slot.yDisplayPosition + 16, NEUOverlay.overlayColourDark
 			);
-			GlStateManager.depthMask(true);
-			GlStateManager.popMatrix();
+			com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 
 		ItemStack stack = slot.getStack();
@@ -148,9 +148,9 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		}
 	}
 
-	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;drawGradientRect(IIIIII)V"))
+	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/ContainerScreen;drawGradientRect(IIIIII)V"))
 	public void drawScreen_drawGradientRect(
-		GuiContainer container,
+		ContainerScreen container,
 		int left,
 		int top,
 		int right,
@@ -225,7 +225,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		return slot.canBeHovered();
 	}
 
-	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;handleMouseClick(Lnet.minecraft.world.inventory.Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/ContainerScreen;handleMouseClick(Lnet.minecraft.world.inventory.Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
 	public void checkHotbarKeys_Slotlock(int keyCode, CallbackInfoReturnable<Boolean> cir, int i) {
 		if (SlotLocking.getInstance().isSlotIndexLocked(i)) {
 			cir.setReturnValue(false);
@@ -235,7 +235,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 	@Inject(method = "handleMouseClick", at = @At(value = "HEAD"), cancellable = true)
 	public void handleMouseClick(Slot slotIn, int slotId, int clickedButton, int clickType, CallbackInfo ci) {
 		if (slotIn == null) return;
-		GuiContainer $this = (GuiContainer) (Object) this;
+		ContainerScreen $this = (ContainerScreen) (Object) this;
 		SlotClickEvent event = new SlotClickEvent($this, slotIn, slotId, clickedButton, clickType);
 		event.post();
 		if (event.isCanceled()) {
@@ -251,9 +251,9 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		}
 	}
 
-	@Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V", ordinal = 1))
+	@Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/com.mojang.blaze3d.systems.RenderSystem;color(FFFF)V", ordinal = 1))
 	private void drawBackground(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
-		new GuiContainerBackgroundDrawnEvent(((GuiContainer) (Object) this), partialTicks).post();
+		new ContainerScreenBackgroundDrawnEvent(((ContainerScreen) (Object) this), partialTicks).post();
 	}
 
 	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet.minecraft.world.item.ItemStack;II)V", ordinal = 0))

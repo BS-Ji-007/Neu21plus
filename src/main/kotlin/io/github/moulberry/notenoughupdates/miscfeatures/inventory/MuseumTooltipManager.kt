@@ -23,7 +23,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonPrimitive
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
-import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent
+import io.github.moulberry.notenoughupdates.events.ContainerScreenBackgroundDrawnEvent
 import io.github.moulberry.notenoughupdates.util.Constants
 import io.github.moulberry.notenoughupdates.util.MuseumUtil
 import io.github.moulberry.notenoughupdates.util.SBInfo
@@ -137,7 +137,7 @@ object MuseumTooltipManager {
     private var previousSlots: List<Slot> = emptyList()
 
     @SubscribeEvent
-    fun onBackgroundDrawn(event: GuiContainerBackgroundDrawnEvent) {
+    fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {
         val gui = event.container ?: return
         val chest = gui.inventorySlots as? ContainerChest ?: return
         if (!MuseumUtil.isMuseumInventory(chest.lowerChestInventory)) return

@@ -36,7 +36,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class ShaderManager implements IResourceManagerReloadListener {
-	private final ResourceLocation shaderLocation = new ResourceLocation("notenoughupdates:shaders");
+	private final ResourceLocation shaderLocation = new ResourceLocation("notenoughupdates", "notenoughupdates:shaders");
 	private final HashMap<String, Shader> shaderMap = new HashMap<>();
 
 	private static final ShaderManager INSTANCE = new ShaderManager();

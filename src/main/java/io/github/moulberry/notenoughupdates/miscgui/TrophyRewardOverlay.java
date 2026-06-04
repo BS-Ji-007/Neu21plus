@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent;
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent;
-import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
+import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
@@ -34,8 +34,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.ChestScreen;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.inventory.Slot;
@@ -62,7 +62,7 @@ public class TrophyRewardOverlay {
 	private boolean reloadNeeded = true;
 
 	public static final ResourceLocation trophyProfitImage =
-		new ResourceLocation("notenoughupdates:trophy_profit.png");
+		new ResourceLocation("notenoughupdates", "notenoughupdates:trophy_profit.png");
 
 	public static TrophyRewardOverlay getInstance() {
 		if (instance == null) {
@@ -123,11 +123,11 @@ public class TrophyRewardOverlay {
 		if (!NotEnoughUpdates.INSTANCE.config.fishing.trophyRewardOverlay) return;
 
 		GuiScreen screen = Minecraft.getInstance().currentScreen;
-		if (!(screen instanceof GuiChest)) return;
+		if (!(screen instanceof ChestScreen)) return;
 		Gui gui = event.gui;
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 
 		List<String> list = createText();
 		int removed = 0;
@@ -260,13 +260,13 @@ public class TrophyRewardOverlay {
 	) {
 
 		Gui gui = event.gui;
-		int xSize = ((AccessorGuiContainer) gui).getXSize();
-		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
-		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
+		int xSize = ((AccessorContainerScreen) gui).getXSize();
+		int guiLeft = ((AccessorContainerScreen) gui).getGuiLeft();
+		int guiTop = ((AccessorContainerScreen) gui).getGuiTop();
 		Minecraft minecraft = Minecraft.getInstance();
 		minecraft.getTextureManager().bindTexture(trophyProfitImage);
 		GL11.glColor4f(1, 1, 1, 1);
-		GlStateManager.disableLighting();
+		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 158, 128, 0, 1, 0, 1, GL11.GL_NEAREST);
 

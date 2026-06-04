@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.MainWindow;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.item.ItemArmor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -227,8 +227,8 @@ public class ItemCustomizationUtils {
 			dyeColours[getTicksForList(ticks, dyeColours.length)]);
 	}
 
-	static final ResourceLocation RESET = new ResourceLocation("notenoughupdates:itemcustomize/reset.png");
-	static final ResourceLocation CROSS = new ResourceLocation("notenoughupdates:itemcustomize/cross.png");
+	static final ResourceLocation RESET = new ResourceLocation("notenoughupdates", "notenoughupdates:itemcustomize/reset.png");
+	static final ResourceLocation CROSS = new ResourceLocation("notenoughupdates", "notenoughupdates:itemcustomize/cross.png");
 
 	public static void renderColourBlob(int xCenter, int yTop, int colour, String text, boolean renderReset,
 																			boolean renderCross) {
@@ -240,13 +240,13 @@ public class ItemCustomizationUtils {
 
 		if (renderReset) {
 			Minecraft.getInstance().getTextureManager().bindTexture(RESET);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 2, 10, 11, GL11.GL_NEAREST);
 		}
 
 		if (renderCross) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CROSS);
-			GlStateManager.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 3, 9, 9, GL11.GL_NEAREST);
 		}
 	}
@@ -288,7 +288,7 @@ public class ItemCustomizationUtils {
 
 	public static void renderPresetButtons(int x, int y, boolean valid, boolean secondValid, String preset) {
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(
 			x - 88 + 198,
 			y + 2,
@@ -324,7 +324,7 @@ public class ItemCustomizationUtils {
 			Gui.drawRect(x - 88 + 198, y + 2 + 24, x + 198, y + 2 + 20 + 24, 0x80000000);
 		}
 
-		GlStateManager.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 	}
 
 	public static boolean validShareContents(String sharePrefix) {
