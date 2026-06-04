@@ -54,7 +54,7 @@ public abstract class MixinItemRenderer {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}
 
-	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemModelForEntity(Lnet.minecraft.world.item.ItemStack;Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", ordinal = 0))
+	@ModifyArg(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemModelForEntity(Lnet.minecraft.world.item.ItemStack;Lnet.minecraft.world.entity.EntityLivingBase;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", ordinal = 0))
 	public ItemStack renderItem_renderItemModelForEntity(ItemStack stack) {
 		return ItemCustomizeManager.useCustomItem(stack);
 	}

@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.world.entity.EntityLivingBase;
 import net.minecraft.world.item.ItemArmor;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -95,7 +95,7 @@ public abstract class MixinLayerArmorBase<T extends ModelBase> {
 	@Redirect(method = "renderLayer",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getCurrentArmor(Lnet/minecraft/entity/EntityLivingBase;I)Lnet.minecraft.world.item.ItemStack;"
+			target = "Lnet/minecraft/client/renderer/entity/layers/LayerArmorBase;getCurrentArmor(Lnet.minecraft.world.entity.EntityLivingBase;I)Lnet.minecraft.world.item.ItemStack;"
 		)
 	)
 	public ItemStack renderItem_getCurrentArmor(LayerArmorBase<?> instance, EntityLivingBase entitylivingbaseIn, int armorSlot) {

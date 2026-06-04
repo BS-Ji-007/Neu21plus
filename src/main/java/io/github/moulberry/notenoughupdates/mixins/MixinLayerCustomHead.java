@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.world.entity.EntityLivingBase;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
@@ -53,7 +53,7 @@ public class MixinLayerCustomHead {
 		}
 	}
 
-	@Redirect(method = "doRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;getCurrentArmor(I)Lnet.minecraft.world.item.ItemStack;"))
+	@Redirect(method = "doRenderLayer", at = @At(value = "INVOKE", target = "Lnet.minecraft.world.entity.EntityLivingBase;getCurrentArmor(I)Lnet.minecraft.world.item.ItemStack;"))
 	public ItemStack doRenderLayer_getCurrentArmor(EntityLivingBase instance, int i) {
 		return ItemCustomizeManager.setHeadArmour(instance, i);
 	}

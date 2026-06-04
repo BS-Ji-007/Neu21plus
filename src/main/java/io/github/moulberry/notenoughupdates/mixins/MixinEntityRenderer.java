@@ -25,7 +25,7 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.util.vector.Vector3f;
 import org.objectweb.asm.Opcodes;
