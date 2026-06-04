@@ -625,8 +625,8 @@ public class DevInfoPane extends TextInfoPane {
 		}
 		ItemStack res = Utils.createItemStack(
 			stackToAdd.getItem(),
-			EnumChatFormatting.WHITE + stackToAdd.getItem().getItemStackDisplayName(stackToAdd),
-			EnumChatFormatting.WHITE.toString() + EnumChatFormatting.BOLD + "COMMON"
+			ChatFormatting.WHITE + stackToAdd.getItem().getItemStackDisplayName(stackToAdd),
+			ChatFormatting.WHITE.toString() + ChatFormatting.BOLD + "COMMON"
 		);
 		if (stackToAdd.getItemDamage() != 0 && stackToAdd.getItemDamage() < 32000) {
 			res.setItemDamage(stackToAdd.getItemDamage());
@@ -864,8 +864,8 @@ public class DevInfoPane extends TextInfoPane {
 						if (recipeJsonForDamage.isEmpty()) {
 							ItemStack res = Utils.createItemStack(
 								item,
-								EnumChatFormatting.WHITE + item.getItemStackDisplayName(new ItemStack(item)),
-								EnumChatFormatting.WHITE.toString() + EnumChatFormatting.BOLD + "COMMON"
+								ChatFormatting.WHITE + item.getItemStackDisplayName(new ItemStack(item)),
+								ChatFormatting.WHITE.toString() + ChatFormatting.BOLD + "COMMON"
 							);
 							res.getTag().setInteger("HideFlags", 254);
 							CompoundTag ea = new CompoundTag();
@@ -890,8 +890,8 @@ public class DevInfoPane extends TextInfoPane {
 							for (Map.Entry<Integer, JsonObject> entry : recipeJsonForDamage.entrySet()) {
 								ItemStack res = Utils.createItemStack(
 									item,
-									EnumChatFormatting.WHITE + item.getItemStackDisplayName(new ItemStack(item, 1, entry.getKey())),
-									EnumChatFormatting.WHITE.toString() + EnumChatFormatting.BOLD + "COMMON"
+									ChatFormatting.WHITE + item.getItemStackDisplayName(new ItemStack(item, 1, entry.getKey())),
+									ChatFormatting.WHITE.toString() + ChatFormatting.BOLD + "COMMON"
 								);
 								res.setItemDamage(entry.getKey());
 								res.getTag().setInteger("HideFlags", 254);

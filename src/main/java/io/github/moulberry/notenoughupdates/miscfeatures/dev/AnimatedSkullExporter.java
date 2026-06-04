@@ -110,27 +110,27 @@ public class AnimatedSkullExporter {
 		}
 		if (recordingType == RecordingType.HEAD) {
 			recordingState = RecordingType.HEAD;
-			Utils.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "[NEU] Started recording skull frames"));
+			Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Started recording skull frames"));
 		} else if (recordingType == RecordingType.PET) {
 			recordingState = RecordingType.PET;
 			Utils.addChatMessage(new ChatComponentText(
-				EnumChatFormatting.YELLOW + "[NEU] Started recording pet skull frames"));
+				ChatFormatting.YELLOW + "[NEU] Started recording pet skull frames"));
 			Utils.addChatMessage(new ChatComponentText(
-				EnumChatFormatting.YELLOW + "[NEU] Make sure you are near NO OTHER armour stands"));
+				ChatFormatting.YELLOW + "[NEU] Make sure you are near NO OTHER armour stands"));
 			Utils.addChatMessage(new ChatComponentText(
-				EnumChatFormatting.YELLOW + "[NEU] The corner of my island /visit throwpo works"));
+				ChatFormatting.YELLOW + "[NEU] The corner of my island /visit throwpo works"));
 		} else if (recordingType == RecordingType.PLAYER) {
 			recordingState = RecordingType.PLAYER;
 			Utils.addChatMessage(new ChatComponentText(
-				EnumChatFormatting.YELLOW + "[NEU] Started recording " + trackedPlayer + "'s skull frames"));
+				ChatFormatting.YELLOW + "[NEU] Started recording " + trackedPlayer + "'s skull frames"));
 		}
-		Utils.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "[NEU] Wait for the animation to play out"));
+		Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Wait for the animation to play out"));
 		Utils.addChatMessage(new ChatComponentText(
-			EnumChatFormatting.YELLOW + "[NEU] Use /neuskull stop to stop recording"));
+			ChatFormatting.YELLOW + "[NEU] Use /neuskull stop to stop recording"));
 	}
 
 	public static void restartRecording(RecordingType recordingType) {
-		Utils.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "[NEU] Restarting..."));
+		Utils.addChatMessage(new ChatComponentText(ChatFormatting.YELLOW + "[NEU] Restarting..."));
 		AnimatedSkullExporter.finishRecording(false, true);
 		AnimatedSkullExporter.startRecording(recordingType);
 	}
@@ -153,12 +153,12 @@ public class AnimatedSkullExporter {
 				jsonArray.add(new JsonPrimitive(id + ":" + value));
 			}
 			if (jsonArray.size() == 0) {
-				Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU] No skull frames recorded.");
+				Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU] No skull frames recorded.");
 				skullsList.clear();
 				return;
 			}
 			Utils.addChatMessage(
-				EnumChatFormatting.YELLOW + "[NEU] " + jsonArray.size() + " skull frame" + (jsonArray.size() == 1 ? "" : "s") +
+				ChatFormatting.YELLOW + "[NEU] " + jsonArray.size() + " skull frame" + (jsonArray.size() == 1 ? "" : "s") +
 					" copied to clipboard.");
 			ClipboardUtils.copyToClipboard(jsonArray.toString());
 			lastSkullsList.clear();
@@ -197,7 +197,7 @@ public class AnimatedSkullExporter {
 	}
 
 	public static CompoundTag getSkullOwner(ItemStack stack) {
-		if (stack != null && stack.getItem() == Items.skull) {
+		if (stack != null && stack.getItem() == Items.PLAYER_HEAD) {
 			if (stack.hasTag() && stack.getTag().hasKey("SkullOwner")) {
 				return stack.getTag().getCompoundTag("SkullOwner");
 			}

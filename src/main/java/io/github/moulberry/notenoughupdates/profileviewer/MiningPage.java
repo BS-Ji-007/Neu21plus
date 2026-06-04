@@ -58,20 +58,20 @@ public class MiningPage extends GuiProfileViewerPage {
 	private static final ResourceLocation FORGE_SLOT_BACKGROUND = new ResourceLocation("notenoughupdates", "notenoughupdates:profile_viewer/mining/perk_background.png");
 
 	private static final ItemStack hotmSkillIcon = new ItemStack(Items.iron_pickaxe);
-	private static final Map<String, EnumChatFormatting> crystalToColor =
-		new LinkedHashMap<String, EnumChatFormatting>() {{
-			put("jade", EnumChatFormatting.GREEN);
-			put("amethyst", EnumChatFormatting.DARK_PURPLE);
-			put("amber", EnumChatFormatting.GOLD);
-			put("sapphire", EnumChatFormatting.AQUA);
-			put("topaz", EnumChatFormatting.YELLOW);
-			put("jasper", EnumChatFormatting.LIGHT_PURPLE);
-			put("ruby", EnumChatFormatting.RED);
-			put("opal", EnumChatFormatting.WHITE);
-			put("aquamarine", EnumChatFormatting.BLUE);
-			put("peridot", EnumChatFormatting.DARK_GREEN);
-			put("onyx", EnumChatFormatting.DARK_GRAY);
-			put("citrine", EnumChatFormatting.DARK_RED);
+	private static final Map<String, ChatFormatting> crystalToColor =
+		new LinkedHashMap<String, ChatFormatting>() {{
+			put("jade", ChatFormatting.GREEN);
+			put("amethyst", ChatFormatting.DARK_PURPLE);
+			put("amber", ChatFormatting.GOLD);
+			put("sapphire", ChatFormatting.AQUA);
+			put("topaz", ChatFormatting.YELLOW);
+			put("jasper", ChatFormatting.LIGHT_PURPLE);
+			put("ruby", ChatFormatting.RED);
+			put("opal", ChatFormatting.WHITE);
+			put("aquamarine", ChatFormatting.BLUE);
+			put("peridot", ChatFormatting.DARK_GREEN);
+			put("onyx", ChatFormatting.DARK_GRAY);
+			put("citrine", ChatFormatting.DARK_RED);
 		}};
 
 	public MiningPage(GuiProfileViewer instance) {
@@ -132,7 +132,7 @@ public class MiningPage extends GuiProfileViewerPage {
 
 			// HOTM
 			getInstance().renderXpBar(
-				EnumChatFormatting.RED + "HOTM",
+				ChatFormatting.RED + "HOTM",
 				hotmSkillIcon,
 				x,
 				y,
@@ -145,77 +145,77 @@ public class MiningPage extends GuiProfileViewerPage {
 
 		// Powder
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_GREEN + "Mithril",
+			ChatFormatting.DARK_GREEN + "Mithril",
 			"",
 			guiLeft + xStart + 45,
 			guiTop + yStartTop + 24,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.LIGHT_PURPLE + "Gemstone",
+			ChatFormatting.LIGHT_PURPLE + "Gemstone",
 			"",
 			guiLeft + xStart + 85,
 			guiTop + yStartTop + 24,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.AQUA + "Glacite",
+			ChatFormatting.AQUA + "Glacite",
 			"",
 			guiLeft + xStart + 145,
 			guiTop + yStartTop + 24,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.WHITE + "Powder:",
+			ChatFormatting.WHITE + "Powder:",
 			"",
 			guiLeft + xStart,
 			guiTop + yStartTop + 44,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_GREEN + StringUtils.shortNumberFormat(mithrilPowder),
+			ChatFormatting.DARK_GREEN + StringUtils.shortNumberFormat(mithrilPowder),
 			"",
 			guiLeft + xStart + 50,
 			guiTop + yStartTop + 44,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.LIGHT_PURPLE + StringUtils.shortNumberFormat(gemstonePowder),
+			ChatFormatting.LIGHT_PURPLE + StringUtils.shortNumberFormat(gemstonePowder),
 			"",
 			guiLeft + xStart + 100,
 			guiTop + yStartTop + 44,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.AQUA + StringUtils.shortNumberFormat(glacitePowder),
+			ChatFormatting.AQUA + StringUtils.shortNumberFormat(glacitePowder),
 			"",
 			guiLeft + xStart + 150,
 			guiTop + yStartTop + 44,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.WHITE + "Total:",
+			ChatFormatting.WHITE + "Total:",
 			"",
 			guiLeft + xStart,
 			guiTop + yStartTop + 54,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_GREEN + StringUtils.shortNumberFormat(mithrilPowder + mithrilPowderTotal),
+			ChatFormatting.DARK_GREEN + StringUtils.shortNumberFormat(mithrilPowder + mithrilPowderTotal),
 			"",
 			guiLeft + xStart + 50,
 			guiTop + yStartTop + 54,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.LIGHT_PURPLE + StringUtils.shortNumberFormat(gemstonePowder + gemstonePowderTotal),
+			ChatFormatting.LIGHT_PURPLE + StringUtils.shortNumberFormat(gemstonePowder + gemstonePowderTotal),
 			"",
 			guiLeft + xStart + 100,
 			guiTop + yStartTop + 54,
 			115
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.AQUA + StringUtils.shortNumberFormat(glacitePowder + glacitePowderTotal),
+			ChatFormatting.AQUA + StringUtils.shortNumberFormat(glacitePowder + glacitePowderTotal),
 			"",
 			guiLeft + xStart + 150,
 			guiTop + yStartTop + 54,
@@ -239,7 +239,7 @@ public class MiningPage extends GuiProfileViewerPage {
 			int totalRows = rectYSize / rowHeight;
 
 			int idx = 0;
-			for (Map.Entry<String, EnumChatFormatting> crystal : crystalToColor.entrySet()) {
+			for (Map.Entry<String, ChatFormatting> crystal : crystalToColor.entrySet()) {
 
 				int currentRow = idx % totalRows;
 				int currentCol = idx / totalRows;
@@ -253,7 +253,7 @@ public class MiningPage extends GuiProfileViewerPage {
 				String crystalStr = crystalState.equals("FOUND") ? "§a✔" : "§c✖";
 				Utils.renderAlignedString(
 					crystal.getValue() + WordUtils.capitalizeFully(crystal.getKey()) + ":",
-					EnumChatFormatting.WHITE + crystalStr,
+					ChatFormatting.WHITE + crystalStr,
 					guiLeft + rectStartX + currentCol * columnOffset,
 					guiTop + rectStartY + currentRow * rowHeight,
 					columnWidth
@@ -262,8 +262,8 @@ public class MiningPage extends GuiProfileViewerPage {
 			}
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.BLUE + "Nucleus Runs Completed:",
-				EnumChatFormatting.WHITE + StringUtils.formatNumber(nucleusRunsCompleted),
+				ChatFormatting.BLUE + "Nucleus Runs Completed:",
+				ChatFormatting.WHITE + StringUtils.formatNumber(nucleusRunsCompleted),
 				guiLeft + rectStartX,
 				guiTop + rectStartY + originalRectYSize - padding - 1.5F * Minecraft.getInstance().font.FONT_HEIGHT,
 				rectXSize
@@ -400,7 +400,7 @@ public class MiningPage extends GuiProfileViewerPage {
 				tooltip.add("§c" + Utils.getDiscordInvite());
 			}
 
-			tooltip.add(EnumChatFormatting.GOLD + "Forge");
+			tooltip.add(ChatFormatting.GOLD + "Forge");
 			tooltip.add("");
 			tooltip.addAll(forgeSlots);
 			getInstance().tooltipToDisplay = tooltip;

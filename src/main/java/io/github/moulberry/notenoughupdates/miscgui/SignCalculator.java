@@ -81,15 +81,15 @@ public class SignCalculator {
 			DecimalFormat formatter = new DecimalFormat("#,##0.##");
 			String lr = formatter.format(lastResult);
 			if (Minecraft.getInstance().font.getStringWidth(lr) > 90) {
-				return EnumChatFormatting.WHITE + lastSource + " " + EnumChatFormatting.YELLOW + "= " + EnumChatFormatting.RED +
+				return ChatFormatting.WHITE + lastSource + " " + ChatFormatting.YELLOW + "= " + ChatFormatting.RED +
 					"Result too long";
 			}
-			return EnumChatFormatting.WHITE + lastSource + " " + EnumChatFormatting.YELLOW + "= " + EnumChatFormatting.GREEN +
+			return ChatFormatting.WHITE + lastSource + " " + ChatFormatting.YELLOW + "= " + ChatFormatting.GREEN +
 				lr;
 		} else if (lastException != null) {
-			return EnumChatFormatting.RED + lastException.getMessage();
+			return ChatFormatting.RED + lastException.getMessage();
 		}
-		return EnumChatFormatting.RED + "No calculation has been done.";
+		return ChatFormatting.RED + "No calculation has been done.";
 	}
 
 	private void refresh(String source) {

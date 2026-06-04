@@ -159,7 +159,7 @@ public class BetterContainers {
 			stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
 			ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 			return lore.tagCount() == 1 && lore.getStringTagAt(0).equalsIgnoreCase(
-				EnumChatFormatting.GRAY + "click to disable!");
+				ChatFormatting.GRAY + "click to disable!");
 		}
 		return false;
 	}
@@ -169,7 +169,7 @@ public class BetterContainers {
 			stack.getTag().getCompoundTag("display").hasKey("Lore", 9)) {
 			ListTag lore = stack.getTag().getCompoundTag("display").getTagList("Lore", 8);
 			return lore.tagCount() == 1 && lore.getStringTagAt(0).equalsIgnoreCase(
-				EnumChatFormatting.GRAY + "click to enable!");
+				ChatFormatting.GRAY + "click to enable!");
 		}
 		return false;
 	}

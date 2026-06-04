@@ -136,7 +136,7 @@ public class CustomBiomes {
 
 	public static boolean isMithril(IBlockState state) {
 		return isBreakableMithril(state)
-			|| state.getBlock() == Blocks.bedrock;
+			|| state.getBlock() == Blocks.BEDROCK;
 	}
 
 	public static boolean isBreakableMithril(IBlockState state) {

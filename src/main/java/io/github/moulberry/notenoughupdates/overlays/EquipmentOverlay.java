@@ -267,9 +267,9 @@ public class EquipmentOverlay {
 			}
 
 			tooltipToDisplay = Lists.newArrayList(
-				EnumChatFormatting.RED + "Warning",
-				EnumChatFormatting.GREEN + "You need to open /equipment",
-				EnumChatFormatting.GREEN + "to cache your armour"
+				ChatFormatting.RED + "Warning",
+				ChatFormatting.GREEN + "You need to open /equipment",
+				ChatFormatting.GREEN + "to cache your armour"
 			);
 			if (Utils.isWithinRect(mouseX, mouseY, overlayLeft + 8, overlayTop + 8, 16, 70)
 				&& NotEnoughUpdates.INSTANCE.config.customArmour.sendWardrobeCommand

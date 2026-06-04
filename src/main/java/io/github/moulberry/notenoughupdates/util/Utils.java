@@ -114,14 +114,14 @@ public class Utils {
 	//Labymod compatibility
 	private static final FloatBuffer projectionMatrixOld = BufferUtils.createFloatBuffer(16);
 	private static final FloatBuffer modelviewMatrixOld = BufferUtils.createFloatBuffer(16);
-	private static final EnumChatFormatting[] rainbow = new EnumChatFormatting[]{
-		EnumChatFormatting.RED,
-		EnumChatFormatting.GOLD,
-		EnumChatFormatting.YELLOW,
-		EnumChatFormatting.GREEN,
-		EnumChatFormatting.AQUA,
-		EnumChatFormatting.LIGHT_PURPLE,
-		EnumChatFormatting.DARK_PURPLE
+	private static final ChatFormatting[] rainbow = new ChatFormatting[]{
+		ChatFormatting.RED,
+		ChatFormatting.GOLD,
+		ChatFormatting.YELLOW,
+		ChatFormatting.GREEN,
+		ChatFormatting.AQUA,
+		ChatFormatting.LIGHT_PURPLE,
+		ChatFormatting.DARK_PURPLE
 	};
 	private static final Pattern CHROMA_REPLACE_PATTERN = Pattern.compile("\u00a7z(.+?)(?=\u00a7|$)");
 	final static Pattern GUILD_OR_PARTY_MESSAGE_PATTERN = Pattern.compile(
@@ -143,15 +143,15 @@ public class Utils {
 		"^^ THAT ONE IS DIVINE ^^"
 	};
 	public static String[] rarityArrC = new String[]{
-		EnumChatFormatting.WHITE + EnumChatFormatting.BOLD.toString() + "COMMON",
-		EnumChatFormatting.GREEN + EnumChatFormatting.BOLD.toString() + "UNCOMMON",
-		EnumChatFormatting.BLUE + EnumChatFormatting.BOLD.toString() + "RARE",
-		EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD.toString() + "EPIC",
-		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD.toString() + "LEGENDARY",
-		EnumChatFormatting.LIGHT_PURPLE + EnumChatFormatting.BOLD.toString() + "MYTHIC",
-		EnumChatFormatting.RED + EnumChatFormatting.BOLD.toString() + "SPECIAL",
-		EnumChatFormatting.RED + EnumChatFormatting.BOLD.toString() + "VERY SPECIAL",
-		EnumChatFormatting.AQUA + EnumChatFormatting.BOLD.toString() + "DIVINE",
+		ChatFormatting.WHITE + ChatFormatting.BOLD.toString() + "COMMON",
+		ChatFormatting.GREEN + ChatFormatting.BOLD.toString() + "UNCOMMON",
+		ChatFormatting.BLUE + ChatFormatting.BOLD.toString() + "RARE",
+		ChatFormatting.DARK_PURPLE + ChatFormatting.BOLD.toString() + "EPIC",
+		ChatFormatting.GOLD + ChatFormatting.BOLD.toString() + "LEGENDARY",
+		ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD.toString() + "MYTHIC",
+		ChatFormatting.RED + ChatFormatting.BOLD.toString() + "SPECIAL",
+		ChatFormatting.RED + ChatFormatting.BOLD.toString() + "VERY SPECIAL",
+		ChatFormatting.AQUA + ChatFormatting.BOLD.toString() + "DIVINE",
 	};
 	public static final HashMap<String, String> rarityArrMap = new HashMap<String, String>() {{
 		put("COMMON", rarityArrC[0]);
@@ -449,10 +449,10 @@ public class Utils {
 		String s = stack.getName().getString();
 
 		if (stack.hasDisplayName()) {
-			s = EnumChatFormatting.ITALIC + s;
+			s = ChatFormatting.ITALIC + s;
 		}
 
-		s = s + EnumChatFormatting.RESET;
+		s = s + ChatFormatting.RESET;
 
 		if (!stack.hasDisplayName() && stack.getItem() == Items.filled_map) {
 			s = s + " #" + stack.getItemDamage();
@@ -465,7 +465,7 @@ public class Utils {
 				CompoundTag nbttagcompound = stack.getTag().getCompoundTag("display");
 
 				if (nbttagcompound.hasKey("color", 3)) {
-					list.add(EnumChatFormatting.ITALIC + StatCollector.translateToLocal("item.dyed"));
+					list.add(ChatFormatting.ITALIC + StatCollector.translateToLocal("item.dyed"));
 				}
 
 				if (nbttagcompound.getTagId("Lore") == 9) {
@@ -474,7 +474,7 @@ public class Utils {
 					if (nbttaglist1.tagCount() > 0) {
 						for (int j1 = 0; j1 < nbttaglist1.tagCount(); ++j1) {
 							list.add(
-								EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + nbttaglist1.getStringTagAt(j1));
+								ChatFormatting.DARK_PURPLE + "" + ChatFormatting.ITALIC + nbttaglist1.getStringTagAt(j1));
 						}
 					}
 				}
@@ -1022,7 +1022,7 @@ public class Utils {
 	}
 
 	public static ItemStack createSkull(String displayName, String uuid, String value, String[] lore) {
-		ItemStack render = new ItemStack(Items.skull, 1, 3);
+		ItemStack render = new ItemStack(Items.PLAYER_HEAD, 1, 3);
 		CompoundTag tag = new CompoundTag();
 		CompoundTag skullOwner = new CompoundTag();
 		CompoundTag properties = new CompoundTag();
@@ -1661,7 +1661,7 @@ public class Utils {
 		style.setChatClickEvent(new ClickEvent(action, value));
 		style.setChatHoverEvent(new HoverEvent(
 			HoverEvent.Action.SHOW_TEXT,
-			new ChatComponentText(EnumChatFormatting.YELLOW + value)
+			new ChatComponentText(ChatFormatting.YELLOW + value)
 		));
 		return style;
 	}
@@ -2252,17 +2252,17 @@ public class Utils {
 	}
 
 	public static String getStarsString(int stars) {
-		EnumChatFormatting colorCode = null;
-		EnumChatFormatting defaultColorCode = EnumChatFormatting.GOLD;
+		ChatFormatting colorCode = null;
+		ChatFormatting defaultColorCode = ChatFormatting.GOLD;
 		int amount = 0;
 		if (stars > 5 && stars < 11) {
-			colorCode = EnumChatFormatting.LIGHT_PURPLE;
+			colorCode = ChatFormatting.LIGHT_PURPLE;
 			amount = stars - 5;
 			stars = 5;
 		}
 		if (stars > 10) {
-			colorCode = EnumChatFormatting.AQUA;
-			defaultColorCode = EnumChatFormatting.LIGHT_PURPLE;
+			colorCode = ChatFormatting.AQUA;
+			defaultColorCode = ChatFormatting.LIGHT_PURPLE;
 			amount = stars - 10;
 			stars = 5;
 		}

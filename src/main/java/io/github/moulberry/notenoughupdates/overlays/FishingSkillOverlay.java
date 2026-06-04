@@ -269,17 +269,17 @@ public class FishingSkillOverlay
             /*if(expertise >= 0) {
                 int counterInterp = (int)interp(expertise, expertiseLast);
 
-                lineMap.put(0, EnumChatFormatting.AQUA+"Expertise Kills: "+EnumChatFormatting.YELLOW+format.format(counterInterp));
+                lineMap.put(0, ChatFormatting.AQUA+"Expertise Kills: "+ChatFormatting.YELLOW+format.format(counterInterp));
             }*/
 
 
             /*if(expertise >= 0) {
                 if(fishedPerSecondLast == fishedPerSecond && fishedPerSecond <= 0) {
-                    lineMap.put(7, EnumChatFormatting.AQUA+"Catches/m: "+EnumChatFormatting.YELLOW + "N/A");
+                    lineMap.put(7, ChatFormatting.AQUA+"Catches/m: "+ChatFormatting.YELLOW + "N/A");
                 } else {
                     //float cpsInterp = interp(fishedPerSecond, fishedPerSecondLast);
 
-                    lineMap.put(7, EnumChatFormatting.AQUA+"Catches/m: "+EnumChatFormatting.YELLOW +
+                    lineMap.put(7, ChatFormatting.AQUA+"Catches/m: "+ChatFormatting.YELLOW +
                             fishedPerSecond);
                             //String.format("%.2f", cpsInterp*60));
                 }
@@ -289,7 +289,7 @@ public class FishingSkillOverlay
 				int counterInterp = (int) interp(expertise, expertiseLast);
 				lineMap.put(
 					0,
-					EnumChatFormatting.AQUA + "Expertise: " + EnumChatFormatting.YELLOW + format.format(counterInterp) + "/" +
+					ChatFormatting.AQUA + "Expertise: " + ChatFormatting.YELLOW + format.format(counterInterp) + "/" +
 						expertiseTierAmount
 				);
 			}
@@ -297,27 +297,27 @@ public class FishingSkillOverlay
 				int counterInterp = (int) interp(expertise, expertiseLast);
 				lineMap.put(
 					0,
-					EnumChatFormatting.AQUA + "Expertise: " + EnumChatFormatting.YELLOW + format.format(counterInterp) + " " +
-						EnumChatFormatting.RED + expertiseTierAmount
+					ChatFormatting.AQUA + "Expertise: " + ChatFormatting.YELLOW + format.format(counterInterp) + " " +
+						ChatFormatting.RED + expertiseTierAmount
 				);
 			}
 
 			float xpInterp = xpGainHour;
 			if (xpGainHourLast == xpGainHour && xpGainHour <= 0) {
-				lineMap.put(4, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW + "N/A");
+				lineMap.put(4, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW + "N/A");
 			} else {
 				xpInterp = interp(xpGainHour, xpGainHourLast);
 
-				lineMap.put(4, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW +
-					format.format(xpInterp) + (isFishing ? "" : EnumChatFormatting.RED + " (PAUSED)"));
+				lineMap.put(4, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW +
+					format.format(xpInterp) + (isFishing ? "" : ChatFormatting.RED + " (PAUSED)"));
 			}
 
 			if (skillInfo != null && skillInfo.level < 50) {
-				StringBuilder levelStr = new StringBuilder(EnumChatFormatting.AQUA + skillType + ": ");
+				StringBuilder levelStr = new StringBuilder(ChatFormatting.AQUA + skillType + ": ");
 
-				levelStr.append(EnumChatFormatting.YELLOW)
+				levelStr.append(ChatFormatting.YELLOW)
 								.append(skillInfo.level)
-								.append(EnumChatFormatting.GRAY)
+								.append(ChatFormatting.GRAY)
 								.append(" [");
 
 				float progress = (float) (skillInfo.currentXp / skillInfo.currentXpMax);
@@ -328,16 +328,16 @@ public class FishingSkillOverlay
 				float lines = 25;
 				for (int i = 0; i < lines; i++) {
 					if (i / lines < progress) {
-						levelStr.append(EnumChatFormatting.YELLOW);
+						levelStr.append(ChatFormatting.YELLOW);
 					} else {
-						levelStr.append(EnumChatFormatting.DARK_GRAY);
+						levelStr.append(ChatFormatting.DARK_GRAY);
 					}
 					levelStr.append('|');
 				}
 
-				levelStr.append(EnumChatFormatting.GRAY)
+				levelStr.append(ChatFormatting.GRAY)
 								.append("] ")
-								.append(EnumChatFormatting.YELLOW)
+								.append(ChatFormatting.YELLOW)
 								.append((int) (progress * 100))
 								.append("%");
 
@@ -352,21 +352,21 @@ public class FishingSkillOverlay
 				}
 
 				lineMap.put(1, levelStr.toString());
-				lineMap.put(2, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(2, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 				if (remaining < 0) {
-					lineMap.put(3, EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + "MAXED!");
-					lineMap.put(5, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(3, ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(5, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "MAXED!");
 				} else {
 					lineMap.put(
 						3,
-						EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + format.format(remaining)
+						ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + format.format(remaining)
 					);
 					if (xpGainHour < 1000) {
-						lineMap.put(5, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "N/A");
+						lineMap.put(5, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "N/A");
 					} else {
 						lineMap.put(
 							5,
-							EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW +
+							ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW +
 								Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpInterp)
 						);
 					}
@@ -382,9 +382,9 @@ public class FishingSkillOverlay
 
 				lineMap.put(
 					1,
-					EnumChatFormatting.AQUA + "Fishing: " + EnumChatFormatting.YELLOW + "50 " + EnumChatFormatting.RED + "(Maxed)"
+					ChatFormatting.AQUA + "Fishing: " + ChatFormatting.YELLOW + "50 " + ChatFormatting.RED + "(Maxed)"
 				);
-				lineMap.put(2, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(2, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 
 			}
 
@@ -393,8 +393,8 @@ public class FishingSkillOverlay
             if(yaw < 0) yaw += 360;
             if(yaw > 180) yaw -= 360;
 
-            lineMap.put(6, EnumChatFormatting.AQUA+"Yaw: "+EnumChatFormatting.YELLOW+
-                    String.format("%.2f", yaw)+EnumChatFormatting.BOLD+"\u00b0");*/
+            lineMap.put(6, ChatFormatting.AQUA+"Yaw: "+ChatFormatting.YELLOW+
+                    String.format("%.2f", yaw)+ChatFormatting.BOLD+"\u00b0");*/
 			int key = NotEnoughUpdates.INSTANCE.config.skillOverlays.fishKey;
 
 			ISound sound = new PositionedSound(new ResourceLocation("notenoughupdates", "random.orb")) {{
@@ -413,12 +413,12 @@ public class FishingSkillOverlay
 			if (timer >= 1) {
 				lineMap.put(
 					6,
-					EnumChatFormatting.AQUA + "Timer: " + EnumChatFormatting.YELLOW +
+					ChatFormatting.AQUA + "Timer: " + ChatFormatting.YELLOW +
 						Utils.prettyTime(System.currentTimeMillis() - (timer))
 				);
 			}
 			if (timer <= 0) {
-				lineMap.put(6, EnumChatFormatting.AQUA + "Timer: " + EnumChatFormatting.RED + "(Stopped)");
+				lineMap.put(6, ChatFormatting.AQUA + "Timer: " + ChatFormatting.RED + "(Stopped)");
 			}
 			if (System.currentTimeMillis() - timer > funnyCustomTimer &&
 				System.currentTimeMillis() - timer < (funnyCustomTimer + 100) && funnyCustomTimer != 0) {

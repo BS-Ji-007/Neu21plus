@@ -218,11 +218,11 @@ public class FairySouls {
 
 	public void markAllAsFound() {
 		if (!trackSouls) {
-			print(EnumChatFormatting.RED + "Fairy soul tracking is turned off, turn it on using /neu");
+			print(ChatFormatting.RED + "Fairy soul tracking is turned off, turn it on using /neu");
 			return;
 		}
 		if (allSoulsInCurrentLocation == null) {
-			print(EnumChatFormatting.RED + "No fairy souls found in your current world");
+			print(ChatFormatting.RED + "No fairy souls found in your current world");
 			return;
 		}
 		for (int i = 0; i < allSoulsInCurrentLocation.size(); i++) {
@@ -230,22 +230,22 @@ public class FairySouls {
 		}
 		refreshMissingSoulInfo(true);
 
-		print(EnumChatFormatting.DARK_PURPLE + "Marked all fairy souls as found");
+		print(ChatFormatting.DARK_PURPLE + "Marked all fairy souls as found");
 	}
 
 	public void markAllAsMissing() {
 		if (!trackSouls) {
-			print(EnumChatFormatting.RED + "Fairy soul tracking is turned off, turn it on using /neu");
+			print(ChatFormatting.RED + "Fairy soul tracking is turned off, turn it on using /neu");
 			return;
 		}
 		if (allSoulsInCurrentLocation == null) {
-			print(EnumChatFormatting.RED + "No fairy souls found in your current world");
+			print(ChatFormatting.RED + "No fairy souls found in your current world");
 			return;
 		}
 		foundSoulsInLocation.clear();
 		refreshMissingSoulInfo(true);
 
-		print(EnumChatFormatting.DARK_PURPLE + "Marked all fairy souls as not found");
+		print(ChatFormatting.DARK_PURPLE + "Marked all fairy souls as not found");
 	}
 
 	private HashMap<String, Set<Integer>> getFoundSoulsForProfile() {

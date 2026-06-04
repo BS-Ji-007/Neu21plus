@@ -176,7 +176,7 @@ public class ForgeRecipe implements NeuRecipe {
 
 		Utils.drawHoveringText(
 			Collections.singletonList(
-				EnumChatFormatting.YELLOW + formatDuration(reducedTime) + " with Quick Forge (Level " + level + ")"),
+				ChatFormatting.YELLOW + formatDuration(reducedTime) + " with Quick Forge (Level " + level + ")"),
 			mouseX, mouseY, gui.width, gui.height, 500);
 	}
 

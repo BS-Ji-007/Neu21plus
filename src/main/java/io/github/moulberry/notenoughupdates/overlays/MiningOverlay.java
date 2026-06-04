@@ -420,7 +420,7 @@ public class MiningOverlay extends TextTabOverlay {
 				if (entry.getValue() >= 1) {
 					commissionsStrings.add(DARK_AQUA + entry.getKey() + ": " + GREEN + "DONE");
 				} else {
-					EnumChatFormatting col = RED;
+					ChatFormatting col = RED;
 					if (entry.getValue() >= 0.75) {
 						col = GREEN;
 					} else if (entry.getValue() >= 0.5) {
@@ -779,36 +779,36 @@ public class MiningOverlay extends TextTabOverlay {
 		public final boolean fromScoreBoard;
 
 		public String getFormattedString(long currentTimeMillis) {
-			String returnText = EnumChatFormatting.DARK_AQUA + "Forge " + (this.forgeID + 1) + ": ";
+			String returnText = ChatFormatting.DARK_AQUA + "Forge " + (this.forgeID + 1) + ": ";
 			if (status == 0) {
-				return returnText + EnumChatFormatting.GRAY + "Empty";
+				return returnText + ChatFormatting.GRAY + "Empty";
 			} else if (status == 1) {
-				return returnText + EnumChatFormatting.DARK_RED + "Locked";
+				return returnText + ChatFormatting.DARK_RED + "Locked";
 			}
 
 			long timeDuration = finishTime - currentTimeMillis;
-			returnText = returnText + EnumChatFormatting.DARK_PURPLE + this.itemName + ": ";
+			returnText = returnText + ChatFormatting.DARK_PURPLE + this.itemName + ": ";
 
 			int days = (int) (timeDuration / (1000 * 60 * 60 * 24));
 			timeDuration = timeDuration - (days * (1000 * 60 * 60 * 24));
 			int hours = (int) ((timeDuration / (1000 * 60 * 60)) % 24);
 
 			if (days > 0) {
-				return returnText + EnumChatFormatting.AQUA + days + "d " + hours + "h";
+				return returnText + ChatFormatting.AQUA + days + "d " + hours + "h";
 			}
 			timeDuration = timeDuration - (hours * (1000 * 60 * 60));
 			int minutes = (int) ((timeDuration / (1000 * 60)) % 60);
 			if (hours > 0) {
-				return returnText + EnumChatFormatting.AQUA + hours + "h " + minutes + "m";
+				return returnText + ChatFormatting.AQUA + hours + "h " + minutes + "m";
 			}
 			timeDuration = timeDuration - (minutes * (1000 * 60));
 			int seconds = (int) (timeDuration / 1000) % 60;
 			if (minutes > 0) {
-				return returnText + EnumChatFormatting.AQUA + minutes + "m " + seconds + "s";
+				return returnText + ChatFormatting.AQUA + minutes + "m " + seconds + "s";
 			} else if (seconds > 0) {
-				return returnText + EnumChatFormatting.AQUA + seconds + "s";
+				return returnText + ChatFormatting.AQUA + seconds + "s";
 			} else {
-				return returnText + EnumChatFormatting.DARK_GREEN + "Done";
+				return returnText + ChatFormatting.DARK_GREEN + "Done";
 			}
 		}
 	}

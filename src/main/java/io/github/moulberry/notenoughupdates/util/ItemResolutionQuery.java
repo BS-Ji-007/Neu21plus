@@ -194,7 +194,7 @@ public class ItemResolutionQuery {
 		if (itemType == Items.enchanted_book && isOnBazaar && compound != null) {
 			return resolveEnchantmentByName(displayName);
 		}
-		if (itemType == Items.skull && displayName.contains("Essence")) {
+		if (itemType == Items.PLAYER_HEAD && displayName.contains("Essence")) {
 			return findInternalNameByDisplayName(displayName, false);
 		}
 		if (displayName.endsWith("Enchanted Book") && guiName.startsWith("Superpairs")) {

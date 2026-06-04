@@ -45,62 +45,62 @@ import static io.github.moulberry.notenoughupdates.miscgui.GuiEnchantColour.cust
 public class ItemCustomizationUtils {
 
 	public static List<String> customizeColourGuide = Lists.newArrayList(
-		EnumChatFormatting.AQUA + "Set a custom name for the item",
-		EnumChatFormatting.GREEN + "",
-		EnumChatFormatting.GREEN + "Type \"&&\" for ¶",
-		EnumChatFormatting.GREEN + "Type \"**\" for ✪",
-		EnumChatFormatting.GREEN + "Type \"*1-9\" for ➊-➒",
-		EnumChatFormatting.GREEN + "",
-		EnumChatFormatting.GREEN + "Available colour codes:",
+		ChatFormatting.AQUA + "Set a custom name for the item",
+		ChatFormatting.GREEN + "",
+		ChatFormatting.GREEN + "Type \"&&\" for ¶",
+		ChatFormatting.GREEN + "Type \"**\" for ✪",
+		ChatFormatting.GREEN + "Type \"*1-9\" for ➊-➒",
+		ChatFormatting.GREEN + "",
+		ChatFormatting.GREEN + "Available colour codes:",
 		Utils.chromaString("¶z = Chroma"),
-		EnumChatFormatting.DARK_BLUE + "¶1 = Dark Blue",
-		EnumChatFormatting.DARK_GREEN + "¶2 = Dark Green",
-		EnumChatFormatting.DARK_AQUA + "¶3 = Dark Aqua",
-		EnumChatFormatting.DARK_RED + "¶4 = Dark Red",
-		EnumChatFormatting.DARK_PURPLE + "¶5 = Dark Purple",
-		EnumChatFormatting.GOLD + "¶6 = Gold",
-		EnumChatFormatting.GRAY + "¶7 = Gray",
-		EnumChatFormatting.DARK_GRAY + "¶8 = Dark Gray",
-		EnumChatFormatting.BLUE + "¶9 = Blue",
-		EnumChatFormatting.GREEN + "¶a = Green",
-		EnumChatFormatting.AQUA + "¶b = Aqua",
-		EnumChatFormatting.RED + "¶c = Red",
-		EnumChatFormatting.LIGHT_PURPLE + "¶d = Purple",
-		EnumChatFormatting.YELLOW + "¶e = Yellow",
-		EnumChatFormatting.WHITE + "¶f = White",
-		"§Z¶Z = SBA Chroma" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " (Requires SBA)",
+		ChatFormatting.DARK_BLUE + "¶1 = Dark Blue",
+		ChatFormatting.DARK_GREEN + "¶2 = Dark Green",
+		ChatFormatting.DARK_AQUA + "¶3 = Dark Aqua",
+		ChatFormatting.DARK_RED + "¶4 = Dark Red",
+		ChatFormatting.DARK_PURPLE + "¶5 = Dark Purple",
+		ChatFormatting.GOLD + "¶6 = Gold",
+		ChatFormatting.GRAY + "¶7 = Gray",
+		ChatFormatting.DARK_GRAY + "¶8 = Dark Gray",
+		ChatFormatting.BLUE + "¶9 = Blue",
+		ChatFormatting.GREEN + "¶a = Green",
+		ChatFormatting.AQUA + "¶b = Aqua",
+		ChatFormatting.RED + "¶c = Red",
+		ChatFormatting.LIGHT_PURPLE + "¶d = Purple",
+		ChatFormatting.YELLOW + "¶e = Yellow",
+		ChatFormatting.WHITE + "¶f = White",
+		"§Z¶Z = SBA Chroma" + ChatFormatting.RESET + ChatFormatting.GRAY + " (Requires SBA)",
 		"",
-		EnumChatFormatting.GREEN + "Available formatting codes:",
-		EnumChatFormatting.GRAY + "¶k = " + EnumChatFormatting.OBFUSCATED + "Obfuscated",
-		EnumChatFormatting.GRAY + "¶l = " + EnumChatFormatting.BOLD + "Bold",
-		EnumChatFormatting.GRAY + "¶m = " + EnumChatFormatting.STRIKETHROUGH + "Strikethrough",
-		EnumChatFormatting.GRAY + "¶n = " + EnumChatFormatting.UNDERLINE + "Underline",
-		EnumChatFormatting.GRAY + "¶o = " + EnumChatFormatting.ITALIC + "Italic"
+		ChatFormatting.GREEN + "Available formatting codes:",
+		ChatFormatting.GRAY + "¶k = " + ChatFormatting.OBFUSCATED + "Obfuscated",
+		ChatFormatting.GRAY + "¶l = " + ChatFormatting.BOLD + "Bold",
+		ChatFormatting.GRAY + "¶m = " + ChatFormatting.STRIKETHROUGH + "Strikethrough",
+		ChatFormatting.GRAY + "¶n = " + ChatFormatting.UNDERLINE + "Underline",
+		ChatFormatting.GRAY + "¶o = " + ChatFormatting.ITALIC + "Italic"
 	);
 
 	public static List<String> resetGuide = Lists.newArrayList(
-		EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "This will reset all customisations!!",
-		EnumChatFormatting.GREEN + "",
-		EnumChatFormatting.RED + "Only click if you are sure you want to reset everything for this item"
+		ChatFormatting.RED + "" + ChatFormatting.BOLD + "This will reset all customisations!!",
+		ChatFormatting.GREEN + "",
+		ChatFormatting.RED + "Only click if you are sure you want to reset everything for this item"
 	);
 
 	public static List<String> speedGuide = Lists.newArrayList(
-		EnumChatFormatting.AQUA + "This is how fast the dyes will cycle, in ticks",
-		EnumChatFormatting.GRAY + "§6Hypixel §7dyes cycle every 2 ticks",
-		EnumChatFormatting.GRAY + "",
-		EnumChatFormatting.GRAY + "In the §dgradient mode §7this decides the amount of intermediary colours",
-		EnumChatFormatting.GRAY + "This means if speed is set to 1 it's the same as §aCycling mode"
+		ChatFormatting.AQUA + "This is how fast the dyes will cycle, in ticks",
+		ChatFormatting.GRAY + "§6Hypixel §7dyes cycle every 2 ticks",
+		ChatFormatting.GRAY + "",
+		ChatFormatting.GRAY + "In the §dgradient mode §7this decides the amount of intermediary colours",
+		ChatFormatting.GRAY + "This means if speed is set to 1 it's the same as §aCycling mode"
 	);
 
 	public static List<String> skullGuide = Lists.newArrayList(
-		EnumChatFormatting.GOLD + "How to use custom skulls",
-		EnumChatFormatting.YELLOW + "1. Search for the skull in the item list",
-		EnumChatFormatting.YELLOW + "2. Middle click on the item in the item list, this should give you the item id",
-		EnumChatFormatting.YELLOW + "3. Copy the item id and put it after \"skull:\". Make sure you remove the \"id:\"",
-		EnumChatFormatting.YELLOW + "",
-		EnumChatFormatting.GREEN  + "Examples:",
-		EnumChatFormatting.YELLOW + "skull:YOUNG DRAGON HELMET",
-		EnumChatFormatting.YELLOW + "skull:WITHER_GOGGLES_CELESTIAL"
+		ChatFormatting.GOLD + "How to use custom skulls",
+		ChatFormatting.YELLOW + "1. Search for the skull in the item list",
+		ChatFormatting.YELLOW + "2. Middle click on the item in the item list, this should give you the item id",
+		ChatFormatting.YELLOW + "3. Copy the item id and put it after \"skull:\". Make sure you remove the \"id:\"",
+		ChatFormatting.YELLOW + "",
+		ChatFormatting.GREEN  + "Examples:",
+		ChatFormatting.YELLOW + "skull:YOUNG DRAGON HELMET",
+		ChatFormatting.YELLOW + "skull:WITHER_GOGGLES_CELESTIAL"
 	);
 
 	public static ItemStack copy(ItemStack stack, GuiItemCustomize instance) {

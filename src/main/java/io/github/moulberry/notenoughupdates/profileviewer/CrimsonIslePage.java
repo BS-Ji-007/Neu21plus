@@ -48,27 +48,27 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 
 	private static final ItemStack[] KUUDRA_KEYS = {
 		Utils.createSkull(
-			EnumChatFormatting.BLUE + "Kuudra Key",
+			ChatFormatting.BLUE + "Kuudra Key",
 			"2a9e4728-b0c5-3f7d-9c45-7ff3fc1eb206",
 			"ewogICJ0aW1lc3RhbXAiIDogMTY0MzY1MjgzNTU0NCwKICAicHJvZmlsZUlkIiA6ICJkYmQ4MDQ2M2EwMzY0Y2FjYjI3OGNhODBhMDBkZGIxMyIsCiAgInByb2ZpbGVOYW1lIiA6ICJ4bG9nMjEiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmZkM2U3MTgzOGMwZTc2Zjg5MDIxMzEyMGI0Y2U3NDQ5NTc3NzM2NjA0MzM4YThkMjhiNGM4NmRiMjU0N2U3MSIKICAgIH0KICB9Cn0"
 		),
 		Utils.createSkull(
-			EnumChatFormatting.DARK_PURPLE + "Hot Kuudra Key",
+			ChatFormatting.DARK_PURPLE + "Hot Kuudra Key",
 			"80a91601-ac87-302b-ac6a-4c635b73c2a2",
 			"ewogICJ0aW1lc3RhbXAiIDogMTY0MzY1Mjg2NTc1MiwKICAicHJvZmlsZUlkIiA6ICJkMGI4MjE1OThmMTE0NzI1ODBmNmNiZTliOGUxYmU3MCIsCiAgInByb2ZpbGVOYW1lIiA6ICJqYmFydHl5IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2MwMjU5ZTg5NjRjM2RlYjk1YjEyMzNiYjJkYzgyYzk4NjE3N2U2M2FlMzZjMTEyNjVjYjM4NTE4MGJiOTFjYzAiCiAgICB9CiAgfQp9"
 		),
 		Utils.createSkull(
-			EnumChatFormatting.DARK_PURPLE + "Burning Kuudra Key",
+			ChatFormatting.DARK_PURPLE + "Burning Kuudra Key",
 			"74ceda89-849d-35b4-b0fb-00083f599c02",
 			"ewogICJ0aW1lc3RhbXAiIDogMTY0MzY1Mjg4MjI5NSwKICAicHJvZmlsZUlkIiA6ICI1YjY2YzNkZWZhYTI0NWMzYTcwNjM3OTA3NTQ0Yjg3MCIsCiAgInByb2ZpbGVOYW1lIiA6ICJSZWFuX1JhaWNvMDgxNiIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8zMzBmNmY2ZTYzYjI0NWY4MzllM2NjZGNlNWE1ZjIyMDU2MjAxZDAyNzQ0MTFkZmU1ZDk0YmJlNDQ5YzRlY2UiCiAgICB9CiAgfQp9"
 		),
 		Utils.createSkull(
-			EnumChatFormatting.DARK_PURPLE + "Fiery Kuudra Key",
+			ChatFormatting.DARK_PURPLE + "Fiery Kuudra Key",
 			"75c56136-e7cc-3836-a4d5-ed516b7651d6",
 			"ewogICJ0aW1lc3RhbXAiIDogMTY0MzY1Mjg5ODM0MSwKICAicHJvZmlsZUlkIiA6ICI5ZDQyNWFiOGFmZjg0MGU1OWM3NzUzZjc5Mjg5YjMyZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJUb21wa2luNDIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ4NTQzOTNiYmY5NDQ0NTQyNTAyNTgyZDRiNWEyM2NjNzM4OTY1MDZlMmZjNzM5ZDU0NWJjMzViYzdiMWMwNiIKICAgIH0KICB9Cn0"
 		),
 		Utils.createSkull(
-			EnumChatFormatting.GOLD + "Infernal Kuudra Key",
+			ChatFormatting.GOLD + "Infernal Kuudra Key",
 			"3877a428-ace8-3faf-9992-4644fbd87f4c",
 			"ewogICJ0aW1lc3RhbXAiIDogMTY0MzY1MjkxMzA5NiwKICAicHJvZmlsZUlkIiA6ICJjNTlkMDFlMDI4MWI0MGNhOTczNjc5ODc4NmRmN2FmNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJvWm9va3hQYXJjY2VyIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzgyZWUyNTQxNGFhN2VmYjRhMmI0OTAxYzZlMzNlNWVhYTcwNWE2YWIyMTJlYmViZmQ2YTRkZTk4NDEyNWM3YTAiCiAgICB9CiAgfQp9"
 		),
@@ -80,28 +80,28 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 	public static final String[] KUUDRA_TIERS = {"none", "hot", "burning", "fiery", "infernal"};
 
 	public static final LinkedHashMap<String, String> apiDojoTestNames = new LinkedHashMap<String, String>() {{
-		put("mob_kb", EnumChatFormatting.GOLD + "Test of Force");
-		put("wall_jump", EnumChatFormatting.LIGHT_PURPLE + "Test of Stamina");
-		put("archer", EnumChatFormatting.YELLOW + "Test of Mastery");
-		put("sword_swap", EnumChatFormatting.RED + "Test of Discipline");
-		put("snake", EnumChatFormatting.GREEN + "Test of Swiftness");
-		put("lock_head", EnumChatFormatting.BLUE + "Test of Control");
-		put("fireball", EnumChatFormatting.GOLD + "Test of Tenacity");
+		put("mob_kb", ChatFormatting.GOLD + "Test of Force");
+		put("wall_jump", ChatFormatting.LIGHT_PURPLE + "Test of Stamina");
+		put("archer", ChatFormatting.YELLOW + "Test of Mastery");
+		put("sword_swap", ChatFormatting.RED + "Test of Discipline");
+		put("snake", ChatFormatting.GREEN + "Test of Swiftness");
+		put("lock_head", ChatFormatting.BLUE + "Test of Control");
+		put("fireball", ChatFormatting.GOLD + "Test of Tenacity");
 	}};
 
 	public static final LinkedHashMap<Integer, String> dojoPointsToRank = new LinkedHashMap<Integer, String>() {{
-		put(0, EnumChatFormatting.GRAY + "None");
-		put(1000, EnumChatFormatting.YELLOW + "Yellow");
-		put(2000, EnumChatFormatting.GREEN + "Green");
-		put(4000, EnumChatFormatting.BLUE + "Blue");
-		put(6000, EnumChatFormatting.GOLD + "Brown");
-		put(7000, EnumChatFormatting.DARK_GRAY + "Black");
+		put(0, ChatFormatting.GRAY + "None");
+		put(1000, ChatFormatting.YELLOW + "Yellow");
+		put(2000, ChatFormatting.GREEN + "Green");
+		put(4000, ChatFormatting.BLUE + "Blue");
+		put(6000, ChatFormatting.GOLD + "Brown");
+		put(7000, ChatFormatting.DARK_GRAY + "Black");
 	}};
 
 	private static final HashMap<String, String> factions = new HashMap<String, String>() {{
-		put("mages", EnumChatFormatting.DARK_PURPLE + "Mages");
-		put("barbarians", EnumChatFormatting.RED + "Barbarians");
-		put("N/A", EnumChatFormatting.GRAY + "N/A");
+		put("mages", ChatFormatting.DARK_PURPLE + "Mages");
+		put("barbarians", ChatFormatting.RED + "Barbarians");
+		put("N/A", ChatFormatting.GRAY + "N/A");
 	}};
 
 	private static final LinkedHashMap<Integer, String> factionThresholds = new LinkedHashMap<Integer, String>() {{
@@ -131,7 +131,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		JsonObject profileInfo = selectedProfile.getProfileJson();
 		if (!profileInfo.has("nether_island_player_data")) {
 			Utils.drawStringCentered(
-				EnumChatFormatting.RED + "No data found for the Crimson Isles",
+				ChatFormatting.RED + "No data found for the Crimson Isles",
 				guiLeft + 431 / 2f, guiTop + 101, true, 0
 			);
 			return;
@@ -156,13 +156,13 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 	}
 
 	public void drawKuudraStats(JsonObject data, int guiLeft, int guiTop, int mouseX, int mouseY) {
-		Utils.drawStringCentered(EnumChatFormatting.RED + "Kuudra Stats", guiLeft + (431 * 0.18f), guiTop + 14, true, 0);
+		Utils.drawStringCentered(ChatFormatting.RED + "Kuudra Stats", guiLeft + (431 * 0.18f), guiTop + 14, true, 0);
 
 		JsonObject kuudraCompletedTiers = data.getAsJsonObject("kuudra_completed_tiers");
 
 		if (kuudraCompletedTiers == null) {
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "No kuudra stats found!",
+				ChatFormatting.RED + "No kuudra stats found!",
 				" ",
 				guiLeft + 15,
 				guiTop + 101,
@@ -191,16 +191,16 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + KUUDRA_TIERS_NAME[i] + ": ",
-				EnumChatFormatting.WHITE + String.valueOf(completions),
+				ChatFormatting.RED + KUUDRA_TIERS_NAME[i] + ": ",
+				ChatFormatting.WHITE + String.valueOf(completions),
 				guiLeft + 23,
 				guiTop + 30 + (i * 30),
 				110
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "Highest Wave: ",
-				EnumChatFormatting.WHITE + (highestWaveCompleted != 0 ? String.valueOf(highestWaveCompleted) : "N/A"),
+				ChatFormatting.RED + "Highest Wave: ",
+				ChatFormatting.WHITE + (highestWaveCompleted != 0 ? String.valueOf(highestWaveCompleted) : "N/A"),
 				guiLeft + 23,
 				guiTop + 42 + (i * 30),
 				110
@@ -210,16 +210,16 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 				if (mouseX > guiLeft + 23 && mouseX < guiLeft + 133 && mouseY < guiTop + 50 + (i * 30) &&
 					mouseY > guiTop + 42 + (i * 30)) {
 					getInstance().tooltipToDisplay = new ArrayList<>();
-					getInstance().tooltipToDisplay.add(EnumChatFormatting.RED + "N/A will only show for highest wave");
-					getInstance().tooltipToDisplay.add(EnumChatFormatting.RED + "if you have not completed a run for");
-					getInstance().tooltipToDisplay.add(EnumChatFormatting.RED + "this tier since Infernal tier was released.");
+					getInstance().tooltipToDisplay.add(ChatFormatting.RED + "N/A will only show for highest wave");
+					getInstance().tooltipToDisplay.add(ChatFormatting.RED + "if you have not completed a run for");
+					getInstance().tooltipToDisplay.add(ChatFormatting.RED + "this tier since Infernal tier was released.");
 				}
 			}
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.RED + "Total runs: ",
-			EnumChatFormatting.WHITE + String.valueOf(getTotalKuudraRuns(kuudraCompletedTiers)),
+			ChatFormatting.RED + "Total runs: ",
+			ChatFormatting.WHITE + String.valueOf(getTotalKuudraRuns(kuudraCompletedTiers)),
 			guiLeft + 23,
 			guiTop + 30 + (5 * 30),
 			110
@@ -236,7 +236,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 	}
 
 	public void drawDojoStats(JsonObject data, int guiLeft, int guiTop) {
-		Utils.drawStringCentered(EnumChatFormatting.YELLOW + "Dojo Stats", guiLeft + (431 * 0.49f), guiTop + 14, true, 0);
+		Utils.drawStringCentered(ChatFormatting.YELLOW + "Dojo Stats", guiLeft + (431 * 0.49f), guiTop + 14, true, 0);
 
 
 		int totalPoints = 0;
@@ -246,7 +246,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 			totalPoints += curPoints;
 			Utils.renderAlignedString(
 				dojoTest.getValue() + ": ",
-				EnumChatFormatting.WHITE + "" + curPoints + " (" +
+				ChatFormatting.WHITE + "" + curPoints + " (" +
 					dojoGrades[(curPoints / 200) >= 6 ? 5 : (curPoints / 200)] + ")",
 				guiLeft + (431 * 0.49f) - 65,
 				guiTop + 30 + (idx * 12),
@@ -256,15 +256,15 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GRAY + "Points: ",
-			EnumChatFormatting.GOLD + String.valueOf(totalPoints),
+			ChatFormatting.GRAY + "Points: ",
+			ChatFormatting.GOLD + String.valueOf(totalPoints),
 			guiLeft + (431 * 0.49f) - 65,
 			guiTop + 40 + (apiDojoTestNames.size() * 12),
 			130
 		);
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GRAY + "Rank: ",
+			ChatFormatting.GRAY + "Rank: ",
 			getRank(totalPoints),
 			guiLeft + (431 * 0.49f) - 65,
 			guiTop + 52 + (apiDojoTestNames.size() * 12),
@@ -272,9 +272,9 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		);
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GRAY + "Points to next: ",
+			ChatFormatting.GRAY + "Points to next: ",
 			getPointsToNextRank(totalPoints) == 0
-				? EnumChatFormatting.GOLD + "MAXED!"
+				? ChatFormatting.GOLD + "MAXED!"
 				: String.valueOf(getPointsToNextRank(totalPoints)),
 			guiLeft + (431 * 0.49f) - 65,
 			guiTop + 64 + (apiDojoTestNames.size() * 12),
@@ -306,7 +306,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 
 	public void drawLastMatriarchAttempt(JsonObject data, int guiLeft, int guiTop) {
 		Utils.drawStringCentered(
-			EnumChatFormatting.GOLD + "Last Matriarch Attempt",
+			ChatFormatting.GOLD + "Last Matriarch Attempt",
 			guiLeft + (431 * 0.82f), guiTop + 104, true, 0
 		);
 
@@ -314,8 +314,8 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 
 		if (lastMatriarchAttempt != null && !lastMatriarchAttempt.entrySet().isEmpty()) {
 			Utils.renderAlignedString(
-				EnumChatFormatting.GOLD + "Heavy Pearls Acquired: ",
-				EnumChatFormatting.WHITE + lastMatriarchAttempt.get("pearls_collected").getAsString(),
+				ChatFormatting.GOLD + "Heavy Pearls Acquired: ",
+				ChatFormatting.WHITE + lastMatriarchAttempt.get("pearls_collected").getAsString(),
 				guiLeft + 290,
 				guiTop + 119,
 				130
@@ -327,16 +327,16 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 			String time = timeFormat.format(calendar.getTime());
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.GOLD + "Last Attempt: ",
-				EnumChatFormatting.WHITE + date,
+				ChatFormatting.GOLD + "Last Attempt: ",
+				ChatFormatting.WHITE + date,
 				guiLeft + 290,
 				guiTop + 131,
 				130
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.GOLD + " ",
-				EnumChatFormatting.WHITE + time,
+				ChatFormatting.GOLD + " ",
+				ChatFormatting.WHITE + time,
 				guiLeft + 290,
 				guiTop + 143,
 				130
@@ -345,7 +345,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.RED + "No attempts found!",
+			ChatFormatting.RED + "No attempts found!",
 			" ",
 			guiLeft + 290,
 			guiTop + 119,
@@ -355,14 +355,14 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 
 	public void drawFactionReputation(JsonObject data, int guiLeft, int guiTop) {
 		Utils.drawStringCentered(
-			EnumChatFormatting.DARK_PURPLE + "Faction Reputation",
+			ChatFormatting.DARK_PURPLE + "Faction Reputation",
 			guiLeft + (431 * 0.82f), guiTop + 14, true, 0
 		);
 
 		String selectedFaction = data.has("selected_faction") ? data.get("selected_faction").getAsString() : "N/A";
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Faction: ",
+			ChatFormatting.GREEN + "Faction: ",
 			factions.get(selectedFaction),
 			guiLeft + 290,
 			guiTop + 30,
@@ -381,16 +381,16 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Mage Reputation: ",
-			EnumChatFormatting.WHITE + String.valueOf(mageReputation),
+			ChatFormatting.DARK_PURPLE + "Mage Reputation: ",
+			ChatFormatting.WHITE + String.valueOf(mageReputation),
 			guiLeft + 290,
 			guiTop + 42 + (selectedFaction.equals("mages") || selectedFaction.equals("N/A") ? 0 : 24),
 			130
 		);
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Title: ",
-			EnumChatFormatting.WHITE + factionThresholds.get(mageReputationThreshold),
+			ChatFormatting.DARK_PURPLE + "Title: ",
+			ChatFormatting.WHITE + factionThresholds.get(mageReputationThreshold),
 			guiLeft + 290,
 			guiTop + 54 + (selectedFaction.equals("mages") || selectedFaction.equals("N/A") ? 0 : 24),
 			130
@@ -405,16 +405,16 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.RED + "Barbarian Reputation: ",
-			EnumChatFormatting.WHITE + String.valueOf(barbarianReputation),
+			ChatFormatting.RED + "Barbarian Reputation: ",
+			ChatFormatting.WHITE + String.valueOf(barbarianReputation),
 			guiLeft + 290,
 			guiTop + 42 + (selectedFaction.equals("barbarians") ? 0 : 24),
 			130
 		);
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.RED + "Title: ",
-			EnumChatFormatting.WHITE + factionThresholds.get(barbarianReputationThreshold),
+			ChatFormatting.RED + "Title: ",
+			ChatFormatting.WHITE + factionThresholds.get(barbarianReputationThreshold),
 			guiLeft + 290,
 			guiTop + 54 + (selectedFaction.equals("barbarians") ? 0 : 24),
 			130

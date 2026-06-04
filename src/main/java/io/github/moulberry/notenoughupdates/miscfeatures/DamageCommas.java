@@ -34,13 +34,13 @@ import java.util.regex.Pattern;
 public class DamageCommas {
 	private static final WeakHashMap<EntityLivingBase, ChatComponentText> replacementMap = new WeakHashMap<>();
 
-	private static final EnumChatFormatting[] coloursHypixel = {
-		EnumChatFormatting.WHITE,
-		EnumChatFormatting.YELLOW,
-		EnumChatFormatting.GOLD,
-		EnumChatFormatting.RED,
-		EnumChatFormatting.RED,
-		EnumChatFormatting.WHITE
+	private static final ChatFormatting[] coloursHypixel = {
+		ChatFormatting.WHITE,
+		ChatFormatting.YELLOW,
+		ChatFormatting.GOLD,
+		ChatFormatting.RED,
+		ChatFormatting.RED,
+		ChatFormatting.WHITE
 	};
 
 	private static final char STAR = '\u2727';
@@ -116,7 +116,7 @@ public class DamageCommas {
 			int colourIndex = 0;
 			for (char c : newFormatted.toString().toCharArray()) {
 				if (c == ',') {
-					newFormattedCrit.append(EnumChatFormatting.GRAY);
+					newFormattedCrit.append(ChatFormatting.GRAY);
 				} else {
 					newFormattedCrit.append(coloursHypixel[colourIndex++ % coloursHypixel.length]);
 				}
@@ -201,8 +201,8 @@ public class DamageCommas {
             return ret;
         }
 
-        if (formatted.length() >= 5 && formatted.startsWith(EnumChatFormatting.GRAY.toString()) &&
-                formatted.endsWith(EnumChatFormatting.RESET.toString())) {
+        if (formatted.length() >= 5 && formatted.startsWith(ChatFormatting.GRAY.toString()) &&
+                formatted.endsWith(ChatFormatting.RESET.toString())) {
             String damageS = formatted.substring(2, formatted.length() - 2);
 
             for (int i = 0; i < damageS.length(); i++) {
@@ -223,7 +223,7 @@ public class DamageCommas {
                     damageFormatted = NumberFormat.getIntegerInstance().format(damage);
                 }
 
-                ChatComponentText ret = new ChatComponentText(EnumChatFormatting.GRAY + damageFormatted + EnumChatFormatting.RESET);
+                ChatComponentText ret = new ChatComponentText(ChatFormatting.GRAY + damageFormatted + ChatFormatting.RESET);
                 replacementMap.put(hashCode, ret);
                 return ret;
             } catch (Exception e) {

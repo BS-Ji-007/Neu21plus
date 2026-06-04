@@ -116,16 +116,16 @@ public class AccessoryBagOverlay {
 	}
 
 	private static final ItemStack[] TAB_STACKS = new ItemStack[]{
-		Utils.createItemStack(Items.dye, EnumChatFormatting.DARK_AQUA + "Basic Information",
-			10, EnumChatFormatting.GREEN + "- Talis count by rarity"
+		Utils.createItemStack(Items.dye, ChatFormatting.DARK_AQUA + "Basic Information",
+			10, ChatFormatting.GREEN + "- Talis count by rarity"
 		),
-		Utils.createItemStack(Items.diamond_sword, EnumChatFormatting.DARK_AQUA + "Total Stat Bonuses",
+		Utils.createItemStack(Items.diamond_sword, ChatFormatting.DARK_AQUA + "Total Stat Bonuses",
 			0
 		),
-		Utils.createItemStack(Items.dye, EnumChatFormatting.DARK_AQUA + "Duplicates",
+		Utils.createItemStack(Items.dye, ChatFormatting.DARK_AQUA + "Duplicates",
 			8
 		),
-		Utils.createItemStack(Item.getItemFromBlock(Blocks.barrier), EnumChatFormatting.DARK_AQUA + "Missing",
+		Utils.createItemStack(Item.getItemFromBlock(Blocks.barrier), ChatFormatting.DARK_AQUA + "Missing",
 			0
 		)
 	};
@@ -257,7 +257,7 @@ public class AccessoryBagOverlay {
 			String rarityName = Utils.rarityArrC[entry.getKey()];
 			Utils.renderAlignedString(
 				rarityName,
-				EnumChatFormatting.WHITE.toString() + entry.getValue(),
+				ChatFormatting.WHITE.toString() + entry.getValue(),
 				x + 34,
 				y + 20 + 11 * yIndex,
 				100
@@ -269,8 +269,8 @@ public class AccessoryBagOverlay {
 		int mp = 0;
 		if (profileSpecific != null) mp = profileSpecific.magicalPower;
 		Utils.renderAlignedString(
-			EnumChatFormatting.AQUA + "Magical Power",
-			mp != 0 ? EnumChatFormatting.WHITE.toString() + mp : EnumChatFormatting.RED + "NO DATA, DO /PV",
+			ChatFormatting.AQUA + "Magical Power",
+			mp != 0 ? ChatFormatting.WHITE.toString() + mp : ChatFormatting.RED + "NO DATA, DO /PV",
 			x + 20, y + 25 + 88, 130
 		);
 	}
@@ -301,7 +301,7 @@ public class AccessoryBagOverlay {
 		for (Pair<String, Integer> pair : statPairs.subList(statsPageActive * 8, statPairs.size())) {
 			Utils.renderAlignedString(
 				pair.getKey(),
-				EnumChatFormatting.WHITE.toString() + pair.getValue(),
+				ChatFormatting.WHITE.toString() + pair.getValue(),
 				x + 6,
 				y + 20 + 11 * yIndex, 158
 			);
@@ -759,7 +759,7 @@ public class AccessoryBagOverlay {
 							stats.addStat(entry.getKey(), bonus);
 						}
 					}
-					if (line.startsWith(EnumChatFormatting.GRAY + "Current Bonus: ")) {
+					if (line.startsWith(ChatFormatting.GRAY + "Current Bonus: ")) {
 						for (Map.Entry<String, Pattern> entry : patternMap.entrySet()) {
 							String prettyStatName = Utils.cleanColour(
 								PlayerStats.defaultStatNamesPretty[Arrays

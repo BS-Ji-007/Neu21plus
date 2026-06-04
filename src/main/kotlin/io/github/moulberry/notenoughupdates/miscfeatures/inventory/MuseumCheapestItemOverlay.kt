@@ -225,15 +225,15 @@ object MuseumCheapestItemOverlay {
         if (leftButtonRect.contains(mouseX, mouseY)) {
             val tooltip = if (useBIN) {
                 listOf(
-                    "${EnumChatFormatting.GREEN}Using ${EnumChatFormatting.BLUE}lowest BIN ${EnumChatFormatting.GREEN}as price source!",
+                    "${ChatFormatting.GREEN}Using ${ChatFormatting.BLUE}lowest BIN ${ChatFormatting.GREEN}as price source!",
                     "",
-                    "${EnumChatFormatting.YELLOW}Click to switch to craft cost!"
+                    "${ChatFormatting.YELLOW}Click to switch to craft cost!"
                 )
             } else {
                 listOf(
-                    "${EnumChatFormatting.GREEN}Using ${EnumChatFormatting.AQUA}craft cost ${EnumChatFormatting.GREEN}as price source!",
+                    "${ChatFormatting.GREEN}Using ${ChatFormatting.AQUA}craft cost ${ChatFormatting.GREEN}as price source!",
                     "",
-                    "${EnumChatFormatting.YELLOW}Click to switch to lowest BIN!"
+                    "${ChatFormatting.YELLOW}Click to switch to lowest BIN!"
                 )
             }
             Utils.drawHoveringText(
@@ -250,7 +250,7 @@ object MuseumCheapestItemOverlay {
         val rightItemStack = when (selectedCategory) {
             Category.WEAPONS -> ItemStack(Items.diamond_sword)
             Category.ARMOUR_SETS -> ItemStack(Items.diamond_chestplate)
-            Category.RARITIES -> ItemStack(Items.emerald)
+            Category.RARITIES -> ItemStack(Items.EMERALD)
             Category.NOT_APPLICABLE -> ItemStack(Items.filled_map)
         }
         rightButtonRect = Rectangle(
@@ -266,13 +266,13 @@ object MuseumCheapestItemOverlay {
         )
         if (rightButtonRect.contains(mouseX, mouseY)) {
             val tooltip = mutableListOf(
-                "${EnumChatFormatting.GREEN}Category Filter",
+                "${ChatFormatting.GREEN}Category Filter",
                 "",
             )
             for (category in Category.values()) {
                 tooltip.add(
                     if (category == selectedCategory) {
-                        "${EnumChatFormatting.BLUE}>$category"
+                        "${ChatFormatting.BLUE}>$category"
                     } else {
                         category.toString()
                     }
@@ -280,7 +280,7 @@ object MuseumCheapestItemOverlay {
             }
 
             tooltip.add("")
-            tooltip.add("${EnumChatFormatting.YELLOW}Click to advance!")
+            tooltip.add("${ChatFormatting.YELLOW}Click to advance!")
             Utils.drawHoveringText(
                 tooltip,
                 mouseX,
@@ -314,15 +314,15 @@ object MuseumCheapestItemOverlay {
         if (xpButtonRect.contains(mouseX, mouseY)) {
             val tooltip = if (useCoinsPerXp) {
                 listOf(
-                    "${EnumChatFormatting.GREEN}Sort by SkyBlock XP",
+                    "${ChatFormatting.GREEN}Sort by SkyBlock XP",
                     "",
-                    "${EnumChatFormatting.YELLOW}Click to switch to Raw Value!"
+                    "${ChatFormatting.YELLOW}Click to switch to Raw Value!"
                 )
             } else {
                 listOf(
-                    "${EnumChatFormatting.GREEN}Sort by Raw Value",
+                    "${ChatFormatting.GREEN}Sort by Raw Value",
                     "",
-                    "${EnumChatFormatting.YELLOW}Click to switch Skyblock XP!"
+                    "${ChatFormatting.YELLOW}Click to switch Skyblock XP!"
                 )
             }
             Utils.drawHoveringText(
@@ -421,7 +421,7 @@ object MuseumCheapestItemOverlay {
         lines.forEachIndexed { index, line ->
             if (!visitedAllPages() && (index == ITEMS_PER_PAGE || index == lines.size - 1)) {
                 TextRenderUtils.drawStringScaledMaxWidth(
-                    "${EnumChatFormatting.RED}Visit all pages for accurate info!",
+                    "${ChatFormatting.RED}Visit all pages for accurate info!",
                     Minecraft.getInstance().font,
                     (guiLeft + 185).toFloat(),
                     (guiTop + 95).toFloat(),
@@ -435,7 +435,7 @@ object MuseumCheapestItemOverlay {
                 val y = (guiTop + 5 + (index * 10)).toFloat()
                 Utils.renderAlignedString(
                     line.name,
-                    if (line.value == Double.MAX_VALUE) "${EnumChatFormatting.RED}Unknown ${if (config.museumCheapestItemOverlayValueSource == 0) "BIN" else "Craft Cost"}" else "${EnumChatFormatting.AQUA}${
+                    if (line.value == Double.MAX_VALUE) "${ChatFormatting.RED}Unknown ${if (config.museumCheapestItemOverlayValueSource == 0) "BIN" else "Craft Cost"}" else "${ChatFormatting.AQUA}${
                         Utils.shortNumberFormat(
                             line.value,
                             0
@@ -450,7 +450,7 @@ object MuseumCheapestItemOverlay {
                     val tooltip = mutableListOf(line.name, "")
                     //armor set
                     if (line.internalNames.size > 1) {
-                        tooltip.add("${EnumChatFormatting.AQUA}Consists of:")
+                        tooltip.add("${ChatFormatting.AQUA}Consists of:")
                         line.internalNames.forEach {
                             val displayname =
                                 NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withKnownInternalName(it)
@@ -460,31 +460,31 @@ object MuseumCheapestItemOverlay {
 
                             // Creates:"  - displayname (price)" OR "  - displayname (No BIN found!)"
                             tooltip.add(
-                                "  ${EnumChatFormatting.DARK_GRAY}-${EnumChatFormatting.RESET} $displayname${EnumChatFormatting.DARK_GRAY} (${EnumChatFormatting.GOLD}${
+                                "  ${ChatFormatting.DARK_GRAY}-${ChatFormatting.RESET} $displayname${ChatFormatting.DARK_GRAY} (${ChatFormatting.GOLD}${
                                     if (value == Double.MAX_VALUE) {
-                                        "${EnumChatFormatting.RED}No BIN found!"
+                                        "${ChatFormatting.RED}No BIN found!"
                                     } else {
                                         Utils.shortNumberFormat(
                                             value,
                                             0
                                         )
                                     }
-                                }${EnumChatFormatting.DARK_GRAY})"
+                                }${ChatFormatting.DARK_GRAY})"
                             )
                         }
                         tooltip.add("")
                     }
 
                     if (line.sbXp > 0) {
-                        tooltip.add("${EnumChatFormatting.GRAY}Reward: ${EnumChatFormatting.AQUA}+${line.sbXp} SkyBlock XP")
+                        tooltip.add("${ChatFormatting.GRAY}Reward: ${ChatFormatting.AQUA}+${line.sbXp} SkyBlock XP")
                     }
 
                     if (line.internalNames.isEmpty()) {
-                        tooltip.add("${EnumChatFormatting.RED}Could not determine item!")
+                        tooltip.add("${ChatFormatting.RED}Could not determine item!")
                     } else if (NotEnoughUpdates.INSTANCE.manager.getRecipesFor(line.internalNames[0]).isNotEmpty()) {
-                        tooltip.add("${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Click to open recipe!")
+                        tooltip.add("${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Click to open recipe!")
                     } else {
-                        tooltip.add("${EnumChatFormatting.RED}${EnumChatFormatting.BOLD}No recipe available!")
+                        tooltip.add("${ChatFormatting.RED}${ChatFormatting.BOLD}No recipe available!")
                     }
 
                     if (Mouse.getEventButtonState()) {
@@ -508,7 +508,7 @@ object MuseumCheapestItemOverlay {
         //no page has been visited yet
         if (lines.isEmpty()) {
             TextRenderUtils.drawStringScaledMaxWidth(
-                "${EnumChatFormatting.RED}No items matching filter!",
+                "${ChatFormatting.RED}No items matching filter!",
                 Minecraft.getInstance().font,
                 (guiLeft + 200).toFloat(),
                 (guiTop + 128 / 2).toFloat(),
@@ -558,13 +558,13 @@ object MuseumCheapestItemOverlay {
                     MISSING -> {
                         val displayName = if (armor) {
                             // Use the provided displayname for armor sets but change the color to blue (from red)
-                            "${EnumChatFormatting.BLUE}${stack.displayName.stripControlCodes()}"
+                            "${ChatFormatting.BLUE}${stack.displayName.stripControlCodes()}"
                         } else {
                             // Find out the real displayname and use it for normal items, if possible
                             NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery()
                                 .withKnownInternalName(parsedItems.skyblockItemIds.first())
                                 .resolveToItemListJson()
-                                ?.get("displayname")?.asString ?: "${EnumChatFormatting.RED}ERROR"
+                                ?.get("displayname")?.asString ?: "${ChatFormatting.RED}ERROR"
                         }
 
                         addItemToDonate(displayName, parsedItems.skyblockItemIds, category, time)

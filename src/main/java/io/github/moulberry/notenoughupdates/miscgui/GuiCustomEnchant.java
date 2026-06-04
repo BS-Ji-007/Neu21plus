@@ -561,8 +561,8 @@ public class GuiCustomEnchant extends Gui {
 	}
 
 	private List<String> createTooltip(String title, int selectedOption, String... options) {
-		String selPrefix = EnumChatFormatting.DARK_AQUA + " \u25b6 ";
-		String unselPrefix = EnumChatFormatting.GRAY.toString();
+		String selPrefix = ChatFormatting.DARK_AQUA + " \u25b6 ";
+		String unselPrefix = ChatFormatting.GRAY.toString();
 
 		for (int i = 0; i < options.length; i++) {
 			if (i == selectedOption) {
@@ -574,7 +574,7 @@ public class GuiCustomEnchant extends Gui {
 
 		List<String> list = Lists.newArrayList(options);
 		list.add(0, "");
-		list.add(0, EnumChatFormatting.GREEN + title);
+		list.add(0, ChatFormatting.GREEN + title);
 		return list;
 	}
 
@@ -672,9 +672,9 @@ public class GuiCustomEnchant extends Gui {
                     tooltipToDisplay = createTooltip("Incompatible Enchants",
                             NotEnoughUpdates.INSTANCE.config.enchantingSolvers.incompatibleEnchants,
                             "Highlight", "Hide");
-                    tooltipToDisplay.add(1, EnumChatFormatting.GRAY + "How to display enchants that are");
-                    tooltipToDisplay.add(2, EnumChatFormatting.GRAY + "incompatible with your current item,");
-                    tooltipToDisplay.add(3, EnumChatFormatting.GRAY + "eg. Smite on a sword with Sharpness");
+                    tooltipToDisplay.add(1, ChatFormatting.GRAY + "How to display enchants that are");
+                    tooltipToDisplay.add(2, ChatFormatting.GRAY + "incompatible with your current item,");
+                    tooltipToDisplay.add(3, ChatFormatting.GRAY + "eg. Smite on a sword with Sharpness");
                     break;*/
 				case 2:
 					Gui.drawRect(guiLeft + 295, guiTop + 147 + 18, guiLeft + 295 + 16, guiTop + 147 + 16 + 18, 0x80ffffff);

@@ -65,7 +65,7 @@ object TabSkillInfoParser {
         }
 
         if (Constants.LEVELING == null) {
-            sendError("${EnumChatFormatting.RED}[NEU] There is an error with your repo, please report this in the discord at ${EnumChatFormatting.AQUA}${Utils.getDiscordInvite()}")
+            sendError("${ChatFormatting.RED}[NEU] There is an error with your repo, please report this in the discord at ${ChatFormatting.AQUA}${Utils.getDiscordInvite()}")
             return
         }
 
@@ -80,7 +80,7 @@ object TabSkillInfoParser {
                 val level = matcher.group("level")!!.toInt()
                 val progress = matcher.group("progress")!!.toFloatOrNull()
                 if (progress == null) {
-                    sendError("${EnumChatFormatting.RED}[NEU] Error while parsing skill level from tab list")
+                    sendError("${ChatFormatting.RED}[NEU] Error while parsing skill level from tab list")
                     return
                 }
                 val levelingArray = levelArray(name)

@@ -33,7 +33,7 @@ public class NEUDebugLogger {
 	public static boolean allFlagsEnabled = false;
 
 	private static void chatLogger(String message) {
-		mc.addScheduledTask(() -> Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU DEBUG] " + message));
+		mc.addScheduledTask(() -> Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU DEBUG] " + message));
 	}
 
 	public static boolean isFlagEnabled(NEUDebugFlag flag) {

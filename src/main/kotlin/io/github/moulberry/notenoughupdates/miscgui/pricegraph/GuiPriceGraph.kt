@@ -246,29 +246,29 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
                 text.add(dateFormat.format(Date.from(closestPoint.key)))
                 if (closestPoint.value.sellPrice == null) {
                     text.add(
-                        "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Lowest BIN: ${EnumChatFormatting.GOLD}" +
-                                "${EnumChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.buyPrice)}"
+                        "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Lowest BIN: ${ChatFormatting.GOLD}" +
+                                "${ChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.buyPrice)}"
                     )
                     if (config.ahGraph.movingAverages && buyMovingAverage[x] != null) text.add(
-                        "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Lowest BIN Moving Average: ${EnumChatFormatting.GOLD}" +
-                                "${EnumChatFormatting.BOLD}${StringUtils.formatNumber(buyMovingAverage[x])}"
+                        "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Lowest BIN Moving Average: ${ChatFormatting.GOLD}" +
+                                "${ChatFormatting.BOLD}${StringUtils.formatNumber(buyMovingAverage[x])}"
                     )
                 } else {
                     text.add(
-                        "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Bazaar Insta-Buy: ${EnumChatFormatting.GOLD}" +
-                                "${EnumChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.buyPrice)}"
+                        "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Bazaar Insta-Buy: ${ChatFormatting.GOLD}" +
+                                "${ChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.buyPrice)}"
                     )
                     text.add(
-                        "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Bazaar Insta-Sell: ${EnumChatFormatting.GOLD}" +
-                                "${EnumChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.sellPrice)}"
+                        "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Bazaar Insta-Sell: ${ChatFormatting.GOLD}" +
+                                "${ChatFormatting.BOLD}${StringUtils.formatNumber(closestPoint.value.sellPrice)}"
                     )
                     if (config.ahGraph.movingAverages) {
                         if (buyMovingAverage[x] != null) text.add(
-                            "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Bazaar Insta-Buy Moving Average: ${EnumChatFormatting.GOLD}${EnumChatFormatting.BOLD}" +
+                            "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Bazaar Insta-Buy Moving Average: ${ChatFormatting.GOLD}${ChatFormatting.BOLD}" +
                                     StringUtils.formatNumber(buyMovingAverage[x])
                         )
                         if (sellMovingAverage[x] != null) text.add(
-                            "${EnumChatFormatting.YELLOW}${EnumChatFormatting.BOLD}Bazaar Insta-Sell Moving Average: ${EnumChatFormatting.GOLD}${EnumChatFormatting.BOLD}" +
+                            "${ChatFormatting.YELLOW}${ChatFormatting.BOLD}Bazaar Insta-Sell Moving Average: ${ChatFormatting.GOLD}${ChatFormatting.BOLD}" +
                                     StringUtils.formatNumber(sellMovingAverage[x])
                         )
                     }

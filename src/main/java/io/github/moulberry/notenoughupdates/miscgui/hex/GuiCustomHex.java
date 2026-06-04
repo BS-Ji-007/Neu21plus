@@ -1270,8 +1270,8 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private List<String> createTooltip(String title, int selectedOption, String... options) {
-		String selPrefix = EnumChatFormatting.DARK_AQUA + " \u25b6 ";
-		String unselPrefix = EnumChatFormatting.GRAY.toString();
+		String selPrefix = ChatFormatting.DARK_AQUA + " \u25b6 ";
+		String unselPrefix = ChatFormatting.GRAY.toString();
 
 		for (int i = 0; i < options.length; i++) {
 			if (i == selectedOption) {
@@ -1283,7 +1283,7 @@ public class GuiCustomHex extends Gui {
 
 		List<String> list = Lists.newArrayList(options);
 		list.add(0, "");
-		list.add(0, EnumChatFormatting.GREEN + title);
+		list.add(0, ChatFormatting.GREEN + title);
 		return list;
 	}
 
@@ -3147,9 +3147,9 @@ public class GuiCustomHex extends Gui {
 						(NotEnoughUpdates.INSTANCE.config.enchantingSolvers.maxEnchLevel ? 0 : 1),
 						"Enabled", "Disabled"
 					);
-					tooltipToDisplay.add(1, EnumChatFormatting.GRAY + "Show max level of enchant");
-					tooltipToDisplay.add(2, EnumChatFormatting.GRAY + "from either hex or enchantment table");
-					tooltipToDisplay.add(3, EnumChatFormatting.GRAY + "max level");
+					tooltipToDisplay.add(1, ChatFormatting.GRAY + "Show max level of enchant");
+					tooltipToDisplay.add(2, ChatFormatting.GRAY + "from either hex or enchantment table");
+					tooltipToDisplay.add(3, ChatFormatting.GRAY + "max level");
 					break;
 				case 2:
 					Gui.drawRect(guiLeft + 295, guiTop + 147 + 18, guiLeft + 295 + 16, guiTop + 147 + 16 + 18, 0x80ffffff);

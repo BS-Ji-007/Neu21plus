@@ -88,7 +88,7 @@ public class EnderNodeHighlighter extends GenericBlockHighlighter {
 		World w = Minecraft.getInstance().level;
 		if (w == null) return false;
 		Block b = w.getBlockState(key).getBlock();
-		return b == Blocks.end_stone || b == Blocks.obsidian ||b == Blocks.stained_hardened_clay;
+		return b == Blocks.END_STONE || b == Blocks.obsidian ||b == Blocks.stained_hardened_clay;
 	}
 
 	@Override

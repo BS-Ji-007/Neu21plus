@@ -178,7 +178,7 @@ public class TextRenderUtils {
 			if (i == 0) {
 				list.set(i, stack.getRarity().rarityColor + list.get(i));
 			} else {
-				list.set(i, EnumChatFormatting.GRAY + list.get(i));
+				list.set(i, ChatFormatting.GRAY + list.get(i));
 			}
 		}
 

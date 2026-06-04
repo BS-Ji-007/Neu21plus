@@ -55,16 +55,16 @@ public class MuseumPage extends GuiProfileViewerPage {
 	private static final ResourceLocation pv_museum = new ResourceLocation("notenoughupdates", "notenoughupdates:pv_museum.png");
 	private static final LinkedHashMap<String, ItemStack> museumCategories = new LinkedHashMap<String, ItemStack>() {
 		{
-			put("weapons", Utils.createItemStack(Items.diamond_sword, EnumChatFormatting.GOLD + "Weapons"));
-			put("armor", Utils.createItemStack(Items.diamond_chestplate, EnumChatFormatting.GOLD + "Armor Sets"));
+			put("weapons", Utils.createItemStack(Items.diamond_sword, ChatFormatting.GOLD + "Weapons"));
+			put("armor", Utils.createItemStack(Items.diamond_chestplate, ChatFormatting.GOLD + "Armor Sets"));
 			put(
 				"rarities", Utils.createSkull(
-					EnumChatFormatting.GOLD + "Rarities",
+					ChatFormatting.GOLD + "Rarities",
 					"b569ed03-94ae-3da9-a01d-9726633d5b8b",
 					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODZhZGRiZDVkZWRhZDQwOTk5NDczYmU0YTdmNDhmNjIzNmE3OWEwZGNlOTcxYjVkYmQ3MzcyMDE0YWUzOTRkIn19fQ"
 				)
 			);
-			put("special", Utils.createItemStack(Items.cake, EnumChatFormatting.GOLD + "Special Items"));
+			put("special", Utils.createItemStack(Items.cake, ChatFormatting.GOLD + "Special Items"));
 		}
 	};
 	private static final ResourceLocation CHEST_GUI_TEXTURE =
@@ -101,17 +101,17 @@ public class MuseumPage extends GuiProfileViewerPage {
 		long value = museumData.getValue();
 
 		if (value == -2) {
-			String message = EnumChatFormatting.RED + "Museum API Disabled!";
+			String message = ChatFormatting.RED + "Museum API Disabled!";
 			Utils.drawStringCentered(message, guiLeft + 250, guiTop + 101, true, 0);
 			return;
 		}
 		if (value == -1) {
-			String message = EnumChatFormatting.YELLOW + "Museum Data Loading!";
+			String message = ChatFormatting.YELLOW + "Museum Data Loading!";
 			Utils.drawStringCentered(message, guiLeft + 250, guiTop + 101, true, 0);
 			return;
 		}
 		if (value == -3 || museum == null) {
-			String message = EnumChatFormatting.RED + "Missing Repo Data!";
+			String message = ChatFormatting.RED + "Missing Repo Data!";
 			Utils.drawStringCentered(message, guiLeft + 250, guiTop + 101, true, 0);
 			return;
 		}
@@ -153,8 +153,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 		}
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GOLD + "Museum Value",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(value),
+			ChatFormatting.GOLD + "Museum Value",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(value),
 			guiLeft + 21,
 			guiTop + 25,
 			114
@@ -163,8 +163,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 		int donated =
 			museumData.getWeaponItems().size() + museumData.getArmorItems().size() + museumData.getRaritiesItems().size();
 		Utils.renderAlignedString(
-			EnumChatFormatting.BLUE + "Total Donations",
-			EnumChatFormatting.WHITE + "" + donated,
+			ChatFormatting.BLUE + "Total Donations",
+			ChatFormatting.WHITE + "" + donated,
 			guiLeft + 21,
 			guiTop + 45,
 			114
@@ -174,8 +174,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		donated = museumData.getWeaponItems().size();
 		Utils.renderAlignedString(
-			EnumChatFormatting.BLUE + "Weapons Donated",
-			EnumChatFormatting.WHITE + "" + donated,
+			ChatFormatting.BLUE + "Weapons Donated",
+			ChatFormatting.WHITE + "" + donated,
 			guiLeft + 21,
 			guiTop + 70,
 			114
@@ -185,8 +185,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		donated = museumData.getArmorItems().size();
 		Utils.renderAlignedString(
-			EnumChatFormatting.BLUE + "Armor Donated",
-			EnumChatFormatting.WHITE + "" + donated,
+			ChatFormatting.BLUE + "Armor Donated",
+			ChatFormatting.WHITE + "" + donated,
 			guiLeft + 21,
 			guiTop + 95,
 			114
@@ -196,8 +196,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		donated = museumData.getRaritiesItems().size();
 		Utils.renderAlignedString(
-			EnumChatFormatting.BLUE + "Rarities Donated",
-			EnumChatFormatting.WHITE + "" + donated,
+			ChatFormatting.BLUE + "Rarities Donated",
+			ChatFormatting.WHITE + "" + donated,
 			guiLeft + 21,
 			guiTop + 120,
 			114
@@ -207,8 +207,8 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		donated = museumData.getSpecialItems().size();
 		Utils.renderAlignedString(
-			EnumChatFormatting.BLUE + "Special Items Donated",
-			EnumChatFormatting.WHITE + String.valueOf(donated),
+			ChatFormatting.BLUE + "Special Items Donated",
+			ChatFormatting.WHITE + String.valueOf(donated),
 			guiLeft + 21,
 			guiTop + 145,
 			114
@@ -358,7 +358,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				}
 				String displayName = NotEnoughUpdates.INSTANCE.manager.getDisplayName(mappedName);
 
-				ItemStack stack = Utils.createItemStack(Items.dye, displayName, 8, EnumChatFormatting.RED + "Missing");
+				ItemStack stack = Utils.createItemStack(Items.dye, displayName, 8, ChatFormatting.RED + "Missing");
 				JsonArray items = new JsonArray();
 				if (categoryDonated.containsKey(itemID)) {
 					items = categoryDonated.get(itemID);
@@ -477,12 +477,12 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 			Pair<Long, Boolean> itemData = museumData.getSavedItems().get(currentItemSelected);
 			String donationStatus =
-				itemData.getRight() ? EnumChatFormatting.YELLOW + "Borrowing" : EnumChatFormatting.GREEN + "In Museum";
+				itemData.getRight() ? ChatFormatting.YELLOW + "Borrowing" : ChatFormatting.GREEN + "In Museum";
 			String donationTime = Utils.timeSinceMillisecond(itemData.getLeft());
 
-			Utils.drawStringCentered(EnumChatFormatting.BLUE + "Donated", guiLeft + 391, guiTop + 35, true, 4210752);
-			Utils.drawStringCentered(EnumChatFormatting.WHITE + donationTime, guiLeft + 391, guiTop + 47, true, 4210752);
-			Utils.drawStringCentered(EnumChatFormatting.BLUE + "Currently", guiLeft + 391, guiTop + 70, true, 4210752);
+			Utils.drawStringCentered(ChatFormatting.BLUE + "Donated", guiLeft + 391, guiTop + 35, true, 4210752);
+			Utils.drawStringCentered(ChatFormatting.WHITE + donationTime, guiLeft + 391, guiTop + 47, true, 4210752);
+			Utils.drawStringCentered(ChatFormatting.BLUE + "Currently", guiLeft + 391, guiTop + 70, true, 4210752);
 			Utils.drawStringCentered(donationStatus, guiLeft + 391, guiTop + 82, true, 4210752);
 		}
 	}

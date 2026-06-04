@@ -149,7 +149,7 @@ public class PresetWarning extends GuiElement {
 		RenderUtils.drawFloatingRectDark(width / 2 + 3, height / 2 + 23, 40, 16, false);
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(
-			EnumChatFormatting.GREEN + "[Y]es",
+			ChatFormatting.GREEN + "[Y]es",
 			Minecraft.getInstance().font,
 			width / 2 - 23,
 			height / 2 + 31,
@@ -158,7 +158,7 @@ public class PresetWarning extends GuiElement {
 			0xff00ff00
 		);
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(
-			EnumChatFormatting.RED + "[N]o",
+			ChatFormatting.RED + "[N]o",
 			Minecraft.getInstance().font,
 			width / 2 + 23,
 			height / 2 + 31,

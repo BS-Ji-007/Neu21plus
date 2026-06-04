@@ -49,7 +49,7 @@ class HotmExporter : RepoExporter {
         for (inventorySlot in gui.inventorySlots.inventorySlots) {
             if (inventorySlot.inventory is InventoryPlayer) continue
             val stack = inventorySlot.stack ?: continue
-            val isNormalPerk = stack.item in setOf(Items.diamond, Items.coal, Items.emerald, Items.redstone)
+            val isNormalPerk = stack.item in setOf(Items.diamond, Items.coal, Items.EMERALD, Items.redstone)
             val isAbilityPerk = stack.item in setOf(
                 Item.getItemFromBlock(Blocks.coal_block),
                 Item.getItemFromBlock(Blocks.emerald_block)

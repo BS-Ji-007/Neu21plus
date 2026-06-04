@@ -252,19 +252,19 @@ public class CalendarOverlay {
 
 			if (daEvent > currentTime) {
 				getEventsAt(daEvent).add(new SBEvent("dark_auction",
-					EnumChatFormatting.DARK_PURPLE + "Dark Auction", false, DA_STACK, null, MINUTE * 5
+					ChatFormatting.DARK_PURPLE + "Dark Auction", false, DA_STACK, null, MINUTE * 5
 				));
 			}
 			if (jfEvent > currentTime) {
 				SBEvent jf = new SBEvent("jacob_farming",
-					EnumChatFormatting.YELLOW + "Jacob's Farming Contest", false, JF_STACK, null, MINUTE * 20
+					ChatFormatting.YELLOW + "Jacob's Farming Contest", false, JF_STACK, null, MINUTE * 20
 				);
 				if (farmingEventTypes != null && farmingEventTypes.has("" + jfEvent) &&
 					farmingEventTypes.get("" + jfEvent).isJsonArray()) {
 					JsonArray arr = farmingEventTypes.get("" + jfEvent).getAsJsonArray();
 					jf.desc = new ArrayList<>();
 					for (JsonElement e : arr) {
-						jf.desc.add(EnumChatFormatting.YELLOW + "\u25CB " + e.getAsString());
+						jf.desc.add(ChatFormatting.YELLOW + "\u25CB " + e.getAsString());
 						jf.id += ":" + e.getAsString();
 					}
 				}
@@ -512,8 +512,8 @@ public class CalendarOverlay {
 
 	private void scrapeOverviewPage(ContainerChest cc) {
 		long currentTime = System.currentTimeMillis();
-		String lastsForText = EnumChatFormatting.GRAY + "Event lasts for " + EnumChatFormatting.YELLOW;
-		String startsInText = EnumChatFormatting.GRAY + "Starts in: " + EnumChatFormatting.YELLOW;
+		String lastsForText = ChatFormatting.GRAY + "Event lasts for " + ChatFormatting.YELLOW;
+		String startsInText = ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW;
 		for (int i = 0; i < 21; i++) {
 			int itemIndex = 10 + i + (i / 7) * 2;
 			ItemStack item = cc.getLowerChestInventory().getStackInSlot(itemIndex);
@@ -656,13 +656,13 @@ public class CalendarOverlay {
 			);
 		}
 
-		String calendar = EnumChatFormatting.GREEN + "Calendar";
+		String calendar = ChatFormatting.GREEN + "Calendar";
 		float calendarHeight = Utils.getVerticalHeight(calendar);
 		Utils.drawStringVertical(calendar, guiLeft + xSize - 12, guiTop + 60 - calendarHeight / 2,
 			false, -1
 		);
 
-		String rewards = EnumChatFormatting.GOLD + "Rewards";
+		String rewards = ChatFormatting.GOLD + "Rewards";
 		float rewardsHeight = Utils.getVerticalHeight(rewards);
 		Utils.drawStringVertical(rewards, guiLeft + xSize - 12, guiTop + 132 - rewardsHeight / 2,
 			false, -1
@@ -758,19 +758,19 @@ public class CalendarOverlay {
 					if (mouseY >= y && mouseY <= y + 16) {
 						tooltipToDisplay = Utils.createList(
 							sbEvent.display,
-							EnumChatFormatting.GRAY + "Starts in: " + EnumChatFormatting.YELLOW + prettyTime(timeUntilMillis, false)
+							ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW + prettyTime(timeUntilMillis, false)
 						);
 						if (!(prettyTime(timeUntilMillis, false).equals("Now!"))) {
 							addCountdownCalculatorToTooltip(timeUntilMillis, tooltipToDisplay);
 						}
 						if (sbEvent.lastsFor >= 0) {
-							tooltipToDisplay.add(EnumChatFormatting.GRAY + "Lasts for: " + EnumChatFormatting.YELLOW +
+							tooltipToDisplay.add(ChatFormatting.GRAY + "Lasts for: " + ChatFormatting.YELLOW +
 								prettyTime(sbEvent.lastsFor, true));
 							if (!(prettyTime(timeUntilMillis, false).equals("Now!"))) {
 								addCountdownCalculatorToTooltip(sbEvent.lastsFor + timeUntilMillis, tooltipToDisplay);
 							}
 							if (timeUntilMillis < 0) {
-								tooltipToDisplay.add(EnumChatFormatting.GRAY + "Time left: " + EnumChatFormatting.YELLOW +
+								tooltipToDisplay.add(ChatFormatting.GRAY + "Time left: " + ChatFormatting.YELLOW +
 									prettyTime(sbEvent.lastsFor + timeUntilMillis, true));
 								if ((prettyTime(timeUntilMillis, false).equals("Now!"))) {
 									addCountdownCalculatorToTooltip(sbEvent.lastsFor + timeUntilMillis, tooltipToDisplay);
@@ -841,11 +841,11 @@ public class CalendarOverlay {
 		}
 
 		if (nextEvent != null) {
-			String nextS = EnumChatFormatting.YELLOW + "Next: ";
+			String nextS = ChatFormatting.YELLOW + "Next: ";
 			int nextSLen = fr.getStringWidth(nextS);
 			fr.drawString(nextS, guiLeft + 8, guiTop + 6, -1, false);
 
-			String until = " " + EnumChatFormatting.YELLOW + prettyTime(timeUntilNext, false);
+			String until = " " + ChatFormatting.YELLOW + prettyTime(timeUntilNext, false);
 			int untilLen = fr.getStringWidth(until);
 
 			fr.drawString(until, guiLeft + xSize - 8 - untilLen, guiTop + 6, -1, false);
@@ -873,19 +873,19 @@ public class CalendarOverlay {
 				if (mouseY > guiTop && mouseY < guiTop + 20) {
 					tooltipToDisplay = Utils.createList(
 						nextEvent.display,
-						EnumChatFormatting.GRAY + "Starts in: " + EnumChatFormatting.YELLOW + prettyTime(timeUntilNext, false)
+						ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW + prettyTime(timeUntilNext, false)
 					);
 					if (!(prettyTime(timeUntilNext, false).equals("Now!"))) {
 						addCountdownCalculatorToTooltip(timeUntilNext, tooltipToDisplay);
 					}
 					if (nextEvent.lastsFor >= 0) {
-						tooltipToDisplay.add(EnumChatFormatting.GRAY + "Lasts for: " + EnumChatFormatting.YELLOW +
+						tooltipToDisplay.add(ChatFormatting.GRAY + "Lasts for: " + ChatFormatting.YELLOW +
 							prettyTime(nextEvent.lastsFor, true));
 						if (!(prettyTime(timeUntilNext, false).equals("Now!"))) {
 							addCountdownCalculatorToTooltip(nextEvent.lastsFor + timeUntilNext, tooltipToDisplay);
 						}
 						if (timeUntilNext < 0) {
-							tooltipToDisplay.add(EnumChatFormatting.GRAY + "Time left: " + EnumChatFormatting.YELLOW +
+							tooltipToDisplay.add(ChatFormatting.GRAY + "Time left: " + ChatFormatting.YELLOW +
 								prettyTime(nextEvent.lastsFor + timeUntilNext, true));
 							if ((prettyTime(timeUntilNext, false).equals("Now!"))) {
 								addCountdownCalculatorToTooltip(nextEvent.lastsFor + timeUntilNext, tooltipToDisplay);
@@ -908,21 +908,21 @@ public class CalendarOverlay {
 		if (mouseX >= guiLeft + xSize - 18 && mouseX < guiLeft + xSize - 2) {
 			if (mouseY >= guiTop + ySize + 2 && mouseY <= guiTop + ySize + 18) {
 				tooltipToDisplay = new ArrayList<>();
-				tooltipToDisplay.add(EnumChatFormatting.AQUA + "NEU Calendar Help");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "This calendar displays various SkyBlock events");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "'Daily' events are events that happen frequently");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "'Special' events are events that happen infrequently");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "The eventbar at the top will also show in your inventory");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "Press 'F' on an event to mark it as a favourite");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "Favourited events will show over normal events");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "Favourited events will also give a notification when it");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "is about to start and when it does start");
-				tooltipToDisplay.add(EnumChatFormatting.YELLOW + "");
-				tooltipToDisplay.add(EnumChatFormatting.DARK_GRAY + "In order to show crop types for Jacob's Farming");
-				tooltipToDisplay.add(EnumChatFormatting.DARK_GRAY + "contest, visit the full SkyBlock calendar and go all");
-				tooltipToDisplay.add(EnumChatFormatting.DARK_GRAY + "the way to the end of the SkyBlock year");
+				tooltipToDisplay.add(ChatFormatting.AQUA + "NEU Calendar Help");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "This calendar displays various SkyBlock events");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "'Daily' events are events that happen frequently");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "'Special' events are events that happen infrequently");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "The eventbar at the top will also show in your inventory");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "Press 'F' on an event to mark it as a favourite");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "Favourited events will show over normal events");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "Favourited events will also give a notification when it");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "is about to start and when it does start");
+				tooltipToDisplay.add(ChatFormatting.YELLOW + "");
+				tooltipToDisplay.add(ChatFormatting.DARK_GRAY + "In order to show crop types for Jacob's Farming");
+				tooltipToDisplay.add(ChatFormatting.DARK_GRAY + "contest, visit the full SkyBlock calendar and go all");
+				tooltipToDisplay.add(ChatFormatting.DARK_GRAY + "the way to the end of the SkyBlock year");
 				Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
 				tooltipToDisplay = null;
 			}
@@ -962,10 +962,10 @@ public class CalendarOverlay {
 			com.mojang.blaze3d.systems.RenderSystem.depthFunc(GL11.GL_LEQUAL);
 
 			String all = (NotEnoughUpdates.INSTANCE.config.hidden.eventFavourites.contains("jacob_farming") ?
-				EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_GRAY) + "All";
+				ChatFormatting.DARK_GREEN : ChatFormatting.DARK_GRAY) + "All";
 			if (jfFavouriteSelectIndex == 0) {
 				fr.drawString(
-					EnumChatFormatting.BLACK + "> " + all,
+					ChatFormatting.BLACK + "> " + all,
 					jfFavouriteSelectX + 5,
 					jfFavouriteSelectY + 5,
 					0xff000000
@@ -974,16 +974,16 @@ public class CalendarOverlay {
 				fr.drawString(all, jfFavouriteSelectX + 5, jfFavouriteSelectY + 5, 0xff000000);
 			}
 
-			fr.drawString(EnumChatFormatting.BLACK + "> ", jfFavouriteSelectX + 6,
+			fr.drawString(ChatFormatting.BLACK + "> ", jfFavouriteSelectX + 6,
 				jfFavouriteSelectY + 10 * jfFavouriteSelectIndex + 5, 0xff000000
 			);
 
 			selectStringIndex = 0;
 			for (String s : jfFavouriteSelect) {
-				EnumChatFormatting colour = NotEnoughUpdates.INSTANCE.config.hidden.eventFavourites.contains(
+				ChatFormatting colour = NotEnoughUpdates.INSTANCE.config.hidden.eventFavourites.contains(
 					"jacob_farming:" + s)
-					? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_GRAY;
-				s = (selectStringIndex + 1 == jfFavouriteSelectIndex ? EnumChatFormatting.BLACK + "> " : "") + colour + s;
+					? ChatFormatting.DARK_GREEN : ChatFormatting.DARK_GRAY;
+				s = (selectStringIndex + 1 == jfFavouriteSelectIndex ? ChatFormatting.BLACK + "> " : "") + colour + s;
 				fr.drawString(s, jfFavouriteSelectX + 5, jfFavouriteSelectY + 10 * selectStringIndex + 15, 0xff000000);
 				selectStringIndex++;
 			}
@@ -1352,12 +1352,12 @@ public class CalendarOverlay {
 			com.mojang.blaze3d.systems.RenderSystem.translate(0, -y, 0);
 
 			if (preNotification) {
-				String starting = EnumChatFormatting.YELLOW + "Event Starting in " + prettyTime(preNotificationTime, true) +
+				String starting = ChatFormatting.YELLOW + "Event Starting in " + prettyTime(preNotificationTime, true) +
 					"!";
 				int startingWidth = fr.getStringWidth(starting);
 				fr.drawString(starting, Math.max(guiLeft + 23, width / 2f - startingWidth / 2f), y + 7, -1, false);
 			} else {
-				Utils.drawStringCentered(EnumChatFormatting.YELLOW + "Event Starting Now!", width / 2, y + 11, false, -1);
+				Utils.drawStringCentered(ChatFormatting.YELLOW + "Event Starting Now!", width / 2, y + 11, false, -1);
 			}
 
 			int displayWidth = fr.getStringWidth(event.display);
@@ -1485,11 +1485,11 @@ public class CalendarOverlay {
 					Minecraft.getInstance().getTextureManager().bindTexture(DISPLAYBAR);
 					Utils.drawTexturedRect(guiLeft, guiTop, xSize, 20, GL11.GL_NEAREST);
 
-					String nextS = EnumChatFormatting.YELLOW + "Next: ";
+					String nextS = ChatFormatting.YELLOW + "Next: ";
 					int nextSLen = fr.getStringWidth(nextS);
 					fr.drawString(nextS, guiLeft + 8, guiTop + 6, -1, false);
 
-					String until = " " + EnumChatFormatting.YELLOW + prettyTime(timeUntilNext, false);
+					String until = " " + ChatFormatting.YELLOW + prettyTime(timeUntilNext, false);
 					int untilLen = fr.getStringWidth(until);
 
 					fr.drawString(until, guiLeft + xSize - 8 - untilLen, guiTop + 6, -1, false);
@@ -1526,18 +1526,18 @@ public class CalendarOverlay {
 
 								tooltipToDisplay.add(sbEvent.display);
 								tooltipToDisplay.add(
-									EnumChatFormatting.GRAY + "Starts in: " + EnumChatFormatting.YELLOW + prettyTime(timeUntil, false));
+									ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW + prettyTime(timeUntil, false));
 								if (!(prettyTime(timeUntil, false).equals("Now!"))) {
 									addCountdownCalculatorToTooltip(timeUntil, tooltipToDisplay);
 								}
 								if (sbEvent.lastsFor >= 0) {
-									tooltipToDisplay.add(EnumChatFormatting.GRAY + "Lasts for: " + EnumChatFormatting.YELLOW +
+									tooltipToDisplay.add(ChatFormatting.GRAY + "Lasts for: " + ChatFormatting.YELLOW +
 										prettyTime(sbEvent.lastsFor, true));
 									if (!(prettyTime(timeUntilNext, false).equals("Now!"))) {
 										addCountdownCalculatorToTooltip(sbEvent.lastsFor + timeUntil, tooltipToDisplay);
 									}
 									if (timeUntil < 0) {
-										tooltipToDisplay.add(EnumChatFormatting.GRAY + "Time left: " + EnumChatFormatting.YELLOW +
+										tooltipToDisplay.add(ChatFormatting.GRAY + "Time left: " + ChatFormatting.YELLOW +
 											prettyTime(sbEvent.lastsFor + timeUntil, true));
 										if ((prettyTime(timeUntil, false).equals("Now!"))) {
 											addCountdownCalculatorToTooltip(sbEvent.lastsFor + timeUntil, tooltipToDisplay);
@@ -1552,13 +1552,13 @@ public class CalendarOverlay {
 								}
 							}
 							if (nextMayorEvent != null) {
-								tooltipToDisplay.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "Next Mayor:");
+								tooltipToDisplay.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "Next Mayor:");
 								tooltipToDisplay.add(nextMayorEvent.display);
-								tooltipToDisplay.add(EnumChatFormatting.GRAY + "Starts in: " + EnumChatFormatting.YELLOW +
+								tooltipToDisplay.add(ChatFormatting.GRAY + "Starts in: " + ChatFormatting.YELLOW +
 									prettyTime(timeUntilMayor, false));
 								addCountdownCalculatorToTooltip(timeUntilMayor, tooltipToDisplay);
 								if (nextMayorEvent.lastsFor >= 0) {
-									tooltipToDisplay.add(EnumChatFormatting.GRAY + "Lasts for: " + EnumChatFormatting.YELLOW +
+									tooltipToDisplay.add(ChatFormatting.GRAY + "Lasts for: " + ChatFormatting.YELLOW +
 										prettyTime(nextMayorEvent.lastsFor, true));
 									addCountdownCalculatorToTooltip(nextMayorEvent.lastsFor + timeUntilMayor, tooltipToDisplay);
 								}
@@ -1588,7 +1588,7 @@ public class CalendarOverlay {
 				Minecraft.getInstance().getTextureManager().bindTexture(DISPLAYBAR);
 				Utils.drawTexturedRect(guiLeft, guiTop, xSize, 20, GL11.GL_NEAREST);
 
-				String nextS = EnumChatFormatting.RED + "Open calendar to see events";
+				String nextS = ChatFormatting.RED + "Open calendar to see events";
 				fr.drawString(nextS, guiLeft + 8, guiTop + 6, -1, false);
 			}
 		}

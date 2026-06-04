@@ -42,7 +42,7 @@ public class MixinEntityPlayerSP {
 		int slot = Minecraft.getInstance().player.inventory.currentItem;
 		if (SlotLocking.getInstance().isSlotIndexLocked(slot) || SlotLocking.getInstance().isSwapedSlotLocked()) {
 			ci.cancel();
-			Utils.addChatMessage(EnumChatFormatting.RED + "NotEnoughUpdates has prevented you from dropping that locked item!");
+			Utils.addChatMessage(ChatFormatting.RED + "NotEnoughUpdates has prevented you from dropping that locked item!");
 		}
 	}
 }

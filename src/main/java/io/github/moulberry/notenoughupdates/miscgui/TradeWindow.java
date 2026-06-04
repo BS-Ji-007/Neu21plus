@@ -651,7 +651,7 @@ public class TradeWindow {
 		ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
 		if (confirmStack != null) {
 			String confirmDisplay = confirmStack.getName().getString();
-			if (!confirmDisplay.equals(EnumChatFormatting.GREEN + "Trading!")) {
+			if (!confirmDisplay.equals(ChatFormatting.GREEN + "Trading!")) {
 				if (mouseX > guiLeft + 81 - 51 && mouseX < guiLeft + 81) {
 					if (mouseY > guiTop + 91 && mouseY < guiTop + 91 + 14) {
 						tooltipToDisplay = confirmStack.getTooltip(
@@ -667,11 +667,11 @@ public class TradeWindow {
 				);
 
 				Pattern pattern = Pattern.compile(
-					EnumChatFormatting.GRAY + "\\(" + EnumChatFormatting.YELLOW + "([0-9]+)" + EnumChatFormatting.GRAY + "\\)");
+					ChatFormatting.GRAY + "\\(" + ChatFormatting.YELLOW + "([0-9]+)" + ChatFormatting.GRAY + "\\)");
 				Matcher matcher = pattern.matcher(confirmDisplay);
 
-				if (!confirmDisplay.equals(EnumChatFormatting.YELLOW + "Warning!") &&
-					!confirmDisplay.equals(EnumChatFormatting.YELLOW + "Deal!")) {
+				if (!confirmDisplay.equals(ChatFormatting.YELLOW + "Warning!") &&
+					!confirmDisplay.equals(ChatFormatting.YELLOW + "Deal!")) {
 					lastTradeMillis = -1;
 				}
 
@@ -680,20 +680,20 @@ public class TradeWindow {
 					int num = Integer.parseInt(numS);
 
 					Utils.drawStringCentered(
-						EnumChatFormatting.DARK_RED + "Check " + EnumChatFormatting.BOLD + (char) (9311 + num),
+						ChatFormatting.DARK_RED + "Check " + ChatFormatting.BOLD + (char) (9311 + num),
 						guiLeft + 56, guiTop + 99,
 						false,
 						4210752
 					);
-				} else if (confirmDisplay.equals(EnumChatFormatting.AQUA + "Gift!")) {
-					Utils.drawStringCentered(EnumChatFormatting.GREEN + "Accept", guiLeft + 56, guiTop + 99, true, 4210752);
-				} else if (confirmDisplay.equals(EnumChatFormatting.GREEN + "Deal accepted!")) {
-					Utils.drawStringCentered(EnumChatFormatting.GREEN + "Accepted", guiLeft + 56, guiTop + 99, true, 4210752);
+				} else if (confirmDisplay.equals(ChatFormatting.AQUA + "Gift!")) {
+					Utils.drawStringCentered(ChatFormatting.GREEN + "Accept", guiLeft + 56, guiTop + 99, true, 4210752);
+				} else if (confirmDisplay.equals(ChatFormatting.GREEN + "Deal accepted!")) {
+					Utils.drawStringCentered(ChatFormatting.GREEN + "Accepted", guiLeft + 56, guiTop + 99, true, 4210752);
 				} else if (lastTradeMillis > 0) {
 					long delta = System.currentTimeMillis() - lastTradeMillis;
 					if (delta > 2000) {
 						Utils.drawStringCentered(
-							EnumChatFormatting.GREEN + "Accept",
+							ChatFormatting.GREEN + "Accept",
 							guiLeft + 56,
 							guiTop + 99,
 							true,
@@ -701,7 +701,7 @@ public class TradeWindow {
 						);
 					} else {
 						Utils.drawStringCentered(
-							EnumChatFormatting.YELLOW + "Trade " + EnumChatFormatting.BOLD + (char) (9312 + (2000 - delta) / 1000),
+							ChatFormatting.YELLOW + "Trade " + ChatFormatting.BOLD + (char) (9312 + (2000 - delta) / 1000),
 							guiLeft + 56,
 							guiTop + 99,
 							true,
@@ -710,7 +710,7 @@ public class TradeWindow {
 					}
 				} else {
 					Utils.drawStringCentered(
-						EnumChatFormatting.YELLOW + "Trade " + EnumChatFormatting.BOLD + (char) (9314),
+						ChatFormatting.YELLOW + "Trade " + ChatFormatting.BOLD + (char) (9314),
 						guiLeft + 56,
 						guiTop + 99,
 						true,
@@ -738,12 +738,12 @@ public class TradeWindow {
 				0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
 			);
 
-			if (confirmDisplay.equals(EnumChatFormatting.YELLOW + "Pending their confirm")) {
-				Utils.drawStringCentered(EnumChatFormatting.YELLOW + "Pending", guiLeft + 120, guiTop + 99, true, 4210752);
-			} else if (confirmDisplay.equals(EnumChatFormatting.YELLOW + "Deal timer...")) {
-				Utils.drawStringCentered(EnumChatFormatting.YELLOW + "Pending", guiLeft + 120, guiTop + 99, true, 4210752);
-			} else if (confirmDisplay.equals(EnumChatFormatting.GREEN + "Other player confirmed!")) {
-				Utils.drawStringCentered(EnumChatFormatting.GREEN + "Accepted", guiLeft + 120, guiTop + 99, true, 4210752);
+			if (confirmDisplay.equals(ChatFormatting.YELLOW + "Pending their confirm")) {
+				Utils.drawStringCentered(ChatFormatting.YELLOW + "Pending", guiLeft + 120, guiTop + 99, true, 4210752);
+			} else if (confirmDisplay.equals(ChatFormatting.YELLOW + "Deal timer...")) {
+				Utils.drawStringCentered(ChatFormatting.YELLOW + "Pending", guiLeft + 120, guiTop + 99, true, 4210752);
+			} else if (confirmDisplay.equals(ChatFormatting.GREEN + "Other player confirmed!")) {
+				Utils.drawStringCentered(ChatFormatting.GREEN + "Accepted", guiLeft + 120, guiTop + 99, true, 4210752);
 			}
 		}
 
@@ -822,10 +822,10 @@ public class TradeWindow {
 			Utils.drawTexturedRect(guiLeft - 80 - 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
-			drawStringShadow(EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + "Total Value",
+			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + "Total Value",
 				guiLeft - 40 - 3, guiTop + 11, 72
 			);
-			drawStringShadow(EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(ourPrice),
+			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(ourPrice),
 				guiLeft - 40 - 3, guiTop + 21, 72
 			);
 
@@ -855,7 +855,7 @@ public class TradeWindow {
 						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						drawStringShadow(
-							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
+							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft - 29 - 3,
 							guiTop + 57 + 18 * ourTopIndex,
 							52
@@ -863,13 +863,13 @@ public class TradeWindow {
 						com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 					} else {
 						drawStringShadow(
-							stack.getName().getString() + EnumChatFormatting.GRAY + "x" + ourTopItemsCount.get(ourTopItemInternal),
+							stack.getName().getString() + ChatFormatting.GRAY + "x" + ourTopItemsCount.get(ourTopItemInternal),
 							guiLeft - 40 - 3,
 							guiTop + 46 + 20 * ourTopIndex,
 							72
 						);
 						drawStringShadow(
-							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
+							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft - 40 - 3,
 							guiTop + 56 + 20 * ourTopIndex,
 							72
@@ -885,10 +885,10 @@ public class TradeWindow {
 			Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
-			drawStringShadow(EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + "Total Value",
+			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + "Total Value",
 				guiLeft + xSize + 3 + 40, guiTop + 11, 72
 			);
-			drawStringShadow(EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(theirPrice),
+			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(theirPrice),
 				guiLeft + xSize + 3 + 40, guiTop + 21, 72
 			);
 
@@ -918,7 +918,7 @@ public class TradeWindow {
 						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 						drawStringShadow(
-							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
+							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft + xSize + 3 + 51,
 							guiTop + 57 + 18 * theirTopIndex,
 							52
@@ -929,7 +929,7 @@ public class TradeWindow {
 							guiLeft + xSize + 3 + 40, guiTop + 46 + 20 * theirTopIndex, 72
 						);
 						drawStringShadow(
-							EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
+							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft + xSize + 3 + 40,
 							guiTop + 56 + 20 * theirTopIndex,
 							72
@@ -960,20 +960,20 @@ public class TradeWindow {
 		if (mouseX >= guiLeft + xSize + 3 && mouseX <= guiLeft + xSize + 3 + 17) {
 			if (mouseY >= guiTop + ySize - 19 && mouseY <= guiTop + ySize - 19 + 17) {
 				tooltipToDisplay = new ArrayList<String>() {{
-					add(EnumChatFormatting.GOLD + "Enable Custom Trade Menu");
-					add(EnumChatFormatting.GRAY + "Use this menu instead of the default trade window");
+					add(ChatFormatting.GOLD + "Enable Custom Trade Menu");
+					add(ChatFormatting.GRAY + "Use this menu instead of the default trade window");
 				}};
 				tooltipLen = 200;
 			} else if (mouseY >= guiTop + ySize - 38 && mouseY <= guiTop + ySize - 38 + 17) {
 				tooltipToDisplay = new ArrayList<String>() {{
-					add(EnumChatFormatting.GOLD + "Price Information");
-					add(EnumChatFormatting.GRAY + "Show the price of items on both sides");
+					add(ChatFormatting.GOLD + "Price Information");
+					add(ChatFormatting.GRAY + "Show the price of items on both sides");
 				}};
 				tooltipLen = 200;
 			} else if (mouseY >= guiTop + ySize - 57 && mouseY <= guiTop + ySize - 57 + 17) {
 				tooltipToDisplay = new ArrayList<String>() {{
-					add(EnumChatFormatting.GOLD + "Trade Prices Style");
-					add(EnumChatFormatting.GRAY + "Changes the style of the top item prices");
+					add(ChatFormatting.GOLD + "Trade Prices Style");
+					add(ChatFormatting.GRAY + "Changes the style of the top item prices");
 				}};
 				tooltipLen = 200;
 			}
@@ -1070,11 +1070,11 @@ public class TradeWindow {
 			ItemStack confirmStack = chest.inventorySlots.getInventory().get(39);
 			if (confirmStack != null) {
 				String confirmDisplay = confirmStack.getName().getString();
-				if (!confirmDisplay.equals(EnumChatFormatting.GREEN + "Trading!")) {
+				if (!confirmDisplay.equals(ChatFormatting.GREEN + "Trading!")) {
 					if (mouseX > guiLeft + 42 && mouseX < guiLeft + 42 + 40) {
 						if (mouseY > guiTop + 92 && mouseY < guiTop + 92 + 14) {
-							if ((confirmDisplay.equals(EnumChatFormatting.YELLOW + "Warning!") ||
-								confirmDisplay.equals(EnumChatFormatting.YELLOW + "Deal!")) && lastTradeMillis < 0) {
+							if ((confirmDisplay.equals(ChatFormatting.YELLOW + "Warning!") ||
+								confirmDisplay.equals(ChatFormatting.YELLOW + "Deal!")) && lastTradeMillis < 0) {
 								lastTradeMillis = System.currentTimeMillis();
 							} else if (lastTradeMillis < 0 || System.currentTimeMillis() - lastTradeMillis > 2000) {
 								Minecraft.getInstance().playerController.windowClick(

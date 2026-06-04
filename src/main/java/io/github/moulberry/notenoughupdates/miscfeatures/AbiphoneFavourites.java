@@ -66,7 +66,7 @@ public class AbiphoneFavourites {
 		"§eClick to show all contacts!"
 	);
 	private final ItemStack ITEM_STACK_ALL = Utils.createItemStack(
-		Items.emerald,
+		Items.EMERALD,
 		"§aShow all contacts",
 		"§7Favourite contacts are marked §6orange§7.",
 		"§7All contacts can be called.",

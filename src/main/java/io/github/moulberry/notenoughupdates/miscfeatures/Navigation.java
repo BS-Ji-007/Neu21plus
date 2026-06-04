@@ -389,7 +389,7 @@ public class Navigation {
 	private void showError(String message, boolean log) {
 		EntityPlayerSP player = Minecraft.getInstance().player;
 		if (player != null)
-			Utils.addChatMessage(EnumChatFormatting.DARK_RED + "[NEU-Waypoint] " + message);
+			Utils.addChatMessage(ChatFormatting.DARK_RED + "[NEU-Waypoint] " + message);
 		if (log)
 			new RuntimeException("[NEU-Waypoint] " + message).printStackTrace();
 	}

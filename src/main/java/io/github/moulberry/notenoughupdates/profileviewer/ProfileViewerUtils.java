@@ -95,7 +95,7 @@ public class ProfileViewerUtils {
 		}).filter(Objects::nonNull).map(tag -> {
 			ListTag loreTagList = tag.getCompoundTag("display").getTagList("Lore", 8);
 			String lastElement = loreTagList.getStringTagAt(loreTagList.tagCount() - 1);
-			if (lastElement.contains(EnumChatFormatting.OBFUSCATED.toString())) {
+			if (lastElement.contains(ChatFormatting.OBFUSCATED.toString())) {
 				lastElement = lastElement.substring(lastElement.indexOf(' ')).trim();
 			}
 			JsonArray lastElementJsonArray = new JsonArray();

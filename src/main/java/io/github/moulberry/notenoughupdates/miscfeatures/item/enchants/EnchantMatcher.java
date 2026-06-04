@@ -95,19 +95,19 @@ public class EnchantMatcher {
 		String formatting = "§" + colourCode;
 
 		if ((intModifier & GuiEnchantColour.BOLD_MODIFIER) != 0) {
-			formatting += EnumChatFormatting.BOLD;
+			formatting += ChatFormatting.BOLD;
 		}
 		if ((intModifier & GuiEnchantColour.ITALIC_MODIFIER) != 0) {
-			formatting += EnumChatFormatting.ITALIC;
+			formatting += ChatFormatting.ITALIC;
 		}
 		if ((intModifier & GuiEnchantColour.UNDERLINE_MODIFIER) != 0) {
-			formatting += EnumChatFormatting.UNDERLINE;
+			formatting += ChatFormatting.UNDERLINE;
 		}
 		if ((intModifier & GuiEnchantColour.OBFUSCATED_MODIFIER) != 0) {
-			formatting += EnumChatFormatting.OBFUSCATED;
+			formatting += ChatFormatting.OBFUSCATED;
 		}
 		if ((intModifier & GuiEnchantColour.STRIKETHROUGH_MODIFIER) != 0) {
-			formatting += EnumChatFormatting.STRIKETHROUGH;
+			formatting += ChatFormatting.STRIKETHROUGH;
 		}
 
 		return Optional.of(new EnchantMatcher(patternWithLevels, compareWith, formatting, comparator.charAt(0)));

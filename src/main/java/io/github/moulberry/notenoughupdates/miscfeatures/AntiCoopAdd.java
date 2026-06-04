@@ -56,13 +56,13 @@ public class AntiCoopAdd {
 			"Co-op Request")) {
 			String ign = Utils.getOpenChestName().split("'s Profile")[0];
 			ChatComponentText storageMessage = new ChatComponentText(
-				EnumChatFormatting.YELLOW + "[NEU] " + EnumChatFormatting.YELLOW +
+				ChatFormatting.YELLOW + "[NEU] " + ChatFormatting.YELLOW +
 					"You just clicked on the Co-op add button. If you want to coop add this person, click this chat message");
 			storageMessage.setChatStyle(Utils.createClickStyle(ClickEvent.Action.RUN_COMMAND, "/coopadd " + ign));
 			storageMessage.setChatStyle(storageMessage.getChatStyle().setChatHoverEvent(
 				new HoverEvent(
 					HoverEvent.Action.SHOW_TEXT,
-					new ChatComponentText(EnumChatFormatting.YELLOW + "Click to add " + ign + " to your coop")
+					new ChatComponentText(ChatFormatting.YELLOW + "Click to add " + ign + " to your coop")
 				)));
 			ChatComponentText storageChatMessage = new ChatComponentText("");
 			storageChatMessage.appendSibling(storageMessage);

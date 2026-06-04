@@ -104,7 +104,7 @@ public class EssenceTaskLevel extends GuiTaskLevel {
 			if (!essenceShopTask.has(name)) continue;
 			value.max = essenceShopTask.get(name).getAsInt();
 			lore.add(levelPage.buildLore(
-				EnumChatFormatting.getTextWithoutFormattingCodes(value.name),
+				ChatFormatting.getTextWithoutFormattingCodes(value.name),
 				value.current,
 				value.max,
 				false

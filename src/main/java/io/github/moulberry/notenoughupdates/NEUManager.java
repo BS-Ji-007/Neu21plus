@@ -788,7 +788,7 @@ public class NEUManager {
 				ea = ea.getCompoundTag("Properties");
 				ea = ea.getTagList("textures", 10).getCompoundTagAt(0);
 				String name = ea3.getString("Name").replaceAll(" M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$", "");
-				return "put(\"ID\", Utils.createSkull(EnumChatFormatting.AQUA + \"" + name + "\" ,\"" + ea2.getString("Id") +
+				return "put(\"ID\", Utils.createSkull(ChatFormatting.AQUA + \"" + name + "\" ,\"" + ea2.getString("Id") +
 					"\", \"" + ea.getString("Value") + "\"));";
 			}
 		}

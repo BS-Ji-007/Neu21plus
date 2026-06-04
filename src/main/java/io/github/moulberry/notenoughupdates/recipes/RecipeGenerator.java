@@ -91,16 +91,16 @@ public class RecipeGenerator {
 			ForgeRecipe recipe = parseSingleForgeRecipe(menu);
 			if (recipe == null) {
 				Utils.addChatMessage(
-					"" + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "Could not parse recipe for this UI");
+					"" + ChatFormatting.DARK_RED + ChatFormatting.BOLD + "Could not parse recipe for this UI");
 			} else {
-				Utils.addChatMessage("" + EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + "Parsed recipe:");
-				Utils.addChatMessage("" + EnumChatFormatting.AQUA + " Inputs:");
+				Utils.addChatMessage("" + ChatFormatting.GREEN + ChatFormatting.BOLD + "Parsed recipe:");
+				Utils.addChatMessage("" + ChatFormatting.AQUA + " Inputs:");
 				for (Ingredient i : recipe.getInputs())
-					Utils.addChatMessage("  - " + EnumChatFormatting.AQUA + i.getInternalItemId() + " x " + i.getCount());
-				Utils.addChatMessage("" + EnumChatFormatting.AQUA + " Output: " + EnumChatFormatting.GOLD +
+					Utils.addChatMessage("  - " + ChatFormatting.AQUA + i.getInternalItemId() + " x " + i.getCount());
+				Utils.addChatMessage("" + ChatFormatting.AQUA + " Output: " + ChatFormatting.GOLD +
 					recipe.getOutput().getInternalItemId() + " x " + recipe.getOutput().getCount());
 				Utils.addChatMessage(
-					"" + EnumChatFormatting.AQUA + " Time: " + EnumChatFormatting.GRAY + recipe.getTimeInSeconds() +
+					"" + ChatFormatting.AQUA + " Time: " + ChatFormatting.GRAY + recipe.getTimeInSeconds() +
 						" seconds (no QF) .");
 				boolean saved = false;
 				try {
@@ -109,10 +109,10 @@ public class RecipeGenerator {
 				}
 				if (!saved)
 					Utils.addChatMessage(
-						"" + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + EnumChatFormatting.OBFUSCATED + "#" +
-							EnumChatFormatting.RESET + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " ERROR " +
-							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + EnumChatFormatting.OBFUSCATED + "#" +
-							EnumChatFormatting.RESET + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD +
+						"" + ChatFormatting.DARK_RED + ChatFormatting.BOLD + ChatFormatting.OBFUSCATED + "#" +
+							ChatFormatting.RESET + ChatFormatting.DARK_RED + ChatFormatting.BOLD + " ERROR " +
+							ChatFormatting.DARK_RED + ChatFormatting.BOLD + ChatFormatting.OBFUSCATED + "#" +
+							ChatFormatting.RESET + ChatFormatting.DARK_RED + ChatFormatting.BOLD +
 							" Failed to save recipe. Does the item already exist?");
 			}
 		}
@@ -157,7 +157,7 @@ public class RecipeGenerator {
 			menu.getName().getString().getUnformattedText().split("➜")[1].toUpperCase(Locale.ROOT).trim() + "_MONSTER";
 		for (int i = 9; i < 44; i++) {
 			ItemStack mobStack = menu.getStackInSlot(i);
-			if (mobStack == null || mobStack.getItem() != Items.skull) continue;
+			if (mobStack == null || mobStack.getItem() != Items.PLAYER_HEAD) continue;
 			Matcher matcher = MOB_DISPLAY_NAME_PATTERN.matcher(mobStack.getName().getString());
 			if (!matcher.matches()) continue;
 			String name = matcher.group("name");
@@ -215,10 +215,10 @@ public class RecipeGenerator {
 		}
 		if (!saved)
 			Utils.addChatMessage(
-				"" + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + EnumChatFormatting.OBFUSCATED + "#" +
-					EnumChatFormatting.RESET + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " ERROR " +
-					EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + EnumChatFormatting.OBFUSCATED + "#" +
-					EnumChatFormatting.RESET + EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD +
+				"" + ChatFormatting.DARK_RED + ChatFormatting.BOLD + ChatFormatting.OBFUSCATED + "#" +
+					ChatFormatting.RESET + ChatFormatting.DARK_RED + ChatFormatting.BOLD + " ERROR " +
+					ChatFormatting.DARK_RED + ChatFormatting.BOLD + ChatFormatting.OBFUSCATED + "#" +
+					ChatFormatting.RESET + ChatFormatting.DARK_RED + ChatFormatting.BOLD +
 					" Failed to save recipe. Does the item already exist?"); // TODO: MERGE CODE OVER
 	}
 

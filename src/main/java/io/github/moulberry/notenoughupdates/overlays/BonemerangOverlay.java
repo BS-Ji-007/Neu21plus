@@ -111,7 +111,7 @@ public class BonemerangOverlay extends TextOverlay {
 
 				if (!Minecraft.getInstance().level.isAirBlock(blockPos) &&
 					Minecraft.getInstance().level.getBlockState(blockPos).getBlock().isFullCube()) {
-					map.put(0, EnumChatFormatting.RED + "Bonemerang will break!");
+					map.put(0, ChatFormatting.RED + "Bonemerang will break!");
 					break;
 				}
 
@@ -132,7 +132,7 @@ public class BonemerangOverlay extends TextOverlay {
 			if (NotEnoughUpdates.INSTANCE.config.itemOverlays.enableBonemerangOverlay) {
 				map.put(
 					1,
-					EnumChatFormatting.GRAY + "Targets: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+					ChatFormatting.GRAY + "Targets: " + ChatFormatting.GOLD + ChatFormatting.BOLD +
 						bonemeragedEntities.size()
 				);
 				for (int index : NotEnoughUpdates.INSTANCE.config.itemOverlays.bonemerangOverlayText) {

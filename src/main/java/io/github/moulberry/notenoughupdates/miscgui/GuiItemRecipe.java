@@ -234,8 +234,8 @@ public class GuiItemRecipe extends GuiScreen {
 			)) {
 				RecipeType type = tabs.get(i);
 				tooltipToDisplay = Arrays.asList(
-					"" + EnumChatFormatting.RESET + EnumChatFormatting.GREEN + type.getLabel(),
-					"" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + craftingRecipes.get(type).size() + " Recipes"
+					"" + ChatFormatting.RESET + ChatFormatting.GREEN + type.getLabel(),
+					"" + ChatFormatting.RESET + ChatFormatting.GRAY + craftingRecipes.get(type).size() + " Recipes"
 				);
 				return;
 			}

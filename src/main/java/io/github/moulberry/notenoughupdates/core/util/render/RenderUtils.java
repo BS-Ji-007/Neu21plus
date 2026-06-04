@@ -474,7 +474,7 @@ public class RenderUtils {
 		com.mojang.blaze3d.systems.RenderSystem.translate(0, viewer.getEyeHeight(), 0);
 
 		lines = onlyShowDistance ? new ArrayList<>() : new ArrayList<>(lines);
-		lines.add(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m");
+		lines.add(ChatFormatting.YELLOW.toString() + Math.round(dist) + "m");
 		renderNametag(lines);
 
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();

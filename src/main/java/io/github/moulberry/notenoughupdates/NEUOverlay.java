@@ -549,7 +549,7 @@ public class NEUOverlay extends Gui {
 				ItemStack render = null;
 				float extraScale = 1;
 				if (display.length() > 20) { //Custom head
-					render = new ItemStack(Items.skull, 1, 3);
+					render = new ItemStack(Items.PLAYER_HEAD, 1, 3);
 					CompoundTag nbt = new CompoundTag();
 					CompoundTag skullOwner = new CompoundTag();
 					CompoundTag properties = new CompoundTag();
@@ -595,7 +595,7 @@ public class NEUOverlay extends Gui {
 					if (mouseX > x && mouseX < x + bigItemSize) {
 						if (mouseY > y && mouseY < y + bigItemSize) {
 							textToDisplay = new ArrayList<>();
-							textToDisplay.add(EnumChatFormatting.GRAY + quickCommandStrSplit[1]);
+							textToDisplay.add(ChatFormatting.GRAY + quickCommandStrSplit[1]);
 						}
 					}
 
@@ -753,8 +753,8 @@ public class NEUOverlay extends Gui {
 				displayInformationPane(new TextInfoPane(
 					this,
 					manager,
-					EnumChatFormatting.GRAY + "Loading",
-					EnumChatFormatting.GRAY + "Loading your requested information about " + name + EnumChatFormatting.GRAY + "."
+					ChatFormatting.GRAY + "Loading",
+					ChatFormatting.GRAY + "Loading your requested information about " + name + ChatFormatting.GRAY + "."
 				));
 				infoPaneLoadingJob = InfoPane.create(this, manager, infoType, name, internalname, infoText)
 																		 .thenAccept(this::displayInformationPane);
@@ -883,7 +883,7 @@ public class NEUOverlay extends Gui {
 				FontRenderer fr = Minecraft.getInstance().font;
 				int maxPages = getMaxPages();
 				String name = Utils.peekGuiScale().getScaleFactor() < 4 ? "Page: " : "";
-				float maxStrLen = fr.getStringWidth(EnumChatFormatting.BOLD + name + maxPages + "/" + maxPages);
+				float maxStrLen = fr.getStringWidth(ChatFormatting.BOLD + name + maxPages + "/" + maxPages);
 				float maxButtonXSize = (rightSide - leftSide + 2 - maxStrLen * 0.5f - 10) / 2f;
 				int buttonXSize = (int) Math.min(maxButtonXSize, getSearchBarYSize() * 480 / 160f);
 				int ySize = (int) (buttonXSize / 480f * 160);
@@ -1056,7 +1056,7 @@ public class NEUOverlay extends Gui {
 			Keyboard.KEY_LCONTROL)) && !searchBarHasFocus) {
 			DevInfoPane devInfoPane = new DevInfoPane(this, manager);
 			if (devInfoPane.getText().isEmpty()) {
-				Utils.addChatMessage(EnumChatFormatting.AQUA + "[NEU] No missing items!");
+				Utils.addChatMessage(ChatFormatting.AQUA + "[NEU] No missing items!");
 			} else {
 				displayInformationPane(devInfoPane);
 			}
@@ -1694,9 +1694,9 @@ public class NEUOverlay extends Gui {
 	public void renderNavElement(int leftSide, int rightSide, int maxPages, int page, String name) {
 		FontRenderer fr = Minecraft.getInstance().font;
 
-		String pageText = EnumChatFormatting.BOLD + name + page + "/" + maxPages;
+		String pageText = ChatFormatting.BOLD + name + page + "/" + maxPages;
 
-		float maxStrLen = fr.getStringWidth(EnumChatFormatting.BOLD + name + maxPages + "/" + maxPages);
+		float maxStrLen = fr.getStringWidth(ChatFormatting.BOLD + name + maxPages + "/" + maxPages);
 		float maxButtonXSize = (rightSide - leftSide + 2 - maxStrLen * 0.5f - 10) / 2f;
 		int buttonXSize = (int) Math.min(maxButtonXSize, getSearchBarYSize() * 480 / 160f);
 		int ySize = (int) (buttonXSize / 480f * 160);
@@ -1738,7 +1738,7 @@ public class NEUOverlay extends Gui {
 			buttonXSize, ySize, 1 - leftPressed, leftPressed, 1 - leftPressed, leftPressed
 		);
 		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
-		Utils.drawStringCenteredScaled(EnumChatFormatting.BOLD + "Prev",
+		Utils.drawStringCenteredScaled(ChatFormatting.BOLD + "Prev",
 			leftSide - 1 + buttonXSize * 300 / 480f + leftPressed,
 			top + ySize / 2f + leftPressed, false,
 			(int) (buttonXSize * 240 / 480f), Color.BLACK.getRGB()
@@ -1757,7 +1757,7 @@ public class NEUOverlay extends Gui {
 			buttonXSize, ySize, 1 - rightPressed, rightPressed, 1 - rightPressed, rightPressed
 		);
 		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
-		Utils.drawStringCenteredScaled(EnumChatFormatting.BOLD + "Next",
+		Utils.drawStringCenteredScaled(ChatFormatting.BOLD + "Next",
 			rightSide + 1 - buttonXSize * 300 / 480f + rightPressed,
 			top + ySize / 2f + rightPressed, false,
 			(int) (buttonXSize * 240 / 480f), Color.BLACK.getRGB()
@@ -2098,7 +2098,7 @@ public class NEUOverlay extends Gui {
 					if (mouseX > orderIconX && mouseX < orderIconX + scaledITEM_SIZE) {
 						hoveredOverControl = true;
 						if (System.currentTimeMillis() - millisLastMouseMove > 400) {
-							String text = EnumChatFormatting.GRAY + "Order ";
+							String text = ChatFormatting.GRAY + "Order ";
 							if (i == COMPARE_MODE_ALPHABETICAL) text += "Alphabetically";
 							else if (i == COMPARE_MODE_RARITY) text += "by Rarity";
 							else if (i == COMPARE_MODE_VALUE) text += "by Item Worth";
@@ -2122,8 +2122,8 @@ public class NEUOverlay extends Gui {
 					if (mouseX > sortIconX && mouseX < sortIconX + scaledITEM_SIZE) {
 						hoveredOverControl = true;
 						if (System.currentTimeMillis() - millisLastMouseMove > 400) {
-							String text = EnumChatFormatting.GRAY + "Filter ";
-							if (i == SORT_MODE_ALL) text = EnumChatFormatting.GRAY + "No Filter";
+							String text = ChatFormatting.GRAY + "Filter ";
+							if (i == SORT_MODE_ALL) text = ChatFormatting.GRAY + "No Filter";
 							else if (i == SORT_MODE_MOB) text += "Mobs";
 							else if (i == SORT_MODE_PET) text += "Pets";
 							else if (i == SORT_MODE_TOOL) text += "Tools";
@@ -2305,11 +2305,11 @@ public class NEUOverlay extends Gui {
 
 			if (hasClick || hasInfo) text.add("");
 			if (hasClick)
-				text.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "LMB/R : View recipe!");
+				text.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "LMB/R : View recipe!");
 			if (hasInfo)
-				text.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "RMB : View additional information!");
+				text.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "RMB : View additional information!");
 			if (hasWaypoint)
-				text.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+				text.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 					Keyboard.getKeyName(NotEnoughUpdates.INSTANCE.config.misc.keybindWaypoint) + " : Set waypoint!");
 
 			textToDisplay = text;

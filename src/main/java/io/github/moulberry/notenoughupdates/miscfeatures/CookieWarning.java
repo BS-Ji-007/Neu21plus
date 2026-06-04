@@ -98,7 +98,7 @@ public class CookieWarning {
 		} catch (Exception e) {
 			if (!hasErrorMessage) {
 				e.printStackTrace();
-				Utils.addChatMessage(EnumChatFormatting.RED +
+				Utils.addChatMessage(ChatFormatting.RED +
 					"NEU ran into an issue when retrieving the Booster Cookie Timer. Check the logs for details.");
 				hasErrorMessage = true;
 			}

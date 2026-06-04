@@ -448,7 +448,7 @@ public class GuiProfileViewer extends GuiScreen {
 		} else {
 			switch (page) {
 				case LOADING:
-					String str = EnumChatFormatting.YELLOW + "Loading player profiles.";
+					String str = ChatFormatting.YELLOW + "Loading player profiles.";
 					long currentTimeMod = System.currentTimeMillis() % 1000;
 					if (currentTimeMod > 333) {
 						if (currentTimeMod < 666) {
@@ -467,7 +467,7 @@ public class GuiProfileViewer extends GuiScreen {
 					val authState = NotEnoughUpdates.INSTANCE.manager.ursaClient.getAuthenticationState();
 					if (NotEnoughUpdates.INSTANCE.manager.ursaClient.hasNonStandardUrsa()) {
 						Utils.drawStringCentered(
-							EnumChatFormatting.RED +
+							ChatFormatting.RED +
 								"Looks like you are using a non standard NEU server.",
 							guiLeft + sizeX / 2f, guiTop + 111, true, 0
 						);
@@ -477,42 +477,42 @@ public class GuiProfileViewer extends GuiScreen {
 						);
 					} else if (authState == UrsaClient.AuthenticationState.FAILED_TO_JOINSERVER) {
 						Utils.drawStringCentered(
-							EnumChatFormatting.RED +
+							ChatFormatting.RED +
 								"Looks like we cannot authenticate with Mojang.",
 							guiLeft + sizeX / 2f, guiTop + 111, true, 0
 						);
 						Utils.drawStringCentered(
-							EnumChatFormatting.RED + "Is your game open for more than 24 hours?",
+							ChatFormatting.RED + "Is your game open for more than 24 hours?",
 							guiLeft + sizeX / 2f, guiTop + 121, true, 0
 						);
 					} else if (authState == UrsaClient.AuthenticationState.REJECTED) {
 						Utils.drawStringCentered(
-							EnumChatFormatting.RED +
+							ChatFormatting.RED +
 								"Looks like we cannot authenticate with Ursa.",
 							guiLeft + sizeX / 2f, guiTop + 111, true, 0
 						);
 						Utils.drawStringCentered(
-							EnumChatFormatting.RED + "Is your game open for more than 24 hours?",
+							ChatFormatting.RED + "Is your game open for more than 24 hours?",
 							guiLeft + sizeX / 2f, guiTop + 121, true, 0
 						);
 
 					} else if (timeDiff > 20000) {
 						Utils.drawStringCentered(
-							EnumChatFormatting.YELLOW + "Its taking a while...",
+							ChatFormatting.YELLOW + "Its taking a while...",
 							guiLeft + sizeX / 2f, guiTop + 111, true, 0
 						);
 						Utils.drawStringCentered(
-							EnumChatFormatting.YELLOW + "Might be hypixel's fault.",
+							ChatFormatting.YELLOW + "Might be hypixel's fault.",
 							guiLeft + sizeX / 2f, guiTop + 121, true, 0
 						);
 						if (timeDiff > 60000) {
 							Utils.drawStringCentered(
-								EnumChatFormatting.YELLOW + "Might be our fault :/.",
+								ChatFormatting.YELLOW + "Might be our fault :/.",
 								guiLeft + sizeX / 2f, guiTop + 131, true, 0
 							);
 							if (timeDiff > 180000) {
 								Utils.drawStringCentered(
-									EnumChatFormatting.YELLOW + "Wow you're still here?",
+									ChatFormatting.YELLOW + "Wow you're still here?",
 									guiLeft + sizeX / 2f, guiTop + 141, true, 0
 								);
 								if (timeDiff > 360000) {
@@ -522,41 +522,41 @@ public class GuiProfileViewer extends GuiScreen {
 
 									String time = String.format("%02d:%02d:%02d", hour, minute, second);
 									Utils.drawStringCentered(
-										EnumChatFormatting.YELLOW + "You've wasted your time here for: " + time,
+										ChatFormatting.YELLOW + "You've wasted your time here for: " + time,
 										guiLeft + sizeX / 2f, guiTop + 151, true, 0
 									);
 									Utils.drawStringCentered(
-										EnumChatFormatting.YELLOW + String.valueOf(EnumChatFormatting.BOLD) +
+										ChatFormatting.YELLOW + String.valueOf(ChatFormatting.BOLD) +
 											"What are you doing with your life?",
 										guiLeft + sizeX / 2f, guiTop + 161, true, 0
 									);
 									if (timeDiff > 600000) {
 										Utils.drawStringCentered(
-											EnumChatFormatting.RED + String.valueOf(EnumChatFormatting.BOLD) + "Maniac",
+											ChatFormatting.RED + String.valueOf(ChatFormatting.BOLD) + "Maniac",
 											guiLeft + sizeX / 2f, guiTop + 171, true, 0
 										);
 										if (timeDiff > 1200000) {
 											Utils.drawStringCentered(
-												EnumChatFormatting.RED + String.valueOf(EnumChatFormatting.BOLD) +
+												ChatFormatting.RED + String.valueOf(ChatFormatting.BOLD) +
 													"You're a menace to society",
 												guiLeft + sizeX / 2f, guiTop + 181, true, 0
 											);
 											if (timeDiff > 1800000) {
 												Utils.drawStringCentered(
-													EnumChatFormatting.RED + String.valueOf(EnumChatFormatting.BOLD) +
+													ChatFormatting.RED + String.valueOf(ChatFormatting.BOLD) +
 														"You don't know what's gonna happen to you",
 													guiLeft + sizeX / 2f, guiTop + 191, true, 0
 												);
 												if (timeDiff > 3000000) {
 													Utils.drawStringCentered(
-														EnumChatFormatting.RED + String.valueOf(EnumChatFormatting.BOLD) +
+														ChatFormatting.RED + String.valueOf(ChatFormatting.BOLD) +
 															"You really want this?",
 														guiLeft + sizeX / 2f, guiTop + 91, true, 0
 													);
 													if (timeDiff > 3300000) {
 														Utils.drawStringCentered(
-															EnumChatFormatting.DARK_RED +
-																String.valueOf(EnumChatFormatting.BOLD) +
+															ChatFormatting.DARK_RED +
+																String.valueOf(ChatFormatting.BOLD) +
 																"OW LORD FORGIVE ME FOR THIS",
 															guiLeft + sizeX / 2f, guiTop + 71, true, 0
 														);
@@ -581,13 +581,13 @@ public class GuiProfileViewer extends GuiScreen {
 					break;
 				case INVALID_NAME:
 					Utils.drawStringCentered(
-						EnumChatFormatting.RED + "Invalid name or API is down!",
+						ChatFormatting.RED + "Invalid name or API is down!",
 						guiLeft + sizeX / 2f, guiTop + 101, true, 0
 					);
 					break;
 				case NO_SKYBLOCK:
 					Utils.drawStringCentered(
-						EnumChatFormatting.RED + "No SkyBlock data found!",
+						ChatFormatting.RED + "No SkyBlock data found!",
 						guiLeft + sizeX / 2f, guiTop + 101, true, 0
 					);
 					break;
@@ -646,7 +646,7 @@ public class GuiProfileViewer extends GuiScreen {
 		if (tooltipToDisplay != null) {
 			List<String> grayTooltip = new ArrayList<>(tooltipToDisplay.size());
 			for (String line : tooltipToDisplay) {
-				grayTooltip.add(EnumChatFormatting.GRAY + line);
+				grayTooltip.add(ChatFormatting.GRAY + line);
 			}
 			Utils.drawHoveringText(grayTooltip, mouseX, mouseY, width, height, -1);
 			tooltipToDisplay = null;
@@ -715,7 +715,7 @@ public class GuiProfileViewer extends GuiScreen {
 		return Utils.getElementOrDefault(
 			profile.getHypixelProfile(),
 			"displayname",
-			new JsonPrimitive(EnumChatFormatting.RED + "ERROR")
+			new JsonPrimitive(ChatFormatting.RED + "ERROR")
 		).getAsString();
 	}
 
@@ -990,7 +990,7 @@ public class GuiProfileViewer extends GuiScreen {
 		float level = levelObj.level;
 		int levelFloored = (int) Math.floor(level);
 
-		Utils.renderAlignedString(skillName, EnumChatFormatting.WHITE.toString() + levelFloored, x + 14, y - 4, xSize - 20);
+		Utils.renderAlignedString(skillName, ChatFormatting.WHITE.toString() + levelFloored, x + 14, y - 4, xSize - 20);
 
 		if (levelObj.maxed) {
 			renderGoldBar(x, y + 6, xSize);
@@ -1009,33 +1009,33 @@ public class GuiProfileViewer extends GuiScreen {
 				String levelStr;
 				String totalXpStr = null;
 				if (skillName.contains("Catacombs")) {
-					totalXpStr = EnumChatFormatting.GRAY + "Total XP: " + EnumChatFormatting.DARK_PURPLE +
-						StringUtils.formatNumber(levelObj.totalXp) + EnumChatFormatting.DARK_GRAY + " (" +
+					totalXpStr = ChatFormatting.GRAY + "Total XP: " + ChatFormatting.DARK_PURPLE +
+						StringUtils.formatNumber(levelObj.totalXp) + ChatFormatting.DARK_GRAY + " (" +
 						StringUtils.formatToTenths(getPercentage(skillName.toLowerCase(Locale.ROOT), levelObj)) + "% to 50)";
 				}
 				// Adds overflow level to each level object that is maxed, avoids hotm level as there is no overflow xp for it
 				if (levelObj.maxed) {
 					levelStr = !skillName.contains("HOTM") ?
-						EnumChatFormatting.GOLD + "MAXED!" + EnumChatFormatting.GRAY + " (Overflow level: " + String.format(
+						ChatFormatting.GOLD + "MAXED!" + ChatFormatting.GRAY + " (Overflow level: " + String.format(
 							"%.2f",
 							levelObj.level
 						) + ")" :
-						EnumChatFormatting.GOLD + "MAXED!";
+						ChatFormatting.GOLD + "MAXED!";
 				} else {
 					if (skillName.contains("Class Average")) {
-						levelStr = "Progress: " + EnumChatFormatting.DARK_PURPLE + String.format("%.1f", (level % 1 * 100)) + "%";
-						totalXpStr = "Exact Class Average: " + EnumChatFormatting.WHITE + String.format("%.2f", levelObj.level);
+						levelStr = "Progress: " + ChatFormatting.DARK_PURPLE + String.format("%.1f", (level % 1 * 100)) + "%";
+						totalXpStr = "Exact Class Average: " + ChatFormatting.WHITE + String.format("%.2f", levelObj.level);
 					} else {
 						int maxXp = (int) levelObj.maxXpForLevel;
 						levelStr =
-							EnumChatFormatting.DARK_PURPLE +
+							ChatFormatting.DARK_PURPLE +
 								StringUtils.shortNumberFormat(Math.round((level % 1) * maxXp)) +
 								"/" +
 								StringUtils.shortNumberFormat(maxXp) +
 								// Since catacombs isn't considered 'maxed' at level 50 (since the cap is '99'), we can add
 								// a conditional here to add the overflow level rather than above
 								(skillName.contains("Catacombs") && levelObj.level >= 50 ?
-									EnumChatFormatting.GRAY + " (Overflow level: " + String.format("%.2f", levelObj.level) + ")" : "");
+									ChatFormatting.GRAY + " (Overflow level: " + String.format("%.2f", levelObj.level) + ")" : "");
 					}
 				}
 				if (totalXpStr != null) {
@@ -1287,7 +1287,7 @@ public class GuiProfileViewer extends GuiScreen {
 		INVALID_NAME(),
 		NO_SKYBLOCK(),
 		CRASH_RECOVERY(),
-		BASIC(0, Items.paper, "§9Skills"),
+		BASIC(0, Items.PAPER, "§9Skills"),
 		DUNGEON(1, Item.getItemFromBlock(Blocks.deadbush), "§eDungeoneering"),
 		EXTRA(2, Items.book, "§7Profile Stats"),
 		INVENTORIES(3, Item.getItemFromBlock(Blocks.ender_chest), "§bStorage"),

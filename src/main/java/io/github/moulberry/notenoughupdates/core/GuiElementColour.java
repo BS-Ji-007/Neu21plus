@@ -254,12 +254,12 @@ public class GuiElementColour extends GuiElement {
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
 
-		TextRenderUtils.drawStringCenteredScaledMaxWidth(EnumChatFormatting.GRAY.toString() + Math.round(hsv[2] * 100) + "",
+		TextRenderUtils.drawStringCenteredScaledMaxWidth(ChatFormatting.GRAY.toString() + Math.round(hsv[2] * 100) + "",
 			x + 5 + 64 + 5 + 5 - (Math.round(hsv[2] * 100) == 100 ? 1 : 0), y + 5 + 64 + 5 + 5, true, 13, -1
 		);
 		if (opacitySlider) {
 			TextRenderUtils.drawStringCenteredScaledMaxWidth(
-				EnumChatFormatting.GRAY.toString() + Math.round(c.getAlpha() / 255f * 100) + "",
+				ChatFormatting.GRAY.toString() + Math.round(c.getAlpha() / 255f * 100) + "",
 				x + 5 + 64 + 5 + valueOffset + 5,
 				y + 5 + 64 + 5 + 5,
 				true,
@@ -268,7 +268,7 @@ public class GuiElementColour extends GuiElement {
 			);
 		}
 		if (chromaSpeed > 0) {
-			TextRenderUtils.drawStringCenteredScaledMaxWidth(EnumChatFormatting.GRAY.toString() +
+			TextRenderUtils.drawStringCenteredScaledMaxWidth(ChatFormatting.GRAY.toString() +
 					(int) ChromaColour.getSecondsForSpeed(chromaSpeed) + "s",
 				x + 5 + 64 + 5 + valueOffset + opacityOffset + 6, y + 5 + 64 + 5 + 5, true, 13, -1
 			);
@@ -277,11 +277,11 @@ public class GuiElementColour extends GuiElement {
 		hexField.setSize(48, 10);
 		if (!hexField.getFocus()) hexField.setText(Integer.toHexString(c.getRGB() & 0xFFFFFF).toUpperCase(Locale.ROOT));
 
-		StringBuilder sb = new StringBuilder(EnumChatFormatting.GRAY + "#");
+		StringBuilder sb = new StringBuilder(ChatFormatting.GRAY + "#");
 		for (int i = 0; i < 6 - hexField.getText().length(); i++) {
 			sb.append("0");
 		}
-		sb.append(EnumChatFormatting.WHITE);
+		sb.append(ChatFormatting.WHITE);
 
 		hexField.setPrependText(sb.toString());
 		hexField.render(x + 5 + 8, y + 5 + 64 + 5);

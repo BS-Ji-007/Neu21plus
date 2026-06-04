@@ -166,7 +166,7 @@ public class CrystalMetalDetectorSolver {
 					NEUDebugLogger.log(NEUDebugFlag.METAL, "Known location identified.");
 					// falls through
 				case FOUND:
-					Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU] Found solution.");
+					Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU] Found solution.");
 					metalDetectorTitle(
 						"Found Solution",
 						NotEnoughUpdates.INSTANCE.config.mining.metalDetectorTicks,
@@ -176,18 +176,18 @@ public class CrystalMetalDetectorSolver {
 						(previousState == SolutionState.INVALID || previousState == SolutionState.FAILED)) {
 						NEUDebugLogger.log(
 							NEUDebugFlag.METAL,
-							EnumChatFormatting.AQUA + "Solution coordinates: " +
-								EnumChatFormatting.WHITE + possibleBlocks.iterator().next().toString()
+							ChatFormatting.AQUA + "Solution coordinates: " +
+								ChatFormatting.WHITE + possibleBlocks.iterator().next().toString()
 						);
 					}
 					break;
 				case INVALID:
-					Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Previous solution is invalid.");
+					Utils.addChatMessage(ChatFormatting.RED + "[NEU] Previous solution is invalid.");
 					logDiagnosticData(false);
 					resetSolution(false);
 					break;
 				case FAILED:
-					Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Failed to find a solution.");
+					Utils.addChatMessage(ChatFormatting.RED + "[NEU] Failed to find a solution.");
 					metalDetectorTitle(
 						"Failed to find a solution!",
 						NotEnoughUpdates.INSTANCE.config.mining.metalDetectorTicks,
@@ -201,7 +201,7 @@ public class CrystalMetalDetectorSolver {
 					// falls through
 				case MULTIPLE:
 					Utils.addChatMessage(
-						EnumChatFormatting.YELLOW + "[NEU] Need another position to find solution. Possible blocks: " +
+						ChatFormatting.YELLOW + "[NEU] Need another position to find solution. Possible blocks: " +
 							possibleBlocks.size());
 					metalDetectorTitle(
 						"Need another position!",
@@ -393,7 +393,7 @@ public class CrystalMetalDetectorSolver {
 
 		if (keeperEntities.size() == 0) {
 			if (!visitKeeperMessagePrinted) {
-				Utils.addChatMessage(EnumChatFormatting.YELLOW +
+				Utils.addChatMessage(ChatFormatting.YELLOW +
 					"[NEU] Approach a Keeper while holding the metal detector to enable faster treasure hunting.");
 				visitKeeperMessagePrinted = true;
 			}
@@ -403,13 +403,13 @@ public class CrystalMetalDetectorSolver {
 		EntityArmorStand keeperEntity = keeperEntities.get(0);
 		String keeperName = keeperEntity.getCustomNameTag();
 		NEUDebugLogger.log(NEUDebugFlag.METAL, "Locating center using Keeper: " +
-			EnumChatFormatting.WHITE + keeperEntity);
+			ChatFormatting.WHITE + keeperEntity);
 		String keeperType = keeperName.substring(keeperName.indexOf(KEEPER_OF_STRING) + KEEPER_OF_STRING.length());
 		minesCenter = keeperEntity.getPosition().add(keeperOffsets.get(keeperType.toLowerCase(Locale.ROOT)));
 		NEUDebugLogger.log(NEUDebugFlag.METAL, "Mines center: " +
-			EnumChatFormatting.WHITE + minesCenter.toString());
+			ChatFormatting.WHITE + minesCenter.toString());
 		Utils.addChatMessage(
-			EnumChatFormatting.YELLOW + "[NEU] Faster treasure hunting is now enabled based on Keeper location.");
+			ChatFormatting.YELLOW + "[NEU] Faster treasure hunting is now enabled based on Keeper location.");
 		return true;
 	}
 
@@ -504,53 +504,53 @@ public class CrystalMetalDetectorSolver {
 	static private String getDiagnosticMessage() {
 		StringBuilder diagsMessage = new StringBuilder();
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Mines Center: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((minesCenter.equals(Vec3i.NULL_VECTOR)) ? "<NOT DISCOVERED>" : minesCenter.toString());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Current Solution State: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(currentState.name());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Previous Solution State: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(previousState.name());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Previous Player Position: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((prevPlayerPos == null) ? "<NONE>" : prevPlayerPos.toString());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Previous Distance To Treasure: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((prevDistToTreasure == 0) ? "<NONE>" : prevDistToTreasure);
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Current Possible Blocks: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(possibleBlocks.size());
 		diagsMessage.append(getFriendlyBlockPositions(possibleBlocks));
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Evaluated player positions: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(evaluatedPlayerPositions.size());
 		diagsMessage.append(getFriendlyEvaluatedPositions());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Chest locations not on known list:\n");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		if (minesCenter != Vec3i.NULL_VECTOR) {
 			HashSet<BlockPos> locationsNotOnKnownList = openedChestPositions
 				.stream()
@@ -581,7 +581,7 @@ public class CrystalMetalDetectorSolver {
 		}
 
 		if (!NotEnoughUpdates.INSTANCE.config.mining.metalDetectorEnabled) {
-			Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Metal Detector Solver is not enabled.");
+			Utils.addChatMessage(ChatFormatting.RED + "[NEU] Metal Detector Solver is not enabled.");
 			return;
 		}
 

@@ -108,7 +108,7 @@ object OldSkyBlockMenu {
             "These trades are always",
             "available and accessible through",
             "the SkyBlock Menu.",
-            itemData = NormalItemData(Items.emerald),
+            itemData = NormalItemData(Items.EMERALD),
             requiresBoosterCookie = false
         ),
         ACCESSORY(

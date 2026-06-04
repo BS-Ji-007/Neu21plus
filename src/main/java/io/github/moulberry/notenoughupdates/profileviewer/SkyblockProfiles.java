@@ -507,7 +507,7 @@ public class SkyblockProfiles {
 		private Integer magicPower = null;
 		private LinkedHashMap<String, Integer> tuningInfo = null;
 		private Double skyblockLevel = null;
-		private EnumChatFormatting skyBlockExperienceColour = null;
+		private ChatFormatting skyBlockExperienceColour = null;
 		private Map<String, JsonArray> inventoryNameToInfo = null;
 		private Map<String, ProfileViewer.Level> levelingInfo = null;
 		private JsonObject petsInfo = null;
@@ -845,10 +845,10 @@ public class SkyblockProfiles {
 			return bundledReturn;
 		}
 
-		public EnumChatFormatting getSkyblockLevelColour() {
+		public ChatFormatting getSkyblockLevelColour() {
 			if (Constants.SBLEVELS == null || !Constants.SBLEVELS.has("sblevel_colours")) {
 				Utils.showOutdatedRepoNotification("sblevels.json or missing sblevel_colours");
-				return EnumChatFormatting.WHITE;
+				return ChatFormatting.WHITE;
 			}
 
 			if (skyBlockExperienceColour != null) {
@@ -856,13 +856,13 @@ public class SkyblockProfiles {
 			}
 
 			double skyblockLevel = getSkyblockLevel();
-			EnumChatFormatting levelColour = EnumChatFormatting.WHITE;
+			ChatFormatting levelColour = ChatFormatting.WHITE;
 
 			JsonObject sblevelColours = Constants.SBLEVELS.getAsJsonObject("sblevel_colours");
 			try {
 				for (Map.Entry<String, JsonElement> stringJsonElementEntry : sblevelColours.entrySet()) {
 					int nextLevelBracket = Integer.parseInt(stringJsonElementEntry.getKey());
-					EnumChatFormatting valueByName = EnumChatFormatting.getValueByName(stringJsonElementEntry
+					ChatFormatting valueByName = ChatFormatting.getValueByName(stringJsonElementEntry
 						.getValue()
 						.getAsString());
 					if (skyblockLevel >= nextLevelBracket) {

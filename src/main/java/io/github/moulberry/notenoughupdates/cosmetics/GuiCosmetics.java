@@ -133,7 +133,7 @@ public class GuiCosmetics extends GuiScreen {
 			if (cosmeticsInfoTooltip != null) {
 				List<String> grayTooltip = new ArrayList<>(cosmeticsInfoTooltip.size());
 				for (String line : cosmeticsInfoTooltip) {
-					grayTooltip.add(EnumChatFormatting.GRAY + line);
+					grayTooltip.add(ChatFormatting.GRAY + line);
 				}
 				Utils.drawHoveringText(grayTooltip, mouseX, mouseY, width, height, -1);}
 		}
@@ -152,7 +152,7 @@ public class GuiCosmetics extends GuiScreen {
 		}
 
 		Minecraft.getInstance().font.drawString(
-			EnumChatFormatting.AQUA + statusMsg.toString(),
+			ChatFormatting.AQUA + statusMsg.toString(),
 			guiLeft + sizeX - Minecraft.getInstance().font.getStringWidth(statusMsg.toString()) - 20,
 			guiTop - 12,
 			0,
@@ -176,9 +176,9 @@ public class GuiCosmetics extends GuiScreen {
 
 			String equipMsg;
 			if (wantToEquipCape != null) {
-				equipMsg = EnumChatFormatting.GREEN + "Equip Cape";
+				equipMsg = ChatFormatting.GREEN + "Equip Cape";
 			} else {
-				equipMsg = EnumChatFormatting.GREEN + "Unequip";
+				equipMsg = ChatFormatting.GREEN + "Unequip";
 			}
 			if (System.currentTimeMillis() - lastCapeEquip < 20 * 1000) {
 				equipMsg += " - " + (20 - (System.currentTimeMillis() - lastCapeEquip) / 1000) + "s";

@@ -221,7 +221,7 @@ public class CrystalWishingCompassSolver {
 		}
 
 		ItemStack heldItem = event.entityPlayer.getHeldItem();
-		if (heldItem == null || heldItem.getItem() != Items.skull) {
+		if (heldItem == null || heldItem.getItem() != Items.PLAYER_HEAD) {
 			return;
 		}
 
@@ -239,33 +239,33 @@ public class CrystalWishingCompassSolver {
 					return;
 				case STILL_PROCESSING_PRIOR_USE:
 					Utils.addChatMessage(
-						EnumChatFormatting.YELLOW + "[NEU] Wait a little longer before using the wishing compass again.");
+						ChatFormatting.YELLOW + "[NEU] Wait a little longer before using the wishing compass again.");
 					event.setCanceled(true);
 					break;
 				case LOCATION_TOO_CLOSE:
 					Utils.addChatMessage(
-						EnumChatFormatting.YELLOW + "[NEU] Move a little further before using the wishing compass again.");
+						ChatFormatting.YELLOW + "[NEU] Move a little further before using the wishing compass again.");
 					event.setCanceled(true);
 					break;
 				case POSSIBLE_TARGETS_CHANGED:
 					Utils.addChatMessage(
-						EnumChatFormatting.YELLOW + "[NEU] Possible wishing compass targets have changed. Solver has been reset.");
+						ChatFormatting.YELLOW + "[NEU] Possible wishing compass targets have changed. Solver has been reset.");
 					event.setCanceled(true);
 					break;
 				case NO_PARTICLES_FOR_PREVIOUS_COMPASS:
-					Utils.addChatMessage(EnumChatFormatting.YELLOW +
+					Utils.addChatMessage(ChatFormatting.YELLOW +
 						"[NEU] No particles detected for prior compass use. Need another position to solve.");
 					break;
 				case PLAYER_IN_NUCLEUS:
 					Utils.addChatMessage(
-						EnumChatFormatting.YELLOW + "[NEU] Wishing compass must be used outside the nucleus for accurate results.");
+						ChatFormatting.YELLOW + "[NEU] Wishing compass must be used outside the nucleus for accurate results.");
 					event.setCanceled(true);
 					break;
 				default:
 					throw new IllegalStateException("Unexpected wishing compass solver state: \n" + getDiagnosticMessage());
 			}
 		} catch (Exception e) {
-			Utils.addChatMessage(EnumChatFormatting.RED +
+			Utils.addChatMessage(ChatFormatting.RED +
 				"[NEU] Error processing wishing compass action - see log for details");
 			e.printStackTrace();
 			event.setCanceled(true);
@@ -379,36 +379,36 @@ public class CrystalWishingCompassSolver {
 						showSolution();
 						break;
 					case FAILED_EXCEPTION:
-						Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Unable to determine wishing compass target.");
+						Utils.addChatMessage(ChatFormatting.RED + "[NEU] Unable to determine wishing compass target.");
 						logDiagnosticData(false);
 						break;
 					case FAILED_TIMEOUT_NO_REPEATING:
 						Utils.addChatMessage(
-							EnumChatFormatting.RED + "[NEU] Timed out waiting for repeat set of compass particles.");
+							ChatFormatting.RED + "[NEU] Timed out waiting for repeat set of compass particles.");
 						logDiagnosticData(false);
 						break;
 					case FAILED_TIMEOUT_NO_PARTICLES:
-						Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Timed out waiting for compass particles.");
+						Utils.addChatMessage(ChatFormatting.RED + "[NEU] Timed out waiting for compass particles.");
 						logDiagnosticData(false);
 						break;
 					case FAILED_INTERSECTION_CALCULATION:
 						Utils.addChatMessage(
-							EnumChatFormatting.RED + "[NEU] Unable to determine intersection of wishing compasses.");
+							ChatFormatting.RED + "[NEU] Unable to determine intersection of wishing compasses.");
 						logDiagnosticData(false);
 						break;
 					case FAILED_INVALID_SOLUTION:
-						Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Failed to find solution.");
+						Utils.addChatMessage(ChatFormatting.RED + "[NEU] Failed to find solution.");
 						logDiagnosticData(false);
 						break;
 					case NEED_SECOND_COMPASS:
 						Utils.addChatMessage(
-							EnumChatFormatting.YELLOW + "[NEU] Need another position to determine wishing compass target.");
+							ChatFormatting.YELLOW + "[NEU] Need another position to determine wishing compass target.");
 						break;
 				}
 			}
 		} catch (Exception e) {
 			Utils.addChatMessage(
-				EnumChatFormatting.RED + "[NEU] Exception while calculating wishing compass solution - see log for details");
+				ChatFormatting.RED + "[NEU] Exception while calculating wishing compass solution - see log for details");
 			e.printStackTrace();
 		}
 	}
@@ -710,25 +710,25 @@ public class CrystalWishingCompassSolver {
 	private String getFriendlyNameForCompassTarget(CompassTarget compassTarget) {
 		switch (compassTarget) {
 			case BAL:
-				return EnumChatFormatting.RED + "Bal";
+				return ChatFormatting.RED + "Bal";
 			case ODAWA:
-				return EnumChatFormatting.GREEN + "Odawa";
+				return ChatFormatting.GREEN + "Odawa";
 			case JUNGLE_TEMPLE:
-				return EnumChatFormatting.AQUA + "the " +
-					EnumChatFormatting.GREEN + "Jungle Temple";
+				return ChatFormatting.AQUA + "the " +
+					ChatFormatting.GREEN + "Jungle Temple";
 			case GOBLIN_KING:
-				return EnumChatFormatting.GOLD + "King Yolkar";
+				return ChatFormatting.GOLD + "King Yolkar";
 			case GOBLIN_QUEEN:
-				return EnumChatFormatting.AQUA + "the " +
-					EnumChatFormatting.YELLOW + "Goblin Queen";
+				return ChatFormatting.AQUA + "the " +
+					ChatFormatting.YELLOW + "Goblin Queen";
 			case PRECURSOR_CITY:
-				return EnumChatFormatting.AQUA + "the " +
-					EnumChatFormatting.WHITE + "Precursor City";
+				return ChatFormatting.AQUA + "the " +
+					ChatFormatting.WHITE + "Precursor City";
 			case MINES_OF_DIVAN:
-				return EnumChatFormatting.AQUA + "the " +
-					EnumChatFormatting.BLUE + "Mines of Divan";
+				return ChatFormatting.AQUA + "the " +
+					ChatFormatting.BLUE + "Mines of Divan";
 			default:
-				return EnumChatFormatting.WHITE + "an undetermined location";
+				return ChatFormatting.WHITE + "an undetermined location";
 		}
 	}
 
@@ -761,14 +761,14 @@ public class CrystalWishingCompassSolver {
 
 	private String getWishingCompassDestinationsMessage() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(EnumChatFormatting.YELLOW);
+		sb.append(ChatFormatting.YELLOW);
 		sb.append("[NEU] ");
-		sb.append(EnumChatFormatting.AQUA);
+		sb.append(ChatFormatting.AQUA);
 		sb.append("Wishing compass points to ");
 		int index = 1;
 		for (CompassTarget target : solutionPossibleTargets) {
 			if (index > 1) {
-				sb.append(EnumChatFormatting.AQUA);
+				sb.append(ChatFormatting.AQUA);
 				if (index == solutionPossibleTargets.size()) {
 					sb.append(" or ");
 				} else {
@@ -779,7 +779,7 @@ public class CrystalWishingCompassSolver {
 			index++;
 		}
 
-		sb.append(EnumChatFormatting.AQUA);
+		sb.append(ChatFormatting.AQUA);
 		sb.append(" (");
 		sb.append(getSolutionCoordsText());
 		sb.append(")");
@@ -790,7 +790,7 @@ public class CrystalWishingCompassSolver {
 		if (solution == null) return;
 
 		if (NUCLEUS_BB.isVecInside(solution)) {
-			Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU] " + EnumChatFormatting.AQUA + "Wishing compass target is the Crystal Nucleus");
+			Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU] " + ChatFormatting.AQUA + "Wishing compass target is the Crystal Nucleus");
 			return;
 		}
 
@@ -813,15 +813,15 @@ public class CrystalWishingCompassSolver {
 				return;
 			}
 			Utils.addChatMessage(
-				EnumChatFormatting.RED + "[NEU] Failed to automatically run /sthw");
+				ChatFormatting.RED + "[NEU] Failed to automatically run /sthw");
 		}
 
-		destinationMessage += EnumChatFormatting.YELLOW + " [Add Skytils Waypoint]";
+		destinationMessage += ChatFormatting.YELLOW + " [Add Skytils Waypoint]";
 		ChatComponentText chatMessage = new ChatComponentText(destinationMessage);
 		chatMessage.setChatStyle(Utils.createClickStyle(
 			ClickEvent.Action.RUN_COMMAND,
 			skytilsCommand,
-			EnumChatFormatting.YELLOW + "Set waypoint for wishing target"
+			ChatFormatting.YELLOW + "Set waypoint for wishing target"
 		));
 		mc.player.addChatMessage(chatMessage);
 	}
@@ -829,16 +829,16 @@ public class CrystalWishingCompassSolver {
 	private String getDiagnosticMessage() {
 		StringBuilder diagsMessage = new StringBuilder();
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Solver State: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(solverState.name());
 		diagsMessage.append("\n");
 
 		if (firstCompass == null) {
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append("First Compass: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append("<NONE>");
 			diagsMessage.append("\n");
 		} else {
@@ -846,75 +846,75 @@ public class CrystalWishingCompassSolver {
 		}
 
 		if (secondCompass == null) {
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append("Second Compass: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append("<NONE>");
 			diagsMessage.append("\n");
 		} else {
 			secondCompass.appendCompassDiagnostics(diagsMessage, "Second Compass");
 		}
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Intersection Line: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((solutionIntersectionLine == null) ? "<NONE>" : solutionIntersectionLine);
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Jungle Key in Inventory: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(isKeyInInventory());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("King's Scent Present: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(isKingsScentPresent());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("First Compass Targets: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(possibleTargets == null ? "<NONE>" : possibleTargets.toString());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Current Calculated Targets: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(calculatePossibleTargets(mc.player.getPosition()));
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Found Crystals: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append(getFoundCrystals());
 		diagsMessage.append("\n");
 
 		if (originalSolution != null) {
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append("Original Solution: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append(originalSolution);
 			diagsMessage.append("\n");
 		}
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Solution: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((solution == null) ? "<NONE>" : solution.toString());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Solution Targets: ");
-		diagsMessage.append(EnumChatFormatting.WHITE);
+		diagsMessage.append(ChatFormatting.WHITE);
 		diagsMessage.append((solutionPossibleTargets == null) ? "<NONE>" : solutionPossibleTargets.toString());
 		diagsMessage.append("\n");
 
-		diagsMessage.append(EnumChatFormatting.AQUA);
+		diagsMessage.append(ChatFormatting.AQUA);
 		diagsMessage.append("Seen particles:\n");
 		for (ParticleData particleData : seenParticles) {
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append(particleData);
 			diagsMessage.append("\n");
 		}
@@ -928,7 +928,7 @@ public class CrystalWishingCompassSolver {
 		}
 
 		if (!NotEnoughUpdates.INSTANCE.config.mining.wishingCompassSolver) {
-			Utils.addChatMessage(EnumChatFormatting.RED +
+			Utils.addChatMessage(ChatFormatting.RED +
 				"[NEU] Wishing Compass Solver is not enabled.");
 			return;
 		}
@@ -1041,46 +1041,46 @@ public class CrystalWishingCompassSolver {
 		}
 
 		public void appendCompassDiagnostics(StringBuilder diagsMessage, String compassName) {
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append("Compass State: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append(compassState.name());
 			diagsMessage.append("\n");
 
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append(compassName);
 			diagsMessage.append(" Used Millis: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append(whenUsedMillis);
 			diagsMessage.append("\n");
 
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append(compassName);
 			diagsMessage.append(" Used Position: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append((whereUsed == null) ? "<NONE>" : whereUsed.toString());
 			diagsMessage.append("\n");
 
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append(compassName);
 			diagsMessage.append(" All Seen Particles: \n");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			for (ProcessedParticle particle : processedParticles) {
 				diagsMessage.append(particle.toString());
 				diagsMessage.append("\n");
 			}
 
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append(compassName);
 			diagsMessage.append(" Particle Spread: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append(particleSpread());
 			diagsMessage.append("\n");
 
-			diagsMessage.append(EnumChatFormatting.AQUA);
+			diagsMessage.append(ChatFormatting.AQUA);
 			diagsMessage.append(compassName);
 			diagsMessage.append(" Compass Line: ");
-			diagsMessage.append(EnumChatFormatting.WHITE);
+			diagsMessage.append(ChatFormatting.WHITE);
 			diagsMessage.append((line == null) ? "<NONE>" : line.toString());
 			diagsMessage.append("\n");
 		}

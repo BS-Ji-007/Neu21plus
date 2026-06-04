@@ -60,10 +60,10 @@ object MuseumTooltipManager {
                 if (loadedData != null) {
                     data = loadedData
                 } else {
-                    Utils.addChatMessage("${EnumChatFormatting.RED}${EnumChatFormatting.BOLD}[NEU] Error while reading existing museum data, resetting.")
+                    Utils.addChatMessage("${ChatFormatting.RED}${ChatFormatting.BOLD}[NEU] Error while reading existing museum data, resetting.")
                 }
             } catch (ignored: Exception) {
-                Utils.addChatMessage("${EnumChatFormatting.RED}${EnumChatFormatting.BOLD}[NEU] Error while reading existing museum data, resetting.")
+                Utils.addChatMessage("${ChatFormatting.RED}${ChatFormatting.BOLD}[NEU] Error while reading existing museum data, resetting.")
             }
         } else {
             file.createNewFile()

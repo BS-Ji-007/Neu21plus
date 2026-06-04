@@ -101,7 +101,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
 
         if (!hasMigrated(profileInfo) || Constants.BESTIARY == null) {
             Utils.drawStringCentered(
-                "${EnumChatFormatting.RED}No valid bestiary data!",
+                "${ChatFormatting.RED}No valid bestiary data!",
                 guiLeft + 431 / 2f,
                 (guiTop + 101).toFloat(),
                 true,
@@ -118,7 +118,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
 
         if (computedCategories.isEmpty() || Constants.BESTIARY == null) {
             Utils.drawStringCentered(
-                "${EnumChatFormatting.RED}No valid bestiary data!",
+                "${ChatFormatting.RED}No valid bestiary data!",
                 guiLeft + 431 / 2f,
                 (guiTop + 101).toFloat(),
                 true,
@@ -141,7 +141,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
                 mouseX < guiLeft + 30 + bestiaryXSize * categoryXIndex + 20
                 && mouseY > guiTop + 10 && mouseY < guiTop + 10 + 20
             ) {
-                tooltipToDisplay.add(EnumChatFormatting.GRAY.toString() + category.name)
+                tooltipToDisplay.add(ChatFormatting.GRAY.toString() + category.name)
                 if (Mouse.getEventButtonState() && selectedCategory != category.id) {
                     selectedCategory = category.id
                     Utils.playPressSound()
@@ -186,8 +186,8 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
         com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
         val color = Color(128, 128, 128, 255)
         Utils.renderAlignedString(
-            EnumChatFormatting.RED.toString() + "Milestone: ",
-            "${EnumChatFormatting.GRAY}${(bestiaryLevel / 10)}",
+            ChatFormatting.RED.toString() + "Milestone: ",
+            "${ChatFormatting.GRAY}${(bestiaryLevel / 10)}",
             (guiLeft + 280).toFloat(),
             (guiTop + 50).toFloat(),
             110
@@ -201,7 +201,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             }
 
             Utils.renderShadowedString(
-                "${EnumChatFormatting.RED}Subcategories", (guiLeft + 317).toFloat(), (guiTop + 165).toFloat(), 1000
+                "${ChatFormatting.RED}Subcategories", (guiLeft + 317).toFloat(), (guiTop + 165).toFloat(), 1000
             )
             com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
 
@@ -255,7 +255,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
         // Render family information
         var catData = selectedCategory.familyData
         Utils.renderAlignedString(
-            EnumChatFormatting.RED.toString() + "Families Found:",
+            ChatFormatting.RED.toString() + "Families Found:",
             (if (catData.found == catData.total) "§6" else "§7") + "${catData.found}/${catData.total}",
             guiLeft + 280F,
             guiTop + 70F,
@@ -268,7 +268,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
         }
 
         Utils.renderAlignedString(
-            EnumChatFormatting.RED.toString() + "Families Completed:",
+            ChatFormatting.RED.toString() + "Families Completed:",
             (if (catData.completed == catData.total) "§6" else "§7") + "${catData.completed}/${catData.total}",
             guiLeft + 280F,
             guiTop + 90F,
@@ -284,7 +284,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
         if (selectedSubCategory != "") {
             catData = selectedCategory.subCategories.find { it.id == selectedSubCategory }!!.familyData
             Utils.renderAlignedString(
-                EnumChatFormatting.RED.toString() + "Families Found:",
+                ChatFormatting.RED.toString() + "Families Found:",
                 (if (catData.found == catData.total) "§6" else "§7") + "${catData.found}/${catData.total}",
                 guiLeft + 280F,
                 guiTop + 120F,
@@ -297,7 +297,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             }
 
             Utils.renderAlignedString(
-                EnumChatFormatting.RED.toString() + "Families Completed:",
+                ChatFormatting.RED.toString() + "Families Completed:",
                 (if (catData.completed == catData.total) "§6" else "§7") + "${catData.completed}/${catData.total}",
                 guiLeft + 280F,
                 guiTop + 140F,
@@ -351,19 +351,19 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
                         "${mob.name} ${mob.mobLevelData.level}"
                     )
                     tooltipToDisplay.add(
-                        EnumChatFormatting.GRAY.toString() + "Kills: " + EnumChatFormatting.GREEN +
+                        ChatFormatting.GRAY.toString() + "Kills: " + ChatFormatting.GREEN +
                                 StringUtils.formatNumber(kills)
                     )
                     tooltipToDisplay.add(
-                        EnumChatFormatting.GRAY.toString() + "Deaths: " + EnumChatFormatting.GREEN +
+                        ChatFormatting.GRAY.toString() + "Deaths: " + ChatFormatting.GREEN +
                                 StringUtils.formatNumber(deaths)
                     )
                     tooltipToDisplay.add("")
 
                     if (!mob.mobLevelData.maxLevel) {
                         tooltipToDisplay.add(
-                            EnumChatFormatting.GRAY.toString() + "Progress to Tier ${mob.mobLevelData.level + 1}: " +
-                                    EnumChatFormatting.AQUA + "${mob.mobLevelData.progress}%"
+                            ChatFormatting.GRAY.toString() + "Progress to Tier ${mob.mobLevelData.level + 1}: " +
+                                    ChatFormatting.AQUA + "${mob.mobLevelData.progress}%"
                         )
 
                         var bar = "§3§l§m"
@@ -383,7 +383,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
                     }
 
                     tooltipToDisplay.add(
-                        EnumChatFormatting.GRAY.toString() + "Overall Progress: " + EnumChatFormatting.AQUA + "${mob.mobLevelData.totalProgress}%" +
+                        ChatFormatting.GRAY.toString() + "Overall Progress: " + ChatFormatting.AQUA + "${mob.mobLevelData.totalProgress}%" +
                                 if (mob.mobLevelData.maxLevel) " §7(§c§lMAX!§r§7)" else ""
                     )
                     var bar = "§3§l§m"
@@ -404,7 +404,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f)
             Utils.drawStringCentered(
                 if (mob.mobLevelData.maxLevel) {
-                    "${EnumChatFormatting.GOLD}${mob.mobLevelData.level}"
+                    "${ChatFormatting.GOLD}${mob.mobLevelData.level}"
                 } else {
                     mob.mobLevelData.level.toString()
                 }, guiLeft + x + 10, guiTop + y + 26, true, color.rgb
@@ -415,7 +415,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
         if (tooltipToDisplay.isNotEmpty()) {
             val grayTooltip: MutableList<String> = ArrayList(tooltipToDisplay.size)
             for (line in tooltipToDisplay) {
-                grayTooltip.add(EnumChatFormatting.GRAY.toString() + line)
+                grayTooltip.add(ChatFormatting.GRAY.toString() + line)
             }
             Utils.drawHoveringText(grayTooltip, mouseX, mouseY, width, height, -1)
             tooltipToDisplay.clear()

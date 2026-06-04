@@ -457,11 +457,11 @@ public class DungeonMap {
 		boolean useShd = NotEnoughUpdates.INSTANCE.config.dungeonMap.dmCompat <= 0 && OpenGlHelper.areShadersSupported();
 
         /*if((useFb && !OpenGlHelper.isFramebufferEnabled()) || (useShd && !OpenGlHelper.areShadersSupported())) {
-            Utils.drawStringCentered(EnumChatFormatting.RED+"NEU Dungeon Map requires framebuffers & shaders",
+            Utils.drawStringCentered(ChatFormatting.RED+"NEU Dungeon Map requires framebuffers & shaders",
                     Minecraft.getInstance().font, centerX, centerY-10, true, 0);
-            Utils.drawStringCentered(EnumChatFormatting.RED+"Turn off Optifine Fast Render",
+            Utils.drawStringCentered(ChatFormatting.RED+"Turn off Optifine Fast Render",
                     Minecraft.getInstance().font, centerX, centerY, true, 0);
-            Utils.drawStringCentered(EnumChatFormatting.RED+"If that doesn't work, join NEU discord for support",
+            Utils.drawStringCentered(ChatFormatting.RED+"If that doesn't work, join NEU discord for support",
                     Minecraft.getInstance().font, centerX, centerY+10, true, 0);
             return;
         }*/

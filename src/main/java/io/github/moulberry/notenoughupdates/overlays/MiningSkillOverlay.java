@@ -262,17 +262,17 @@ public class MiningSkillOverlay
 
 				lineMap.put(
 					0,
-					EnumChatFormatting.AQUA + "Compact: " + EnumChatFormatting.YELLOW + format.format(counterInterp)
+					ChatFormatting.AQUA + "Compact: " + ChatFormatting.YELLOW + format.format(counterInterp)
 				);
 			}
 
 			if (compact >= 0) {
 				if (minedPerSecondLast == minedPerSecond && minedPerSecond <= 0) {
-					lineMap.put(1, EnumChatFormatting.AQUA + "Blocks/m: " + EnumChatFormatting.YELLOW + "N/A");
+					lineMap.put(1, ChatFormatting.AQUA + "Blocks/m: " + ChatFormatting.YELLOW + "N/A");
 				} else {
 					float cpsInterp = interp(minedPerSecond, minedPerSecondLast);
 
-					lineMap.put(1, EnumChatFormatting.AQUA + "Blocks/m: " + EnumChatFormatting.YELLOW +
+					lineMap.put(1, ChatFormatting.AQUA + "Blocks/m: " + ChatFormatting.YELLOW +
 						String.format("%,.2f", cpsInterp * 60));
 				}
 			}
@@ -281,30 +281,30 @@ public class MiningSkillOverlay
 				int counterInterp = (int) interp(compact, compactLast);
 				lineMap.put(
 					8,
-					EnumChatFormatting.AQUA + "Compact Progress: " + EnumChatFormatting.YELLOW + format.format(counterInterp) +
+					ChatFormatting.AQUA + "Compact Progress: " + ChatFormatting.YELLOW + format.format(counterInterp) +
 						"/" + compactTierAmount
 				);
 			}
 			if (compactTier == 10) {
-				lineMap.put(8, EnumChatFormatting.AQUA + "Compact Progress: " + EnumChatFormatting.RED + compactTierAmount);
+				lineMap.put(8, ChatFormatting.AQUA + "Compact Progress: " + ChatFormatting.RED + compactTierAmount);
 			}
 
 			float xpInterp = xpGainHour;
 			if (xpGainHourLast == xpGainHour && xpGainHour <= 0) {
-				lineMap.put(5, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW + "N/A");
+				lineMap.put(5, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW + "N/A");
 			} else {
 				xpInterp = interp(xpGainHour, xpGainHourLast);
 
-				lineMap.put(5, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW +
-					format.format(xpInterp) + (isMining ? "" : EnumChatFormatting.RED + " (PAUSED)"));
+				lineMap.put(5, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW +
+					format.format(xpInterp) + (isMining ? "" : ChatFormatting.RED + " (PAUSED)"));
 			}
 
 			if (skillInfo != null && skillInfo.level < 60) {
-				StringBuilder levelStr = new StringBuilder(EnumChatFormatting.AQUA + "Mining" + ": "); //yes ik its spelt wrong
+				StringBuilder levelStr = new StringBuilder(ChatFormatting.AQUA + "Mining" + ": "); //yes ik its spelt wrong
 
-				levelStr.append(EnumChatFormatting.YELLOW)
+				levelStr.append(ChatFormatting.YELLOW)
 								.append(skillInfo.level)
-								.append(EnumChatFormatting.GRAY)
+								.append(ChatFormatting.GRAY)
 								.append(" [");
 
 				float progress = (float) (skillInfo.currentXp / skillInfo.currentXpMax);
@@ -315,16 +315,16 @@ public class MiningSkillOverlay
 				float lines = 25;
 				for (int i = 0; i < lines; i++) {
 					if (i / lines < progress) {
-						levelStr.append(EnumChatFormatting.YELLOW);
+						levelStr.append(ChatFormatting.YELLOW);
 					} else {
-						levelStr.append(EnumChatFormatting.DARK_GRAY);
+						levelStr.append(ChatFormatting.DARK_GRAY);
 					}
 					levelStr.append('|');
 				}
 
-				levelStr.append(EnumChatFormatting.GRAY)
+				levelStr.append(ChatFormatting.GRAY)
 								.append("] ")
-								.append(EnumChatFormatting.YELLOW)
+								.append(ChatFormatting.YELLOW)
 								.append((int) (progress * 100))
 								.append("%");
 
@@ -339,21 +339,21 @@ public class MiningSkillOverlay
 				}
 
 				lineMap.put(2, levelStr.toString());
-				lineMap.put(3, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(3, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 				if (remaining < 0) {
-					lineMap.put(4, EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + "MAXED!");
-					lineMap.put(7, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(4, ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(7, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "MAXED!");
 				} else {
 					lineMap.put(
 						4,
-						EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + format.format(remaining)
+						ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + format.format(remaining)
 					);
 					if (xpGainHour < 1000) {
-						lineMap.put(7, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "N/A");
+						lineMap.put(7, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "N/A");
 					} else {
 						lineMap.put(
 							7,
-							EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW +
+							ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW +
 								Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpInterp)
 						);
 					}
@@ -369,9 +369,9 @@ public class MiningSkillOverlay
 
 				lineMap.put(
 					2,
-					EnumChatFormatting.AQUA + "Mining: " + EnumChatFormatting.YELLOW + "60 " + EnumChatFormatting.RED + "(Maxed)"
+					ChatFormatting.AQUA + "Mining: " + ChatFormatting.YELLOW + "60 " + ChatFormatting.RED + "(Maxed)"
 				);
-				lineMap.put(3, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(3, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 
 			}
 
@@ -380,8 +380,8 @@ public class MiningSkillOverlay
 			if (yaw < 0) yaw += 360;
 			if (yaw > 180) yaw -= 360;
 
-			lineMap.put(6, EnumChatFormatting.AQUA + "Yaw: " + EnumChatFormatting.YELLOW +
-				String.format("%.2f", yaw) + EnumChatFormatting.BOLD + "\u1D52");
+			lineMap.put(6, ChatFormatting.AQUA + "Yaw: " + ChatFormatting.YELLOW +
+				String.format("%.2f", yaw) + ChatFormatting.BOLD + "\u1D52");
 
 			for (int strIndex : NotEnoughUpdates.INSTANCE.config.skillOverlays.miningText) {
 				if (lineMap.get(strIndex) != null) {

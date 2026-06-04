@@ -82,7 +82,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 						NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("DUNGEON_STONE")
 					),
-					EnumChatFormatting.GRAY + "Normal Mode",
+					ChatFormatting.GRAY + "Normal Mode",
 					true
 				)
 			);
@@ -92,7 +92,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 						NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("MASTER_SKULL_TIER_7")
 					),
-					EnumChatFormatting.GRAY + "Master Mode",
+					ChatFormatting.GRAY + "Master Mode",
 					true
 				)
 			);
@@ -137,7 +137,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 		String dungeonString = onMasterMode ? "master_catacombs" : "catacombs";
 
 		Utils.renderShadowedString(
-			EnumChatFormatting.RED + (onMasterMode ? "Master Mode" : "Catacombs"),
+			ChatFormatting.RED + (onMasterMode ? "Master Mode" : "Catacombs"),
 			(guiLeft + getInstance().sizeX / 2),
 			guiTop + 5,
 			sectionWidth
@@ -145,7 +145,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 		ProfileViewer.Level levelObjCata = levelingInfo.get("cosmetic_catacombs");
 		{
-			String skillName = EnumChatFormatting.RED + "Catacombs";
+			String skillName = ChatFormatting.RED + "Catacombs";
 			float level = levelObjCata.level;
 			int levelFloored = (int) Math.floor(level);
 
@@ -160,8 +160,8 @@ public class DungeonPage extends GuiProfileViewerPage {
 			getInstance().renderXpBar(skillName, DEADBUSH, x, y, sectionWidth, levelObjCata, mouseX, mouseY);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Until Cata " + floorLevelTo + ": ",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat((double) floorLevelToXP),
+				ChatFormatting.YELLOW + "Until Cata " + floorLevelTo + ": ",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat((double) floorLevelToXP),
 				x,
 				y + 16,
 				sectionWidth
@@ -211,7 +211,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 				getInstance().tooltipToDisplay =
 					Lists.newArrayList(
-						EnumChatFormatting.YELLOW + "Remaining XP: " + EnumChatFormatting.GRAY +
+						ChatFormatting.YELLOW + "Remaining XP: " + ChatFormatting.GRAY +
 							String.format("%,d", floorLevelToXP),
 						String.format("# F5 Runs (%s xp) : %d", StringUtils.shortNumberFormat(xpF5), runsF5),
 						String.format("# F6 Runs (%s xp) : %d", StringUtils.shortNumberFormat(xpF6), runsF6),
@@ -228,7 +228,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					getInstance()
 						.tooltipToDisplay.add(
-							"[Hold " + EnumChatFormatting.YELLOW + "SHIFT" + EnumChatFormatting.GRAY + " to show without Expert Ring]"
+							"[Hold " + ChatFormatting.YELLOW + "SHIFT" + ChatFormatting.GRAY + " to show without Expert Ring]"
 						);
 				}
 				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
@@ -238,20 +238,20 @@ public class DungeonPage extends GuiProfileViewerPage {
 					getInstance()
 						.tooltipToDisplay.add(
 							"The " +
-								EnumChatFormatting.DARK_PURPLE +
+								ChatFormatting.DARK_PURPLE +
 								"Catacombs Expert Ring" +
-								EnumChatFormatting.GRAY +
+								ChatFormatting.GRAY +
 								" is assumed to be used, unless " +
-								EnumChatFormatting.YELLOW +
+								ChatFormatting.YELLOW +
 								"SHIFT" +
-								EnumChatFormatting.GRAY +
+								ChatFormatting.GRAY +
 								" is held."
 						);
 					getInstance().tooltipToDisplay.add("[Time per run] is calculated using Fastest S+ x 120%");
 				} else {
 					getInstance()
 						.tooltipToDisplay.add(
-							"[Hold " + EnumChatFormatting.YELLOW + "CTRL" + EnumChatFormatting.GRAY + " to see details]");
+							"[Hold " + ChatFormatting.YELLOW + "CTRL" + ChatFormatting.GRAY + " to see details]");
 				}
 			}
 
@@ -290,7 +290,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 				getInstance().tooltipToDisplay =
 					Lists.newArrayList(
-						EnumChatFormatting.YELLOW + "Remaining XP: " + EnumChatFormatting.GRAY +
+						ChatFormatting.YELLOW + "Remaining XP: " + ChatFormatting.GRAY +
 							String.format("%,d", floorLevelToXP),
 						String.format("# M3 Runs (%s xp) : %d", StringUtils.shortNumberFormat(xpM3), runsM3),
 						String.format("# M4 Runs (%s xp) : %d", StringUtils.shortNumberFormat(xpM4), runsM4),
@@ -311,7 +311,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 					getInstance()
 						.tooltipToDisplay.add(
-							"[Hold " + EnumChatFormatting.YELLOW + "SHIFT" + EnumChatFormatting.GRAY + " to show without Expert Ring]"
+							"[Hold " + ChatFormatting.YELLOW + "SHIFT" + ChatFormatting.GRAY + " to show without Expert Ring]"
 						);
 				}
 				if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
@@ -321,20 +321,20 @@ public class DungeonPage extends GuiProfileViewerPage {
 					getInstance()
 						.tooltipToDisplay.add(
 							"The " +
-								EnumChatFormatting.DARK_PURPLE +
+								ChatFormatting.DARK_PURPLE +
 								"Catacombs Expert Ring" +
-								EnumChatFormatting.GRAY +
+								ChatFormatting.GRAY +
 								" is assumed to be used, unless " +
-								EnumChatFormatting.YELLOW +
+								ChatFormatting.YELLOW +
 								"SHIFT" +
-								EnumChatFormatting.GRAY +
+								ChatFormatting.GRAY +
 								" is held."
 						);
 					getInstance().tooltipToDisplay.add("[Time per run] is calculated using Fastest S+ x 120%");
 				} else {
 					getInstance()
 						.tooltipToDisplay.add(
-							"[Hold " + EnumChatFormatting.YELLOW + "CTRL" + EnumChatFormatting.GRAY + " to see details]");
+							"[Hold " + ChatFormatting.YELLOW + "CTRL" + ChatFormatting.GRAY + " to see details]");
 				}
 			}
 
@@ -342,7 +342,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			dungeonLevelTextField.render(x + 22, y + 29);
 			int calcLen = font.getStringWidth("Calculate");
 			Utils.renderShadowedString(
-				EnumChatFormatting.WHITE + "Calculate",
+				ChatFormatting.WHITE + "Calculate",
 				x + sectionWidth - 17 - calcLen / 2f,
 				y + 30,
 				100
@@ -389,37 +389,37 @@ public class DungeonPage extends GuiProfileViewerPage {
 			int miscTopY = y + 55;
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Total Runs " + (onMasterMode ? "M" : "F"),
-				EnumChatFormatting.WHITE.toString() + ((int) (onMasterMode ? totalRunsM : totalRunsF)),
+				ChatFormatting.YELLOW + "Total Runs " + (onMasterMode ? "M" : "F"),
+				ChatFormatting.WHITE.toString() + ((int) (onMasterMode ? totalRunsM : totalRunsF)),
 				x,
 				miscTopY,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Total Runs (" + (onMasterMode ? "M" : "F") + "5-7)  ",
-				EnumChatFormatting.WHITE.toString() + ((int) (onMasterMode ? totalRunsM5 : totalRunsF5)),
+				ChatFormatting.YELLOW + "Total Runs (" + (onMasterMode ? "M" : "F") + "5-7)  ",
+				ChatFormatting.WHITE.toString() + ((int) (onMasterMode ? totalRunsM5 : totalRunsF5)),
 				x,
 				miscTopY + 10,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Secrets (Total)  ",
-				EnumChatFormatting.WHITE + (secrets == -1 ? "?" : StringUtils.shortNumberFormat(secrets)),
+				ChatFormatting.YELLOW + "Secrets (Total)  ",
+				ChatFormatting.WHITE + (secrets == -1 ? "?" : StringUtils.shortNumberFormat(secrets)),
 				x,
 				miscTopY + 20,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Secrets (/Run)  ",
-				EnumChatFormatting.WHITE.toString() + (secrets == -1 ? "?" : (Math.round(
+				ChatFormatting.YELLOW + "Secrets (/Run)  ",
+				ChatFormatting.WHITE.toString() + (secrets == -1 ? "?" : (Math.round(
 					secrets / Math.max(1, totalRuns) * 100) / 100f)),
 				x,
 				miscTopY + 30,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Mob Kills (Total)  ",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(mobKills),
+				ChatFormatting.YELLOW + "Mob Kills (Total)  ",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(mobKills),
 				x,
 				miscTopY + 40,
 				sectionWidth
@@ -431,7 +431,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				int w = font.getStringWidth(String.valueOf(i));
 				int bx = x + sectionWidth * i / 8 - w / 2;
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.renderShadowedString(EnumChatFormatting.WHITE.toString() + i, bx + w / 2, y3, 10);
+				Utils.renderShadowedString(ChatFormatting.WHITE.toString() + i, bx + w / 2, y3, 10);
 			}
 
 			float timeNorm = getElementAsFloat(profileInfo, "dungeons.dungeon_types." + dungeonString + ".fastest_time." + floorTime);
@@ -444,22 +444,22 @@ public class DungeonPage extends GuiProfileViewerPage {
 			String timeSStr = timeS <= 0 ? "N/A" : Utils.prettyTime((long) timeS);
 			String timeSPlusStr = timeSPLUS <= 0 ? "N/A" : Utils.prettyTime((long) timeSPLUS);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Floor " + floorTime + " ",
-				EnumChatFormatting.WHITE + timeNormStr,
+				ChatFormatting.YELLOW + "Floor " + floorTime + " ",
+				ChatFormatting.WHITE + timeNormStr,
 				x,
 				y3 + 10,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Floor " + floorTime + " S",
-				EnumChatFormatting.WHITE + timeSStr,
+				ChatFormatting.YELLOW + "Floor " + floorTime + " S",
+				ChatFormatting.WHITE + timeSStr,
 				x,
 				y3 + 20,
 				sectionWidth
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Floor " + floorTime + " S+",
-				EnumChatFormatting.WHITE + timeSPlusStr,
+				ChatFormatting.YELLOW + "Floor " + floorTime + " S+",
+				ChatFormatting.WHITE + timeSPlusStr,
 				x,
 				y3 + 30,
 				sectionWidth
@@ -471,7 +471,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			int x = guiLeft + 161;
 			int y = guiTop + 27;
 
-			Utils.renderShadowedString(EnumChatFormatting.RED + "Boss Collections", x + sectionWidth / 2, y, sectionWidth);
+			Utils.renderShadowedString(ChatFormatting.RED + "Boss Collections", x + sectionWidth / 2, y, sectionWidth);
 			for (int i = 1; i <= 7; i++) {
 				float compl = getElementAsFloat(profileInfo, "dungeons.dungeon_types." + dungeonString + ".tier_completions." + i);
 
@@ -482,7 +482,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 						"{\"textures\":{\"SKIN\":{\"url\":\"http://textures.minecraft.net/texture/" + textureLink + "\"}}}";
 					String b64Encoded = new String(Base64.getEncoder().encode(b64Decoded.getBytes()));
 
-					ItemStack stack = new ItemStack(Items.skull, 1, 3);
+					ItemStack stack = new ItemStack(Items.PLAYER_HEAD, 1, 3);
 					CompoundTag nbt = new CompoundTag();
 					CompoundTag skullOwner = new CompoundTag();
 					CompoundTag properties = new CompoundTag();
@@ -512,11 +512,11 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 				Utils.renderAlignedString(
 					String.format(
-						EnumChatFormatting.YELLOW + "%s (" + (onMasterMode ? "M" : "F") + "%d) ",
+						ChatFormatting.YELLOW + "%s (" + (onMasterMode ? "M" : "F") + "%d) ",
 						bossFloorArr[i - 1],
 						i
 					),
-					EnumChatFormatting.WHITE.toString() + (int) compl,
+					ChatFormatting.WHITE.toString() + (int) compl,
 					x + 16,
 					y + 18 + 20 * (i - 1),
 					sectionWidth - 15
@@ -530,7 +530,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			int y = guiTop + 27;
 
 			Utils.renderShadowedString(
-				EnumChatFormatting.DARK_PURPLE + "Class Levels",
+				ChatFormatting.DARK_PURPLE + "Class Levels",
 				x + sectionWidth / 2,
 				y,
 				sectionWidth
@@ -548,7 +548,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			for (int i = 0; i < Weight.DUNGEON_CLASS_NAMES.size(); i++) {
 				String className = Weight.DUNGEON_CLASS_NAMES.get(i);
 
-				String colour = className.equalsIgnoreCase(activeClass) ? EnumChatFormatting.GREEN.toString() : EnumChatFormatting.WHITE.toString();
+				String colour = className.equalsIgnoreCase(activeClass) ? ChatFormatting.GREEN.toString() : ChatFormatting.WHITE.toString();
 				ProfileViewer.Level levelObj = levelingInfo.get("cosmetic_" + className);
 				// If the class is maxed but not all are, we need to calculate the average level differently.
 				if (levelObj.level >= 50) {
@@ -583,7 +583,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			}
 
 			getInstance().renderXpBar(
-				EnumChatFormatting.WHITE + "Class Average",
+				ChatFormatting.WHITE + "Class Average",
 				new ItemStack(Items.nether_star),
 				x,
 				y + 20 + 24 * 5,

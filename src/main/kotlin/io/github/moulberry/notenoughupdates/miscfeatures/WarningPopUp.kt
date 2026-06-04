@@ -96,11 +96,11 @@ abstract class WarningPopUp : ScreenReplacer() {
         RenderUtils.drawFloatingRectDark(width / 2 + 3, height / 2 + 23, 40, 16, false)
 
         TextRenderUtils.drawStringCenteredScaledMaxWidth(
-            EnumChatFormatting.GREEN.toString() + "[Y]es",
+            ChatFormatting.GREEN.toString() + "[Y]es",
             (width / 2 - 23).toFloat(), (height / 2 + 31).toFloat(), true, 36, -0xff0100
         )
         TextRenderUtils.drawStringCenteredScaledMaxWidth(
-            EnumChatFormatting.RED.toString() + "[N]o",
+            ChatFormatting.RED.toString() + "[N]o",
             (width / 2 + 23).toFloat(), (height / 2 + 31).toFloat(), true, 36, -0x10000
         )
 

@@ -65,7 +65,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 			guiButton.yPosition = 5;
 		}
 
-		EnumChatFormatting GOLD = EnumChatFormatting.GOLD;
+		ChatFormatting GOLD = ChatFormatting.GOLD;
 
 		guiButton.drawButton(Minecraft.getInstance(), mouseX, mouseY);
 

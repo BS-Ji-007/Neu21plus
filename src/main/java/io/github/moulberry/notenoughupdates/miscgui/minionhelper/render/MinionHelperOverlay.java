@@ -374,7 +374,7 @@ public class MinionHelperOverlay {
 				lore = Collections.singletonList("§cCould not load SkyBlock XP for next slot!");
 			}
 		} else {
-			lore = Arrays.asList(EnumChatFormatting.DARK_AQUA.toString() + xpGain + " Skyblock XP §efor next slot",
+			lore = Arrays.asList(ChatFormatting.DARK_AQUA.toString() + xpGain + " Skyblock XP §efor next slot",
 				"§8DISCLAIMER: This only works if", "§8you follow the helper."
 			);
 		}

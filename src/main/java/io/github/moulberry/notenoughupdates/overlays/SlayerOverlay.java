@@ -249,40 +249,40 @@ public class SlayerOverlay extends TextOverlay {
 			overlayStrings = new ArrayList<>();
 			lineMap.put(
 				0,
-				EnumChatFormatting.YELLOW + "Slayer: " + EnumChatFormatting.DARK_RED + SBInfo.getInstance().slayer +
-					EnumChatFormatting.GREEN + (isSlain ? " (Killed) " : " ")/* + slayerTier*/
+				ChatFormatting.YELLOW + "Slayer: " + ChatFormatting.DARK_RED + SBInfo.getInstance().slayer +
+					ChatFormatting.GREEN + (isSlain ? " (Killed) " : " ")/* + slayerTier*/
 			);
 
 			if (!RNGMeter.equals("?")) {
-				lineMap.put(1, EnumChatFormatting.YELLOW + "RNG Meter: " + EnumChatFormatting.DARK_PURPLE + RNGMeter);
+				lineMap.put(1, ChatFormatting.YELLOW + "RNG Meter: " + ChatFormatting.DARK_PURPLE + RNGMeter);
 			}
 
 			if (!slayerLVL.equals("-1")) {
-				lineMap.put(2, EnumChatFormatting.YELLOW + "Lvl: " + EnumChatFormatting.LIGHT_PURPLE + slayerLVL);
+				lineMap.put(2, ChatFormatting.YELLOW + "Lvl: " + ChatFormatting.LIGHT_PURPLE + slayerLVL);
 			}
 
 			if (timeSinceLastBoss > 0) {
 				lineMap.put(
 					3,
-					EnumChatFormatting.YELLOW + "Kill time: " + EnumChatFormatting.RED +
+					ChatFormatting.YELLOW + "Kill time: " + ChatFormatting.RED +
 						Utils.prettyTime((System.currentTimeMillis() - timeSinceLastBoss))
 				);
 			}
 
 			if (slayerIntXP > 0) {
-				lineMap.put(4, EnumChatFormatting.YELLOW + "XP: " + EnumChatFormatting.LIGHT_PURPLE
+				lineMap.put(4, ChatFormatting.YELLOW + "XP: " + ChatFormatting.LIGHT_PURPLE
 					+ format.format(untilNextSlayerLevel) + "/" + format.format(xpToLevelUp));
 			} else if (isSlayerNine) {
-				lineMap.put(4, EnumChatFormatting.YELLOW + "XP: " + EnumChatFormatting.LIGHT_PURPLE + "MAXED");
+				lineMap.put(4, ChatFormatting.YELLOW + "XP: " + ChatFormatting.LIGHT_PURPLE + "MAXED");
 			}
 
 			if (xpPerBoss != 0 && slayerIntXP > 0) {
-				lineMap.put(5, EnumChatFormatting.YELLOW + "Bosses till next Lvl: " + EnumChatFormatting.LIGHT_PURPLE +
+				lineMap.put(5, ChatFormatting.YELLOW + "Bosses till next Lvl: " + ChatFormatting.LIGHT_PURPLE +
 					(bossesUntilNextLevel > 2000 ? "?" : bossesUntilNextLevel));
 			}
 
 			if (timeSinceLastBoss > 0 && timeSinceLastBoss2 > 0) {
-				lineMap.put(6, EnumChatFormatting.YELLOW + "Average kill time: " + EnumChatFormatting.RED +
+				lineMap.put(6, ChatFormatting.YELLOW + "Average kill time: " + ChatFormatting.RED +
 					Utils.prettyTime((System.currentTimeMillis() - agvSlayerTime)));
 			}
 			for (int strIndex : NotEnoughUpdates.INSTANCE.config.slayerOverlay.slayerText) {

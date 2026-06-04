@@ -166,7 +166,7 @@ public class ItemTooltipListener {
 		for (int k = 0; k < event.toolTip.size(); k++) {
 			String line = event.toolTip.get(k);
 
-			if (line.endsWith(EnumChatFormatting.DARK_GRAY + "Reforge Stone") &&
+			if (line.endsWith(ChatFormatting.DARK_GRAY + "Reforge Stone") &&
 				NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showReforgeStats) {
 				JsonObject reforgeStones = Constants.REFORGESTONES;
 
@@ -180,9 +180,9 @@ public class ItemTooltipListener {
 					newTooltip.add(line);
 					newTooltip.add("");
 					if (!showReforgeStoneStats) {
-						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
+						newTooltip.add(ChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
 					} else {
-						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
+						newTooltip.add(ChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
 					}
 
 					JsonObject reforgeInfo = reforgeStones.get(internalName).getAsJsonObject();
@@ -240,8 +240,8 @@ public class ItemTooltipListener {
 						}
 
 						if (reforgeAbility != null && !reforgeAbility.isEmpty()) {
-							String text = EnumChatFormatting.BLUE + (reforgeName.isEmpty() ? "Bonus: " : reforgeName + " Bonus: ") +
-								EnumChatFormatting.GRAY + reforgeAbility;
+							String text = ChatFormatting.BLUE + (reforgeName.isEmpty() ? "Bonus: " : reforgeName + " Bonus: ") +
+								ChatFormatting.GRAY + reforgeAbility;
 							boolean first = true;
 							for (String s : Minecraft.getInstance().font.listFormattedStringToWidth(text, 150)) {
 								newTooltip.add((first ? "" : "  ") + s);
@@ -250,7 +250,7 @@ public class ItemTooltipListener {
 							newTooltip.add("");
 						}
 
-						newTooltip.add(EnumChatFormatting.BLUE + "Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
+						newTooltip.add(ChatFormatting.BLUE + "Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
 
 						if (statsE != null && statsE.isJsonObject()) {
 							JsonObject stats = statsE.getAsJsonObject();
@@ -274,7 +274,7 @@ public class ItemTooltipListener {
 										}
 										String reforgeNamePretty = WordUtils.capitalizeFully(entry.getKey().replace("_", " "));
 										String text =
-											EnumChatFormatting.GRAY + reforgeNamePretty + ": " + EnumChatFormatting.GREEN + "+" + statNumS;
+											ChatFormatting.GRAY + reforgeNamePretty + ": " + ChatFormatting.GREEN + "+" + statNumS;
 										if (percentStats.contains(entry.getKey())) {
 											text += "%";
 										}
@@ -298,7 +298,7 @@ public class ItemTooltipListener {
 						}
 
 						if (reforgeCost >= 0) {
-							String text = EnumChatFormatting.BLUE + "Apply Cost: " + EnumChatFormatting.GOLD +
+							String text = ChatFormatting.BLUE + "Apply Cost: " + ChatFormatting.GOLD +
 								StringUtils.formatNumber(reforgeCost) + " coins";
 							newTooltip.add("");
 							newTooltip.add(text);
@@ -328,9 +328,9 @@ public class ItemTooltipListener {
 						pressedShiftLast = shift;
 
 						if (!showGemstoneStats) {
-							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
+							newTooltip.add(ChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
 						} else {
-							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
+							newTooltip.add(ChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
 						}
 
 						JsonObject gemstoneInfo = gemstones.getAsJsonObject("gemstoneTypes").getAsJsonObject(gemstoneType);
@@ -382,7 +382,7 @@ public class ItemTooltipListener {
 								);
 
 								newTooltip.add("");
-								String text = EnumChatFormatting.BLUE + "Chisel bonus: " + formattedChiselBonus;
+								String text = ChatFormatting.BLUE + "Chisel bonus: " + formattedChiselBonus;
 								boolean first = true;
 								for (String s : Minecraft.getInstance().font.listFormattedStringToWidth(text, 150)) {
 									newTooltip.add((first ? "" : "  ") + s);
@@ -403,7 +403,7 @@ public class ItemTooltipListener {
 			} else if (line.contains("\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune")) {
 				line = line.replace(
 					"\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune",
-					Utils.chromaString("Rainbow Rune", k, false) + EnumChatFormatting.BLUE
+					Utils.chromaString("Rainbow Rune", k, false) + ChatFormatting.BLUE
 				);
 			} else if (hasEnchantments) {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) &&
@@ -432,7 +432,7 @@ public class ItemTooltipListener {
 								if (!missing.isEmpty()) {
 									newTooltip.add("");
 									StringBuilder currentLine = new StringBuilder(
-										EnumChatFormatting.RED + "Missing: " + EnumChatFormatting.GRAY);
+										ChatFormatting.RED + "Missing: " + ChatFormatting.GRAY);
 									for (int i = 0; i < missing.size(); i++) {
 										String enchName = WordUtils.capitalizeFully(missing.get(i).replace("_", " "));
 										if (currentLine.length() != 0 &&
@@ -443,7 +443,7 @@ public class ItemTooltipListener {
 										if (currentLine.length() != 0 && i != 0) {
 											currentLine.append(", ").append(enchName);
 										} else {
-											currentLine.append(EnumChatFormatting.GRAY).append(enchName);
+											currentLine.append(ChatFormatting.GRAY).append(enchName);
 										}
 									}
 									if (currentLine.length() != 0) {
@@ -460,12 +460,12 @@ public class ItemTooltipListener {
 			newTooltip.add(line);
 
 			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoAucItem) {
-				if (line.contains(EnumChatFormatting.GRAY + "Buy it now: ") || line.contains(
-					EnumChatFormatting.GRAY + "Bidder: ") || line.contains(EnumChatFormatting.GRAY + "Starting bid: ")) {
+				if (line.contains(ChatFormatting.GRAY + "Buy it now: ") || line.contains(
+					ChatFormatting.GRAY + "Bidder: ") || line.contains(ChatFormatting.GRAY + "Starting bid: ")) {
 
 					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 						newTooltip.add("");
-						newTooltip.add(EnumChatFormatting.GRAY + "[SHIFT for Price Info]");
+						newTooltip.add(ChatFormatting.GRAY + "[SHIFT for Price Info]");
 					} else {
 						ItemPriceInformation.addToTooltip(newTooltip, internalName, event.itemStack);
 					}
@@ -474,7 +474,7 @@ public class ItemTooltipListener {
 
 			if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 2 &&
 				Minecraft.getInstance().currentScreen instanceof ChestScreen) {
-				if (line.contains(EnumChatFormatting.GREEN + "Open Reward Chest")) {
+				if (line.contains(ChatFormatting.GREEN + "Open Reward Chest")) {
 					dungeonProfit = true;
 				} else if (k == 7 && dungeonProfit) {
 					ChestScreen eventGui = (ChestScreen) Minecraft.getInstance().currentScreen;
@@ -576,7 +576,7 @@ public class ItemTooltipListener {
 										for (String enchname : enchants.getKeySet()) {
 											int level = enchants.getInteger(enchname);
 											if (level > highestLevel) {
-												display = EnumChatFormatting.BLUE + WordUtils.capitalizeFully(enchname
+												display = ChatFormatting.BLUE + WordUtils.capitalizeFully(enchname
 													.replace("_", " ")
 													.replace("Ultimate", "")
 													.trim()) + " " + level;
@@ -598,16 +598,16 @@ public class ItemTooltipListener {
 					String valueStringBIN1;
 					String valueStringBIN2;
 					if (totalValue >= 0) {
-						valueStringBIN1 = EnumChatFormatting.YELLOW + "Value (BIN): ";
-						valueStringBIN2 = EnumChatFormatting.GOLD + StringUtils.formatNumber(totalValue) + " coins";
+						valueStringBIN1 = ChatFormatting.YELLOW + "Value (BIN): ";
+						valueStringBIN2 = ChatFormatting.GOLD + StringUtils.formatNumber(totalValue) + " coins";
 					} else {
-						valueStringBIN1 = EnumChatFormatting.YELLOW + "Can't find BIN: ";
+						valueStringBIN1 = ChatFormatting.YELLOW + "Can't find BIN: ";
 						valueStringBIN2 = missingItem;
 					}
 
 					int profitLossBIN = totalValue - chestCost;
-					String profitPrefix = EnumChatFormatting.DARK_GREEN.toString();
-					String lossPrefix = EnumChatFormatting.RED.toString();
+					String profitPrefix = ChatFormatting.DARK_GREEN.toString();
+					String lossPrefix = ChatFormatting.RED.toString();
 					String prefix = profitLossBIN >= 0 ? profitPrefix : lossPrefix;
 
 					String plStringBIN;
@@ -617,11 +617,11 @@ public class ItemTooltipListener {
 						plStringBIN = prefix + "-" + StringUtils.formatNumber(-profitLossBIN) + " coins";
 					}
 
-					String neu = EnumChatFormatting.YELLOW + "[NEU] ";
+					String neu = ChatFormatting.YELLOW + "[NEU] ";
 
 					newTooltip.add(neu + valueStringBIN1 + " " + valueStringBIN2);
 					if (totalValue >= 0) {
-						newTooltip.add(neu + EnumChatFormatting.YELLOW + "Profit/Loss: " + plStringBIN);
+						newTooltip.add(neu + ChatFormatting.YELLOW + "Profit/Loss: " + plStringBIN);
 					}
 
 					for (Map.Entry<String, Double> entry : itemValues.entrySet()) {
@@ -681,9 +681,9 @@ public class ItemTooltipListener {
 
 			event.toolTip.add(
 				xpLine + 1,
-				EnumChatFormatting.GRAY + "EXP: " + EnumChatFormatting.YELLOW +
+				ChatFormatting.GRAY + "EXP: " + ChatFormatting.YELLOW +
 					myFormatter.format(petLevel.getExpInCurrentLevel()) +
-					EnumChatFormatting.GOLD + "/" + EnumChatFormatting.YELLOW +
+					ChatFormatting.GOLD + "/" + ChatFormatting.YELLOW +
 					myFormatter.format(petLevel.getExpRequiredForNextLevel())
 			);
 
@@ -730,7 +730,7 @@ public class ItemTooltipListener {
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && NotEnoughUpdates.INSTANCE.config.hidden.dev &&
 			event.toolTip.size() > 0 && event.toolTip.get(event.toolTip.size() - 1).startsWith(
-			EnumChatFormatting.DARK_GRAY + "NBT: ")) {
+			ChatFormatting.DARK_GRAY + "NBT: ")) {
 			event.toolTip.remove(event.toolTip.size() - 1);
 
 			StringBuilder sb = new StringBuilder();
@@ -748,7 +748,7 @@ public class ItemTooltipListener {
 				} else if (c == ',') {
 					newline = true;
 				} else if (c == '\"') {
-					sb.append(EnumChatFormatting.RESET).append(EnumChatFormatting.GRAY);
+					sb.append(ChatFormatting.RESET).append(ChatFormatting.GRAY);
 				}
 
 				sb.append(c);
@@ -769,9 +769,9 @@ public class ItemTooltipListener {
 			}
 		} else if (NotEnoughUpdates.INSTANCE.packDevEnabled) {
 			event.toolTip.add("");
-			event.toolTip.add(EnumChatFormatting.AQUA + "NEU Pack Dev Info:");
+			event.toolTip.add(ChatFormatting.AQUA + "NEU Pack Dev Info:");
 			event.toolTip.add(
-				EnumChatFormatting.GRAY + "Press " + EnumChatFormatting.GOLD + "[KEY]" + EnumChatFormatting.GRAY +
+				ChatFormatting.GRAY + "Press " + ChatFormatting.GOLD + "[KEY]" + ChatFormatting.GRAY +
 					" to copy line");
 
 			String internal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(event.itemStack);
@@ -795,7 +795,7 @@ public class ItemTooltipListener {
 			}
 
 			event.toolTip.add(
-				EnumChatFormatting.AQUA + "Internal Name: " + EnumChatFormatting.GRAY + internal + EnumChatFormatting.GOLD +
+				ChatFormatting.AQUA + "Internal Name: " + ChatFormatting.GRAY + internal + ChatFormatting.GOLD +
 					" [K]");
 			if (!copied && k) {
 				Utils.copyToClipboard(internal);
@@ -804,8 +804,8 @@ public class ItemTooltipListener {
 			if (event.itemStack.getTag() != null) {
 				CompoundTag tag = event.itemStack.getTag();
 
-				event.toolTip.add(EnumChatFormatting.AQUA + "NBT: " + EnumChatFormatting.GRAY + "[...]" +
-					EnumChatFormatting.GOLD + " [B]");
+				event.toolTip.add(ChatFormatting.AQUA + "NBT: " + ChatFormatting.GRAY + "[...]" +
+					ChatFormatting.GOLD + " [B]");
 				if (!copied && b) {
 					Utils.copyToClipboard(tag.toString());
 				}
@@ -825,8 +825,8 @@ public class ItemTooltipListener {
 					GameProfile gameprofile = NbtUtils.readGameProfileFromNBT(tag.getCompoundTag("SkullOwner"));
 
 					if (gameprofile != null) {
-						event.toolTip.add(EnumChatFormatting.AQUA + "Skull UUID: " + EnumChatFormatting.GRAY + gameprofile.getId() +
-							EnumChatFormatting.GOLD + " [M]");
+						event.toolTip.add(ChatFormatting.AQUA + "Skull UUID: " + ChatFormatting.GRAY + gameprofile.getId() +
+							ChatFormatting.GOLD + " [M]");
 						if (!copied && m) {
 							Utils.copyToClipboard(gameprofile.getId().toString());
 						}
@@ -837,8 +837,8 @@ public class ItemTooltipListener {
 						if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
 							MinecraftProfileTexture profTex = map.get(MinecraftProfileTexture.Type.SKIN);
 							event.toolTip.add(
-								EnumChatFormatting.AQUA + "Skull Texture Link: " + EnumChatFormatting.GRAY + profTex.getUrl() +
-									EnumChatFormatting.GOLD + " [N]");
+								ChatFormatting.AQUA + "Skull Texture Link: " + ChatFormatting.GRAY + profTex.getUrl() +
+									ChatFormatting.GOLD + " [N]");
 
 							if (!copied && n) {
 								Utils.copyToClipboard(profTex.getUrl());

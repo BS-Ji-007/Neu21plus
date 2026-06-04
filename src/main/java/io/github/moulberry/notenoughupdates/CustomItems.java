@@ -114,10 +114,10 @@ public class CustomItems {
 		JsonObject json = new JsonObject();
 		json.addProperty("itemid", itemid);
 		json.addProperty("internalname", internalname);
-		json.addProperty("displayname", EnumChatFormatting.RED + displayName);
+		json.addProperty("displayname", ChatFormatting.RED + displayName);
 		JsonArray jsonlore = new JsonArray();
 		for (String line : lore) {
-			jsonlore.add(new JsonPrimitive(EnumChatFormatting.GRAY + line));
+			jsonlore.add(new JsonPrimitive(ChatFormatting.GRAY + line));
 		}
 		json.add("lore", jsonlore);
 		return json;

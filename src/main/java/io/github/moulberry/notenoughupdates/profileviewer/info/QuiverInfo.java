@@ -34,26 +34,26 @@ public class QuiverInfo {
 	public List<String> generateProfileViewerTooltip() {
 		List<String> list = new ArrayList<>();
 		int totalCount = 0;
-		list.add(EnumChatFormatting.AQUA + "Quiver:");
+		list.add(ChatFormatting.AQUA + "Quiver:");
 		for (Map.Entry<String, Integer> arrow : arrows.entrySet()) {
 			JsonObject repoInfo = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(arrow.getKey());
 			if (repoInfo == null || repoInfo.isJsonNull()) {
 				continue;
 			}
 			list.add(
-				"  " + repoInfo.get("displayname").getAsString() + EnumChatFormatting.RESET + ": " + EnumChatFormatting.GREEN +
-					EnumChatFormatting.BOLD + arrow.getValue());
+				"  " + repoInfo.get("displayname").getAsString() + ChatFormatting.RESET + ": " + ChatFormatting.GREEN +
+					ChatFormatting.BOLD + arrow.getValue());
 			totalCount += arrow.getValue();
 		}
 
 		list.add("");
-		list.add(EnumChatFormatting.AQUA + "Total: " + EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + totalCount);
+		list.add(ChatFormatting.AQUA + "Total: " + ChatFormatting.GREEN + ChatFormatting.BOLD + totalCount);
 		if (selectedArrow != null) {
 			JsonObject repoInfo = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(selectedArrow);
 			if (repoInfo == null) {
-				list.add(EnumChatFormatting.AQUA + "Selected Arrow: " + EnumChatFormatting.RED + "ERROR");
+				list.add(ChatFormatting.AQUA + "Selected Arrow: " + ChatFormatting.RED + "ERROR");
 			} else {
-				list.add(EnumChatFormatting.AQUA + "Selected Arrow: " + repoInfo.get("displayname").getAsString());
+				list.add(ChatFormatting.AQUA + "Selected Arrow: " + repoInfo.get("displayname").getAsString());
 			}
 		}
 

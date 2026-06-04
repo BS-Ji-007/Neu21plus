@@ -38,8 +38,8 @@ public class ProfileViewerButton {
 
 	private static final ItemStack profileViewerStack = Utils.createItemStack(
 		Item.getItemFromBlock(Blocks.command_block),
-		EnumChatFormatting.GREEN + "Profile Viewer",
-		EnumChatFormatting.YELLOW + "Click to open NEU profile viewer!"
+		ChatFormatting.GREEN + "Profile Viewer",
+		ChatFormatting.YELLOW + "Click to open NEU profile viewer!"
 	);
 
 
@@ -59,7 +59,7 @@ public class ProfileViewerButton {
 			event.setCanceled(true);
 			NotEnoughUpdates.profileViewer.loadPlayerByName(username, profile -> {
 				if (profile == null) {
-					Utils.addChatMessage(EnumChatFormatting.RED + "Invalid player name. Maybe the API is down?");
+					Utils.addChatMessage(ChatFormatting.RED + "Invalid player name. Maybe the API is down?");
 				} else {
 					profile.resetCache();
 					ProfileViewerUtils.saveSearch(username);

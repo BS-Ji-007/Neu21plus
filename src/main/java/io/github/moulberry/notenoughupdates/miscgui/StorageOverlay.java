@@ -197,52 +197,52 @@ public class StorageOverlay extends GuiElement {
 
 	public static int getRGBFromPane(int paneType) {
 		int rgb = -1;
-		EnumChatFormatting formatting = EnumChatFormatting.WHITE;
+		ChatFormatting formatting = ChatFormatting.WHITE;
 		switch (paneType) {
 			case 0:
-				formatting = EnumChatFormatting.WHITE;
+				formatting = ChatFormatting.WHITE;
 				break;
 			case 1:
-				formatting = EnumChatFormatting.GOLD;
+				formatting = ChatFormatting.GOLD;
 				break;
 			case 2:
-				formatting = EnumChatFormatting.LIGHT_PURPLE;
+				formatting = ChatFormatting.LIGHT_PURPLE;
 				break;
 			case 3:
-				formatting = EnumChatFormatting.BLUE;
+				formatting = ChatFormatting.BLUE;
 				break;
 			case 4:
-				formatting = EnumChatFormatting.YELLOW;
+				formatting = ChatFormatting.YELLOW;
 				break;
 			case 5:
-				formatting = EnumChatFormatting.GREEN;
+				formatting = ChatFormatting.GREEN;
 				break;
 			case 6:
 				rgb = 0xfff03c96;
 				break;
 			case 7:
-				formatting = EnumChatFormatting.DARK_GRAY;
+				formatting = ChatFormatting.DARK_GRAY;
 				break;
 			case 8:
-				formatting = EnumChatFormatting.GRAY;
+				formatting = ChatFormatting.GRAY;
 				break;
 			case 9:
-				formatting = EnumChatFormatting.DARK_AQUA;
+				formatting = ChatFormatting.DARK_AQUA;
 				break;
 			case 10:
-				formatting = EnumChatFormatting.DARK_PURPLE;
+				formatting = ChatFormatting.DARK_PURPLE;
 				break;
 			case 11:
-				formatting = EnumChatFormatting.DARK_BLUE;
+				formatting = ChatFormatting.DARK_BLUE;
 				break;
 			case 12:
 				rgb = 0xffA0522D;
 				break;
 			case 13:
-				formatting = EnumChatFormatting.DARK_GREEN;
+				formatting = ChatFormatting.DARK_GREEN;
 				break;
 			case 14:
-				formatting = EnumChatFormatting.DARK_RED;
+				formatting = ChatFormatting.DARK_RED;
 				break;
 			case 15:
 				rgb = 0x00000000;
@@ -1498,7 +1498,7 @@ public class StorageOverlay extends GuiElement {
 						);
 						if (desiredHeightSwitch != -1) {
 							tooltipToDisplay.add("");
-							tooltipToDisplay.add(EnumChatFormatting.YELLOW + "* Move mouse to apply changes *");
+							tooltipToDisplay.add(ChatFormatting.YELLOW + "* Move mouse to apply changes *");
 						}
 						break;
 					case 2:
@@ -1651,8 +1651,8 @@ public class StorageOverlay extends GuiElement {
 	}
 
 	private List<String> createTooltip(String title, int selectedOption, String... options) {
-		String selPrefix = EnumChatFormatting.DARK_AQUA + " \u25b6 ";
-		String unselPrefix = EnumChatFormatting.GRAY.toString();
+		String selPrefix = ChatFormatting.DARK_AQUA + " \u25b6 ";
+		String unselPrefix = ChatFormatting.GRAY.toString();
 
 		for (int i = 0; i < options.length; i++) {
 			if (i == selectedOption) {
@@ -1664,7 +1664,7 @@ public class StorageOverlay extends GuiElement {
 
 		List<String> list = Lists.newArrayList(options);
 		list.add(0, "");
-		list.add(0, EnumChatFormatting.GREEN + title);
+		list.add(0, ChatFormatting.GREEN + title);
 		return list;
 	}
 
@@ -1913,13 +1913,13 @@ public class StorageOverlay extends GuiElement {
 				case 0:
 					NotEnoughUpdates.INSTANCE.config.storageGUI.enableStorageGUI3 = false;
 					ChatComponentText storageMessage = new ChatComponentText(
-						EnumChatFormatting.YELLOW + "[NEU] " + EnumChatFormatting.YELLOW +
+						ChatFormatting.YELLOW + "[NEU] " + ChatFormatting.YELLOW +
 							"You just disabled the custom storage gui, did you mean to do that? If not click this message to turn it back on.");
 					storageMessage.setChatStyle(Utils.createClickStyle(ClickEvent.Action.RUN_COMMAND, "/neuenablestorage"));
 					storageMessage.setChatStyle(storageMessage.getChatStyle().setChatHoverEvent(
 						new HoverEvent(
 							HoverEvent.Action.SHOW_TEXT,
-							new ChatComponentText(EnumChatFormatting.YELLOW + "Click to enable the custom storage gui.")
+							new ChatComponentText(ChatFormatting.YELLOW + "Click to enable the custom storage gui.")
 						)));
 					ChatComponentText storageChatMessage = new ChatComponentText("");
 					storageChatMessage.appendSibling(storageMessage);

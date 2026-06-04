@@ -113,12 +113,12 @@ public class LevelPage extends GuiProfileViewerPage {
 		if (xp < 0) xp = 0;
 		double experienceRequired = (xp / max);
 
-		String second = EnumChatFormatting.WHITE.toString() + (int) level;
+		String second = ChatFormatting.WHITE.toString() + (int) level;
 		if (percentage) {
-			second = EnumChatFormatting.WHITE.toString() + (int) (experienceRequired * 100) + "%";
+			second = ChatFormatting.WHITE.toString() + (int) (experienceRequired * 100) + "%";
 		}
 		Utils.renderAlignedString(
-			EnumChatFormatting.RED + name,
+			ChatFormatting.RED + name,
 			second,
 			x + 14,
 			y - 4,
@@ -137,7 +137,7 @@ public class LevelPage extends GuiProfileViewerPage {
 				String maxFormatted = StringUtils.formatNumber((int) max);
 
 				levelStr =
-					EnumChatFormatting.GRAY + "Progress: " + EnumChatFormatting.DARK_PURPLE + (int) (experienceRequired * 100) +
+					ChatFormatting.GRAY + "Progress: " + ChatFormatting.DARK_PURPLE + (int) (experienceRequired * 100) +
 						"%" +
 						" §8(" + xpFormatted + "/" + maxFormatted + " XP)";
 				if (tooltip != null && !tooltip.isEmpty()) {
@@ -179,20 +179,20 @@ public class LevelPage extends GuiProfileViewerPage {
 		String xpGainfulFormatted = StringUtils.formatNumber((int) xpGainful);
 
 		if (xpGainful == 0 && xpGotten == 0 && !hasNoLimit) {
-			return EnumChatFormatting.GOLD + name + ": §c§lNOT DETECTABLE!";
+			return ChatFormatting.GOLD + name + ": §c§lNOT DETECTABLE!";
 		}
 		if (hasNoLimit) {
-			return EnumChatFormatting.GOLD + name + ": " + EnumChatFormatting.YELLOW + xpGottenFormatted + " XP";
+			return ChatFormatting.GOLD + name + ": " + ChatFormatting.YELLOW + xpGottenFormatted + " XP";
 		}
 		int percentage = (int) ((xpGotten / xpGainful) * 100);
 		if (xpGotten >= xpGainful) {
-			return EnumChatFormatting.GOLD + name + ": " + EnumChatFormatting.GREEN
+			return ChatFormatting.GOLD + name + ": " + ChatFormatting.GREEN
 				+ percentage + "%" + " §8(" + xpGottenFormatted + "/" + xpGainfulFormatted + " XP)";
 		} else if (xpGotten == -1) {
-			return EnumChatFormatting.GOLD + name + ": §c§lCOLLECTION DISABLED!";
+			return ChatFormatting.GOLD + name + ": §c§lCOLLECTION DISABLED!";
 		} else {
 
-			return EnumChatFormatting.GOLD + name + ": " + EnumChatFormatting.YELLOW
+			return ChatFormatting.GOLD + name + ": " + ChatFormatting.YELLOW
 				+ percentage + "%" + " §8(" + xpGottenFormatted + "/" + xpGainfulFormatted + " XP)";
 		}
 	}

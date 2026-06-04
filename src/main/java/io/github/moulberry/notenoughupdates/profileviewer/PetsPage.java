@@ -127,7 +127,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_pets);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
-		Utils.drawStringCentered(EnumChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
+		Utils.drawStringCentered(ChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 		JsonElement activePetElement = petsInfo.get("active_pet");
@@ -260,19 +260,19 @@ public class PetsPage extends GuiProfileViewerPage {
 
 			Utils.renderAlignedString(
 				colouredName,
-				EnumChatFormatting.WHITE + "Level " + (int) Math.floor(level),
+				ChatFormatting.WHITE + "Level " + (int) Math.floor(level),
 				guiLeft + 319,
 				guiTop + 28,
 				98
 			);
 
 			//Utils.drawStringCenteredScaledMaxWidth(, Minecraft.getInstance().font, guiLeft+368, guiTop+28+4, true, 98, 0);
-			//renderAlignedString(display, EnumChatFormatting.YELLOW+"[LVL "+Math.floor(level)+"]", guiLeft+319, guiTop+28, 98);
+			//renderAlignedString(display, ChatFormatting.YELLOW+"[LVL "+Math.floor(level)+"]", guiLeft+319, guiTop+28, 98);
 			getInstance().renderBar(guiLeft + 319, guiTop + 38, 98, (float) Math.floor(level) / 100f);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "To Next LVL",
-				EnumChatFormatting.WHITE.toString() + (int) (percentageToNextLevel * 100) + "%",
+				ChatFormatting.YELLOW + "To Next LVL",
+				ChatFormatting.WHITE.toString() + (int) (percentageToNextLevel * 100) + "%",
 				guiLeft + 319,
 				guiTop + 46,
 				98
@@ -280,8 +280,8 @@ public class PetsPage extends GuiProfileViewerPage {
 			getInstance().renderBar(guiLeft + 319, guiTop + 56, 98, percentageToNextLevel);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "To Max LVL",
-				EnumChatFormatting.WHITE.toString() + Math.min(100, (int) (exp / maxXP * 100)) + "%",
+				ChatFormatting.YELLOW + "To Max LVL",
+				ChatFormatting.WHITE.toString() + Math.min(100, (int) (exp / maxXP * 100)) + "%",
 				guiLeft + 319,
 				guiTop + 64,
 				98
@@ -289,22 +289,22 @@ public class PetsPage extends GuiProfileViewerPage {
 			getInstance().renderBar(guiLeft + 319, guiTop + 74, 98, exp / maxXP);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Total XP",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(exp),
+				ChatFormatting.YELLOW + "Total XP",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(exp),
 				guiLeft + 319,
 				guiTop + 125,
 				98
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Current LVL XP",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(percentageToNextLevel * currentLevelRequirement),
+				ChatFormatting.YELLOW + "Current LVL XP",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(percentageToNextLevel * currentLevelRequirement),
 				guiLeft + 319,
 				guiTop + 143,
 				98
 			);
 			Utils.renderAlignedString(
-				EnumChatFormatting.YELLOW + "Required LVL XP",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(currentLevelRequirement),
+				ChatFormatting.YELLOW + "Required LVL XP",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(currentLevelRequirement),
 				guiLeft + 319,
 				guiTop + 161,
 				98
@@ -337,16 +337,16 @@ public class PetsPage extends GuiProfileViewerPage {
 		int mouseY = Utils.getMouseY() - guiTop;
 		if (switchSortingMethodButton.contains(mouseX, mouseY)) {
 			getInstance().tooltipToDisplay = Arrays.asList(
-				EnumChatFormatting.GREEN + "Sort",
+				ChatFormatting.GREEN + "Sort",
 				"",
 				(sortPetsAlphabetically
-					? EnumChatFormatting.GRAY + " "
-					: EnumChatFormatting.DARK_AQUA + "▶") + " Pet Exp",
+					? ChatFormatting.GRAY + " "
+					: ChatFormatting.DARK_AQUA + "▶") + " Pet Exp",
 				(!sortPetsAlphabetically
-					? EnumChatFormatting.GRAY + " "
-					: EnumChatFormatting.DARK_AQUA + "▶") + " Alphabetical",
+					? ChatFormatting.GRAY + " "
+					: ChatFormatting.DARK_AQUA + "▶") + " Alphabetical",
 				"",
-				EnumChatFormatting.YELLOW + "Click to switch!"
+				ChatFormatting.YELLOW + "Click to switch!"
 			);
 		}
 	}

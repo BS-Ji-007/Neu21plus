@@ -261,7 +261,7 @@ public class EssenceUpgrades implements NeuRecipe {
 			if (essenceItemStack != null) {
 				essenceItemStack = essenceItemStack.copy();
 				essenceItemStack.setStackDisplayName(
-					EnumChatFormatting.AQUA + StringUtils.formatNumber(tierUpgrade.getEssenceRequired()) + " " + EnumChatFormatting.DARK_GRAY +
+					ChatFormatting.AQUA + StringUtils.formatNumber(tierUpgrade.getEssenceRequired()) + " " + ChatFormatting.DARK_GRAY +
 						tierUpgrade.getEssenceType() + " Essence");
 
 				essenceItemStack.getTag().setInteger(
@@ -365,7 +365,7 @@ public class EssenceUpgrades implements NeuRecipe {
 		for (int i = 0; i < amountOfTiers; i++) {
 			if (i >= buttonLocations.size()) {
 				Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
-					EnumChatFormatting.RED + "[NEU] Error: Item has more than " + buttonLocations.size() +
+					ChatFormatting.RED + "[NEU] Error: Item has more than " + buttonLocations.size() +
 						" possible star upgrades"));
 				break;
 			}
@@ -498,8 +498,8 @@ public class EssenceUpgrades implements NeuRecipe {
 			if (type.equals("DUNGEON_SKILL")) {
 				String readableDungeonType = WordUtils.capitalizeFully(dungeonType);
 				line =
-					"§7§4❣ §cRequires " + readableDungeonType + " Skill " + EnumChatFormatting.GREEN + level +
-						"\n" + EnumChatFormatting.RED + "while in The " + readableDungeonType +
+					"§7§4❣ §cRequires " + readableDungeonType + " Skill " + ChatFormatting.GREEN + level +
+						"\n" + ChatFormatting.RED + "while in The " + readableDungeonType +
 						".";
 			} else {
 				line = "Unexpected Requirement: " + type;

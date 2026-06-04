@@ -352,10 +352,10 @@ public class ItemCustomizeManager {
 					lastUpdate.put(stack.getTag().hashCode(), System.currentTimeMillis());
 				}
 				return damageMap.get(stack.getTag().hashCode());
-			} else if (getCustomItem(stack) == Items.skull) {
+			} else if (getCustomItem(stack) == Items.PLAYER_HEAD) {
 				String itemID = damageString.toUpperCase(Locale.ROOT).replace(" ", "_");
 				ItemStack itemStack = NotEnoughUpdates.INSTANCE.manager.createItem(itemID);
-				if (itemStack != null && itemStack.getItem() == Items.skull) {
+				if (itemStack != null && itemStack.getItem() == Items.PLAYER_HEAD) {
 					return 3;
 				} else {
 					CompoundTag animatedCustomSkull = getAnimatedCustomSkull(itemID, "");
@@ -364,7 +364,7 @@ public class ItemCustomizeManager {
 			}
 			return Integer.parseInt(data.customItem.split(":")[1]);
 		} catch (Exception e) {
-			if (Item.getByNameOrId(data.defaultItem) == Items.skull && getCustomItem(stack) != Items.skull) return 0;
+			if (Item.getByNameOrId(data.defaultItem) == Items.PLAYER_HEAD && getCustomItem(stack) != Items.PLAYER_HEAD) return 0;
 			return stack.getMetadata();
 		}
 	}
@@ -476,12 +476,12 @@ public class ItemCustomizeManager {
 			if (customItemSegments.length > 2) {
 				index = customItemSegments[2];
 			}
-			if (getCustomItem(stack) == Items.skull) {
+			if (getCustomItem(stack) == Items.PLAYER_HEAD) {
 				String itemID = damageString.toUpperCase(Locale.ROOT).replace(" ", "_");
 				CompoundTag animatedCustomSkull = getAnimatedCustomSkull(itemID, index);
 				if (animatedCustomSkull != null) return animatedCustomSkull;
 				ItemStack itemStack = NotEnoughUpdates.INSTANCE.manager.createItem(itemID);
-				if (itemStack != null && itemStack.getItem() == Items.skull) {
+				if (itemStack != null && itemStack.getItem() == Items.PLAYER_HEAD) {
 					return itemStack.getTag().getCompoundTag("SkullOwner");
 				}
 			}

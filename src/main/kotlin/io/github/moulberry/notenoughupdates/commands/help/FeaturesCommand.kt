@@ -46,13 +46,13 @@ class FeaturesCommand {
 
                 if (Utils.openUrl(url)) {
                     reply(
-                        EnumChatFormatting.DARK_PURPLE.toString() + "" + EnumChatFormatting.BOLD + "NEU" + EnumChatFormatting.RESET +
-                                EnumChatFormatting.GOLD + "> Opening Feature List in browser."
+                        ChatFormatting.DARK_PURPLE.toString() + "" + ChatFormatting.BOLD + "NEU" + ChatFormatting.RESET +
+                                ChatFormatting.GOLD + "> Opening Feature List in browser."
                     )
                 } else {
                     val clickTextFeatures = ChatComponentText(
-                        (EnumChatFormatting.DARK_PURPLE.toString() + "" + EnumChatFormatting.BOLD + "NEU" + EnumChatFormatting.RESET +
-                                EnumChatFormatting.GOLD + "> Click here to open the Feature List in your browser.")
+                        (ChatFormatting.DARK_PURPLE.toString() + "" + ChatFormatting.BOLD + "NEU" + ChatFormatting.RESET +
+                                ChatFormatting.GOLD + "> Click here to open the Feature List in your browser.")
                     )
                     clickTextFeatures.chatStyle =
                         Utils.createClickStyle(ClickEvent.Action.OPEN_URL, url)

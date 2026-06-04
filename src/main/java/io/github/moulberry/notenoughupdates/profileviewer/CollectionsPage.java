@@ -101,7 +101,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		ProfileCollectionInfo collectionInfo = selectedProfile.getCollectionInfo();
 		if (collectionInfo == null) {
 			Utils.drawStringCentered(
-				EnumChatFormatting.RED + "Collection API not enabled!",
+				ChatFormatting.RED + "Collection API not enabled!",
 				guiLeft + 134, guiTop + 101, true, 0
 			);
 			return;
@@ -275,7 +275,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 						tooltipToDisplay.add(
 							collectionItem.getName().getString() +
 								" " +
-								(completedness >= 1 ? EnumChatFormatting.GOLD : EnumChatFormatting.GRAY) +
+								(completedness >= 1 ? ChatFormatting.GOLD : ChatFormatting.GRAY) +
 								tierString
 						);
 						tooltipToDisplay.add(
@@ -391,7 +391,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		if (tooltipToDisplay != null) {
 			List<String> grayTooltip = new ArrayList<>(tooltipToDisplay.size());
 			for (String line : tooltipToDisplay) {
-				grayTooltip.add(EnumChatFormatting.GRAY + line);
+				grayTooltip.add(ChatFormatting.GRAY + line);
 			}
 			Utils.drawHoveringText(grayTooltip, mouseX, mouseY, getInstance().width, getInstance().height, -1);
 			tooltipToDisplay = null;

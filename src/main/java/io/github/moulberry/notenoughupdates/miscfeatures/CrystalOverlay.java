@@ -184,7 +184,7 @@ public class CrystalOverlay {
 				if (armorStand.isChild() && armorStand.getEquipmentInSlot(4) != null) {
 					ItemStack helmet = armorStand.getEquipmentInSlot(4);
 
-					if (helmet.getItem() == Items.skull && helmet.hasTag()) {
+					if (helmet.getItem() == Items.PLAYER_HEAD && helmet.hasTag()) {
 						CompoundTag tag = helmet.getTag();
 						if (tag.hasKey("SkullOwner", 10)) {
 							CompoundTag skullOwner = tag.getCompoundTag("SkullOwner");

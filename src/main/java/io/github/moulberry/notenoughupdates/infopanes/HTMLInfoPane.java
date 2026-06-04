@@ -261,7 +261,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		} else if (SystemUtils.IS_OS_LINUX) {
 			osId = "linux";
 		} else {
-			text = EnumChatFormatting.RED + "Unsupported operating system.";
+			text = ChatFormatting.RED + "Unsupported operating system.";
 			return;
 		}
 
@@ -288,7 +288,7 @@ public class HTMLInfoPane extends TextInfoPane {
 
 		if (!wkHtmlToImage.exists()) {
 			if (hasAttemptedDownload) {
-				text = EnumChatFormatting.RED + "Downloading web renderer failed? Or still downloading? Not sure what to do";
+				text = ChatFormatting.RED + "Downloading web renderer failed? Or still downloading? Not sure what to do";
 			} else {
 				hasAttemptedDownload = true;
 				Utils.recursiveDelete(new File(manager.configLocation, "wkhtmltox-" + osId));
@@ -315,7 +315,7 @@ public class HTMLInfoPane extends TextInfoPane {
 					}
 				});
 
-				text = EnumChatFormatting.YELLOW + "Downloading web renderer... try again soon";
+				text = ChatFormatting.YELLOW + "Downloading web renderer... try again soon";
 			}
 			return;
 		}
@@ -346,10 +346,10 @@ public class HTMLInfoPane extends TextInfoPane {
 		if (output.exists()) {
 			try {
 				imageTemp = ImageIO.read(output);
-				text = EnumChatFormatting.RED + "Creating dynamic texture.";
+				text = ChatFormatting.RED + "Creating dynamic texture.";
 			} catch (IOException e) {
 				e.printStackTrace();
-				text = EnumChatFormatting.RED + "Failed to read image.";
+				text = ChatFormatting.RED + "Failed to read image.";
 				return;
 			}
 		} else {
@@ -369,8 +369,8 @@ public class HTMLInfoPane extends TextInfoPane {
 			}
 
 			try {
-				text = EnumChatFormatting.GRAY + "Rendering webpage (" + name + EnumChatFormatting.RESET +
-					EnumChatFormatting.GRAY + "), please wait...";
+				text = ChatFormatting.GRAY + "Rendering webpage (" + name + ChatFormatting.RESET +
+					ChatFormatting.GRAY + "), please wait...";
 
 				String[] wkCommand = new String[]{
 					wkHtmlToImage.getAbsolutePath(),
@@ -429,16 +429,16 @@ public class HTMLInfoPane extends TextInfoPane {
                                         imageTemp.setRGB(x, y, col);
                                     }
                                 }*/
-								text = EnumChatFormatting.RED + "Creating dynamic texture.";
+								text = ChatFormatting.RED + "Creating dynamic texture.";
 							} catch (IOException e) {
 								e.printStackTrace();
-								text = EnumChatFormatting.RED + "Failed to read image.";
+								text = ChatFormatting.RED + "Failed to read image.";
 								return;
 							}
 						} else {
 							if (overlay.getActiveInfoPane() != this) return;
 
-							text = EnumChatFormatting.RED + "Webpage render timed out (>15sec). Maybe it's too large?";
+							text = ChatFormatting.RED + "Webpage render timed out (>15sec). Maybe it's too large?";
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -446,7 +446,7 @@ public class HTMLInfoPane extends TextInfoPane {
 				});
 			} catch (IOException e) {
 				e.printStackTrace();
-				text = EnumChatFormatting.RED + "Failed to exec webpage renderer.";
+				text = ChatFormatting.RED + "Failed to exec webpage renderer.";
 			}
 		}
 	}

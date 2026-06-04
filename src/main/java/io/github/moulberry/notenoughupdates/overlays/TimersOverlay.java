@@ -237,7 +237,7 @@ public class TimersOverlay extends TextTabOverlay {
 								.get("SUPERBOOM_TNT")),
 							new ItemStack(Blocks.pumpkin, 1, 0),
 							new ItemStack(Items.flint_and_steel, 1, 0),
-							new ItemStack(Items.emerald, 50, 0),
+							new ItemStack(Items.EMERALD, 50, 0),
 							//new ItemStack(Items.ender_pearl, 16, 0)
 						};
 					}
@@ -370,7 +370,7 @@ public class TimersOverlay extends TextTabOverlay {
 						}
 					}
 					ItemStack stackSuperPairs = lower.getStackInSlot(22);
-					if (stackSuperPairs != null && stackSuperPairs.getItem() == Items.skull &&
+					if (stackSuperPairs != null && stackSuperPairs.getItem() == Items.PLAYER_HEAD &&
 						stackSuperPairs.getTag() != null) {
 						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stackSuperPairs.getTag());
 						String text = lore[lore.length - 1];
@@ -456,7 +456,7 @@ public class TimersOverlay extends TextTabOverlay {
 										hidden.cookieBuffRemaining = 0;
 										if (!hasErrorMessage) {
 											Utils.addChatMessage(
-												EnumChatFormatting.YELLOW + "[NEU] Unable to work out your cookie buff timer");
+												ChatFormatting.YELLOW + "[NEU] Unable to work out your cookie buff timer");
 											hasErrorMessage = true;
 										}
 										break;
@@ -507,7 +507,7 @@ public class TimersOverlay extends TextTabOverlay {
 						}
 					} catch (Exception e) {
 						if (!hasErrorMessage) {
-							Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU] Unable to work out your god pot timer");
+							Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU] Unable to work out your god pot timer");
 							e.printStackTrace();
 							hasErrorMessage = true;
 						}
@@ -528,7 +528,7 @@ public class TimersOverlay extends TextTabOverlay {
 						}
 					} catch (Exception e) {
 						if (!hasErrorMessage) {
-							Utils.addChatMessage(EnumChatFormatting.YELLOW + "[NEU] Unable to work out your god pot timer");
+							Utils.addChatMessage(ChatFormatting.YELLOW + "[NEU] Unable to work out your god pot timer");
 							e.printStackTrace();
 							hasErrorMessage = true;
 						}
@@ -562,7 +562,7 @@ public class TimersOverlay extends TextTabOverlay {
 		if (cakeEnd <= 0) {
 			map.put(
 				0,
-				DARK_AQUA + "Cakes: " + EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] +
+				DARK_AQUA + "Cakes: " + ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] +
 					"Inactive!"
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cakesDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
@@ -570,14 +570,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				0,
 				DARK_AQUA + "Cakes: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(cakeEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cakesDisplay >= DISPLAYTYPE.SOON.ordinal() &&
 			cakeEnd < TimeEnums.HALFDAY.time) {
 			map.put(
 				0,
-				DARK_AQUA + "Cakes: " + EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+				DARK_AQUA + "Cakes: " + ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(cakeEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cakesDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -585,14 +585,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				0,
 				DARK_AQUA + "Cakes: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(cakeEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cakesDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				0,
 				DARK_AQUA + "Cakes: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(cakeEnd)
 			);
 		}
@@ -602,14 +602,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				1,
 				DARK_AQUA + "Cookie Buff: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] + "Inactive!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] + "Inactive!"
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cookieBuffDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 			hidden.cookieBuffRemaining < TimeEnums.HOUR.time) {
 			map.put(
 				1,
 				DARK_AQUA + "Cookie Buff: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(hidden.cookieBuffRemaining - currentTime)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cookieBuffDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -617,7 +617,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				1,
 				DARK_AQUA + "Cookie Buff: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(hidden.cookieBuffRemaining - currentTime)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cookieBuffDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -625,14 +625,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				1,
 				DARK_AQUA + "Cookie Buff: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(hidden.cookieBuffRemaining - currentTime)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.cookieBuffDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				1,
 				DARK_AQUA + "Cookie Buff: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(hidden.cookieBuffRemaining - currentTime)
 			);
 		}
@@ -644,14 +644,14 @@ public class TimersOverlay extends TextTabOverlay {
 				map.put(
 					2,
 					DARK_AQUA + "Godpot: " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] + "Inactive!"
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.goneColour] + "Inactive!"
 				);
 			} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.godpotDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 				hidden.godPotionDuration < TimeEnums.HOUR.time) {
 				map.put(
 					2,
 					DARK_AQUA + "Godpot: " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 						Utils.prettyTime(hidden.godPotionDuration)
 				);
 			} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.godpotDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -659,7 +659,7 @@ public class TimersOverlay extends TextTabOverlay {
 				map.put(
 					2,
 					DARK_AQUA + "Godpot: " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 						Utils.prettyTime(hidden.godPotionDuration)
 				);
 			} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.godpotDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -667,14 +667,14 @@ public class TimersOverlay extends TextTabOverlay {
 				map.put(
 					2,
 					DARK_AQUA + "Godpot: " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 						Utils.prettyTime(hidden.godPotionDuration)
 				);
 			} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.godpotDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 				map.put(
 					2,
 					DARK_AQUA + "Godpot: " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 						Utils.prettyTime(hidden.godPotionDuration)
 				);
 			}
@@ -687,14 +687,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				12,
 				DARK_AQUA + "Free Rift Infusion: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if ((miscOverlay.freeRiftInfusionDisplay == 1 && riftAvailableAgainIn < TimeEnums.HALFANHOUR.time) ||
 			(miscOverlay.freeRiftInfusionDisplay == 2)) {
 			map.put(
 				12,
 				DARK_AQUA + "Free Rift Infusion: " +
-					EnumChatFormatting.values()[riftAvailableAgainIn < TimeEnums.HALFANHOUR.time
+					ChatFormatting.values()[riftAvailableAgainIn < TimeEnums.HALFANHOUR.time
 						? miscOverlay.verySoonColour
 						: miscOverlay.defaultColour] + Utils.prettyTime(riftAvailableAgainIn)
 			);
@@ -706,14 +706,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				3,
 				DARK_AQUA + "Puzzler: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.puzzlerDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 			(hidden.puzzlerCompleted + (TimeEnums.DAY.time - TimeEnums.HALFANHOUR.time)) < currentTime) {
 			map.put(
 				3,
 				DARK_AQUA + "Puzzler: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(puzzlerEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.puzzlerDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -721,7 +721,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				3,
 				DARK_AQUA + "Puzzler: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(puzzlerEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.puzzlerDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -729,14 +729,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				3,
 				DARK_AQUA + "Puzzler: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(puzzlerEnd)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.puzzlerDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				3,
 				DARK_AQUA + "Puzzler: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(puzzlerEnd)
 			);
 		}
@@ -746,14 +746,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				4,
 				DARK_AQUA + "Fetchur: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.fetchurDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 			(fetchurComplete < (midnightReset - TimeEnums.HALFANHOUR.time))) {
 			map.put(
 				4,
 				DARK_AQUA + "Fetchur: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.fetchurDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -761,7 +761,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				4,
 				DARK_AQUA + "Fetchur: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.fetchurDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -769,14 +769,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				4,
 				DARK_AQUA + "Fetchur: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.fetchurDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				4,
 				DARK_AQUA + "Fetchur: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		}
@@ -786,14 +786,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				5,
 				DARK_AQUA + "Commissions: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready! "
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready! "
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.commissionDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 			(hidden.commissionsCompleted < (midnightReset - TimeEnums.HALFANHOUR.time))) {
 			map.put(
 				5,
 				DARK_AQUA + "Commissions: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.commissionDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -801,7 +801,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				5,
 				DARK_AQUA + "Commissions: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.commissionDisplay >= DISPLAYTYPE.KINDASOON.ordinal() &&
@@ -809,14 +809,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				5,
 				DARK_AQUA + "Commissions: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.commissionDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				5,
 				DARK_AQUA + "Commissions: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		}
@@ -826,14 +826,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				6,
 				DARK_AQUA + "Experiments: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.experimentationDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
 			(hidden.experimentsCompleted < (catacombsReset - TimeEnums.HALFANHOUR.time))) {
 			map.put(
 				6,
 				DARK_AQUA + "Experiments: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.experimentationDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -841,7 +841,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				6,
 				DARK_AQUA + "Experiments: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (
@@ -850,14 +850,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				6,
 				DARK_AQUA + "Experiments: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.experimentationDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				6,
 				DARK_AQUA + "Experiments: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		}
@@ -867,7 +867,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				7,
 				DARK_AQUA + "Mithril Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (
 			NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyMithrilPowderDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
@@ -875,7 +875,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				7,
 				DARK_AQUA + "Mithril Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyMithrilPowderDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -883,7 +883,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				7,
 				DARK_AQUA + "Mithril Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (
@@ -892,7 +892,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				7,
 				DARK_AQUA + "Mithril Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyMithrilPowderDisplay >=
@@ -900,7 +900,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				7,
 				DARK_AQUA + "Mithril Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		}
@@ -910,7 +910,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				8,
 				DARK_AQUA + "Gemstone Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (
 			NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyGemstonePowderDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
@@ -918,7 +918,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				8,
 				DARK_AQUA + "Gemstone Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyGemstonePowderDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -926,7 +926,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				8,
 				DARK_AQUA + "Gemstone Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (
@@ -935,7 +935,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				8,
 				DARK_AQUA + "Gemstone Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyGemstonePowderDisplay >=
@@ -943,7 +943,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				8,
 				DARK_AQUA + "Gemstone Powder: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		}
@@ -953,7 +953,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				9,
 				DARK_AQUA + "Heavy Pearls: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (
 			NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyHeavyPearlDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
@@ -961,7 +961,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				9,
 				DARK_AQUA + "Heavy Pearls: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(pearlsReset + 86400000 - currentTime)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyHeavyPearlDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -969,7 +969,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				9,
 				DARK_AQUA + "Heavy Pearls: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(pearlsReset + 86400000 - currentTime)
 			);
 		} else if (
@@ -978,7 +978,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				9,
 				DARK_AQUA + "Heavy Pearls: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(pearlsReset + 86400000 - currentTime)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.dailyHeavyPearlDisplay >=
@@ -986,7 +986,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				9,
 				DARK_AQUA + "Heavy Pearls: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(pearlsReset + 86400000 - currentTime)
 			);
 		}
@@ -995,7 +995,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				10,
 				DARK_AQUA + "Crimson Isle Quests: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] +
 					(5 - SBInfo.getInstance().completedQuests.size()) + " left!"
 			);
 		} else if (
@@ -1004,7 +1004,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				10,
 				DARK_AQUA + "Crimson Isle Quests: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.questBoardDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -1012,7 +1012,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				10,
 				DARK_AQUA + "Crimson Isle Quests: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (
@@ -1021,14 +1021,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				10,
 				DARK_AQUA + "Crimson Isle Quests: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.questBoardDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				10,
 				DARK_AQUA + "Crimson Isle Quests: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(timeDiffMidnightNow)
 			);
 		}
@@ -1038,7 +1038,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				11,
 				DARK_AQUA + "NPC Buy Daily Limit: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour] + "Ready!"
 			);
 		} else if (
 			NotEnoughUpdates.INSTANCE.config.miscOverlays.shopLimitDisplay >= DISPLAYTYPE.VERYSOON.ordinal() &&
@@ -1046,7 +1046,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				11,
 				DARK_AQUA + "NPC Buy Daily Limit: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.shopLimitDisplay >= DISPLAYTYPE.SOON.ordinal() &&
@@ -1054,7 +1054,7 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				11,
 				DARK_AQUA + "NPC Buy Daily Limit: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (
@@ -1063,14 +1063,14 @@ public class TimersOverlay extends TextTabOverlay {
 			map.put(
 				11,
 				DARK_AQUA + "NPC Buy Daily Limit: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		} else if (NotEnoughUpdates.INSTANCE.config.miscOverlays.shopLimitDisplay >= DISPLAYTYPE.ALWAYS.ordinal()) {
 			map.put(
 				11,
 				DARK_AQUA + "NPC Buy Daily Limit: " +
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour] +
 					Utils.prettyTime(catacombsDiffNow)
 			);
 		}

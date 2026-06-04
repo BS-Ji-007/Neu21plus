@@ -483,7 +483,7 @@ public class FarmingSkillOverlay extends TextOverlay {
 
 	private void renderCounter() {
 		int counterInterp = (int) interpolate(counter, counterLast);
-		lineMap.put(0, EnumChatFormatting.AQUA + "Counter: " + EnumChatFormatting.YELLOW + format.format(counterInterp));
+		lineMap.put(0, ChatFormatting.AQUA + "Counter: " + ChatFormatting.YELLOW + format.format(counterInterp));
 	}
 
 	private void renderCoins() {
@@ -505,13 +505,13 @@ public class FarmingSkillOverlay extends TextOverlay {
 		}
 
 		if (cropsPerSecondLast == cropsPerSecond && cropsPerSecond <= 0) {
-			lineMap.put(10, EnumChatFormatting.AQUA + "Coins" + unit + ": " + EnumChatFormatting.YELLOW + "N/A");
+			lineMap.put(10, ChatFormatting.AQUA + "Coins" + unit + ": " + ChatFormatting.YELLOW + "N/A");
 		} else {
 			float cropsPerSecond = cropsPerSecondLast != 0
 				? interpolate(this.cropsPerSecond, cropsPerSecondLast)
 				: this.cropsPerSecond;
 			float cropsPerUnit = cropsPerSecond * coinsMultiplier;
-			lineMap.put(10, EnumChatFormatting.AQUA + "Coins" + unit + ": " + EnumChatFormatting.YELLOW +
+			lineMap.put(10, ChatFormatting.AQUA + "Coins" + unit + ": " + ChatFormatting.YELLOW +
 				String.format("%,.0f", cropsPerUnit * coins));
 		}
 	}
@@ -521,7 +521,7 @@ public class FarmingSkillOverlay extends TextOverlay {
 			int counterInterp = (int) interpolate(cultivating, cultivatingLast);
 			lineMap.put(
 				9,
-				EnumChatFormatting.AQUA + "Cultivating: " + EnumChatFormatting.YELLOW + format.format(counterInterp) + "/" +
+				ChatFormatting.AQUA + "Cultivating: " + ChatFormatting.YELLOW + format.format(counterInterp) + "/" +
 					cultivatingTierAmount
 			);
 		}
@@ -529,7 +529,7 @@ public class FarmingSkillOverlay extends TextOverlay {
 			int counterInterp = (int) interpolate(cultivating, cultivatingLast);
 			lineMap.put(
 				9,
-				EnumChatFormatting.AQUA + "Cultivating: " + EnumChatFormatting.YELLOW + format.format(counterInterp)
+				ChatFormatting.AQUA + "Cultivating: " + ChatFormatting.YELLOW + format.format(counterInterp)
 			);
 		}
 	}
@@ -537,12 +537,12 @@ public class FarmingSkillOverlay extends TextOverlay {
 	private void renderJacob() {
 		if (isJacobTime() && inJacobContest) {
 			if (jacobPredictionLast == jacobPrediction && jacobPrediction <= 0) {
-				lineMap.put(11, EnumChatFormatting.AQUA + "Contest Estimate: " + EnumChatFormatting.YELLOW + "N/A");
+				lineMap.put(11, ChatFormatting.AQUA + "Contest Estimate: " + ChatFormatting.YELLOW + "N/A");
 			} else {
 				float predInterp = interpolate(jacobPrediction, jacobPredictionLast);
 				lineMap.put(
 					11,
-					EnumChatFormatting.AQUA + "Contest Estimate: " + EnumChatFormatting.YELLOW +
+					ChatFormatting.AQUA + "Contest Estimate: " + ChatFormatting.YELLOW +
 						String.format("%,.0f", predInterp)
 				);
 			}
@@ -552,20 +552,20 @@ public class FarmingSkillOverlay extends TextOverlay {
 	private void renderLevelAndXP() {
 		float xpInterp = xpGainHour;
 		if (xpGainHourLast == xpGainHour && xpGainHour <= 0) {
-			lineMap.put(5, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW + "N/A");
+			lineMap.put(5, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW + "N/A");
 		} else {
 			xpInterp = interpolate(xpGainHour, xpGainHourLast);
 
-			lineMap.put(5, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW +
-				format.format(xpInterp) + (isFarming ? "" : EnumChatFormatting.RED + " (PAUSED)"));
+			lineMap.put(5, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW +
+				format.format(xpInterp) + (isFarming ? "" : ChatFormatting.RED + " (PAUSED)"));
 		}
 
 		if (skillInfo != null && skillInfo.level < 60) {
-			StringBuilder levelStr = new StringBuilder(EnumChatFormatting.AQUA + skillType + ": ");
+			StringBuilder levelStr = new StringBuilder(ChatFormatting.AQUA + skillType + ": ");
 
-			levelStr.append(EnumChatFormatting.YELLOW)
+			levelStr.append(ChatFormatting.YELLOW)
 							.append(skillInfo.level)
-							.append(EnumChatFormatting.GRAY)
+							.append(ChatFormatting.GRAY)
 							.append(" [");
 
 			float progress = (float) (skillInfo.currentXp / skillInfo.currentXpMax);
@@ -576,16 +576,16 @@ public class FarmingSkillOverlay extends TextOverlay {
 			float lines = 25;
 			for (int i = 0; i < lines; i++) {
 				if (i / lines < progress) {
-					levelStr.append(EnumChatFormatting.YELLOW);
+					levelStr.append(ChatFormatting.YELLOW);
 				} else {
-					levelStr.append(EnumChatFormatting.DARK_GRAY);
+					levelStr.append(ChatFormatting.DARK_GRAY);
 				}
 				levelStr.append('|');
 			}
 
-			levelStr.append(EnumChatFormatting.GRAY)
+			levelStr.append(ChatFormatting.GRAY)
 							.append("] ")
-							.append(EnumChatFormatting.YELLOW)
+							.append(ChatFormatting.YELLOW)
 							.append((int) (progress * 100))
 							.append("%");
 
@@ -600,21 +600,21 @@ public class FarmingSkillOverlay extends TextOverlay {
 			}
 
 			lineMap.put(2, levelStr.toString());
-			lineMap.put(3, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+			lineMap.put(3, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 			if (remaining < 0) {
-				lineMap.put(4, EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + "MAXED!");
-				lineMap.put(7, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "MAXED!");
+				lineMap.put(4, ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + "MAXED!");
+				lineMap.put(7, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "MAXED!");
 			} else {
 				lineMap.put(
 					4,
-					EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + format.format(remaining)
+					ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + format.format(remaining)
 				);
 				if (xpGainHour < 1000) {
-					lineMap.put(7, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "N/A");
+					lineMap.put(7, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "N/A");
 				} else {
 					lineMap.put(
 						7,
-						EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW +
+						ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW +
 							Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpInterp)
 					);
 				}
@@ -631,17 +631,17 @@ public class FarmingSkillOverlay extends TextOverlay {
 			if (foraging == 0) {
 				lineMap.put(
 					2,
-					EnumChatFormatting.AQUA + "Farming: " + EnumChatFormatting.YELLOW + "60 " + EnumChatFormatting.RED +
+					ChatFormatting.AQUA + "Farming: " + ChatFormatting.YELLOW + "60 " + ChatFormatting.RED +
 						"(Maxed)"
 				);
 			} else {
 				lineMap.put(
 					2,
-					EnumChatFormatting.AQUA + "Foraging: " + EnumChatFormatting.YELLOW + "50 " + EnumChatFormatting.RED +
+					ChatFormatting.AQUA + "Foraging: " + ChatFormatting.YELLOW + "50 " + ChatFormatting.RED +
 						"(Maxed)"
 				);
 			}
-			lineMap.put(3, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+			lineMap.put(3, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 
 		}
 	}
@@ -656,10 +656,10 @@ public class FarmingSkillOverlay extends TextOverlay {
 		if (pitch < 0) pitch += 360;
 		if (pitch > 180) pitch -= 360;
 
-		lineMap.put(6, EnumChatFormatting.AQUA + "Yaw: " + EnumChatFormatting.YELLOW +
+		lineMap.put(6, ChatFormatting.AQUA + "Yaw: " + ChatFormatting.YELLOW +
 			String.format("%.2f°", yaw));
 
-		lineMap.put(8, EnumChatFormatting.AQUA + "Pitch: " + EnumChatFormatting.YELLOW +
+		lineMap.put(8, ChatFormatting.AQUA + "Pitch: " + ChatFormatting.YELLOW +
 			String.format("%.2f°", pitch));
 	}
 
@@ -684,9 +684,9 @@ public class FarmingSkillOverlay extends TextOverlay {
 		if (cropsPerSecondLast == cropsPerSecond && cropsPerSecond <= 0) {
 			lineMap.put(
 				1,
-				EnumChatFormatting.AQUA +
+				ChatFormatting.AQUA +
 					(foraging == 1 ? "Logs" + unit + ": " : "Crops" + unit + ": ") +
-					EnumChatFormatting.YELLOW + "N/A"
+					ChatFormatting.YELLOW + "N/A"
 			);
 		} else {
 			//Don't interpolate at the start
@@ -697,8 +697,8 @@ public class FarmingSkillOverlay extends TextOverlay {
 
 			lineMap.put(
 				1,
-				EnumChatFormatting.AQUA + (foraging == 1 ? "Logs" + unit + ": " : "Crops" + unit + ": ") +
-					EnumChatFormatting.YELLOW +
+				ChatFormatting.AQUA + (foraging == 1 ? "Logs" + unit + ": " : "Crops" + unit + ": ") +
+					ChatFormatting.YELLOW +
 					String.format("%,.0f", cropsPerUnit)
 			);
 		}

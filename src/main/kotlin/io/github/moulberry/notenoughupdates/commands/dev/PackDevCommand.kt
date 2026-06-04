@@ -183,9 +183,9 @@ class PackDevCommand {
             thenExecute {
                 NotEnoughUpdates.INSTANCE.packDevEnabled = !NotEnoughUpdates.INSTANCE.packDevEnabled
                 if (NotEnoughUpdates.INSTANCE.packDevEnabled) {
-                    reply("${EnumChatFormatting.GREEN}Enabled pack developer mode.")
+                    reply("${ChatFormatting.GREEN}Enabled pack developer mode.")
                 } else {
-                    reply("${EnumChatFormatting.RED}Disabled pack developer mode.")
+                    reply("${ChatFormatting.RED}Disabled pack developer mode.")
                 }
             }
         }.withHelp("Toggle pack developer mode")

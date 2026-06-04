@@ -98,26 +98,26 @@ public class PetInfoOverlay extends TextOverlay {
 	}
 
 	public enum Rarity {
-		COMMON(0, 0, 1, EnumChatFormatting.WHITE),
-		UNCOMMON(6, 1, 2, EnumChatFormatting.GREEN),
-		RARE(11, 2, 3, EnumChatFormatting.BLUE),
-		EPIC(16, 3, 4, EnumChatFormatting.DARK_PURPLE),
-		LEGENDARY(20, 4, 5, EnumChatFormatting.GOLD),
-		MYTHIC(20, 5, 5, EnumChatFormatting.LIGHT_PURPLE);
+		COMMON(0, 0, 1, ChatFormatting.WHITE),
+		UNCOMMON(6, 1, 2, ChatFormatting.GREEN),
+		RARE(11, 2, 3, ChatFormatting.BLUE),
+		EPIC(16, 3, 4, ChatFormatting.DARK_PURPLE),
+		LEGENDARY(20, 4, 5, ChatFormatting.GOLD),
+		MYTHIC(20, 5, 5, ChatFormatting.LIGHT_PURPLE);
 
 		public final int petOffset;
-		public final EnumChatFormatting chatFormatting;
+		public final ChatFormatting chatFormatting;
 		public final int petId;
 		public final int beastcreatMultiplyer;
 
-		Rarity(int petOffset, int petId, int beastcreatMultiplyer, EnumChatFormatting chatFormatting) {
+		Rarity(int petOffset, int petId, int beastcreatMultiplyer, ChatFormatting chatFormatting) {
 			this.chatFormatting = chatFormatting;
 			this.petOffset = petOffset;
 			this.petId = petId;
 			this.beastcreatMultiplyer = beastcreatMultiplyer;
 		}
 
-		public static Rarity getRarityFromColor(EnumChatFormatting chatFormatting) {
+		public static Rarity getRarityFromColor(ChatFormatting chatFormatting) {
 			for (Rarity rarity : Rarity.values()) {
 				if (rarity.chatFormatting.equals(chatFormatting))
 					return rarity;
@@ -403,7 +403,7 @@ public class PetInfoOverlay extends TextOverlay {
 		if (levelXp < 0) levelXp = 0;
 
 		String petName =
-			EnumChatFormatting.GREEN + "[Lvl " + currentPet.petLevel.getCurrentLevel() + "] " +
+			ChatFormatting.GREEN + "[Lvl " + currentPet.petLevel.getCurrentLevel() + "] " +
 				currentPet.rarity.chatFormatting +
 				getPetNameFromId(currentPet.petType, currentPet.petLevel.getCurrentLevel());
 		if (currentPet.skin != null) {
@@ -427,14 +427,14 @@ public class PetInfoOverlay extends TextOverlay {
 					visualXp = xpForNextLevel;
 				}
 			}
-			lvlStringShort = EnumChatFormatting.AQUA + "" + roundFloat(visualXp) + "/" +
+			lvlStringShort = ChatFormatting.AQUA + "" + roundFloat(visualXp) + "/" +
 				roundFloat(xpForNextLevel)
-				+ EnumChatFormatting.YELLOW + " (" + levelPercent + "%)";
+				+ ChatFormatting.YELLOW + " (" + levelPercent + "%)";
 
-			lvlString = EnumChatFormatting.AQUA + "" +
+			lvlString = ChatFormatting.AQUA + "" +
 				Utils.shortNumberFormat(Math.min(visualXp, xpForNextLevel), 0) + "/" +
 				Utils.shortNumberFormat(xpForNextLevel, 0)
-				+ EnumChatFormatting.YELLOW + " (" + levelPercent + "%)";
+				+ ChatFormatting.YELLOW + " (" + levelPercent + "%)";
 		}
 
 		float xpGain;
@@ -444,12 +444,12 @@ public class PetInfoOverlay extends TextOverlay {
 			xpGain = xpGainHourSecondPet;
 		}
 		if (xpGain < 0) xpGain = 0;
-		String xpGainString = EnumChatFormatting.AQUA + "XP/h: " +
-			EnumChatFormatting.YELLOW + roundFloat(xpGain);
+		String xpGainString = ChatFormatting.AQUA + "XP/h: " +
+			ChatFormatting.YELLOW + roundFloat(xpGain);
 		if (!secondPet && xpGain > 0 &&
 			(levelXp != levelXpLast || System.currentTimeMillis() - lastXpUpdateNonZero > 4500)) {
 			if (pauseCountdown <= 0) {
-				xpGainString += EnumChatFormatting.RED + " (PAUSED)";
+				xpGainString += ChatFormatting.RED + " (PAUSED)";
 			} else {
 				pauseCountdown--;
 			}
@@ -458,10 +458,10 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 
 		String totalXpString =
-			EnumChatFormatting.AQUA + "Total XP: " + EnumChatFormatting.YELLOW +
+			ChatFormatting.AQUA + "Total XP: " + ChatFormatting.YELLOW +
 				roundFloat(currentPet.petLevel.getExpTotal());
 
-		String petItemStr = EnumChatFormatting.AQUA + "Held Item: " + EnumChatFormatting.RED + "None";
+		String petItemStr = ChatFormatting.AQUA + "Held Item: " + ChatFormatting.RED + "None";
 		if (currentPet.petItem != null) {
 			JsonObject json = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet.petItem);
 			if (json != null) {
@@ -469,7 +469,7 @@ public class PetInfoOverlay extends TextOverlay {
 				if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petItemIcon)
 					name = NotEnoughUpdates.INSTANCE.manager.jsonToStack(json).getName().getString();
 				else name = "";
-				petItemStr = EnumChatFormatting.AQUA + "Held Item: " + name;
+				petItemStr = ChatFormatting.AQUA + "Held Item: " + name;
 			}
 		}
 
@@ -479,11 +479,11 @@ public class PetInfoOverlay extends TextOverlay {
 			float remaining = currentPet.petLevel.getExpRequiredForNextLevel() - currentPet.petLevel.getExpInCurrentLevel();
 			if (remaining > 0) {
 				if (xpGain < 1000) {
-					etaStr = EnumChatFormatting.AQUA + "Until L" + (currentPet.petLevel.getCurrentLevel() + 1) + ": " +
-						EnumChatFormatting.YELLOW + "N/A";
+					etaStr = ChatFormatting.AQUA + "Until L" + (currentPet.petLevel.getCurrentLevel() + 1) + ": " +
+						ChatFormatting.YELLOW + "N/A";
 				} else {
-					etaStr = EnumChatFormatting.AQUA + "Until L" + (currentPet.petLevel.getCurrentLevel() + 1) + ": " +
-						EnumChatFormatting.YELLOW + Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpGain);
+					etaStr = ChatFormatting.AQUA + "Until L" + (currentPet.petLevel.getCurrentLevel() + 1) + ": " +
+						ChatFormatting.YELLOW + Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpGain);
 				}
 			}
 
@@ -492,11 +492,11 @@ public class PetInfoOverlay extends TextOverlay {
 				float remainingMax = currentPet.petLevel.getExpRequiredForMaxLevel() - currentPet.petLevel.getExpTotal();
 				if (remaining > 0) {
 					if (xpGain < 1000) {
-						etaMaxStr = EnumChatFormatting.AQUA + "Until L" + currentPet.petLevel.getMaxLevel() + ": " +
-							EnumChatFormatting.YELLOW + "N/A";
+						etaMaxStr = ChatFormatting.AQUA + "Until L" + currentPet.petLevel.getMaxLevel() + ": " +
+							ChatFormatting.YELLOW + "N/A";
 					} else {
-						etaMaxStr = EnumChatFormatting.AQUA + "Until L" + currentPet.petLevel.getMaxLevel() + ": " +
-							EnumChatFormatting.YELLOW + Utils.prettyTime((long) (remainingMax) * 1000 * 60 * 60 / (long) xpGain);
+						etaMaxStr = ChatFormatting.AQUA + "Until L" + currentPet.petLevel.getMaxLevel() + ": " +
+							ChatFormatting.YELLOW + Utils.prettyTime((long) (remainingMax) * 1000 * 60 * 60 / (long) xpGain);
 					}
 				}
 			}
@@ -918,7 +918,7 @@ public class PetInfoOverlay extends TextOverlay {
 					removeMap.keySet().retainAll(removeSet);
 				} else if (containerName.startsWith("Your Equipment")) {
 					ItemStack petStack = lower.getStackInSlot(47);
-					if (petStack != null && petStack.getItem() == Items.skull) {
+					if (petStack != null && petStack.getItem() == Items.PLAYER_HEAD) {
 						CompoundTag tag = petStack.getTag();
 
 						if (tag.hasKey("ExtraAttributes", 10)) {
@@ -1015,7 +1015,7 @@ public class PetInfoOverlay extends TextOverlay {
 				try {
 					petLevel = Integer.parseInt(petNameMatcher.group(1));
 				} catch (NumberFormatException ignored) {
-					Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Invalid number in tab list: " + petNameMatcher.group(1));
+					Utils.addChatMessage(ChatFormatting.RED + "[NEU] Invalid number in tab list: " + petNameMatcher.group(1));
 				}
 
 				if (!getPetNameFromId(currentPet.petType, currentPet.petLevel.getCurrentLevel()).equalsIgnoreCase(petName)) {
@@ -1087,7 +1087,7 @@ public class PetInfoOverlay extends TextOverlay {
 				try {
 					xpNumber = Float.parseFloat(xpString);
 				} catch (NumberFormatException e) {
-					Utils.addChatMessage(EnumChatFormatting.RED + "[NEU] Invalid number in tab list: " + xpString);
+					Utils.addChatMessage(ChatFormatting.RED + "[NEU] Invalid number in tab list: " + xpString);
 				}
 				PetLeveling.ExpLadder petLadder = PetLeveling.getPetLevelingForPet(currentPet.petType, currentPet.rarity);
 
@@ -1218,8 +1218,8 @@ public class PetInfoOverlay extends TextOverlay {
 						if (getCurrentPet() != null && !"PET_ITEM_TIER_BOOST".equals(getCurrentPet().petItem)) {
 							PetInfoOverlay.config.selectedPet = -1;
 							Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
-								EnumChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
-									EnumChatFormatting.RED + " try revisiting all pages of /pets."));
+								ChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
+									ChatFormatting.RED + " try revisiting all pages of /pets."));
 						}
 					}
 				} else if ((chatMessage.toLowerCase(Locale.ROOT).startsWith("you despawned your")) || (chatMessage.toLowerCase(
@@ -1233,8 +1233,8 @@ public class PetInfoOverlay extends TextOverlay {
 	}
 
 	private static Rarity getRarityByColor(String colChar) {
-		EnumChatFormatting col = EnumChatFormatting.RESET;
-		for (EnumChatFormatting formatting : EnumChatFormatting.values()) {
+		ChatFormatting col = ChatFormatting.RESET;
+		for (ChatFormatting formatting : ChatFormatting.values()) {
 			if (formatting.toString().equals("§" + colChar)) {
 				col = formatting;
 				break;
@@ -1242,7 +1242,7 @@ public class PetInfoOverlay extends TextOverlay {
 
 		}
 		Rarity rarity = Rarity.COMMON;
-		if (col != EnumChatFormatting.RESET) {
+		if (col != ChatFormatting.RESET) {
 			rarity = Rarity.getRarityFromColor(col);
 		}
 		return rarity;

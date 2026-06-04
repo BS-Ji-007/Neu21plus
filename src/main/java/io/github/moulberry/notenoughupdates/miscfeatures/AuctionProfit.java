@@ -100,7 +100,7 @@ public class AuctionProfit {
 					isBin = true;
 					String s = line.split("§7Buy it now: ")[1];
 					String coinsString = s.split("coins")[0];
-					double coins = tryParse(EnumChatFormatting.getTextWithoutFormattingCodes(coinsString.trim()));
+					double coins = tryParse(ChatFormatting.getTextWithoutFormattingCodes(coinsString.trim()));
 					if (coins != 0) {
 						coinsToCheck += coins;
 					}
@@ -109,7 +109,7 @@ public class AuctionProfit {
 				if (line.contains("§7Top bid: ")) {
 					String s = line.split("§7Top bid: ")[1];
 					String coinsString = s.split("coins")[0];
-					String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(coinsString.trim());
+					String textWithoutFormattingCodes = ChatFormatting.getTextWithoutFormattingCodes(coinsString.trim());
 					double coins = tryParse(textWithoutFormattingCodes);
 					if (coins != 0) {
 						coinsToCheck += coins;
@@ -119,7 +119,7 @@ public class AuctionProfit {
 				if (line.contains("§7Sold for: ")) {
 					String s = line.split("§7Sold for: ")[1];
 					String coinsString = s.split("coins")[0];
-					double coins = tryParse(EnumChatFormatting.getTextWithoutFormattingCodes(coinsString.trim()));
+					double coins = tryParse(ChatFormatting.getTextWithoutFormattingCodes(coinsString.trim()));
 					if (coins != 0) {
 						coins = removeTax(coins);
 						coinsToCollect += coins;
@@ -146,10 +146,10 @@ public class AuctionProfit {
 
 		}
 		int a = guiLeft + xSize + 4;
-		String unclaimedAuctionsStr = EnumChatFormatting.DARK_GREEN.toString()
-			+ unclaimedAuctions + EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY + " Unclaimed auctions";
+		String unclaimedAuctionsStr = ChatFormatting.DARK_GREEN.toString()
+			+ unclaimedAuctions + ChatFormatting.BOLD + ChatFormatting.DARK_GRAY + " Unclaimed auctions";
 		String expiredAuctionsStr =
-			EnumChatFormatting.RED.toString() + expiredAuctions + EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY +
+			ChatFormatting.RED.toString() + expiredAuctions + ChatFormatting.BOLD + ChatFormatting.DARK_GRAY +
 				" Expired auctions";
 
 		FontRenderer font = minecraft.font;
@@ -157,11 +157,11 @@ public class AuctionProfit {
 		font.drawString(expiredAuctionsStr, a + 6, guiTop + 16, -1, false);
 
 		String coinsToCollectStr =
-			EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY.toString() + "Coins to collect: " +
-				EnumChatFormatting.RESET + EnumChatFormatting.DARK_GREEN + "" +
+			ChatFormatting.BOLD + ChatFormatting.DARK_GRAY.toString() + "Coins to collect: " +
+				ChatFormatting.RESET + ChatFormatting.DARK_GREEN + "" +
 				StringUtils.shortNumberFormat(coinsToCollect);
-		String valueIfSoldStr = EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY.toString() + "Value if all sold: " +
-			EnumChatFormatting.RESET + EnumChatFormatting.DARK_GREEN + "" +
+		String valueIfSoldStr = ChatFormatting.BOLD + ChatFormatting.DARK_GRAY.toString() + "Value if all sold: " +
+			ChatFormatting.RESET + ChatFormatting.DARK_GREEN + "" +
 			StringUtils.shortNumberFormat(coinsIfAllSold);
 
 		font.drawString(coinsToCollectStr, a + 6, guiTop + 32, -1, false);

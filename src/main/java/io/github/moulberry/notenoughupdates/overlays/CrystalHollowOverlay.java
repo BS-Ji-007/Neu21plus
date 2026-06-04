@@ -179,23 +179,23 @@ public class CrystalHollowOverlay extends TextOverlay {
 								case 2:
 									if (!NotEnoughUpdates.INSTANCE.config.mining.crystalHollowHideDone)
 										overlayStrings.add(
-											EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
+											ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
 												part + ": " +
-												EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPlacedColor] +
+												ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPlacedColor] +
 												"Placed");
 									break;
 								case 1:
 									overlayStrings.add(
-										EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part +
+										ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part +
 											": " +
-											EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowCollectedColor] +
+											ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowCollectedColor] +
 											"Collected");
 									break;
 								case 0:
 									overlayStrings.add(
-										EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part +
+										ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part +
 											": " +
-											EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] +
+											ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] +
 											"Missing");
 									break;
 							}
@@ -207,7 +207,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 						int count = getCountCrystal(hidden.crystals);
 						float percent = (float) count / hidden.crystals.size() * 100;
 						overlayStrings.add(
-							EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
+							ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
 								"Crystals: " + getColor(percent)
 								+ count + "/" + hidden.crystals.size());
 					}
@@ -217,7 +217,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 						int count = getCountCrystal(hidden.crystals);
 						float percent = (float) count / hidden.crystals.size() * 100;
 						overlayStrings.add(
-							EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
+							ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] +
 								"Crystals: " + getColor(percent) +
 								StringUtils.formatToTenths(percent) + "%");
 					}
@@ -266,22 +266,22 @@ public class CrystalHollowOverlay extends TextOverlay {
 		for (String part : parts.keySet()) {
 			if (parts.get(part) && !NotEnoughUpdates.INSTANCE.config.mining.crystalHollowHideDone)
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowDoneColor] + "Done");
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowDoneColor] + "Done");
 			else if (inventoryData.get(part) >= 1)
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowInventoryColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowInventoryColor] +
 						"In Inventory");
 			else if (storageData.get(part) >= 1)
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowStorageColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowStorageColor] +
 						"In Storage");
 			else
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] + "Missing");
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] + "Missing");
 		}
 	}
 
@@ -293,23 +293,23 @@ public class CrystalHollowOverlay extends TextOverlay {
 		for (String part : parts.keySet()) {
 			if (parts.get(part))
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowDoneColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowDoneColor] +
 						(inventoryData.get(part) + storageData.get(part)));
 			else if (inventoryData.get(part) >= 1)
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowInventoryColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowInventoryColor] +
 						(inventoryData.get(part) + storageData.get(part)));
 			else if (storageData.get(part) >= 1)
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowStorageColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowStorageColor] +
 						(inventoryData.get(part) + storageData.get(part)));
 			else
 				overlayStrings.add(
-					EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
-						EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] +
+					ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + part + ": " +
+						ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMissingColor] +
 						(inventoryData.get(part) + storageData.get(part)));
 		}
 	}
@@ -323,7 +323,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 		int count = getCount(parts, inventoryData, storageData);
 		float percent = (float) count / parts.size() * 100;
 		overlayStrings.add(
-			EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + text + ": " +
+			ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + text + ": " +
 				getColor(percent) + count
 				+ "/" + parts.size());
 	}
@@ -337,18 +337,18 @@ public class CrystalHollowOverlay extends TextOverlay {
 		int count = getCount(parts, inventoryData, storageData);
 		float percent = (float) count / parts.size() * 100;
 		overlayStrings.add(
-			EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + text + ": " +
+			ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowPartColor] + text + ": " +
 				getColor(percent) +
 				StringUtils.formatToTenths(percent) + "%");
 	}
 
-	private EnumChatFormatting getColor(float percent) {
+	private ChatFormatting getColor(float percent) {
 		if (percent >= 66)
-			return EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowAllColor];
+			return ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowAllColor];
 		else if (percent >= 33)
-			return EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMiddleColor];
+			return ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowMiddleColor];
 		else
-			return EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowNoneColor];
+			return ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.mining.crystalHollowNoneColor];
 	}
 
 	private int getCount(

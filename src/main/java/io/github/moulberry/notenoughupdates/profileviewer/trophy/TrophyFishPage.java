@@ -52,26 +52,26 @@ import static io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewe
 
 public class TrophyFishPage extends GuiProfileViewerPage {
 
-	private static final Map<String, EnumChatFormatting> internalTrophyFish = new HashMap<String, EnumChatFormatting>() {
+	private static final Map<String, ChatFormatting> internalTrophyFish = new HashMap<String, ChatFormatting>() {
 		{
-			put("gusher", EnumChatFormatting.WHITE);
-			put("flyfish", EnumChatFormatting.GREEN);
-			put("moldfin", EnumChatFormatting.DARK_PURPLE);
-			put("vanille", EnumChatFormatting.BLUE);
-			put("blobfish", EnumChatFormatting.WHITE);
-			put("mana_ray", EnumChatFormatting.BLUE);
-			put("slugfish", EnumChatFormatting.GREEN);
-			put("soul_fish", EnumChatFormatting.DARK_PURPLE);
-			put("lava_horse", EnumChatFormatting.BLUE);
-			put("golden_fish", EnumChatFormatting.GOLD);
-			put("karate_fish", EnumChatFormatting.DARK_PURPLE);
-			put("skeleton_fish", EnumChatFormatting.DARK_PURPLE);
-			put("sulphur_skitter", EnumChatFormatting.WHITE);
-			put("obfuscated_fish_1", EnumChatFormatting.WHITE);
-			put("obfuscated_fish_2", EnumChatFormatting.GREEN);
-			put("obfuscated_fish_3", EnumChatFormatting.BLUE);
-			put("volcanic_stonefish", EnumChatFormatting.BLUE);
-			put("steaming_hot_flounder", EnumChatFormatting.WHITE);
+			put("gusher", ChatFormatting.WHITE);
+			put("flyfish", ChatFormatting.GREEN);
+			put("moldfin", ChatFormatting.DARK_PURPLE);
+			put("vanille", ChatFormatting.BLUE);
+			put("blobfish", ChatFormatting.WHITE);
+			put("mana_ray", ChatFormatting.BLUE);
+			put("slugfish", ChatFormatting.GREEN);
+			put("soul_fish", ChatFormatting.DARK_PURPLE);
+			put("lava_horse", ChatFormatting.BLUE);
+			put("golden_fish", ChatFormatting.GOLD);
+			put("karate_fish", ChatFormatting.DARK_PURPLE);
+			put("skeleton_fish", ChatFormatting.DARK_PURPLE);
+			put("sulphur_skitter", ChatFormatting.WHITE);
+			put("obfuscated_fish_1", ChatFormatting.WHITE);
+			put("obfuscated_fish_2", ChatFormatting.GREEN);
+			put("obfuscated_fish_3", ChatFormatting.BLUE);
+			put("volcanic_stonefish", ChatFormatting.BLUE);
+			put("steaming_hot_flounder", ChatFormatting.WHITE);
 		}
 	};
 	private static final LinkedHashMap<ItemStack, Pair<String, Integer>> armorHelmets = new LinkedHashMap<ItemStack, Pair<String, Integer>>() {
@@ -80,25 +80,25 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 				NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 					NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("BRONZE_HUNTER_HELMET")
 				),
-				Pair.of(EnumChatFormatting.GREEN + "Novice Fisher", 1)
+				Pair.of(ChatFormatting.GREEN + "Novice Fisher", 1)
 			);
 			put(
 				NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 					NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("SILVER_HUNTER_HELMET")
 				),
-				Pair.of(EnumChatFormatting.BLUE + "Adept Fisher", 2)
+				Pair.of(ChatFormatting.BLUE + "Adept Fisher", 2)
 			);
 			put(
 				NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 					NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("GOLD_HUNTER_HELMET")
 				),
-				Pair.of(EnumChatFormatting.DARK_PURPLE + "Expert Fisher", 3)
+				Pair.of(ChatFormatting.DARK_PURPLE + "Expert Fisher", 3)
 			);
 			put(
 				NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 					NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("DIAMOND_HUNTER_HELMET")
 				),
-				Pair.of(EnumChatFormatting.GOLD + "Master Fisher", 4)
+				Pair.of(ChatFormatting.GOLD + "Master Fisher", 4)
 			);
 		}
 	};
@@ -150,7 +150,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 
 		JsonObject profileInformation = selectedProfile.getProfileJson();
 		if (profileInformation == null || !profileInformation.has("trophy_fish")) {
-			Utils.drawStringCentered(EnumChatFormatting.RED + "No data found", guiLeft + 431 / 2f, guiTop + 101, true, 0);
+			Utils.drawStringCentered(ChatFormatting.RED + "No data found", guiLeft + 431 / 2f, guiTop + 101, true, 0);
 			return;
 		}
 		JsonObject trophyObject = profileInformation.getAsJsonObject("trophy_fish");
@@ -174,7 +174,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(thunder_sc, guiLeft + 16, guiTop + 108);
 
 		Utils.drawStringF(
-			EnumChatFormatting.AQUA + "Thunder Kills: §f" + thunderKills,
+			ChatFormatting.AQUA + "Thunder Kills: §f" + thunderKills,
 			guiLeft + 36, guiTop + 112, true, 0
 		);
 
@@ -188,7 +188,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		), 0);
 
 		Utils.drawStringF(
-			EnumChatFormatting.AQUA + "Lord Jawbus Kills: §f" + jawbusKills,
+			ChatFormatting.AQUA + "Lord Jawbus Kills: §f" + jawbusKills,
 			guiLeft + 36, guiTop + 124, true, 0
 		);
 
@@ -197,7 +197,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		);
 		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(fishing_rod, guiLeft + 20, guiTop + 21);
 
-		Utils.drawStringF(EnumChatFormatting.AQUA + "Total Caught: §f" + totalCount, guiLeft + 38, guiTop + 25, true, 0);
+		Utils.drawStringF(ChatFormatting.AQUA + "Total Caught: §f" + totalCount, guiLeft + 38, guiTop + 25, true, 0);
 
 		ArrayList<TrophyFish> arrayList = new ArrayList<>(trophyFishList.values());
 		arrayList.sort((c1, c2) -> Integer.compare(c2.getTotal(), c1.getTotal()));
@@ -332,17 +332,17 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		tooltip.add(" ");
 
 		if (trophyFishRarityIntegerMap == null) {
-			tooltip.add(EnumChatFormatting.RED + checkX + " Not Discovered");
+			tooltip.add(ChatFormatting.RED + checkX + " Not Discovered");
 			tooltip.add(" ");
 		}
 
-		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.DIAMOND, EnumChatFormatting.AQUA));
-		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.GOLD, EnumChatFormatting.GOLD));
-		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.SILVER, EnumChatFormatting.GRAY));
-		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.BRONZE, EnumChatFormatting.DARK_GRAY));
+		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.DIAMOND, ChatFormatting.AQUA));
+		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.GOLD, ChatFormatting.GOLD));
+		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.SILVER, ChatFormatting.GRAY));
+		tooltip.add(display(trophyFishRarityIntegerMap, TrophyFish.TrophyFishRarity.BRONZE, ChatFormatting.DARK_GRAY));
 		if (trophyFishList.get(name) != null) {
 			tooltip.add(" ");
-			tooltip.add(EnumChatFormatting.GRAY + "Total: " + EnumChatFormatting.GOLD +
+			tooltip.add(ChatFormatting.GRAY + "Total: " + ChatFormatting.GOLD +
 				StringUtils.formatNumber(trophyFishList.get(name).getTotal()));
 		}
 		return tooltip;
@@ -351,7 +351,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 	private String display(
 		Map<TrophyFish.TrophyFishRarity, Integer> trophyFishRarityIntegerMap,
 		TrophyFish.TrophyFishRarity rarity,
-		EnumChatFormatting color
+		ChatFormatting color
 	) {
 		String name = WordUtils.capitalize(rarity.name().toLowerCase(Locale.US));
 		if (trophyFishRarityIntegerMap == null) {
@@ -359,7 +359,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		}
 
 		if (trophyFishRarityIntegerMap.containsKey(rarity)) {
-			return color + name + ": " + EnumChatFormatting.GOLD + StringUtils.formatNumber(trophyFishRarityIntegerMap.get(
+			return color + name + ": " + ChatFormatting.GOLD + StringUtils.formatNumber(trophyFishRarityIntegerMap.get(
 				rarity));
 		} else {
 			return color + name + ": " + checkX;

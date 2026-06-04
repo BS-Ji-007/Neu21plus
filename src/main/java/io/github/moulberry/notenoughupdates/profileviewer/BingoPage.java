@@ -117,7 +117,7 @@ public class BingoPage extends GuiProfileViewerPage {
 					dye = true;
 					completed = true;
 				} else {
-					material = Items.paper;
+					material = Items.PAPER;
 				}
 			}
 
@@ -143,20 +143,20 @@ public class BingoPage extends GuiProfileViewerPage {
 		}
 
 		String totalPointsString =
-			EnumChatFormatting.AQUA + "Collected Points: " + EnumChatFormatting.WHITE + lastEvent.get("points").getAsInt();
+			ChatFormatting.AQUA + "Collected Points: " + ChatFormatting.WHITE + lastEvent.get("points").getAsInt();
 		int totalGoals = completedGoals.size();
 		String personalGoalsString;
 		if (totalGoals == 20) {
-			personalGoalsString = EnumChatFormatting.AQUA + "Personal Goals: " + EnumChatFormatting.GOLD + "20/20";
+			personalGoalsString = ChatFormatting.AQUA + "Personal Goals: " + ChatFormatting.GOLD + "20/20";
 		} else {
 			personalGoalsString =
-				EnumChatFormatting.AQUA +
+				ChatFormatting.AQUA +
 					"Personal Goals: " +
-					EnumChatFormatting.WHITE +
+					ChatFormatting.WHITE +
 					completedGoals.size() +
-					EnumChatFormatting.GOLD +
+					ChatFormatting.GOLD +
 					"/" +
-					EnumChatFormatting.WHITE +
+					ChatFormatting.WHITE +
 					20;
 		}
 		Utils.drawStringF(totalPointsString, guiLeft + 22, guiTop + 19, true, 0);
@@ -190,11 +190,11 @@ public class BingoPage extends GuiProfileViewerPage {
 			filled = (int) Math.round((percentage / 100) * 20);
 		}
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(EnumChatFormatting.DARK_GREEN);
+		stringBuilder.append(ChatFormatting.DARK_GREEN);
 		for (int i = 0; i < totalFields; i++) {
 			stringBuilder.append("-");
 			if (i > filled) {
-				stringBuilder.append(EnumChatFormatting.GRAY);
+				stringBuilder.append(ChatFormatting.GRAY);
 			}
 		}
 
@@ -227,69 +227,69 @@ public class BingoPage extends GuiProfileViewerPage {
 
 			String nextTierString = Utils.shortNumberFormat(nextTier, 0);
 			String progressString = Utils.shortNumberFormat(progress, 0);
-			tooltip.add(EnumChatFormatting.GREEN + name + " " + finalTier);
-			tooltip.add(EnumChatFormatting.DARK_GRAY + "Community Goal");
+			tooltip.add(ChatFormatting.GREEN + name + " " + finalTier);
+			tooltip.add(ChatFormatting.DARK_GRAY + "Community Goal");
 			tooltip.add("");
 			tooltip.add(
-				EnumChatFormatting.GRAY +
+				ChatFormatting.GRAY +
 					"Progress to " +
 					name +
 					" " +
 					nextTierNum +
 					": " +
-					EnumChatFormatting.YELLOW +
+					ChatFormatting.YELLOW +
 					progressToNextTier +
-					EnumChatFormatting.GOLD +
+					ChatFormatting.GOLD +
 					"%"
 			);
 			tooltip.add(
 				progressBar +
-					EnumChatFormatting.YELLOW +
+					ChatFormatting.YELLOW +
 					" " +
 					progressString +
-					EnumChatFormatting.GOLD +
+					ChatFormatting.GOLD +
 					"/" +
-					EnumChatFormatting.YELLOW +
+					ChatFormatting.YELLOW +
 					nextTierString
 			);
 			tooltip.add("");
-			tooltip.add(EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "Community Goals are");
+			tooltip.add(ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "Community Goals are");
 			tooltip.add(
-				EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "collaborative - anyone with a");
+				ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "collaborative - anyone with a");
 			tooltip.add(
-				EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "Bingo profile can help to reach");
-			tooltip.add(EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "the goal!");
+				ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "Bingo profile can help to reach");
+			tooltip.add(ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "the goal!");
 			tooltip.add("");
-			tooltip.add(EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "The more you contribute");
+			tooltip.add(ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "The more you contribute");
 			tooltip.add(
-				EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "towards the goal, the more you");
-			tooltip.add(EnumChatFormatting.DARK_GRAY.toString() + EnumChatFormatting.ITALIC + "will be rewarded");
+				ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "towards the goal, the more you");
+			tooltip.add(ChatFormatting.DARK_GRAY.toString() + ChatFormatting.ITALIC + "will be rewarded");
 
 			if (finalTier == totalTiers) {
 				tooltip.add("");
-				tooltip.add(EnumChatFormatting.GREEN + "GOAL REACHED");
+				tooltip.add(ChatFormatting.GREEN + "GOAL REACHED");
 			}
 		} else {
-			tooltip.add(EnumChatFormatting.GREEN + goal.get("name").getAsString());
-			tooltip.add(EnumChatFormatting.DARK_GRAY + "Personal Goal");
+			tooltip.add(ChatFormatting.GREEN + goal.get("name").getAsString());
+			tooltip.add(ChatFormatting.DARK_GRAY + "Personal Goal");
 			tooltip.add("");
 			tooltip.add(goal.get("lore").getAsString());
 			tooltip.add("");
-			tooltip.add(EnumChatFormatting.GRAY + "Reward");
-			tooltip.add(EnumChatFormatting.GOLD + "1 Bingo Point");
+			tooltip.add(ChatFormatting.GRAY + "Reward");
+			tooltip.add(ChatFormatting.GOLD + "1 Bingo Point");
 			if (completed) {
 				tooltip.add("");
-				tooltip.add(EnumChatFormatting.GREEN + "GOAL REACHED");
+				tooltip.add(ChatFormatting.GREEN + "GOAL REACHED");
 			} else {
 				tooltip.add("");
-				tooltip.add(EnumChatFormatting.RED + "You have not reached this goal!");
+				tooltip.add(ChatFormatting.RED + "You have not reached this goal!");
 			}
 		}
 		return tooltip;
 	}
 
 	private void showMissingDataMessage(int guiLeft, int guiTop) {
-		String message = EnumChatFormatting.RED + "No Bingo data for current event!";
+		String message = ChatFormatting.RED + "No Bingo data for current event!";
 		Utils.drawStringCentered(message, guiLeft + 431 / 2f, guiTop + 101, true, 0);
 	}
 

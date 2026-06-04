@@ -257,8 +257,8 @@ public class DungeonNpcProfitOverlay {
 			Utils.renderAlignedString(
 				chestProfit.name,
 				(chestProfit.profit > 0
-					? EnumChatFormatting.GREEN + Utils.shortNumberFormat(chestProfit.profit, 0)
-					: EnumChatFormatting.RED + "-" + Utils.shortNumberFormat(-chestProfit.profit, 0)),
+					? ChatFormatting.GREEN + Utils.shortNumberFormat(chestProfit.profit, 0)
+					: ChatFormatting.RED + "-" + Utils.shortNumberFormat(-chestProfit.profit, 0)),
 				x,
 				y,
 				160
@@ -310,18 +310,18 @@ public class DungeonNpcProfitOverlay {
 				double cost = item.calculateCost();
 				profit += cost;
 				lore.add(
-					EnumChatFormatting.AQUA + " - " + item.getName().getString() + EnumChatFormatting.RESET + " " +
-						EnumChatFormatting.GREEN +
+					ChatFormatting.AQUA + " - " + item.getName().getString() + ChatFormatting.RESET + " " +
+						ChatFormatting.GREEN +
 						Utils.shortNumberFormat(cost, 0));
 			}
 			lore.add("");
 			profit -= costToOpen;
 			lore.add(
-				EnumChatFormatting.AQUA + "Cost to open: " + EnumChatFormatting.RED + Utils.shortNumberFormat(costToOpen, 0));
+				ChatFormatting.AQUA + "Cost to open: " + ChatFormatting.RED + Utils.shortNumberFormat(costToOpen, 0));
 			lore.add(
-				EnumChatFormatting.AQUA + "Total profit: " +
-					(profit > 0 ? EnumChatFormatting.GREEN + Utils.shortNumberFormat(profit, 0)
-						: EnumChatFormatting.RED + "-" + Utils.shortNumberFormat(
+				ChatFormatting.AQUA + "Total profit: " +
+					(profit > 0 ? ChatFormatting.GREEN + Utils.shortNumberFormat(profit, 0)
+						: ChatFormatting.RED + "-" + Utils.shortNumberFormat(
 							-profit,
 							0
 						)));

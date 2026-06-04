@@ -192,15 +192,15 @@ public class RepoExporters {
 					))
 				) {
 					writer.write(gson.toJson(jsonObject));
-					Utils.addChatMessage(EnumChatFormatting.AQUA + "Parsed and saved: " + EnumChatFormatting.WHITE + id);
+					Utils.addChatMessage(ChatFormatting.AQUA + "Parsed and saved: " + ChatFormatting.WHITE + id);
 				}
 			} catch (IOException ignored) {
-				Utils.addChatMessage(EnumChatFormatting.RED + "Error while writing file.");
+				Utils.addChatMessage(ChatFormatting.RED + "Error while writing file.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Utils.addChatMessage(
-				EnumChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details.");
+				ChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details.");
 		}
 	}
 
@@ -285,17 +285,17 @@ public class RepoExporters {
 					) {
 						writer.write(gson.toJson(jsonObject));
 						Utils.addChatMessage(
-							EnumChatFormatting.AQUA + "Parsed and saved: " + EnumChatFormatting.WHITE + id);
+							ChatFormatting.AQUA + "Parsed and saved: " + ChatFormatting.WHITE + id);
 					}
 				} catch (IOException ignored) {
 					Utils.addChatMessage(
-						EnumChatFormatting.RED + "Error while writing file.");
+						ChatFormatting.RED + "Error while writing file.");
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
-				EnumChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details."));
+				ChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details."));
 		}
 	}
 
@@ -312,7 +312,7 @@ public class RepoExporters {
 			String internalName = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 			if (internalName == null) {
 				Utils.addChatMessage(
-					EnumChatFormatting.RED + "ERROR: Could not get internal name for: " + EnumChatFormatting.AQUA +
+					ChatFormatting.RED + "ERROR: Could not get internal name for: " + ChatFormatting.AQUA +
 						stack.getName().getString());
 				continue;
 			}
@@ -334,9 +334,9 @@ public class RepoExporters {
 
 			if (!NEUItemEditor.saveOnly(internalName, itemObject)) {
 				Utils.addChatMessage(
-					EnumChatFormatting.RED + "ERROR: Failed to save item: " + EnumChatFormatting.AQUA + stack.getName().getString());
+					ChatFormatting.RED + "ERROR: Failed to save item: " + ChatFormatting.AQUA + stack.getName().getString());
 			}
 		}
-		Utils.addChatMessage(EnumChatFormatting.AQUA + "Parsed page: " + lower.getName().getString().getUnformattedText());
+		Utils.addChatMessage(ChatFormatting.AQUA + "Parsed page: " + lower.getName().getString().getUnformattedText());
 	}
 }

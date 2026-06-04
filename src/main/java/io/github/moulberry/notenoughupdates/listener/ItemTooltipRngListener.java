@@ -164,7 +164,7 @@ public class ItemTooltipRngListener {
 
 		double coinsPer = ((profit / needed) * multiplier) - cost;
 		String format = StringUtils.shortNumberFormat(coinsPer);
-		EnumChatFormatting profitIndicator = coinsPer >= 0 ? EnumChatFormatting.GREEN : EnumChatFormatting.RED;
+		ChatFormatting profitIndicator = coinsPer >= 0 ? ChatFormatting.GREEN : ChatFormatting.RED;
 		return "§7Coins per " + label + ": " + profitIndicator + format + " coins";
 	}
 

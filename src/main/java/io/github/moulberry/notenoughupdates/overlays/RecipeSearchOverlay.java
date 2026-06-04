@@ -62,8 +62,8 @@ public class RecipeSearchOverlay extends SearchOverlayScreen {
 
 	private static final ItemStack recipeSearchStack = Utils.createItemStack(
 		Items.golden_pickaxe,
-		EnumChatFormatting.GREEN + "Recipe Search",
-		EnumChatFormatting.YELLOW + "Click to open Recipe Search!"
+		ChatFormatting.GREEN + "Recipe Search",
+		ChatFormatting.YELLOW + "Click to open Recipe Search!"
 	);
 
 	@SubscribeEvent

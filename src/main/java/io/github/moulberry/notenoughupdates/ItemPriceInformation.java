@@ -134,8 +134,8 @@ public class ItemPriceInformation {
 			long lastUpdate = NotEnoughUpdates.INSTANCE.manager.auctionManager.getLastLowestBinUpdateTime();
 			//check if info is older than 10 minutes
 			if (currentTime - lastUpdate > 600 * 1000 && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
-				tooltip.add(EnumChatFormatting.RED + "[NEU] Price info is outdated.");
-				tooltip.add(EnumChatFormatting.RED + "It will be updated again as soon as possible.");
+				tooltip.add(ChatFormatting.RED + "[NEU] Price info is outdated.");
+				tooltip.add(ChatFormatting.RED + "It will be updated again as soon as possible.");
 			}
 		}
 
@@ -178,7 +178,7 @@ public class ItemPriceInformation {
 							if (!added) {
 								tooltip.add("");
 								if (!shiftPressed)
-									tooltip.add(EnumChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
+									tooltip.add(ChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
 								added = true;
 							}
 							double bazaarBuyPrice = bazaarInfo.get("avg_buy").getAsFloat() * stackMultiplier;
@@ -190,7 +190,7 @@ public class ItemPriceInformation {
 							if (!added) {
 								tooltip.add("");
 								if (!shiftPressed)
-									tooltip.add(EnumChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
+									tooltip.add(ChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
 								added = true;
 							}
 							double bazaarSellPrice = bazaarInfo.get("avg_sell").getAsDouble() * stackMultiplier;
@@ -202,7 +202,7 @@ public class ItemPriceInformation {
 							if (!added) {
 								tooltip.add("");
 								if (!shiftPressed)
-									tooltip.add(EnumChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
+									tooltip.add(ChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
 								added = true;
 							}
 							double bazaarInstantBuyPrice = bazaarInfo.get("curr_buy").getAsFloat() * stackMultiplier;
@@ -214,7 +214,7 @@ public class ItemPriceInformation {
 							if (!added) {
 								tooltip.add("");
 								if (!shiftPressed)
-									tooltip.add(EnumChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
+									tooltip.add(ChatFormatting.DARK_GRAY + "[SHIFT show x" + shiftStackMultiplier + "]");
 								added = true;
 							}
 							double bazaarInstantSellPrice = bazaarInfo.get("curr_sell").getAsFloat() * stackMultiplier;
@@ -242,9 +242,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Buys (Hourly): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instabuys_hourly").getAsFloat()));
 						}
 						break;
@@ -255,9 +255,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Sells (Hourly): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instasells_hourly").getAsFloat()));
 						}
 						break;
@@ -268,9 +268,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Buys (Daily): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instabuys_daily").getAsFloat()));
 						}
 						break;
@@ -281,9 +281,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Sells (Daily): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instasells_daily").getAsFloat()));
 						}
 						break;
@@ -294,9 +294,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Buys (Weekly): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instabuys_weekly").getAsFloat()));
 						}
 						break;
@@ -307,9 +307,9 @@ public class ItemPriceInformation {
 								added = true;
 							}
 
-							tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD +
+							tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD +
 								"Insta-Sells (Weekly): " +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								ChatFormatting.GOLD + ChatFormatting.BOLD +
 								format.format(bazaarInfo.get("instasells_weekly").getAsFloat()));
 						}
 						break;
@@ -355,15 +355,15 @@ public class ItemPriceInformation {
 								added = true;
 							}
 							if (auctionInfo.has("clean_price")) {
-								tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "AH Sales (Clean): " +
-									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "AH Sales (Clean): " +
+									ChatFormatting.GOLD + ChatFormatting.BOLD +
 									(auctionInfo.get("clean_sales").getAsFloat() < 2 ?
 										format.format(auctionInfo.get("clean_sales").getAsFloat()) + " sale/day"
 										:
 											format.format(auctionInfo.get("clean_sales").getAsFloat()) + " sales/day"));
 							} else {
-								tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "AH Sales: " +
-									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD +
+								tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "AH Sales: " +
+									ChatFormatting.GOLD + ChatFormatting.BOLD +
 									(auctionInfo.get("sales").getAsFloat() < 2 ? format.format(auctionInfo.get("sales").getAsFloat()) +
 										" sale/day"
 										: format.format(auctionInfo.get("sales").getAsFloat()) +
@@ -416,8 +416,8 @@ public class ItemPriceInformation {
 							}
 
 							if (dungeonizeCost > 0) {
-								tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "Dungeonize Cost: " +
-									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + dungeonizeCost + " " + essenceType);
+								tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "Dungeonize Cost: " +
+									ChatFormatting.GOLD + ChatFormatting.BOLD + dungeonizeCost + " " + essenceType);
 							}
 						} else if (dungeonItemLevel >= 0) {
 							String nextStarLevelString = (dungeonItemLevel + 1) + "";
@@ -426,15 +426,15 @@ public class ItemPriceInformation {
 							if (itemCosts.has(nextStarLevelString)) {
 								int upgradeCost = itemCosts.get(nextStarLevelString).getAsInt();
 								String starString = Utils.getStarsString(nextStarLevelInt);
-								tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "Upgrade to " +
-									starString + EnumChatFormatting.YELLOW + EnumChatFormatting.BOLD + ": " +
-									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + upgradeCost + " " + essenceType);
+								tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "Upgrade to " +
+									starString + ChatFormatting.YELLOW + ChatFormatting.BOLD + ": " +
+									ChatFormatting.GOLD + ChatFormatting.BOLD + upgradeCost + " " + essenceType);
 								if (requiresItems && itemsObject.has(nextStarLevelString)) {
 									boolean shouldShow = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) ||
 										NotEnoughUpdates.INSTANCE.config.tooltipTweaks.alwaysShowRequiredItems;
 
 									if (shouldShow) {
-										tooltip.add(EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "Required Items:");
+										tooltip.add(ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "Required Items:");
 										for (JsonElement item : itemsObject.get(nextStarLevelString).getAsJsonArray()) {
 											if (item.getAsString().contains("§")) {
 												//TODO show outdated repo notification when 2.1.1 releases
@@ -447,7 +447,7 @@ public class ItemPriceInformation {
 												String amount = itemString.substring(colon + 1);
 												String requiredItem = itemString.substring(0, colon);
 												if (requiredItem.equals("SKYBLOCK_COIN")) {
-													tooltip.add("  - " + EnumChatFormatting.GOLD + amount + " Coins");
+													tooltip.add("  - " + ChatFormatting.GOLD + amount + " Coins");
 												}
 
 												if (NotEnoughUpdates.INSTANCE.manager.isValidInternalName(requiredItem)) {
@@ -458,13 +458,13 @@ public class ItemPriceInformation {
 
 													if (itemObject != null && itemObject.has("displayname")) {
 														String displayName = itemObject.get("displayname").getAsString();
-														tooltip.add("  - " + displayName + EnumChatFormatting.DARK_GRAY + " x" + amount);
+														tooltip.add("  - " + displayName + ChatFormatting.DARK_GRAY + " x" + amount);
 													}
 												}
 											}
 										}
 									} else {
-										tooltip.add(EnumChatFormatting.DARK_GRAY + "[CTRL to show required items]");
+										tooltip.add(ChatFormatting.DARK_GRAY + "[CTRL to show required items]");
 									}
 								}
 							}
@@ -482,7 +482,7 @@ public class ItemPriceInformation {
 				tooltip.add(formatPrice("Raw Craft Cost: ", cost));
 			}
 		} else if (auctionInfoErrored && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
-			String message = EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "[NEU] API is down";
+			String message = ChatFormatting.RED.toString() + ChatFormatting.BOLD + "[NEU] API is down";
 			if (auctionableItems != null && !auctionableItems.isEmpty()) {
 				if (auctionableItems.contains(internalname)) {
 					tooltip.add(message);
@@ -500,15 +500,15 @@ public class ItemPriceInformation {
 
 		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.museumDonationStatus) {
 			if (!MuseumTooltipManager.INSTANCE.hasPlayerVisitedMuseum()) {
-				tooltip.add(EnumChatFormatting.RED + EnumChatFormatting.BOLD.toString() +
+				tooltip.add(ChatFormatting.RED + ChatFormatting.BOLD.toString() +
 					"[NEU] Visit your Museum to display donation status");
 			}
 			if (MuseumTooltipManager.INSTANCE.isItemDonated(internalname)) {
 				tooltip.add(
-					EnumChatFormatting.YELLOW + "Item already donated to museum");
+					ChatFormatting.YELLOW + "Item already donated to museum");
 			} else if (MuseumTooltipManager.INSTANCE.canItemBeDonated(internalname)) {
 				tooltip.add(
-					EnumChatFormatting.RED + "Item not donated to museum");
+					ChatFormatting.RED + "Item not donated to museum");
 			}
 		}
 	}

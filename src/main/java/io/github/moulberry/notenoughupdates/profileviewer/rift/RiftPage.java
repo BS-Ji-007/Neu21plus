@@ -159,7 +159,7 @@ public class RiftPage extends GuiProfileViewerPage {
 					getInstance().tooltipToDisplay = tooltip;
 				}
 			} else if (size > 0) {
-				String montezumaError = EnumChatFormatting.RED + "Could not get pet";
+				String montezumaError = ChatFormatting.RED + "Could not get pet";
 				Utils.drawStringCentered(montezumaError, guiLeft + 91 / 2f, guiTop + 158 + 10, true, 0);
 			}
 		}
@@ -186,8 +186,8 @@ public class RiftPage extends GuiProfileViewerPage {
 		if (rift.gallery != null && rift.gallery.secured_trophies != null) {
 			JsonArray timecharm = rift.gallery.secured_trophies;
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "Timecharms:",
-				EnumChatFormatting.WHITE.toString() + timecharm.size() + "/8",
+				ChatFormatting.RED + "Timecharms:",
+				ChatFormatting.WHITE.toString() + timecharm.size() + "/8",
 				guiLeft + 336,
 				guiTop + 39,
 				83
@@ -204,11 +204,11 @@ public class RiftPage extends GuiProfileViewerPage {
 					if (timecharmItem != null) {
 						displayNames.add(timecharmItem.getName().getString() + "§7: §a✔");
 					} else {
-						displayNames.add(EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "ERROR LOADING TIMECHARM!");
-						displayNames.add(EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "PLEASE REPORT THIS AT " +
-							EnumChatFormatting.GOLD + Utils.getDiscordInvite());
-						displayNames.add(EnumChatFormatting.RED.toString() + EnumChatFormatting.BOLD + "WITH THE FOLLOWING TEXT: " +
-							EnumChatFormatting.AQUA + timecharmType);
+						displayNames.add(ChatFormatting.RED.toString() + ChatFormatting.BOLD + "ERROR LOADING TIMECHARM!");
+						displayNames.add(ChatFormatting.RED.toString() + ChatFormatting.BOLD + "PLEASE REPORT THIS AT " +
+							ChatFormatting.GOLD + Utils.getDiscordInvite());
+						displayNames.add(ChatFormatting.RED.toString() + ChatFormatting.BOLD + "WITH THE FOLLOWING TEXT: " +
+							ChatFormatting.AQUA + timecharmType);
 					}
 				}
 				getInstance().tooltipToDisplay = displayNames;
@@ -219,8 +219,8 @@ public class RiftPage extends GuiProfileViewerPage {
 
 		int grubberStacks = rift.castle.grubber_stacks;
 		Utils.renderAlignedString(
-			EnumChatFormatting.GOLD + "Burger:",
-			EnumChatFormatting.WHITE.toString() + grubberStacks + "/5",
+			ChatFormatting.GOLD + "Burger:",
+			ChatFormatting.WHITE.toString() + grubberStacks + "/5",
 			guiLeft + 331,
 			guiTop + 87,
 			83
@@ -231,7 +231,7 @@ public class RiftPage extends GuiProfileViewerPage {
 
 		Utils.renderAlignedString(
 			"§6Vampire",
-			EnumChatFormatting.WHITE.toString() + (int) vampire.level,
+			ChatFormatting.WHITE.toString() + (int) vampire.level,
 			guiLeft + 336,
 			guiTop + 61,
 			60
@@ -250,14 +250,14 @@ public class RiftPage extends GuiProfileViewerPage {
 				tooltipToDisplay.add("§6Vampire Slayer");
 				if (vampire.maxed) {
 					tooltipToDisplay.add(
-						EnumChatFormatting.GRAY + "Progress: " + EnumChatFormatting.GOLD + "MAXED!");
+						ChatFormatting.GRAY + "Progress: " + ChatFormatting.GOLD + "MAXED!");
 				} else {
 					int maxXp = (int) vampire.maxXpForLevel;
 					getInstance()
 						.tooltipToDisplay.add(
-							EnumChatFormatting.GRAY +
+							ChatFormatting.GRAY +
 								"Progress: " +
-								EnumChatFormatting.DARK_PURPLE +
+								ChatFormatting.DARK_PURPLE +
 								StringUtils.shortNumberFormat(Math.round((vampire.level % 1) * maxXp)) +
 								"/" +
 								StringUtils.shortNumberFormat(maxXp));
@@ -269,8 +269,8 @@ public class RiftPage extends GuiProfileViewerPage {
 			int foundSouls = rift.enigma.found_souls.size();
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.DARK_PURPLE + "Enigma Souls:",
-				EnumChatFormatting.WHITE.toString() + foundSouls + "/52",
+				ChatFormatting.DARK_PURPLE + "Enigma Souls:",
+				ChatFormatting.WHITE.toString() + foundSouls + "/52",
 				guiLeft + 331,
 				guiTop + 110,
 				83
@@ -280,7 +280,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		}
 
 		if (riftInventory == null) {
-			String message = EnumChatFormatting.RED + "Inventory API not enabled!";
+			String message = ChatFormatting.RED + "Inventory API not enabled!";
 			Utils.drawStringCentered(message, guiLeft + 431 / 2f, guiTop + 61, true, 0);
 		}
 
@@ -568,7 +568,7 @@ public class RiftPage extends GuiProfileViewerPage {
 	}
 
 	public void drawErrorMessage() {
-		String message = EnumChatFormatting.RED + "No Rift data available!";
+		String message = ChatFormatting.RED + "No Rift data available!";
 		Utils.drawStringCentered(message, guiLeft + 431 / 2f, guiTop + 61, true, 0);
 	}
 }

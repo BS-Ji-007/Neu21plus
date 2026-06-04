@@ -336,7 +336,7 @@ public class CustomItemEffects {
 				if (NotEnoughUpdates.INSTANCE.config.itemOverlays.enableEtherwarpHelperOverlay) {
 					if (denyTpReason != null && !NotEnoughUpdates.INSTANCE.config.itemOverlays.hideEtherwarpFailText) {
 						ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
-						Utils.drawStringCentered(EnumChatFormatting.RED + "Can't TP: " + denyTpReason,
+						Utils.drawStringCentered(ChatFormatting.RED + "Can't TP: " + denyTpReason,
 							Minecraft.getInstance().font,
 							scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 2f + 10, true, 0
 						);
@@ -397,7 +397,7 @@ public class CustomItemEffects {
 
 		boolean usingDirtWand = false;
 		int itemCount;
-		if (match.getBlock() == Blocks.dirt && matchStack.getItemDamage() == 0 && hasDirtWand()) {
+		if (match.getBlock() == Blocks.DIRT && matchStack.getItemDamage() == 0 && hasDirtWand()) {
 			itemCount = candidatesOld.size();
 			usingDirtWand = true;
 		} else {
@@ -407,7 +407,7 @@ public class CustomItemEffects {
 
 		if (candidatesOld.size() > MAX_BUILDERS_BLOCKS) {
 			Utils.drawStringCentered(
-				EnumChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
+				ChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
 				Minecraft.getInstance().font,
 				scaledResolution.getScaledWidth() / 2f,
 				scaledResolution.getScaledHeight() / 2f + 10,
@@ -415,9 +415,9 @@ public class CustomItemEffects {
 				0
 			);
 		} else {
-			String pre = EnumChatFormatting.GREEN.toString();
+			String pre = ChatFormatting.GREEN.toString();
 			if (itemCount < candidatesOld.size()) {
-				pre = EnumChatFormatting.RED.toString();
+				pre = ChatFormatting.RED.toString();
 			}
 			Utils.drawStringCentered(pre + Math.min(candidatesOld.size(), itemCount) + "/" +
 					Math.min(candidatesOld.size(), MAX_BUILDERS_BLOCKS),
@@ -426,7 +426,7 @@ public class CustomItemEffects {
 			);
 		}
 
-		String itemCountS = EnumChatFormatting.DARK_GRAY + "x" + EnumChatFormatting.RESET + itemCount;
+		String itemCountS = ChatFormatting.DARK_GRAY + "x" + ChatFormatting.RESET + itemCount;
 		int itemCountLen = Minecraft.getInstance().font.getStringWidth(itemCountS);
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
@@ -482,7 +482,7 @@ public class CustomItemEffects {
 				)
 		);
 		if (!Minecraft.getInstance().player.isSneaking()) matchStack = getFirstItemInRuler();
-		match = Blocks.dirt.getDefaultState();
+		match = Blocks.DIRT.getDefaultState();
 		if (matchStack == null) return;
 		if (matchStack.getItem() == null) return;
 
@@ -500,7 +500,7 @@ public class CustomItemEffects {
 		if (Minecraft.getInstance().player.isSneaking()) {
 			itemCount = candidatesOld.size();
 		} else {
-			if (match.getBlock() == Blocks.dirt && matchStack.getItemDamage() == 0 && hasDirtWand()) {
+			if (match.getBlock() == Blocks.DIRT && matchStack.getItemDamage() == 0 && hasDirtWand()) {
 				itemCount = candidatesOld.size();
 				usingDirtWand = true;
 			} else {
@@ -512,7 +512,7 @@ public class CustomItemEffects {
 		if (!Minecraft.getInstance().player.isSneaking()) {
 			if (candidatesOld.size() > MAX_BUILDERS_BLOCKS) {
 				Utils.drawStringCentered(
-					EnumChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
+					ChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
 					Minecraft.getInstance().font,
 					scaledResolution.getScaledWidth() / 2f,
 					scaledResolution.getScaledHeight() / 2f + 10,
@@ -520,7 +520,7 @@ public class CustomItemEffects {
 					0
 				);
 			} else {
-				String pre = EnumChatFormatting.GREEN.toString();
+				String pre = ChatFormatting.GREEN.toString();
 				Utils.drawStringCentered(pre + Math.min(candidatesOld.size(), itemCount) + "/" +
 						Math.min(candidatesOld.size(), MAX_BUILDERS_BLOCKS),
 					Minecraft.getInstance().font,
@@ -529,7 +529,7 @@ public class CustomItemEffects {
 			}
 		}
 
-		String itemCountS = EnumChatFormatting.DARK_GRAY + "x" + EnumChatFormatting.RESET + itemCount;
+		String itemCountS = ChatFormatting.DARK_GRAY + "x" + ChatFormatting.RESET + itemCount;
 		int itemCountLen = Minecraft.getInstance().font.getStringWidth(itemCountS);
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
@@ -944,12 +944,12 @@ public class CustomItemEffects {
 
 				String special = NotEnoughUpdates.INSTANCE.config.itemOverlays.wandOverlayColour;
 
-				AxisAlignedBB bb = Blocks.dirt.getSelectedBoundingBox(Minecraft.getInstance().level, hover);
-				drawBlock((int) bb.minX, (int) bb.minY, (int) bb.minZ + 1, Blocks.dirt.getDefaultState(),
+				AxisAlignedBB bb = Blocks.DIRT.getSelectedBoundingBox(Minecraft.getInstance().level, hover);
+				drawBlock((int) bb.minX, (int) bb.minY, (int) bb.minZ + 1, Blocks.DIRT.getDefaultState(),
 					event.partialTicks, 0.75f
 				);
 
-				AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(Minecraft.getInstance().level, hover)
+				AxisAlignedBB bbExpanded = Blocks.DIRT.getSelectedBoundingBox(Minecraft.getInstance().level, hover)
 																							.expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2);
 				drawOutlineBoundingBox(bbExpanded, 1f, special);
 
@@ -1056,7 +1056,7 @@ public class CustomItemEffects {
 
 			int radius = heldInternal.equals("HOE_OF_GREAT_TILLING") ? 1 : 2;
 
-			if (targetState.getBlock() == Blocks.dirt || targetState.getBlock() == Blocks.grass) {
+			if (targetState.getBlock() == Blocks.DIRT || targetState.getBlock() == Blocks.grass) {
 				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 				com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -1069,9 +1069,9 @@ public class CustomItemEffects {
 						BlockPos airPos = renderPos.add(0, 1, 0);
 						IBlockState renderState = Minecraft.getInstance().level.getBlockState(renderPos);
 						IBlockState airState = Minecraft.getInstance().level.getBlockState(airPos);
-						if (renderState.getBlock() == Blocks.dirt ||
+						if (renderState.getBlock() == Blocks.DIRT ||
 							renderState.getBlock() == Blocks.grass && airState.getBlock() == Blocks.air) {
-							AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
+							AxisAlignedBB bbExpanded = Blocks.DIRT.getSelectedBoundingBox(
 																								 Minecraft.getInstance().level,
 																								 renderPos
 																							 )
@@ -1092,7 +1092,7 @@ public class CustomItemEffects {
 			BlockPos target = event.target.getBlockPos();
 			IBlockState targetState = Minecraft.getInstance().level.getBlockState(target);
 
-			if (targetState.getBlock() == Blocks.dirt || targetState.getBlock() == Blocks.grass) {
+			if (targetState.getBlock() == Blocks.DIRT || targetState.getBlock() == Blocks.grass) {
 				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 				com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -1128,7 +1128,7 @@ public class CustomItemEffects {
 						IBlockState airState = Minecraft.getInstance().level.getBlockState(airPos);
 						if (!candidatesOld.contains(renderPos) && !candidates.contains(renderPos) && !candidatesNew.contains(
 							renderPos)) {
-							if (renderState.getBlock() == Blocks.dirt ||
+							if (renderState.getBlock() == Blocks.DIRT ||
 								renderState.getBlock() == Blocks.grass && airState.getBlock() == Blocks.air) {
 								candidatesNew.add(renderPos);
 							} else {
@@ -1138,7 +1138,7 @@ public class CustomItemEffects {
 					}
 
 					for (BlockPos renderPos : candidatesNew) {
-						AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
+						AxisAlignedBB bbExpanded = Blocks.DIRT.getSelectedBoundingBox(
 																							 Minecraft.getInstance().level,
 																							 renderPos
 																						 )
@@ -1148,7 +1148,7 @@ public class CustomItemEffects {
 					}
 				}
 
-				AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
+				AxisAlignedBB bbExpanded = Blocks.DIRT.getSelectedBoundingBox(
 																					 Minecraft.getInstance().level,
 																					 target
 																				 )
@@ -1389,7 +1389,7 @@ public class CustomItemEffects {
 			);
 
 			int itemCount;
-			if (match.getBlock() == Blocks.dirt && matchStack.getItemDamage() == 0 && hasDirtWand()) {
+			if (match.getBlock() == Blocks.DIRT && matchStack.getItemDamage() == 0 && hasDirtWand()) {
 				itemCount = candidatesOld.size();
 			} else {
 				itemCount = countItemsInInventoryAndStorage(matchStack);
@@ -1472,7 +1472,7 @@ public class CustomItemEffects {
 				if (item != null) {
 					if (item instanceof ItemBlock)
 						match = ((ItemBlock) item).getBlock().getStateFromMeta(firstItemInRuler.getItemDamage());
-					else match = Blocks.dirt.getDefaultState();
+					else match = Blocks.DIRT.getDefaultState();
 				}
 			}
 
@@ -1486,7 +1486,7 @@ public class CustomItemEffects {
 			}
 			int itemCount;
 			if (matchStack != null && matchStack.getItem() != null) {
-				if (match.getBlock() == Blocks.dirt && matchStack.getItemDamage() == 0 && hasDirtWand()) {
+				if (match.getBlock() == Blocks.DIRT && matchStack.getItemDamage() == 0 && hasDirtWand()) {
 					itemCount = candidatesOld.size();
 				} else {
 					itemCount = countItemsInInventoryAndStorage(matchStack);

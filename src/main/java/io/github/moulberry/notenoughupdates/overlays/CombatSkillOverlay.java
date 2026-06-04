@@ -255,7 +255,7 @@ public class CombatSkillOverlay
 			if (kill >= 0) {
 				int counterInterp = (int) interp(kill, killLast);
 
-				lineMap.put(0, EnumChatFormatting.AQUA + "Kills: " + EnumChatFormatting.YELLOW + format.format(counterInterp));
+				lineMap.put(0, ChatFormatting.AQUA + "Kills: " + ChatFormatting.YELLOW + format.format(counterInterp));
 			}
 
 			String enchantText = "Champion: ";
@@ -267,7 +267,7 @@ public class CombatSkillOverlay
 				int counterInterp = (int) interp(championXp, championXpLast);
 				lineMap.put(
 					6,
-					EnumChatFormatting.AQUA + enchantText + EnumChatFormatting.YELLOW + format.format(counterInterp) + "/" +
+					ChatFormatting.AQUA + enchantText + ChatFormatting.YELLOW + format.format(counterInterp) + "/" +
 						championTierAmount
 				);
 			}
@@ -275,27 +275,27 @@ public class CombatSkillOverlay
 				int counterInterp = (int) interp(championXp, championXpLast);
 				lineMap.put(
 					6,
-					EnumChatFormatting.AQUA + enchantText + EnumChatFormatting.YELLOW + format.format(counterInterp) + " " +
-						EnumChatFormatting.RED + championTierAmount
+					ChatFormatting.AQUA + enchantText + ChatFormatting.YELLOW + format.format(counterInterp) + " " +
+						ChatFormatting.RED + championTierAmount
 				);
 			}
 
 			float xpInterp = xpGainHour;
 			if (xpGainHourLast == xpGainHour && xpGainHour <= 0) {
-				lineMap.put(4, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW + "N/A");
+				lineMap.put(4, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW + "N/A");
 			} else {
 				xpInterp = interp(xpGainHour, xpGainHourLast);
 
-				lineMap.put(4, EnumChatFormatting.AQUA + "XP/h: " + EnumChatFormatting.YELLOW +
-					format.format(xpInterp) + (isKilling ? "" : EnumChatFormatting.RED + " (PAUSED)"));
+				lineMap.put(4, ChatFormatting.AQUA + "XP/h: " + ChatFormatting.YELLOW +
+					format.format(xpInterp) + (isKilling ? "" : ChatFormatting.RED + " (PAUSED)"));
 			}
 
 			if (skillInfo != null && skillInfo.level < 60) {
-				StringBuilder levelStr = new StringBuilder(EnumChatFormatting.AQUA + "Combat" + ": ");
+				StringBuilder levelStr = new StringBuilder(ChatFormatting.AQUA + "Combat" + ": ");
 
-				levelStr.append(EnumChatFormatting.YELLOW)
+				levelStr.append(ChatFormatting.YELLOW)
 								.append(skillInfo.level)
-								.append(EnumChatFormatting.GRAY)
+								.append(ChatFormatting.GRAY)
 								.append(" [");
 
 				float progress = (float) (skillInfo.currentXp / skillInfo.currentXpMax);
@@ -306,16 +306,16 @@ public class CombatSkillOverlay
 				float lines = 25;
 				for (int i = 0; i < lines; i++) {
 					if (i / lines < progress) {
-						levelStr.append(EnumChatFormatting.YELLOW);
+						levelStr.append(ChatFormatting.YELLOW);
 					} else {
-						levelStr.append(EnumChatFormatting.DARK_GRAY);
+						levelStr.append(ChatFormatting.DARK_GRAY);
 					}
 					levelStr.append('|');
 				}
 
-				levelStr.append(EnumChatFormatting.GRAY)
+				levelStr.append(ChatFormatting.GRAY)
 								.append("] ")
-								.append(EnumChatFormatting.YELLOW)
+								.append(ChatFormatting.YELLOW)
 								.append((int) (progress * 100))
 								.append("%");
 
@@ -330,21 +330,21 @@ public class CombatSkillOverlay
 				}
 
 				lineMap.put(1, levelStr.toString());
-				lineMap.put(2, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(2, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 				if (remaining < 0) {
-					lineMap.put(3, EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + "MAXED!");
-					lineMap.put(5, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(3, ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + "MAXED!");
+					lineMap.put(5, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "MAXED!");
 				} else {
 					lineMap.put(
 						3,
-						EnumChatFormatting.AQUA + "Remaining XP: " + EnumChatFormatting.YELLOW + format.format(remaining)
+						ChatFormatting.AQUA + "Remaining XP: " + ChatFormatting.YELLOW + format.format(remaining)
 					);
 					if (xpGainHour < 1000) {
-						lineMap.put(5, EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW + "N/A");
+						lineMap.put(5, ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW + "N/A");
 					} else {
 						lineMap.put(
 							5,
-							EnumChatFormatting.AQUA + "ETA: " + EnumChatFormatting.YELLOW +
+							ChatFormatting.AQUA + "ETA: " + ChatFormatting.YELLOW +
 								Utils.prettyTime((long) (remaining) * 1000 * 60 * 60 / (long) xpInterp)
 						);
 					}
@@ -360,9 +360,9 @@ public class CombatSkillOverlay
 
 				lineMap.put(
 					1,
-					EnumChatFormatting.AQUA + "Combat: " + EnumChatFormatting.YELLOW + "60 " + EnumChatFormatting.RED + "(Maxed)"
+					ChatFormatting.AQUA + "Combat: " + ChatFormatting.YELLOW + "60 " + ChatFormatting.RED + "(Maxed)"
 				);
-				lineMap.put(2, EnumChatFormatting.AQUA + "Current XP: " + EnumChatFormatting.YELLOW + format.format(current));
+				lineMap.put(2, ChatFormatting.AQUA + "Current XP: " + ChatFormatting.YELLOW + format.format(current));
 
 			}
 

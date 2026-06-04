@@ -282,7 +282,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			String link = icon.substring("skull:".length());
 			if (skullMap.containsKey(link)) return skullMap.get(link);
 
-			ItemStack render = new ItemStack(Items.skull, 1, 3);
+			ItemStack render = new ItemStack(Items.PLAYER_HEAD, 1, 3);
 			CompoundTag nbt = new CompoundTag();
 			CompoundTag skullOwner = new CompoundTag();
 			CompoundTag properties = new CompoundTag();

@@ -78,13 +78,13 @@ public class DwarvenMinesWaypoints {
 	}};
 
 	private static final HashSet<String> emissaryNames = new HashSet<String>() {{
-		add(EnumChatFormatting.GOLD + "Emissary Ceanna" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD + "Emissary Carlton" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD + "Emissary Wilson" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD + "Emissary Lilith" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD + "Emissary Frasier" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD + "Emissary Eliza" + EnumChatFormatting.RESET);
-		add(EnumChatFormatting.GOLD.toString() + EnumChatFormatting.BOLD + "King" + EnumChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Ceanna" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Carlton" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Wilson" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Lilith" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Frasier" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD + "Emissary Eliza" + ChatFormatting.RESET);
+		add(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + "King" + ChatFormatting.RESET);
 	}};
 
 	private enum Emissary {
@@ -122,13 +122,13 @@ public class DwarvenMinesWaypoints {
 		Matcher matcherGhast = ghastRegex.matcher(event.message.getFormattedText());
 		if (matcherGhast.find() && config.powderGhastWaypoint) {
 			dynamicLocation = Utils.cleanColour(matcherGhast.group(1).trim());
-			dynamicName = EnumChatFormatting.GOLD + "Powder Ghast";
+			dynamicName = ChatFormatting.GOLD + "Powder Ghast";
 			dynamicMillis = System.currentTimeMillis();
 		} else {
 			Matcher matcherStar = fallenStarRegex.matcher(event.message.getFormattedText());
 			if (matcherStar.find() && config.fallenStarWaypoint) {
 				dynamicLocation = Utils.cleanColour(matcherStar.group(1).trim());
-				dynamicName = EnumChatFormatting.DARK_PURPLE + "Fallen Star";
+				dynamicName = ChatFormatting.DARK_PURPLE + "Fallen Star";
 				dynamicMillis = System.currentTimeMillis();
 			}
 		}
@@ -153,7 +153,7 @@ public class DwarvenMinesWaypoints {
 				for (int i = 0; i < lower.getSizeInventory(); i++) {
 					ItemStack stack = lower.getStackInSlot(i);
 					if (stack == null) continue;
-					if (stack.getName().getString().equals(EnumChatFormatting.YELLOW + "Commission Milestones")) {
+					if (stack.getName().getString().equals(ChatFormatting.YELLOW + "Commission Milestones")) {
 						hidden.commissionMilestone = 5;
 						String[] lore = NotEnoughUpdates.INSTANCE.manager.getLoreFromNBT(stack.getTag());
 						for (String line : lore) {
@@ -194,7 +194,7 @@ public class DwarvenMinesWaypoints {
 		if (commissionFinished && event.entity instanceof EntityArmorStand) {
 			String name = event.entity.getName().getString().getFormattedText();
 			if (emissaryRemovedDistSq > 0 && name.equals(
-				EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "CLICK" + EnumChatFormatting.RESET)) {
+				ChatFormatting.YELLOW.toString() + ChatFormatting.BOLD + "CLICK" + ChatFormatting.RESET)) {
 				EntityPlayerSP p = Minecraft.getInstance().player;
 				double distSq = event.entity.getDistanceSq(p.posX, p.posY, p.posZ);
 				if (Math.abs(distSq - emissaryRemovedDistSq) < 1) {
@@ -234,7 +234,7 @@ public class DwarvenMinesWaypoints {
 		if (locWaypoint >= 1) {
 			for (Map.Entry<String, Vector3f> entry : waypointsMap.entrySet()) {
 				if (locWaypoint >= 2) {
-					RenderUtils.renderWayPoint(EnumChatFormatting.AQUA + entry.getKey(), entry.getValue(), event.partialTicks);
+					RenderUtils.renderWayPoint(ChatFormatting.AQUA + entry.getKey(), entry.getValue(), event.partialTicks);
 				} else {
 					String commissionLocation = entry.getKey().toLowerCase(Locale.ROOT);
 					for (String commissionName : MiningOverlay.commissionProgress.keySet()) {
@@ -243,13 +243,13 @@ public class DwarvenMinesWaypoints {
 						if (commissionName.toLowerCase(Locale.ROOT).contains(commissionLocation)) {
 							if (commissionName.contains("Titanium")) {
 								RenderUtils.renderWayPoint(
-									EnumChatFormatting.WHITE + entry.getKey(),
+									ChatFormatting.WHITE + entry.getKey(),
 									entry.getValue(),
 									event.partialTicks
 								);
 							} else {
 								RenderUtils.renderWayPoint(
-									EnumChatFormatting.AQUA + entry.getKey(),
+									ChatFormatting.AQUA + entry.getKey(),
 									entry.getValue(),
 									event.partialTicks
 								);
@@ -291,7 +291,7 @@ public class DwarvenMinesWaypoints {
 						double distSq = dX * dX + dY * dY + dZ * dZ;
 						if (distSq >= 12 * 12) {
 							RenderUtils.renderWayPoint(
-								EnumChatFormatting.GOLD + emissary.name,
+								ChatFormatting.GOLD + emissary.name,
 								new Vector3f(emissary.loc).translate(0.5f, 2.488f, 0.5f),
 								event.partialTicks
 							);

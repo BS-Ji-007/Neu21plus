@@ -109,18 +109,18 @@ object CustomTodoHud {
                 strings.add(
                     encodeCustomItem(it.icon) + ":§3" + it.label + ": " +
                             if (until <= 0)
-                                EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour].toString() + "Ready!"
+                                ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.readyColour].toString() + "Ready!"
                             else if (until < 60 * 30 * 1000L)
-                                EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour].toString()
+                                ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.verySoonColour].toString()
                                         + Utils.prettyTime(until)
                             else if (until < 60 * 60 * 1000L)
-                                EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour].toString()
+                                ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.soonColour].toString()
                                         + Utils.prettyTime(until)
                             else if (until < 3 * 60 * 60 * 1000L)
-                                EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour].toString()
+                                ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.kindaSoonColour].toString()
                                         + Utils.prettyTime(until)
                             else
-                                EnumChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour].toString()
+                                ChatFormatting.values()[NotEnoughUpdates.INSTANCE.config.miscOverlays.defaultColour].toString()
                                         + Utils.prettyTime(until)
                 )
             }
@@ -128,7 +128,7 @@ object CustomTodoHud {
 
     fun parseItem(icon: String): ItemStack {
         val stack = GuiInvButtonEditor.getStack(icon.uppercase())
-        if (stack.metadata == 255 || (stack.item == Items.painting && stack.metadata != 0)) return ItemStack(Items.paper)
+        if (stack.metadata == 255 || (stack.item == Items.painting && stack.metadata != 0)) return ItemStack(Items.PAPER)
         return stack
     }
 }

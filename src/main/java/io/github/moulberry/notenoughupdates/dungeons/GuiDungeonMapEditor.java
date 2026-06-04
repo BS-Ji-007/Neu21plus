@@ -121,9 +121,9 @@ public class GuiDungeonMapEditor extends GuiScreen {
 			}
 
 			List<String> tooltip = new ArrayList<>();
-			tooltip.add(EnumChatFormatting.YELLOW + displayName);
+			tooltip.add(ChatFormatting.YELLOW + displayName);
 			for (String line : desc.split("\n")) {
-				tooltip.add(EnumChatFormatting.AQUA + line);
+				tooltip.add(ChatFormatting.AQUA + line);
 			}
 			return tooltip;
 		}
@@ -346,13 +346,13 @@ public class GuiDungeonMapEditor extends GuiScreen {
 					}
 
 					ArrayList<String> tooltip = new ArrayList<>();
-					tooltip.add(EnumChatFormatting.YELLOW + "Border Style");
-					tooltip.add(EnumChatFormatting.AQUA + "Customize the look of the dungeon border");
+					tooltip.add(ChatFormatting.YELLOW + "Border Style");
+					tooltip.add(ChatFormatting.AQUA + "Customize the look of the dungeon border");
 					tooltip.add("");
 					if (mapDesc != null)
-						tooltip.add(EnumChatFormatting.YELLOW + "Set to: " + EnumChatFormatting.AQUA + mapDesc);
+						tooltip.add(ChatFormatting.YELLOW + "Set to: " + ChatFormatting.AQUA + mapDesc);
 					if (mapCredit != null)
-						tooltip.add(EnumChatFormatting.YELLOW + "Artist: " + EnumChatFormatting.GOLD + mapCredit);
+						tooltip.add(ChatFormatting.YELLOW + "Artist: " + ChatFormatting.GOLD + mapCredit);
 					tooltipToDisplay = tooltip;
 				} else {
 					tooltipToDisplay = button.getTooltip();

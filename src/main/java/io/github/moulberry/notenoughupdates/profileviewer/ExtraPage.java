@@ -89,7 +89,7 @@ public class ExtraPage extends GuiProfileViewerPage {
 				"stats",
 				Utils.editItemStackInfo(
 					new ItemStack(Items.book),
-					EnumChatFormatting.GRAY + "Stats",
+					ChatFormatting.GRAY + "Stats",
 					true
 				)
 			);
@@ -97,7 +97,7 @@ public class ExtraPage extends GuiProfileViewerPage {
 				"hoppity",
 				Utils.editItemStackInfo(
 					hoppitySkull,
-					EnumChatFormatting.GRAY + "Hoppity",
+					ChatFormatting.GRAY + "Hoppity",
 					true
 				)
 			);
@@ -196,8 +196,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 			), 0);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.GOLD + displayName,
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(essenceNumber, 0),
+				ChatFormatting.GOLD + displayName,
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(essenceNumber, 0),
 				guiLeft + xStart + xOffset,
 				guiTop + yStartTop + (yOffset - 1) * i,
 				76
@@ -214,9 +214,9 @@ public class ExtraPage extends GuiProfileViewerPage {
 				for (Map.Entry<String, JsonElement> entry : essenceShops.get(essenceName).getAsJsonObject().entrySet()) {
 					int perkTier = Utils.getElementAsInt(Utils.getElement(profileInfo, "player_data.perks." + entry.getKey()), 0);
 					int max = entry.getValue().getAsJsonObject().get("costs").getAsJsonArray().size();
-					EnumChatFormatting formatting = perkTier == max ? EnumChatFormatting.GREEN : EnumChatFormatting.AQUA;
+					ChatFormatting formatting = perkTier == max ? ChatFormatting.GREEN : ChatFormatting.AQUA;
 					String name = entry.getValue().getAsJsonObject().get("name").getAsString();
-					getInstance().tooltipToDisplay.add(EnumChatFormatting.GOLD + name + ": " + formatting + perkTier + "/" + max);
+					getInstance().tooltipToDisplay.add(ChatFormatting.GOLD + name + ": " + formatting + perkTier + "/" + max);
 				}
 			}
 		}
@@ -265,16 +265,16 @@ public class ExtraPage extends GuiProfileViewerPage {
 		float personalBankBalance = data.profile.bank_account;
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GOLD + "Bank",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(bankBalance) + "/" +
+			ChatFormatting.GOLD + "Bank",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(bankBalance) + "/" +
 				StringUtils.shortNumberFormat(personalBankBalance),
 			guiLeft + xStart,
 			guiTop + yStartTop,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.GOLD + "Purse",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(purseBalance),
+			ChatFormatting.GOLD + "Purse",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(purseBalance),
 			guiLeft + xStart,
 			guiTop + yStartTop + yOffset,
 			76
@@ -284,8 +284,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 			String first_join = getTimeSinceString(profileInfo, "profile.first_join");
 			if (first_join != null) {
 				Utils.renderAlignedString(
-					EnumChatFormatting.AQUA + "Joined",
-					EnumChatFormatting.WHITE + first_join,
+					ChatFormatting.AQUA + "Joined",
+					ChatFormatting.WHITE + first_join,
 					guiLeft + xStart,
 					guiTop + yStartTop + yOffset * 2,
 					76
@@ -307,8 +307,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 		// Render the info when the button has been clicked
 		if (shouldRenderGuild) {
 			Utils.renderAlignedString(
-				EnumChatFormatting.AQUA + "Guild",
-				EnumChatFormatting.WHITE + guildInfo.get("name").getAsString(),
+				ChatFormatting.AQUA + "Guild",
+				ChatFormatting.WHITE + guildInfo.get("name").getAsString(),
 				guiLeft + xStart,
 				guiTop + yStartTop + yOffset * 3,
 				76
@@ -327,8 +327,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 			);
 			Utils.renderShadowedString(
 				clickedLoadGuildInfoButton
-					? EnumChatFormatting.AQUA + "Loading..."
-					: EnumChatFormatting.WHITE + "Load Guild Info",
+					? ChatFormatting.AQUA + "Loading..."
+					: ChatFormatting.WHITE + "Load Guild Info",
 				guiLeft + xStart + 38,
 				guiTop + yStartTop + yOffset * 3 + 2,
 				70
@@ -340,8 +340,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 		}
 
 		GuiProfileViewer.pronouns.peekValue().flatMap(it -> it).ifPresent(choice -> Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Pronouns",
-			EnumChatFormatting.WHITE + String.join(" / ", choice.render()),
+			ChatFormatting.GREEN + "Pronouns",
+			ChatFormatting.WHITE + String.join(" / ", choice.render()),
 			guiLeft + xStart,
 			guiTop + yStartTop + yOffset * 4 + (shouldRenderGuild ? 0 : 5),
 			76
@@ -355,8 +355,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 			fairySoulMax = Constants.FAIRYSOULS.get("Max Souls").getAsInt();
 		}
 		Utils.renderAlignedString(
-			EnumChatFormatting.LIGHT_PURPLE + "Fairy Souls",
-			EnumChatFormatting.WHITE.toString() + fairySouls + "/" + fairySoulMax,
+			ChatFormatting.LIGHT_PURPLE + "Fairy Souls",
+			ChatFormatting.WHITE.toString() + fairySouls + "/" + fairySoulMax,
 			guiLeft + xStart,
 			guiTop + yStartBottom,
 			76
@@ -387,44 +387,44 @@ public class ExtraPage extends GuiProfileViewerPage {
 			float avgSlayerLVL = totalSlayerLVL / totalSlayerCount;
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "AVG Skill LVL",
+				ChatFormatting.RED + "AVG Skill LVL",
 				selectedProfile.skillsApiEnabled() ?
-					EnumChatFormatting.WHITE.toString() + Math.floor(avgSkillLVL * 10) / 10 :
-					EnumChatFormatting.RED + "API OFF!",
+					ChatFormatting.WHITE.toString() + Math.floor(avgSkillLVL * 10) / 10 :
+					ChatFormatting.RED + "API OFF!",
 				guiLeft + xStart,
 				guiTop + yStartBottom + yOffset,
 				76
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "True AVG Skill LVL",
+				ChatFormatting.RED + "True AVG Skill LVL",
 				selectedProfile.skillsApiEnabled() ?
-					EnumChatFormatting.WHITE.toString() + Math.floor(avgTrueSkillLVL * 10) / 10 :
-					EnumChatFormatting.RED + "API OFF!",
+					ChatFormatting.WHITE.toString() + Math.floor(avgTrueSkillLVL * 10) / 10 :
+					ChatFormatting.RED + "API OFF!",
 				guiLeft + xStart,
 				guiTop + yStartBottom + yOffset * 2,
 				76
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "AVG Slayer LVL",
-				EnumChatFormatting.WHITE.toString() + Math.floor(avgSlayerLVL * 10) / 10,
+				ChatFormatting.RED + "AVG Slayer LVL",
+				ChatFormatting.WHITE.toString() + Math.floor(avgSlayerLVL * 10) / 10,
 				guiLeft + xStart,
 				guiTop + yStartBottom + yOffset * 3,
 				76
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.RED + "Total Slayer XP",
-				EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(totalSlayerXP),
+				ChatFormatting.RED + "Total Slayer XP",
+				ChatFormatting.WHITE + StringUtils.shortNumberFormat(totalSlayerXP),
 				guiLeft + xStart,
 				guiTop + yStartBottom + yOffset * 4,
 				76
 			);
 
 			Utils.renderAlignedString(
-				EnumChatFormatting.GOLD + "Cookie Buff",
-				(cookieBuff) ? EnumChatFormatting.LIGHT_PURPLE + "Active" : EnumChatFormatting.RED + "Inactive",
+				ChatFormatting.GOLD + "Cookie Buff",
+				(cookieBuff) ? ChatFormatting.LIGHT_PURPLE + "Active" : ChatFormatting.RED + "Inactive",
 				guiLeft + xStart,
 				guiTop + yStartBottom + yOffset * 5,
 				76
@@ -439,43 +439,43 @@ public class ExtraPage extends GuiProfileViewerPage {
 		float auctions_gold_earned = auctions.gold_earned;
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Auction Bids",
-			EnumChatFormatting.WHITE.toString() + (int) auctions_bids,
+			ChatFormatting.DARK_PURPLE + "Auction Bids",
+			ChatFormatting.WHITE.toString() + (int) auctions_bids,
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Highest Bid",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_highest_bid),
+			ChatFormatting.DARK_PURPLE + "Highest Bid",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_highest_bid),
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop + yOffset,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Auctions Won",
-			EnumChatFormatting.WHITE.toString() + (int) auctions_won,
+			ChatFormatting.DARK_PURPLE + "Auctions Won",
+			ChatFormatting.WHITE.toString() + (int) auctions_won,
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop + yOffset * 2,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Auctions Created",
-			EnumChatFormatting.WHITE.toString() + (int) auctions_created,
+			ChatFormatting.DARK_PURPLE + "Auctions Created",
+			ChatFormatting.WHITE.toString() + (int) auctions_created,
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop + yOffset * 3,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Gold Spent",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_gold_spent),
+			ChatFormatting.DARK_PURPLE + "Gold Spent",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_gold_spent),
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop + yOffset * 4,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.DARK_PURPLE + "Gold Earned",
-			EnumChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_gold_earned),
+			ChatFormatting.DARK_PURPLE + "Gold Earned",
+			ChatFormatting.WHITE + StringUtils.shortNumberFormat(auctions_gold_earned),
 			guiLeft + xStart + xOffset,
 			guiTop + yStartTop + yOffset * 5,
 			76
@@ -489,37 +489,37 @@ public class ExtraPage extends GuiProfileViewerPage {
 		float items_fished_large_treasure = player_stats.items_fished.large_treasure;
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Ores Mined",
-			EnumChatFormatting.WHITE.toString() + (int) pet_milestone_ores_mined,
+			ChatFormatting.GREEN + "Ores Mined",
+			ChatFormatting.WHITE.toString() + (int) pet_milestone_ores_mined,
 			guiLeft + xStart + xOffset * 2,
 			guiTop + yStartTop,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Sea Creatures Killed",
-			EnumChatFormatting.WHITE.toString() + (int) pet_milestone_sea_creatures_killed,
+			ChatFormatting.GREEN + "Sea Creatures Killed",
+			ChatFormatting.WHITE.toString() + (int) pet_milestone_sea_creatures_killed,
 			guiLeft + xStart + xOffset * 2,
 			guiTop + yStartTop + yOffset,
 			76
 		);
 
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Items Fished",
-			EnumChatFormatting.WHITE.toString() + (int) items_fished,
+			ChatFormatting.GREEN + "Items Fished",
+			ChatFormatting.WHITE.toString() + (int) items_fished,
 			guiLeft + xStart + xOffset * 2,
 			guiTop + yStartTop + yOffset * 3,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Treasures Fished",
-			EnumChatFormatting.WHITE.toString() + (int) items_fished_treasure,
+			ChatFormatting.GREEN + "Treasures Fished",
+			ChatFormatting.WHITE.toString() + (int) items_fished_treasure,
 			guiLeft + xStart + xOffset * 2,
 			guiTop + yStartTop + yOffset * 4,
 			76
 		);
 		Utils.renderAlignedString(
-			EnumChatFormatting.GREEN + "Large Treasures",
-			EnumChatFormatting.WHITE.toString() + (int) items_fished_large_treasure,
+			ChatFormatting.GREEN + "Large Treasures",
+			ChatFormatting.WHITE.toString() + (int) items_fished_large_treasure,
 			guiLeft + xStart + xOffset * 2,
 			guiTop + yStartTop + yOffset * 5,
 			76
@@ -581,8 +581,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 				if (isSearch && killY + 6 < guiTop + yStartTop + 75 && killY >= guiTop + yStartTop) {
 					renderedKills++;
 					Utils.renderAlignedString(
-						EnumChatFormatting.YELLOW + "K: " + killType,
-						EnumChatFormatting.WHITE.toString() + killCount,
+						ChatFormatting.YELLOW + "K: " + killType,
+						ChatFormatting.WHITE.toString() + killCount,
 						killDeathX,
 						killY,
 						76
@@ -607,8 +607,8 @@ public class ExtraPage extends GuiProfileViewerPage {
 				if (isSearch && deathY + 6 < guiTop + yStartBottom + 75 && deathY >= guiTop + yStartBottom) {
 					renderedDeaths++;
 					Utils.renderAlignedString(
-						EnumChatFormatting.YELLOW + "D: " + deathType,
-						EnumChatFormatting.WHITE.toString() + deathCount,
+						ChatFormatting.YELLOW + "D: " + deathType,
+						ChatFormatting.WHITE.toString() + deathCount,
 						killDeathX,
 						deathY,
 						76

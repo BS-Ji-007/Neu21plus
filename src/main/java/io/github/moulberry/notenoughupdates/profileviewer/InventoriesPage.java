@@ -67,11 +67,11 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		{
 			put(
 				"inv_contents",
-				Utils.createItemStack(Item.getItemFromBlock(Blocks.chest), EnumChatFormatting.GRAY + "Inventory")
+				Utils.createItemStack(Item.getItemFromBlock(Blocks.chest), ChatFormatting.GRAY + "Inventory")
 			);
 			put(
 				"ender_chest_contents",
-				Utils.createItemStack(Item.getItemFromBlock(Blocks.ender_chest), EnumChatFormatting.GRAY + "Ender Chest")
+				Utils.createItemStack(Item.getItemFromBlock(Blocks.ender_chest), ChatFormatting.GRAY + "Ender Chest")
 			);
 			put(
 				"backpack_contents",
@@ -79,7 +79,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 						NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("JUMBO_BACKPACK")
 					),
-					EnumChatFormatting.GRAY + "Backpacks",
+					ChatFormatting.GRAY + "Backpacks",
 					true
 				)
 			);
@@ -89,14 +89,14 @@ public class InventoriesPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(NotEnoughUpdates.INSTANCE.manager
 						.getItemInformation()
 						.get("IRON_CHEST")),
-					EnumChatFormatting.GRAY + "Personal Vault",
+					ChatFormatting.GRAY + "Personal Vault",
 					true
 				)
 			);
-			put("talisman_bag", Utils.createItemStack(Items.golden_apple, EnumChatFormatting.GRAY + "Accessory Bag"));
-			put("wardrobe_contents", Utils.createItemStack(Items.leather_chestplate, EnumChatFormatting.GRAY + "Wardrobe"));
-			put("fishing_bag", Utils.createItemStack(Items.fish, EnumChatFormatting.GRAY + "Fishing Bag"));
-			put("potion_bag", Utils.createItemStack(Items.potionitem, EnumChatFormatting.GRAY + "Potion Bag"));
+			put("talisman_bag", Utils.createItemStack(Items.golden_apple, ChatFormatting.GRAY + "Accessory Bag"));
+			put("wardrobe_contents", Utils.createItemStack(Items.leather_chestplate, ChatFormatting.GRAY + "Wardrobe"));
+			put("fishing_bag", Utils.createItemStack(Items.fish, ChatFormatting.GRAY + "Fishing Bag"));
+			put("potion_bag", Utils.createItemStack(Items.potionitem, ChatFormatting.GRAY + "Potion Bag"));
 		}
 	};
 	private final ItemStack fillerStack = new ItemStack(Item.getItemFromBlock(Blocks.stained_glass_pane), 1, 15);
@@ -140,7 +140,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 				"inventories",
 				Utils.editItemStackInfo(
 					new ItemStack(Items.painting),
-					EnumChatFormatting.GRAY + "Inventories",
+					ChatFormatting.GRAY + "Inventories",
 					true
 				)
 			);
@@ -150,7 +150,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 						NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("LARGE_ENCHANTED_MINING_SACK")
 					),
-					EnumChatFormatting.GRAY + "Sacks",
+					ChatFormatting.GRAY + "Sacks",
 					true
 				)
 			);
@@ -209,38 +209,38 @@ public class InventoriesPage extends GuiProfileViewerPage {
 					getInstance().tooltipToDisplay = entry.getValue().getTooltip(Minecraft.getInstance().player,
 						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 					if (Objects.equals(entry.getKey(), "talisman_bag")) {
-						StringBuilder magicalPowerString = new StringBuilder(EnumChatFormatting.DARK_GRAY + "Magical Power: ");
+						StringBuilder magicalPowerString = new StringBuilder(ChatFormatting.DARK_GRAY + "Magical Power: ");
 						int magicalPower = getSelectedProfile().getMagicalPower();
 						getInstance()
 							.tooltipToDisplay.add(
 								magicalPower == -1
-									? magicalPowerString.append(EnumChatFormatting.RED).append("Error while calculating!").toString()
+									? magicalPowerString.append(ChatFormatting.RED).append("Error while calculating!").toString()
 									: magicalPowerString
-										.append(EnumChatFormatting.GOLD)
+										.append(ChatFormatting.GOLD)
 										.append(StringUtils.formatNumber(magicalPower))
 										.toString()
 							);
 
-						StringBuilder selectedPowerString = new StringBuilder(EnumChatFormatting.DARK_GRAY + "Selected Power: ");
+						StringBuilder selectedPowerString = new StringBuilder(ChatFormatting.DARK_GRAY + "Selected Power: ");
 						String selectedPower = PlayerStats.getSelectedMagicalPower(getSelectedProfile().getProfileJson());
 						getInstance()
 							.tooltipToDisplay.add(
 								selectedPower == null
-									? selectedPowerString.append(EnumChatFormatting.RED).append("None!").toString()
-									: selectedPowerString.append(EnumChatFormatting.GREEN).append(selectedPower).toString()
+									? selectedPowerString.append(ChatFormatting.RED).append("None!").toString()
+									: selectedPowerString.append(ChatFormatting.GREEN).append(selectedPower).toString()
 							);
 
 						LinkedHashMap<String, Integer> tuningInfo = getSelectedProfile().getTuningInfo();
 						if (tuningInfo != null && tuningInfo.size() > 0) {
 							getInstance().tooltipToDisplay.add("");
-							getInstance().tooltipToDisplay.add(EnumChatFormatting.GRAY + "Tuning:");
+							getInstance().tooltipToDisplay.add(ChatFormatting.GRAY + "Tuning:");
 							tuningInfo.forEach((statName, statPoints) -> {
 								if (statPoints != 0) {
 									getInstance().tooltipToDisplay.add(
 										"  " + apiStatNames.get(statName) + ": +" +
 											new DecimalFormat("#.#").format(statPoints * tuningCoefficients.getOrDefault(statName, 1.0f)) +
-											EnumChatFormatting.DARK_GRAY + " (" + EnumChatFormatting.YELLOW + statPoints +
-											EnumChatFormatting.DARK_GRAY + " points)");
+											ChatFormatting.DARK_GRAY + " (" + ChatFormatting.YELLOW + statPoints +
+											ChatFormatting.DARK_GRAY + " points)");
 								}
 							});
 						}
@@ -401,18 +401,18 @@ public class InventoriesPage extends GuiProfileViewerPage {
 				if (mouseY < guiTop + 101 + 17) {
 					QuiverInfo quiverInfo = PlayerStats.getQuiverInfo(inventoryInfo, getSelectedProfile().getProfileJson());
 					if (quiverInfo == null) {
-						getInstance().tooltipToDisplay = Utils.createList(EnumChatFormatting.RED + "Error checking Quiver");
+						getInstance().tooltipToDisplay = Utils.createList(ChatFormatting.RED + "Error checking Quiver");
 					} else {
 						getInstance().tooltipToDisplay = quiverInfo.generateProfileViewerTooltip();
 					}
 				} else if (mouseY < guiTop + 119 + 17) {
 					getInstance().tooltipToDisplay =
 						Utils.createList(
-							EnumChatFormatting.GREEN + "Green Candy " + EnumChatFormatting.GRAY + "x" + greenCandyCount);
+							ChatFormatting.GREEN + "Green Candy " + ChatFormatting.GRAY + "x" + greenCandyCount);
 				} else {
 					getInstance().tooltipToDisplay =
 						Utils.createList(
-							EnumChatFormatting.DARK_PURPLE + "Purple Candy " + EnumChatFormatting.GRAY + "x" + purpleCandyCount
+							ChatFormatting.DARK_PURPLE + "Purple Candy " + ChatFormatting.GRAY + "x" + purpleCandyCount
 						);
 				}
 			}
@@ -425,11 +425,11 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			} else if (selectedInventory.equalsIgnoreCase("backpack_contents")) {
 				strToRender = "Inventory API not enabled";
 				Utils.drawStringCentered(
-					EnumChatFormatting.RED + "Or has no backpacks!",
+					ChatFormatting.RED + "Or has no backpacks!",
 					guiLeft + 317, guiTop + 112, true, 0
 				);
 			}
-			Utils.drawStringCentered(EnumChatFormatting.RED + strToRender, guiLeft + 317, guiTop + 101, true, 0);
+			Utils.drawStringCentered(ChatFormatting.RED + strToRender, guiLeft + 317, guiTop + 101, true, 0);
 			return;
 		}
 
