@@ -251,7 +251,7 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		currentTime = System.currentTimeMillis();
 		if (startTime == 0) startTime = currentTime;
 
@@ -278,8 +278,8 @@ public class GuiProfileViewer extends GuiScreen {
 
 		this.sizeX = 431;
 		this.sizeY = 202;
-		guiLeft = (this.width - this.sizeX) / 2;
-		guiTop = (this.height - this.sizeY) / 2;
+		guiLeft = (graphics.guiWidth() - this.sizeX) / 2;
+		guiTop = (graphics.guiHeight() - this.sizeY) / 2;
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = profile != null ? profile.getProfile(profileName) : null;
 		if (NotEnoughUpdates.INSTANCE.config.profileViewer.alwaysShowBingoTab) {
@@ -783,7 +783,7 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		if (currentPage != ProfileViewerPage.LOADING && currentPage != ProfileViewerPage.INVALID_NAME) {
 			int ignoredTabs = 0;
 			List<Integer> configList = NotEnoughUpdates.INSTANCE.config.profileViewer.pageLayout;
@@ -936,7 +936,7 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 
 		if (pages.containsKey(currentPage)) {

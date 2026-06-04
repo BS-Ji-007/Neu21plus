@@ -134,7 +134,7 @@ public class GuiItemRecipe extends GuiScreen {
 	List<String> tooltipToDisplay = null;
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -326,7 +326,7 @@ public class GuiItemRecipe extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		NeuRecipe currentRecipe = getCurrentRecipe();
 		int[] topLeft = currentRecipe.getPageFlipPositionLeftTopCorner();

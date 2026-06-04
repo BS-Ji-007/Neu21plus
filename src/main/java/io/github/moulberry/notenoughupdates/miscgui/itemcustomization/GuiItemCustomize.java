@@ -276,7 +276,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		if (!supportCustomLeatherColour) guiType = GuiType.DEFAULT;
 		drawScreenType(mouseX, mouseY, partialTicks, guiType);
 	}
@@ -712,7 +712,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		if (textFieldRename.getFocus()) {
 			if (keyCode == InputConstants.KEY_ESCAPE) {
 				textFieldRename.setFocus(false);
@@ -758,8 +758,8 @@ public class GuiItemCustomize extends GuiScreen {
 
 	@Override
 	public void handleMouseInput() throws IOException {
-		int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
-		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		int mouseX = Mouse.getEventX() * graphics.guiWidth() / this.mc.displayWidth;
+		int mouseY = graphics.guiHeight() - Mouse.getEventY() * graphics.guiHeight() / this.mc.displayHeight - 1;
 
 		if (editor == null || !editor.mouseInput(mouseX, mouseY)) {
 			super.handleMouseInput();
@@ -1092,7 +1092,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		mouseClickedType(mouseX, mouseY, mouseButton, guiType);
 	}
 

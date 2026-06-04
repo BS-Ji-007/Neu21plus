@@ -24,8 +24,8 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 	private final LinkedHashMap<MBGuiElement, MBAnchorPoint> children;
 
 	public MBGuiGroupFloating(int width, int height, LinkedHashMap<MBGuiElement, MBAnchorPoint> children) {
-		this.width = width;
-		this.height = height;
+		graphics.guiWidth() = width;
+		graphics.guiHeight() = height;
 		this.children = children;
 		recalculate();
 	}

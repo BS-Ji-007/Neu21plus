@@ -27,10 +27,10 @@ public class RecipeHistory {
 
 	private static final int MAX_HISTORY_SIZE = 50;
 
-	private static ArrayList<GuiScreen> history = new ArrayList<>();
+	private static ArrayList<Screen> history = new ArrayList<>();
 	private static int historyIndex = 0;
 
-	public static void add(GuiScreen recipe) {
+	public static void add(Screen recipe) {
 		if (history.size() == MAX_HISTORY_SIZE) {
 			history.remove(0);
 			historyIndex--;
@@ -47,7 +47,7 @@ public class RecipeHistory {
 		}
 	}
 
-	public static GuiScreen getPrevious() {
+	public static Screen getPrevious() {
 		if (history.size() > 0) {
 			if (historyIndex - 1 < 0) {
 				return null;
@@ -58,7 +58,7 @@ public class RecipeHistory {
 		return null;
 	}
 
-	public static GuiScreen getNext() {
+	public static Screen getNext() {
 		if (historyIndex < history.size() - 1) {
 			historyIndex++;
 			return history.get(historyIndex);

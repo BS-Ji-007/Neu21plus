@@ -207,7 +207,7 @@ public class EntityViewer extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 
 		this.guiLeft = (width - this.xSize) / 2;

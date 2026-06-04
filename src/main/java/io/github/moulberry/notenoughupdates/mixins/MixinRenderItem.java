@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;

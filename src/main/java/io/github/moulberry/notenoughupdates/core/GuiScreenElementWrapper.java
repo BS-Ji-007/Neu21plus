@@ -32,7 +32,7 @@ public class GuiScreenElementWrapper extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		element.render();
 	}
@@ -40,8 +40,8 @@ public class GuiScreenElementWrapper extends GuiScreen {
 	@Override
 	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
-		int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-		int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		int i = Mouse.getEventX() * graphics.guiWidth() / this.mc.displayWidth;
+		int j = graphics.guiHeight() - Mouse.getEventY() * graphics.guiHeight() / this.mc.displayHeight - 1;
 		element.mouseInput(i, j);
 	}
 

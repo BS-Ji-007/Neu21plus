@@ -107,13 +107,13 @@ public class GuiPositionEditor extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
-		this.width = scaledResolution.getScaledWidth();
-		this.height = scaledResolution.getScaledHeight();
+		graphics.guiWidth() = scaledResolution.getScaledWidth();
+		graphics.guiHeight() = scaledResolution.getScaledHeight();
 		mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
 		mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
@@ -146,7 +146,7 @@ public class GuiPositionEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 
 		if (mouseButton == 0) {
@@ -177,7 +177,7 @@ public class GuiPositionEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		if (clickedPos != -1) {
 			Position position = positions.get(clickedPos);
 			int elementHeight = elementHeights.get(positions.indexOf(position));

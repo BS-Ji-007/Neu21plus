@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.lerp.LerpingInteger;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
@@ -59,7 +59,7 @@ import static io.github.moulberry.notenoughupdates.itemeditor.GuiElementTextFiel
 import static io.github.moulberry.notenoughupdates.itemeditor.GuiElementTextField.NO_SPACE;
 import static io.github.moulberry.notenoughupdates.itemeditor.GuiElementTextField.NUM_ONLY;
 
-public class NEUItemEditor extends GuiScreen {
+public class NEUItemEditor extends Screen {
 	private final List<GuiElement> options = new ArrayList<>();
 	private final List<GuiElement> rightOptions = new ArrayList<>();
 
@@ -324,7 +324,7 @@ public class NEUItemEditor extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		scrollHeight.tick();
 
 		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
@@ -388,7 +388,7 @@ public class NEUItemEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		boolean hasChanges = false;
 		if (keyCode == InputConstants.KEY_ESCAPE && !hasChanges) {
 			Minecraft.getInstance().setScreen(null);
@@ -452,7 +452,7 @@ public class NEUItemEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
 		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledresolution.getScaledWidth();
 

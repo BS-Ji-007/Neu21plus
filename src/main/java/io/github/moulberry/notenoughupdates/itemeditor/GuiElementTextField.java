@@ -239,7 +239,7 @@ public class GuiElementTextField extends GuiElement {
 	public void keyTyped(char typedChar, int keyCode) {
 		if (focus) {
 			//allows for pasting formatted text that includes "§"
-			if (GuiScreen.isKeyComboCtrlV(keyCode)) {
+			if (Screen.isKeyComboCtrlV(keyCode)) {
 				textField.setEnabled(false);
 
 				int selectionEnd = textField.getSelectionEnd();
@@ -252,7 +252,7 @@ public class GuiElementTextField extends GuiElement {
 					selectionEnd = selectionEnd ^ cursorPosition;
 				}
 
-				String clipboardContent = GuiScreen.getClipboardString();
+				String clipboardContent = Screen.getClipboardString();
 
 				StringBuilder stringBuilder = new StringBuilder(getText())
 					.replace(selectionEnd, cursorPosition, "")
@@ -326,7 +326,7 @@ public class GuiElementTextField extends GuiElement {
 					int newPos = textField.getSelectionEnd() - strLenNoColor(thisLineBeforeCursor)
 						- strLenNoColor(lineBefore) - 1 + linePos;
 
-					if (GuiScreen.isShiftKeyDown()) {
+					if (Screen.isShiftKeyDown()) {
 						textField.setSelectionPos(newPos);
 					} else {
 						textField.setCursorPosition(newPos);
@@ -368,7 +368,7 @@ public class GuiElementTextField extends GuiElement {
 						int newPos = textField.getSelectionEnd() - strLenNoColor(thisLineBeforeCursor)
 							+ strLenNoColor(split2[numLinesBeforeCursor]) + 1 + linePos;
 
-						if (GuiScreen.isShiftKeyDown()) {
+						if (Screen.isShiftKeyDown()) {
 							textField.setSelectionPos(newPos);
 						} else {
 							textField.setCursorPosition(newPos);

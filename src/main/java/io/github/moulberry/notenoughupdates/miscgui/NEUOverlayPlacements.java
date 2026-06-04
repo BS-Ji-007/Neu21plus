@@ -47,7 +47,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 	private final boolean dropdownMenuShown = false;
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
 
@@ -148,7 +148,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 
 		if (mouseButton != 0 && mouseButton != 1) return;

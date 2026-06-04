@@ -90,7 +90,7 @@ public class GuiEnchantColour extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 
 		List<String> enchantColours = getEnchantColours();
@@ -438,7 +438,7 @@ public class GuiEnchantColour extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 		for (int yIndex = 0; yIndex < guiElementTextFields.size(); yIndex++) {
 			for (int i = 0; i < 3; i++) {
@@ -490,7 +490,7 @@ public class GuiEnchantColour extends GuiScreen {
 		super.handleMouseInput();
 
 		int dWheel = Mouse.getEventDWheel();
-		int mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
+		int mouseX = Mouse.getEventX() * graphics.guiWidth() / this.mc.displayWidth;
 		if (mouseX > guiLeft && mouseX < guiLeft + xSize) {
 			if (dWheel < 0) {
 				scroll.setTarget(scroll.getTarget() - 50);
@@ -526,7 +526,7 @@ public class GuiEnchantColour extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		for (int yIndex = 0; yIndex < guiElementTextFields.size(); yIndex++) {
 			for (int i = 0; i < 3; i++) {

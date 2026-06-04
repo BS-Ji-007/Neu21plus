@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
 import io.github.moulberry.notenoughupdates.mixins.AccessorContainerScreen;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
@@ -32,7 +32,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -95,7 +95,7 @@ public class CraftingOverlay {
 	}
 
 	@SubscribeEvent
-	public void onRender(GuiScreenEvent.DrawScreenEvent.Post event) {
+	public void onRender(ScreenEvent.DrawScreenEvent.Post event) {
 		runIfCraftingOverlayIsPresent(event.gui, (guiChest, chest) -> {
 			renderSlots(guiChest, chest);
 			if (currentRecipe.getCraftText() != null) {
@@ -111,7 +111,7 @@ public class CraftingOverlay {
 	}
 
 	@SubscribeEvent
-	public void onKeyDown(GuiScreenEvent.KeyboardInputEvent.Pre event) {
+	public void onKeyDown(ScreenEvent.KeyboardInputEvent.Pre event) {
 		if (!Keyboard.getEventKeyState() ||
 			(Keyboard.getEventKey() != Keyboard.KEY_U && Keyboard.getEventKey() != Keyboard.KEY_R))
 			return;

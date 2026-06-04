@@ -67,7 +67,7 @@ public class RecipeGenerator {
 	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!neu.config.apiData.repositoryEditing) return;
-		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
+		Screen currentScreen = Minecraft.getInstance().currentScreen;
 		if (currentScreen == null) return;
 		if (!(currentScreen instanceof ChestScreen)) return;
 		analyzeUI((ChestScreen) currentScreen);

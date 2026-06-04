@@ -318,7 +318,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.drawDefaultBackground();
 
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
@@ -486,7 +486,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		boolean ignoreKey = false;
 
 		if (keyCode == InputConstants.KEY_ESCAPE) {

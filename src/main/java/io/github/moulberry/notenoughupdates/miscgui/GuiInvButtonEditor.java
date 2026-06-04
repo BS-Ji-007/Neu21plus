@@ -314,7 +314,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		super.drawDefaultBackground();
@@ -693,7 +693,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 
 		if (editingButton != null) {
@@ -882,7 +882,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 
 		if (editingButton != null && commandTextField.getFocus()) {

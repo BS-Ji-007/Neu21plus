@@ -90,11 +90,11 @@ public class GuiCosmetics extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		this.sizeX = 431;
 		this.sizeY = 202;
-		this.guiLeft = (this.width - this.sizeX) / 2;
-		this.guiTop = (this.height - this.sizeY) / 2;
+		this.guiLeft = (graphics.guiWidth() - this.sizeX) / 2;
+		this.guiTop = (graphics.guiHeight() - this.sizeY) / 2;
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
@@ -259,7 +259,7 @@ public class GuiCosmetics extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		if (unlockTextField.getFocus()) {
 			if (keyCode == InputConstants.KEY_ESCAPE || keyCode == Keyboard.KEY_RETURN) {
 				CapeManager.INSTANCE.tryUnlockCape(unlockTextField.getText().trim());
@@ -274,7 +274,7 @@ public class GuiCosmetics extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
 		//guiLeft+sizeX-140, guiTop+sizeY+2
 
 		if (mouseX > guiLeft + sizeX - 140 & mouseX < guiLeft + sizeX &&

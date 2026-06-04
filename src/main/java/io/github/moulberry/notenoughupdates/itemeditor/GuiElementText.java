@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.itemeditor;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 
 public class GuiElementText extends GuiElement {
 	protected String text;

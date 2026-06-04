@@ -280,13 +280,13 @@ public class GuiDungeonMapEditor extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		ScaledResolution scaledResolution = Utils.pushGuiScale(2);
-		this.width = scaledResolution.getScaledWidth();
-		this.height = scaledResolution.getScaledHeight();
+		graphics.guiWidth() = scaledResolution.getScaledWidth();
+		graphics.guiHeight() = scaledResolution.getScaledHeight();
 
-		mouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
-		mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		mouseX = Mouse.getEventX() * graphics.guiWidth() / this.mc.displayWidth;
+		mouseY = graphics.guiHeight() - Mouse.getEventY() * graphics.guiHeight() / this.mc.displayHeight - 1;
 
 		List<String> tooltipToDisplay = null;
 		for (Button button : buttons) {
@@ -363,8 +363,8 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		this.sizeX = 431;
 		this.sizeY = 237;
-		this.guiLeft = (this.width - this.sizeX) / 2;
-		this.guiTop = (this.height - this.sizeY) / 2;
+		this.guiLeft = (graphics.guiWidth() - this.sizeX) / 2;
+		this.guiTop = (graphics.guiHeight() - this.sizeY) / 2;
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
@@ -540,7 +540,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
 		for (Button button : buttons) {
 			if (mouseX >= guiLeft + button.x && mouseX <= guiLeft + button.x + 48 &&
 				mouseY >= guiTop + button.y && mouseY <= guiTop + button.y + 16) {
@@ -634,7 +634,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 
 		if (blurField.getFocus()) {

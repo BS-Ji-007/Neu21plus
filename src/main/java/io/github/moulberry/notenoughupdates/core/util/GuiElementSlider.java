@@ -60,7 +60,7 @@ public class GuiElementSlider extends GuiElement {
 
 		this.x = x;
 		this.y = y;
-		this.width = width;
+		graphics.guiWidth() = width;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.minStep = minStep;
