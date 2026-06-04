@@ -116,18 +116,17 @@ val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     mergeServiceFiles()
 }
 
-afterEvaluate {
-    val remapJarTask = tasks.named<RemapJarTask>("remapJar") {
-        archiveClassifier.set("")
-        inputFile.set(shadowJar.flatMap { it.archiveFile })
-    }
-    tasks.assemble {
-        dependsOn(remapJarTask)
-    }
+val remapJar = tasks.named<RemapJarTask>("remapJar") {
+    archiveClassifier.set("")
+    input.set(shadowJar.flatMap { it.archiveFile })
 }
 
 val sourcesJar = tasks.named<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
+}
+
+tasks.assemble {
+    dependsOn(remapJar)
 }
 
 val includeBackupRepo = tasks.register<DownloadBackupRepo>("includeBackupRepo") {
@@ -146,6 +145,6 @@ tasks.register("signRelease", neubs.CustomSignTask::class)
 
 applyPublishingInformation(
     "deobf" to tasks.jar,
-    "all" to tasks.named("remapJar"),
+    "all" to remapJar,
     "sources" to sourcesJar,
 )

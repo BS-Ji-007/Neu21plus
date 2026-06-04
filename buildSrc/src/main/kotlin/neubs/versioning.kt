@@ -5,10 +5,12 @@ import java.io.File
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
+    val root = this.projectDir
+
     fun git(vararg args: String): String {
         return try {
             val process = ProcessBuilder("git", *args)
-                .directory(project.rootDir)
+                .directory(root)
                 .redirectError(ProcessBuilder.Redirect.PIPE)
                 .start()
             val output = process.inputStream.bufferedReader().readText().trim()
@@ -19,7 +21,7 @@ fun Project.setVersionFromEnvironment(): String {
         }
     }
 
-    val baseVersion = git("describe", "--tags", "--abbrev=0").ifEmpty { "1.0.0" }
+    val baseVersion = git("describe", "--tags", "--abbrev=0").ifEmpty { "2.1.1" }
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
