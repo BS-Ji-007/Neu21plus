@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.util;
 
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
 import java.util.List;

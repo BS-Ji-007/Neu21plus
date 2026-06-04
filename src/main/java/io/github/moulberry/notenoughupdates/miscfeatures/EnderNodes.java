@@ -32,7 +32,7 @@ public class EnderNodes {
 			TitleUtil.getInstance().createTitle("Nested Endermite",
 				NotEnoughUpdates.INSTANCE.config.notifications.endermiteAlertTicks,
 				SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.notifications.endermiteAlertColor));
-			Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, 1);
+			Minecraft.getInstance().player.playSound("random.orb", 1, 1);
 		}
 	}
 }

@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.miscgui.minionhelper.sources.NpcSour
 import io.github.moulberry.notenoughupdates.mixins.AccessorGuiContainer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import org.lwjgl.input.Mouse;
@@ -59,13 +59,13 @@ public class MinionHelperOverlayHover {
 	}
 
 	void renderHover(LinkedHashMap<String, OverviewLine> renderMap) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		OverviewLine mouseObject = overlay.getObjectOverMouse(renderMap);
 		if (mouseObject != null) {
@@ -76,18 +76,18 @@ public class MinionHelperOverlayHover {
 	}
 
 	private void renderButtons() {
-		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+		GuiScreen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof GuiChest)) return;
 
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
 		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
 		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		int x = guiLeft + xSize + 4 + 149 - 3;
 		int y = guiTop + 109 - 3;

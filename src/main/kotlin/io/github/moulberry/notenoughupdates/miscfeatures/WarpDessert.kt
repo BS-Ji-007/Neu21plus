@@ -28,7 +28,7 @@ object WarpDessert {
     fun onPacketChatMessage(packet: C01PacketChatMessage): Boolean {
         val message = packet.message.lowercase()
         if (message == "/warp dessert") {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp desert")
+            Minecraft.getInstance().player.sendChatMessage("/warp desert")
             Utils.addChatMessage("§e[NEU] Did someone say §d§lDessert§e? Sand is yummy!")
             return true
         }

@@ -55,7 +55,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.ScreenReplacer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -69,7 +69,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -140,8 +140,8 @@ public class RenderListener {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onRenderEntitySpecials(RenderLivingEvent.Specials.Pre<EntityPlayer> event) {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiProfileViewer) {
-			if (((GuiProfileViewer) Minecraft.getMinecraft().currentScreen).getEntityPlayer() == event.entity) {
+		if (Minecraft.getInstance().currentScreen instanceof GuiProfileViewer) {
+			if (((GuiProfileViewer) Minecraft.getInstance().currentScreen).getEntityPlayer() == event.entity) {
 				event.setCanceled(true);
 			}
 		}
@@ -150,7 +150,7 @@ public class RenderListener {
 	@SubscribeEvent
 	public void onRenderGameOverlayPre(RenderGameOverlayEvent.Pre event) {
 		if (event.type != null && event.type.equals(RenderGameOverlayEvent.ElementType.BOSSHEALTH) &&
-			Minecraft.getMinecraft().currentScreen instanceof GuiContainer && neu.overlay.isUsingMobsFilter()) {
+			Minecraft.getInstance().currentScreen instanceof GuiContainer && neu.overlay.isUsingMobsFilter()) {
 			event.setCanceled(true);
 		}
 		if (event.type != null && event.type.equals(RenderGameOverlayEvent.ElementType.PLAYER_LIST)) {
@@ -195,11 +195,11 @@ public class RenderListener {
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.START) return;
-		if (Minecraft.getMinecraft().theWorld == null) return;
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().level == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) chest.inventorySlots;
 			String name = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 
@@ -237,8 +237,8 @@ public class RenderListener {
 	public void onGuiOpen(GuiOpenEvent event) {
 		NEUApi.disableInventoryButtons = false;
 
-		if ((Minecraft.getMinecraft().currentScreen instanceof GuiScreenElementWrapper ||
-			Minecraft.getMinecraft().currentScreen instanceof GuiItemRecipe) && event.gui == null &&
+		if ((Minecraft.getInstance().currentScreen instanceof GuiScreenElementWrapper ||
+			Minecraft.getInstance().currentScreen instanceof GuiItemRecipe) && event.gui == null &&
 			!(Keyboard.getEventKeyState() && Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) &&
 			System.currentTimeMillis() - NotEnoughUpdates.INSTANCE.lastOpenedGui < 500) {
 			NotEnoughUpdates.INSTANCE.lastOpenedGui = 0;
@@ -246,11 +246,11 @@ public class RenderListener {
 			return;
 		}
 
-		if (!(event.gui instanceof GuiContainer) && Minecraft.getMinecraft().currentScreen != null) {
+		if (!(event.gui instanceof GuiContainer) && Minecraft.getInstance().currentScreen != null) {
 			CalendarOverlay.setEnabled(false);
 		}
 
-		if (Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getInstance().currentScreen != null) {
 			lastGuiClosed = System.currentTimeMillis();
 		}
 
@@ -258,7 +258,7 @@ public class RenderListener {
 		inventoryLoaded = false;
 
 		//OPEN
-		if (Minecraft.getMinecraft().currentScreen == null && event.gui instanceof GuiContainer) {
+		if (Minecraft.getInstance().currentScreen == null && event.gui instanceof GuiContainer) {
 			neu.overlay.reset();
 		}
 		if (event.gui != null && NotEnoughUpdates.INSTANCE.config.hidden.dev) {
@@ -267,7 +267,7 @@ public class RenderListener {
 				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 				IInventory lower = cc.getLowerChestInventory();
 				ses.schedule(() -> {
-					if (Minecraft.getMinecraft().currentScreen != event.gui) {
+					if (Minecraft.getInstance().currentScreen != event.gui) {
 						return;
 					}
 					if (lower.getStackInSlot(23).getDisplayName().endsWith("Crafting Table")) {
@@ -331,7 +331,7 @@ public class RenderListener {
 		}
 		inDungeonPage = false;
 		if (NotificationHandler.shouldRenderOverlay(event.gui) && neu.isOnSkyblock()) {
-			ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledresolution.getScaledWidth();
 
 			boolean hoverPane = event.getMouseX() < width * neu.overlay.getInfoPaneOffsetFactor() ||
@@ -392,7 +392,7 @@ public class RenderListener {
 		doInventoryButtons = false;
 
 		String containerName = null;
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) guiScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
@@ -425,7 +425,7 @@ public class RenderListener {
 		if (tradeWindowActive) {
 			event.setCanceled(true);
 
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
 
@@ -514,7 +514,7 @@ public class RenderListener {
 			GlStateManager.enableDepth();
 			GlStateManager.enableAlpha();
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			Utils.drawTexturedRect(
 				buttonPosition.getX(),
 				buttonPosition.getY(),
@@ -544,7 +544,7 @@ public class RenderListener {
 		disableCraftingText = false;
 
 		String containerName = null;
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) guiScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
@@ -828,10 +828,10 @@ public class RenderListener {
 					}
 
 					if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 1 && !valueStringBIN2.equals(missingItem)) {
-						int w = Minecraft.getMinecraft().fontRendererObj.getStringWidth(plStringBIN);
+						int w = Minecraft.getInstance().font.getStringWidth(plStringBIN);
 						GlStateManager.disableLighting();
 						GlStateManager.translate(0, 0, 200);
-						Minecraft.getMinecraft().fontRendererObj.drawString(
+						Minecraft.getInstance().font.drawString(
 							plStringBIN,
 							guiLeft + xSize - 5 - w,
 							guiTop + 5,
@@ -842,7 +842,7 @@ public class RenderListener {
 						return;
 					}
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(dungeon_chest_worth);
+					Minecraft.getInstance().getTextureManager().bindTexture(dungeon_chest_worth);
 					GL11.glColor4f(1, 1, 1, 1);
 					GlStateManager.disableLighting();
 					Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
@@ -909,11 +909,11 @@ public class RenderListener {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onGuiScreenMouse(GuiScreenEvent.MouseInputEvent.Pre event) {
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		for (ScreenReplacer allScreenReplacer : ScreenReplacer.Companion.getAllScreenReplacers()) {
 			if (allScreenReplacer.shouldShow()) {
@@ -939,7 +939,7 @@ public class RenderListener {
 		}
 
 		String containerName = null;
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) guiScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
@@ -994,7 +994,7 @@ public class RenderListener {
 				if (!buttonPositon.intersects(mouseRect)) {
 					return;
 				}
-				if (Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null) {
+				if (Minecraft.getInstance().player.inventory.getItemStack() == null) {
 					int clickType = NotEnoughUpdates.INSTANCE.config.inventoryButtons.clickType;
 					if ((clickType == 0 && Mouse.getEventButtonState()) ||
 						(clickType == 1 && !Mouse.getEventButtonState())) {
@@ -1002,7 +1002,7 @@ public class RenderListener {
 						if (!command.startsWith("/")) {
 							command = "/" + command;
 						}
-						if (ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, command) == 0) {
+						if (ClientCommandHandler.instance.executeCommand(Minecraft.getInstance().player, command) == 0) {
 							NotEnoughUpdates.INSTANCE.sendChatMessage(command);
 						}
 					}
@@ -1021,29 +1021,29 @@ public class RenderListener {
 	@SubscribeEvent
 	public void onGuiScreenKeyboard(GuiScreenEvent.KeyboardInputEvent.Pre event) {
 		Keyboard.enableRepeatEvents(true);
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory &&
+		if (Minecraft.getInstance().currentScreen instanceof GuiInventory &&
 			!NEUOverlay.searchBarHasFocus &&
 			Keyboard.isRepeatEvent()) {
 			event.setCanceled(true);
 			return;
 		}
 		if (NotEnoughUpdates.INSTANCE.config.hidden.dev && Keyboard.isKeyDown(Keyboard.KEY_B) &&
-			Minecraft.getMinecraft().currentScreen instanceof GuiChest
+			Minecraft.getInstance().currentScreen instanceof GuiChest
 		) {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			IInventory lower = cc.getLowerChestInventory();
 
 			ItemStack backArrow = lower.getStackInSlot(48);
-			List<String> tooltip = backArrow != null ? backArrow.getTooltip(Minecraft.getMinecraft().thePlayer, false) : null;
+			List<String> tooltip = backArrow != null ? backArrow.getTooltip(Minecraft.getInstance().player, false) : null;
 			if (tooltip != null && tooltip.size() >= 2 && tooltip.get(1).endsWith("Essence")) {
 				RepoExporters.getInstance().essenceExporter();
 			} else if (lower.getName().contains("Draconic Altar Guide")) {
 				RepoExporters.getInstance().draconicAlterExporter();
 			}
 		} else if (NotEnoughUpdates.INSTANCE.config.hidden.dev && Keyboard.isKeyDown(Keyboard.KEY_B) &&
-			Minecraft.getMinecraft().currentScreen instanceof GuiChest &&
-			((((ContainerChest) ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots)
+			Minecraft.getInstance().currentScreen instanceof GuiChest &&
+			((((ContainerChest) ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots)
 				.getLowerChestInventory()
 				.getDisplayName()
 				.getUnformattedText()
@@ -1073,7 +1073,7 @@ public class RenderListener {
 		}
 
 		String containerName = null;
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 
 		if (guiScreen instanceof GuiChest) {
 			containerName = ((ContainerChest) ((GuiChest) guiScreen).inventorySlots)
@@ -1108,7 +1108,7 @@ public class RenderListener {
 			TradeWindow.keyboardInput();
 			if (Keyboard.getEventKey() != Keyboard.KEY_ESCAPE) {
 				event.setCanceled(true);
-				Minecraft.getMinecraft().dispatchKeypresses();
+				Minecraft.getInstance().dispatchKeypresses();
 				neu.overlay.keyboardInput(focusInv);
 			}
 			return;
@@ -1120,9 +1120,9 @@ public class RenderListener {
 			}
 		}
 		if (NotEnoughUpdates.INSTANCE.config.apiData.repositoryEditing &&
-			Minecraft.getMinecraft().theWorld != null && Keyboard.getEventKey() == Keyboard.KEY_N &&
+			Minecraft.getInstance().level != null && Keyboard.getEventKey() == Keyboard.KEY_N &&
 			Keyboard.getEventKeyState()) {
-			GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+			GuiScreen gui = Minecraft.getInstance().currentScreen;
 			if (gui instanceof GuiChest) {
 				GuiChest eventGui = (GuiChest) event.gui;
 				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
@@ -1177,9 +1177,9 @@ public class RenderListener {
 			}
 		}
 		if (NotEnoughUpdates.INSTANCE.config.apiData.repositoryEditing &&
-			Minecraft.getMinecraft().theWorld != null && Keyboard.getEventKey() == Keyboard.KEY_O &&
+			Minecraft.getInstance().level != null && Keyboard.getEventKey() == Keyboard.KEY_O &&
 			Keyboard.getEventKeyState()) {
-			GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+			GuiScreen gui = Minecraft.getInstance().currentScreen;
 			if (gui instanceof GuiChest) {
 				GuiChest eventGui = (GuiChest) event.gui;
 				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
@@ -1241,8 +1241,8 @@ public class RenderListener {
 
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return;
 
-		Minecraft minecraft = Minecraft.getMinecraft();
-		if (minecraft == null || minecraft.thePlayer == null) return;
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft == null || minecraft.player == null) return;
 
 		GuiScreen screen = minecraft.currentScreen;
 		if (screen instanceof GuiItemRecipe) {

@@ -35,7 +35,7 @@ object TablistAPI {
 
     @SubscribeEvent
     fun onWorldSwitch(event: EntityJoinWorldEvent) {
-        if (event.entity == Minecraft.getMinecraft().thePlayer) {
+        if (event.entity == Minecraft.getInstance().player) {
             lastWorldSwitch = System.nanoTime()
         }
     }

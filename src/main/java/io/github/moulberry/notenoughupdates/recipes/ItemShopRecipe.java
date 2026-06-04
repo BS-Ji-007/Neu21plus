@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.miscgui.GuiNavigation;
 import io.github.moulberry.notenoughupdates.util.JsonUtils;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class ItemShopRecipe implements NeuRecipe {
 
 	@Override
 	public void drawExtraBackground(GuiItemRecipe gui, int mouseX, int mouseY) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		int colCount = cost.size() / 4;
 		int startX = COST_SLOT_X - 8 * (colCount - 1);
 		int rowSize = cost.size();
@@ -127,7 +127,7 @@ public class ItemShopRecipe implements NeuRecipe {
 			);
 		}
 		if (!hasWaypoint) return;
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiNavigation.BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiNavigation.BACKGROUND);
 		selected = npcIngredient.getInternalItemId().equals(NotEnoughUpdates.INSTANCE.navigation.getInternalname());
 		gui.drawTexturedModalRect(
 			gui.guiLeft + BUTTON_X,

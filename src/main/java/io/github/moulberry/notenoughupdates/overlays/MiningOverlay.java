@@ -78,8 +78,8 @@ public class MiningOverlay extends TextTabOverlay {
 
 	@Override
 	public void updateFrequent() {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -586,7 +586,7 @@ public class MiningOverlay extends TextTabOverlay {
 		int settings = NotEnoughUpdates.INSTANCE.config.mining.commissionTaskTips;
 		if (settings == 0) return "";
 
-		if (!Minecraft.getMinecraft().thePlayer.isSneaking() && settings == 1) return "";
+		if (!Minecraft.getInstance().player.isSneaking() && settings == 1) return "";
 
 		String tip = getTip(name);
 		if (tip == null) return "  §4???";

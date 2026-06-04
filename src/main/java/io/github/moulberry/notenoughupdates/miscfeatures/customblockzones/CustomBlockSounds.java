@@ -27,7 +27,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -94,7 +94,7 @@ public class CustomBlockSounds {
 			loaded = true;
 			IResource resource;
 			try {
-				resource = Minecraft.getMinecraft().getResourceManager().getResource(configFile);
+				resource = Minecraft.getInstance().getResourceManager().getResource(configFile);
 			} catch (IOException e) {
 				timer = -1;
 				return;

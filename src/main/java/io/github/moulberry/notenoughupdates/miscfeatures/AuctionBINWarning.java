@@ -124,8 +124,8 @@ public class AuctionBINWarning extends GuiElement {
 		}
 
 		sellingTooltip = sellStack.getTooltip(
-			Minecraft.getMinecraft().thePlayer,
-			Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+			Minecraft.getInstance().player,
+			Minecraft.getInstance().gameSettings.advancedItemTooltips
 		);
 
 		lowestPrice = NotEnoughUpdates.INSTANCE.manager.auctionManager.getLowestBin(internalname);
@@ -162,7 +162,7 @@ public class AuctionBINWarning extends GuiElement {
 
 	@Override
 	public void render() {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		final int width = scaledResolution.getScaledWidth();
 		final int height = scaledResolution.getScaledHeight();
 
@@ -175,8 +175,8 @@ public class AuctionBINWarning extends GuiElement {
 
 		RenderUtils.drawFloatingRectDark(width / 2 - 90, height / 2 - 45, 180, 90);
 
-		int neuLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth("\u00a7lNEU");
-		Minecraft.getMinecraft().fontRendererObj.drawString(
+		int neuLength = Minecraft.getInstance().font.getStringWidth("\u00a7lNEU");
+		Minecraft.getInstance().font.drawString(
 			"\u00a7lNEU",
 			width / 2 + 90 - neuLength - 3,
 			height / 2 - 45 + 4,
@@ -245,10 +245,10 @@ public class AuctionBINWarning extends GuiElement {
 		);
 
 		if (sellingTooltip != null) {
-			int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-			int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+			int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
-			int sellLineLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth(sellLine);
+			int sellLineLength = Minecraft.getInstance().font.getStringWidth(sellLine);
 
 			if (mouseX >= width / 2 - sellLineLength / 2 && mouseX <= width / 2 + sellLineLength / 2 &&
 				mouseY >= height / 2 - 45 + 20 && mouseY <= height / 2 - 45 + 30) {
@@ -261,16 +261,16 @@ public class AuctionBINWarning extends GuiElement {
 
 	@Override
 	public boolean mouseInput(int mouseX, int mouseY) {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		final int width = scaledResolution.getScaledWidth();
 		final int height = scaledResolution.getScaledHeight();
 
 		if (Mouse.getEventButtonState()) {
 			if (mouseY >= height / 2 + 23 && mouseY <= height / 2 + 23 + 16) {
 				if (mouseX >= width / 2 - 43 && mouseX <= width / 2 - 3) {
-					GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
-					Minecraft.getMinecraft().playerController.windowClick(chest.inventorySlots.windowId,
-						29, 0, 0, Minecraft.getMinecraft().thePlayer
+					GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+					Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+						29, 0, 0, Minecraft.getInstance().player
 					);
 				}
 				showWarning = false;
@@ -289,9 +289,9 @@ public class AuctionBINWarning extends GuiElement {
 	public boolean keyboardInput() {
 		if (!Keyboard.getEventKeyState()) {
 			if (Keyboard.getEventKey() == Keyboard.KEY_Y || Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
-				GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
-				Minecraft.getMinecraft().playerController.windowClick(chest.inventorySlots.windowId,
-					29, 0, 0, Minecraft.getMinecraft().thePlayer
+				GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+				Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+					29, 0, 0, Minecraft.getInstance().player
 				);
 			}
 			showWarning = false;

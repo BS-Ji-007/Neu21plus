@@ -74,8 +74,8 @@ public class GuiElementSlider extends GuiElement {
 
 	@Override
 	public void render() {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-		int mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
+		int mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getInstance().displayWidth;
 
 		float value = this.value;
 		if (clicked) {
@@ -88,29 +88,29 @@ public class GuiElementSlider extends GuiElement {
 		int sliderAmountI = (int) (width * sliderAmount);
 
 		GlStateManager.color(1f, 1f, 1f, 1f);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(slider_on_cap);
+		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_cap);
 		Utils.drawTexturedRect(x, y, 4, HEIGHT, GL11.GL_NEAREST);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(slider_off_cap);
+		Minecraft.getInstance().getTextureManager().bindTexture(slider_off_cap);
 		Utils.drawTexturedRect(x + width - 4, y, 4, HEIGHT, GL11.GL_NEAREST);
 
 		if (sliderAmountI > 5) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(slider_on_segment);
+			Minecraft.getInstance().getTextureManager().bindTexture(slider_on_segment);
 			Utils.drawTexturedRect(x + 4, y, sliderAmountI - 4, HEIGHT, GL11.GL_NEAREST);
 		}
 
 		if (sliderAmountI < width - 5) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(slider_off_segment);
+			Minecraft.getInstance().getTextureManager().bindTexture(slider_off_segment);
 			Utils.drawTexturedRect(x + sliderAmountI, y, width - 4 - sliderAmountI, HEIGHT, GL11.GL_NEAREST);
 		}
 
 		for (int i = 1; i < 4; i++) {
 			int notchX = x + width * i / 4 - 1;
-			Minecraft.getMinecraft().getTextureManager().bindTexture(
+			Minecraft.getInstance().getTextureManager().bindTexture(
 				notchX > x + sliderAmountI ? slider_off_notch : slider_on_notch);
 			Utils.drawTexturedRect(notchX, y + (HEIGHT - 4) / 2, 2, 4, GL11.GL_NEAREST);
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(slider_button_new);
+		Minecraft.getInstance().getTextureManager().bindTexture(slider_button_new);
 		Utils.drawTexturedRect(x + sliderAmountI - 4, y, 8, HEIGHT, GL11.GL_NEAREST);
 	}
 

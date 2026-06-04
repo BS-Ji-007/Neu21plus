@@ -25,7 +25,7 @@ import com.mojang.brigadier.suggestion.Suggestions
 import com.mojang.brigadier.tree.CommandNode
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
-import net.minecraft.util.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.EnumChatFormatting.YELLOW
 import java.util.concurrent.CompletableFuture

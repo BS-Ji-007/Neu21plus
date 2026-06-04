@@ -29,10 +29,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkCoordIntPair;
 
@@ -69,7 +69,7 @@ public class DwarvenMinesTextures implements IslandZoneSubdivider {
 	private boolean error = false;
 
 	private IBlockState getBlock(BlockPos pos) {
-		return Minecraft.getMinecraft().theWorld.getBlockState(pos);
+		return Minecraft.getInstance().level.getBlockState(pos);
 	}
 
 	private boolean isDoubleSlab(IBlockState state) {

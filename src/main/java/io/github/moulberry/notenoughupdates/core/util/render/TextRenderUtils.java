@@ -73,7 +73,7 @@ public class TextRenderUtils {
 		int len,
 		int colour
 	) {
-		drawStringScaledMaxWidth(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, len, colour);
+		drawStringScaledMaxWidth(str, Minecraft.getInstance().font, x, y, shadow, len, colour);
 	}
 
 	@Deprecated
@@ -112,7 +112,7 @@ public class TextRenderUtils {
 		int colour,
 		float factor
 	) {
-		drawStringScaled(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour, factor);
+		drawStringScaled(str, Minecraft.getInstance().font, x, y, shadow, colour, factor);
 	}
 
 	@Deprecated
@@ -138,7 +138,7 @@ public class TextRenderUtils {
 		int len,
 		int colour
 	) {
-		drawStringCenteredScaledMaxWidth(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, len, colour);
+		drawStringCenteredScaledMaxWidth(str, Minecraft.getInstance().font, x, y, shadow, len, colour);
 	}
 
 	@Deprecated
@@ -170,8 +170,8 @@ public class TextRenderUtils {
 		FontRenderer fontStd
 	) {
 		List<String> list = stack.getTooltip(
-			Minecraft.getMinecraft().thePlayer,
-			Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+			Minecraft.getInstance().player,
+			Minecraft.getInstance().gameSettings.advancedItemTooltips
 		);
 
 		for (int i = 0; i < list.size(); ++i) {

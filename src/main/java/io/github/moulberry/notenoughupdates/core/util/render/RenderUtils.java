@@ -34,10 +34,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 import org.lwjgl.opengl.GL11;
@@ -58,7 +58,7 @@ public class RenderUtils {
 		int alpha = 0xf0000000;
 
 		if (OpenGlHelper.isFramebufferEnabled()) {
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			BackgroundBlur.renderBlurredBackground(15, scaledResolution.getScaledWidth(),
 				scaledResolution.getScaledHeight(), x, y, width, height, true
 			);
@@ -232,7 +232,7 @@ public class RenderUtils {
 			GlStateManager.disableDepth();
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(beaconBeam);
+		Minecraft.getInstance().getTextureManager().bindTexture(beaconBeam);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		GlStateManager.disableLighting();
@@ -242,7 +242,7 @@ public class RenderUtils {
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
 
-		double time = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + (double) partialTicks;
+		double time = Minecraft.getInstance().level.getTotalWorldTime() + (double) partialTicks;
 		double d1 = MathHelper.func_181162_h(-time * 0.2D - (double) MathHelper.floor_double(-time * 0.1D));
 
 		float r = ((rgb >> 16) & 0xFF) / 255f;
@@ -347,7 +347,7 @@ public class RenderUtils {
 			viewerY = aoteInterpPos.y;
 			viewerZ = aoteInterpPos.z;
 		} else {
-			Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+			Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 			viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
 			viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
 			viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
@@ -368,7 +368,7 @@ public class RenderUtils {
 		if (aoteInterpPos != null) {
 			return new Vector3f(aoteInterpPos);
 		} else {
-			Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+			Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 			Vector3f lastPos = new Vector3f(
 				(float) viewer.lastTickPosX,
 				(float) viewer.lastTickPosY,
@@ -426,7 +426,7 @@ public class RenderUtils {
 		ResourceLocation texture
 	) {
 		GlStateManager.pushMatrix();
-		Entity v = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity v = Minecraft.getInstance().getRenderViewEntity();
 		double vX = v.lastTickPosX + (v.posX - v.lastTickPosX);
 		double vY = v.lastTickPosY + (v.posY - v.lastTickPosY);
 		double vZ = v.lastTickPosZ + (v.posZ - v.lastTickPosZ);
@@ -438,7 +438,7 @@ public class RenderUtils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 		GlStateManager.color(1.0f, 1.0f, 1.0f, alpha);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
+		Minecraft.getInstance().getTextureManager().bindTexture(texture);
 		worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 		worldrenderer.pos(p1.xCoord - vX, p1.yCoord - vY, p1.zCoord - vZ).tex(0, 0).endVertex(); //Top Left
 		worldrenderer.pos(p2.xCoord - vX, p2.yCoord - vY, p2.zCoord - vZ).tex(1, 0).endVertex(); //Top Right
@@ -454,7 +454,7 @@ public class RenderUtils {
 
 		GlStateManager.pushMatrix();
 
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
 		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
@@ -487,13 +487,13 @@ public class RenderUtils {
 	}
 
 	public static void renderNametag(List<String> lines) {
-		FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fontrenderer = Minecraft.getInstance().font;
 		float f = 1.6F;
 		float f1 = 0.016666668F * f;
 		GlStateManager.pushMatrix();
 		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(-Minecraft.getInstance().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(Minecraft.getInstance().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
 		GlStateManager.scale(-f1, -f1, f1);
 		GlStateManager.disableLighting();
 		GlStateManager.depthMask(false);
@@ -534,7 +534,7 @@ public class RenderUtils {
 		GlStateManager.color(1f, 1f, 1f, 1f);
 
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0f, 0f, 110 + Minecraft.getMinecraft().getRenderItem().zLevel);
+		GlStateManager.translate(0f, 0f, 110 + Minecraft.getInstance().getRenderItem().zLevel);
 		Gui.drawRect(
 			slot.xDisplayPosition,
 			slot.yDisplayPosition,
@@ -548,7 +548,7 @@ public class RenderUtils {
 	}
 
 	public static void renderLineToBlock(BlockPos block, int rgb, float partialTicks) {
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 		Entity renderViewEntity = mc.getRenderViewEntity();
 
 		double cameraX = renderViewEntity.lastTickPosX + (renderViewEntity.posX - renderViewEntity.lastTickPosX);

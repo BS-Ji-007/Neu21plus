@@ -40,12 +40,12 @@ class DungeonCommands {
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("dh") {
             thenExecute {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp dungeon_hub")
+                Minecraft.getInstance().player.sendChatMessage("/warp dungeon_hub")
             }
         }.withHelp("Warps to the dungeon hub")
         event.command("dn") {
             thenExecute {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp dungeon_hub")
+                Minecraft.getInstance().player.sendChatMessage("/warp dungeon_hub")
                 reply("Warping to...")
                 reply("Deez nuts lmao")
             }
@@ -62,13 +62,13 @@ class DungeonCommands {
                 thenArgument("filename", string()) { fileName ->
                     requiresDev()
                     thenExecute {
-                        val stack = Minecraft.getMinecraft().thePlayer.heldItem
+                        val stack = Minecraft.getInstance().player.heldItem
                         if (stack == null || stack.item !is ItemMap) {
                             reply("Please hold a map item")
                             return@thenExecute
                         }
                         val map = stack.item as ItemMap
-                        val mapData = map.getMapData(stack, Minecraft.getMinecraft().theWorld)
+                        val mapData = map.getMapData(stack, Minecraft.getInstance().level)
                         if (mapData == null) {
                             reply("Could not grab map data (empty map)")
                             return@thenExecute

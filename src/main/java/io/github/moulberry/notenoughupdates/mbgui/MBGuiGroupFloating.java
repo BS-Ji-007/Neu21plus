@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.mbgui;
 import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.util.vector.Vector2f;
@@ -53,14 +53,14 @@ public class MBGuiGroupFloating extends MBGuiGroup {
 
 	@Override
 	public Map<MBGuiElement, Vector2f> getChildrenPosition() {
-		GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
 
 		if (currentScreen instanceof GuiContainer || currentScreen instanceof GuiItemRecipe) {
 
 			if (lastScreen != currentScreen) {
 				lastScreen = currentScreen;
 
-				ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+				ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 				int screenWidth = scaledResolution.getScaledWidth();
 				int screenHeight = scaledResolution.getScaledHeight();
 

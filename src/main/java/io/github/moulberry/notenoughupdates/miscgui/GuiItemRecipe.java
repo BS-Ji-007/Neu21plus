@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.recipes.RecipeType;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -41,7 +41,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -141,7 +141,7 @@ public class GuiItemRecipe extends GuiScreen {
 
 		NeuRecipe currentRecipe = getCurrentRecipe();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(currentRecipe.getBackground());
+		Minecraft.getInstance().getTextureManager().bindTexture(currentRecipe.getBackground());
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
 
 		drawTabs();
@@ -166,7 +166,7 @@ public class GuiItemRecipe extends GuiScreen {
 				GlStateManager.disableLighting();
 				GlStateManager.disableDepth();
 				GlStateManager.disableBlend();
-				fontRendererObj.drawStringWithShadow(stackSize, (slot.getX(this) + 17 - fontRendererObj.getStringWidth(stackSize)), (slot.getY(this) + 9), 16777215);
+				font.drawStringWithShadow(stackSize, (slot.getX(this) + 17 - font.getStringWidth(stackSize)), (slot.getY(this) + 9), 16777215);
 				GlStateManager.enableLighting();
 				GlStateManager.enableDepth();
 				GlStateManager.enableBlend();
@@ -190,8 +190,8 @@ public class GuiItemRecipe extends GuiScreen {
 		for (RecipeSlot slot : slots) {
 			if (isWithinRect(mouseX, mouseY, slot.getX(this), slot.getY(this), SLOT_SIZE, SLOT_SIZE)) {
 				if (slot.getItemStack() == null) continue;
-				tooltipToDisplay = slot.getItemStack().getTooltip(Minecraft.getMinecraft().thePlayer,
-					Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+				tooltipToDisplay = slot.getItemStack().getTooltip(Minecraft.getInstance().player,
+					Minecraft.getInstance().gameSettings.advancedItemTooltips);
 			}
 		}
 
@@ -200,7 +200,7 @@ public class GuiItemRecipe extends GuiScreen {
 			if (!NotEnoughUpdates.INSTANCE.manager.auctionManager.isVanillaItem(internalItemId)) {
 				int x = guiLeft + 123;
 				int y = guiTop + 105;
-				Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(x - 1, y - 1, 18, 18,
 					0 / 256f, 18 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
@@ -251,7 +251,7 @@ public class GuiItemRecipe extends GuiScreen {
 			if (currentTab == i) {
 				textureOffset = 30;
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(tabsTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(tabsTexture);
 			drawTexturedModalRect(
 				tabPosX, tabPosY,
 				0, textureOffset,
@@ -263,7 +263,7 @@ public class GuiItemRecipe extends GuiScreen {
 
 	public List<RecipeSlot> getPlayerInventory() {
 		List<RecipeSlot> slots = new ArrayList<>();
-		ItemStack[] inventory = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+		ItemStack[] inventory = Minecraft.getInstance().player.inventory.mainInventory;
 		int hotbarSize = InventoryPlayer.getHotbarSize();
 		for (int i = 0; i < inventory.length; i++) {
 			ItemStack item = inventory[i];
@@ -286,11 +286,11 @@ public class GuiItemRecipe extends GuiScreen {
 	public void handleKeyboardInput() throws IOException {
 		super.handleKeyboardInput();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 		int keyPressed = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
 		if (Keyboard.getEventKeyState()) return;
 		for (RecipeSlot slot : getAllRenderedSlots()) {
@@ -394,9 +394,9 @@ public class GuiItemRecipe extends GuiScreen {
 	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
 		ScaledResolution scaledResolution = Utils.peekGuiScale();
-		int mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+		int mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getInstance().displayWidth;
 		int mouseY = scaledResolution.getScaledHeight() -
-			Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getMinecraft().displayHeight - 1;
+			Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getInstance().displayHeight - 1;
 		getCurrentRecipe().genericMouseInput(mouseX, mouseY);
 
 		

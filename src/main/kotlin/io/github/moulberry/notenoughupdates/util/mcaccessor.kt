@@ -21,4 +21,4 @@ package io.github.moulberry.notenoughupdates.util
 
 import net.minecraft.client.Minecraft
 
-inline val MC get() = Minecraft.getMinecraft()
+inline val MC get() = Minecraft.getInstance()

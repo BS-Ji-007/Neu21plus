@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSo
 import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSolver.HandleCompassResult;
 import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSolver.SolverState;
 import io.github.moulberry.notenoughupdates.util.NEUDebugLogger;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 import org.junit.jupiter.api.Assertions;

@@ -138,7 +138,7 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 
 	private void drawString(String text) {
 		Utils.drawStringCenteredScaledMaxWidth(text, 0, 0, false, getInstance().sizeX - 20, -1);
-		val spacing = Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 2;
+		val spacing = Minecraft.getInstance().font.FONT_HEIGHT + 2;
 		GlStateManager.translate(0, spacing, 0);
 		offset += spacing;
 	}
@@ -148,7 +148,7 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 		GlStateManager.scale(2, 2, 2);
 		Utils.drawStringCenteredScaledMaxWidth("§cKA-BOOM!", 0, 0, false, getInstance().sizeX / 2, -1);
 		GlStateManager.popMatrix();
-		val spacing = Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT * 2 + 6;
+		val spacing = Minecraft.getInstance().font.FONT_HEIGHT * 2 + 6;
 		GlStateManager.translate(0, spacing, 0);
 		offset += spacing;
 	}

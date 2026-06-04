@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import io.github.moulberry.notenoughupdates.profileviewer.BasicPage;
 import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;

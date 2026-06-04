@@ -33,14 +33,14 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -122,7 +122,7 @@ public class TrophyRewardOverlay {
 		if (!inTrophyFishingInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.fishing.trophyRewardOverlay) return;
 
-		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen screen = Minecraft.getInstance().currentScreen;
 		if (!(screen instanceof GuiChest)) return;
 		Gui gui = event.gui;
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
@@ -202,9 +202,9 @@ public class TrophyRewardOverlay {
 	}
 
 	private void readInventory(Map<String, Integer> totalAmount, Map<String, Integer> totalExchange) {
-		if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
+		if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
 
-			for (Slot slot : Minecraft.getMinecraft().thePlayer.openContainer.inventorySlots) {
+			for (Slot slot : Minecraft.getInstance().player.openContainer.inventorySlots) {
 				if (!slot.getHasStack()) continue;
 				ItemStack stack = slot.getStack();
 				if (stack != null) {
@@ -263,7 +263,7 @@ public class TrophyRewardOverlay {
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
 		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
 		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
-		Minecraft minecraft = Minecraft.getMinecraft();
+		Minecraft minecraft = Minecraft.getInstance();
 		minecraft.getTextureManager().bindTexture(trophyProfitImage);
 		GL11.glColor4f(1, 1, 1, 1);
 		GlStateManager.disableLighting();
@@ -271,12 +271,12 @@ public class TrophyRewardOverlay {
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 158, 128, 0, 1, 0, 1, GL11.GL_NEAREST);
 
 		int a = guiLeft + xSize + 4;
-		FontRenderer fontRendererObj = minecraft.fontRendererObj;
+		FontRenderer font = minecraft.font;
 
 		//Render first two header lines
 		int i = 0;
 		for (String text : texts) {
-			fontRendererObj.drawString("§8" + text, a + 10, guiTop + 6 + i, -1, false);
+			font.drawString("§8" + text, a + 10, guiTop + 6 + i, -1, false);
 			i += 10;
 			if (i == 20) break;
 		}
@@ -286,7 +286,7 @@ public class TrophyRewardOverlay {
 		int index = 0;
 		for (String text : texts) {
 			if (index > 1) {
-				fontRendererObj.drawString(text, a + 10, guiTop + 6 + i, -1, false);
+				font.drawString(text, a + 10, guiTop + 6 + i, -1, false);
 				i += 10;
 			} else {
 				index++;
@@ -297,10 +297,10 @@ public class TrophyRewardOverlay {
 	public static boolean inTrophyFishingInventory() {
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return false;
 
-		Minecraft minecraft = Minecraft.getMinecraft();
-		if (minecraft == null || minecraft.thePlayer == null) return false;
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft == null || minecraft.player == null) return false;
 
-		Container inventoryContainer = minecraft.thePlayer.openContainer;
+		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
 		return containerChest.getLowerChestInventory().getDisplayName()

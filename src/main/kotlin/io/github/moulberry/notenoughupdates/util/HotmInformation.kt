@@ -57,7 +57,7 @@ class HotmInformation {
 
     private fun loadDataFromInventory() {
         val profileSpecific = NotEnoughUpdates.INSTANCE.config.profileSpecific ?: return
-        val currentScreen = Minecraft.getMinecraft().currentScreen
+        val currentScreen = Minecraft.getInstance().currentScreen
         if (currentScreen !is GuiChest) {
             return
         }

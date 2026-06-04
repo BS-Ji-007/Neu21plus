@@ -29,8 +29,8 @@ import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.util.brigadier.thenExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import io.github.moulberry.notenoughupdates.util.loadResourceLocation
-import net.minecraft.client.gui.GuiScreen
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class CustomTodoList(

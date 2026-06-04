@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils
 import io.github.moulberry.notenoughupdates.util.JsonUtils
 import io.github.moulberry.notenoughupdates.util.copyToClipboard
 import io.github.moulberry.notenoughupdates.util.kotlin.useMatcher
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.init.Blocks

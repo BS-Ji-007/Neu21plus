@@ -64,7 +64,7 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Matrix4f;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.Loader;
 import org.jetbrains.annotations.NotNull;
@@ -166,7 +166,7 @@ public class Utils {
 		put("DIVINE", rarityArrC[8]);
 	}};
 	public static Splitter PATH_SPLITTER = Splitter.on(".").omitEmptyStrings().limit(2);
-	private static ScaledResolution lastScale = new ScaledResolution(Minecraft.getMinecraft());
+	private static ScaledResolution lastScale = new ScaledResolution(Minecraft.getInstance());
 	private static long startTime = 0;
 	private static final DecimalFormat simpleDoubleFormat = new DecimalFormat("0.0");
 
@@ -199,7 +199,7 @@ public class Utils {
 			}
 		} else {
 			if (scale == 0) {
-				guiScales.push(Minecraft.getMinecraft().gameSettings.guiScale);
+				guiScales.push(Minecraft.getInstance().gameSettings.guiScale);
 			} else {
 				guiScales.push(scale);
 			}
@@ -207,16 +207,16 @@ public class Utils {
 
 		int newScale = !guiScales.isEmpty()
 			? Math.max(0, guiScales.peek())
-			: Minecraft.getMinecraft().gameSettings.guiScale;
-		if (newScale == 0) newScale = Minecraft.getMinecraft().gameSettings.guiScale;
+			: Minecraft.getInstance().gameSettings.guiScale;
+		if (newScale == 0) newScale = Minecraft.getInstance().gameSettings.guiScale;
 
-		int oldScale = Minecraft.getMinecraft().gameSettings.guiScale;
-		Minecraft.getMinecraft().gameSettings.guiScale = newScale;
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
-		Minecraft.getMinecraft().gameSettings.guiScale = oldScale;
+		int oldScale = Minecraft.getInstance().gameSettings.guiScale;
+		Minecraft.getInstance().gameSettings.guiScale = newScale;
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
+		Minecraft.getInstance().gameSettings.guiScale = oldScale;
 
 		if (!guiScales.isEmpty()) {
-			GlStateManager.viewport(0, 0, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+			GlStateManager.viewport(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getInstance().displayHeight);
 			GlStateManager.matrixMode(GL11.GL_PROJECTION);
 			GlStateManager.loadIdentity();
 			GlStateManager.ortho(0.0D,
@@ -254,7 +254,7 @@ public class Utils {
 	}
 
 	public static void drawItemStackWithoutGlint(ItemStack stack, int x, int y) {
-		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+		RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 
 		disableCustomDungColours = true;
 		RenderHelper.enableGUIStandardItemLighting();
@@ -265,7 +265,7 @@ public class Utils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} //Catch exceptions to ensure that hasEffectOverride is set back to false.
-		itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRendererObj, stack, x, y, null);
+		itemRender.renderItemOverlayIntoGUI(Minecraft.getInstance().font, stack, x, y, null);
 		hasEffectOverride = false;
 		itemRender.zLevel = 0;
 		RenderHelper.disableStandardItemLighting();
@@ -280,13 +280,13 @@ public class Utils {
 		if (stack == null) return;
 		if (skytilsRarity)
 			SkytilsCompat.renderSkytilsRarity(stack, x, y);
-		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+		RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 
 		disableCustomDungColours = true;
 		RenderHelper.enableGUIStandardItemLighting();
 		itemRender.zLevel = -145; //Negates the z-offset of the below method.
 		itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-		itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRendererObj, stack, x, y, text);
+		itemRender.renderItemOverlayIntoGUI(Minecraft.getInstance().font, stack, x, y, text);
 		itemRender.zLevel = 0;
 		RenderHelper.disableStandardItemLighting();
 		disableCustomDungColours = false;
@@ -345,7 +345,7 @@ public class Utils {
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			int index = ((int) (offset + len / 12f - (currentTimeMillis - startTime) / chromaSpeed)) % rainbow.length;
-			len += Minecraft.getMinecraft().fontRendererObj.getCharWidth(c);
+			len += Minecraft.getInstance().font.getCharWidth(c);
 			if (bold) len++;
 
 			if (index < 0) index += rainbow.length;
@@ -497,15 +497,15 @@ public class Utils {
 	public static void drawItemStackLinear(ItemStack stack, int x, int y) {
 		if (stack == null) return;
 
-		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+		RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 
 		RenderHelper.enableGUIStandardItemLighting();
 		itemRender.zLevel = -145; //Negates the z-offset of the below method.
 
 		IBakedModel ibakedmodel = itemRender.getItemModelMesher().getItemModel(stack);
 		GlStateManager.pushMatrix();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-		Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture).setBlurMipmap(true, true);
+		Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Minecraft.getInstance().getTextureManager().getTexture(TextureMap.locationBlocksTexture).setBlurMipmap(true, true);
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
@@ -522,10 +522,10 @@ public class Utils {
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.disableLighting();
 		GlStateManager.popMatrix();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-		Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
+		Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Minecraft.getInstance().getTextureManager().getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
 
-		itemRender.renderItemOverlays(Minecraft.getMinecraft().fontRendererObj, stack, x, y);
+		itemRender.renderItemOverlays(Minecraft.getInstance().font, stack, x, y);
 		itemRender.zLevel = 0;
 		RenderHelper.disableStandardItemLighting();
 	}
@@ -647,7 +647,7 @@ public class Utils {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 
 		drawTexturedRect(x, y, pressed ? 32 : 28, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
@@ -832,7 +832,7 @@ public class Utils {
 
 	public static void playSound(ResourceLocation sound, boolean gui) {
 		if (NotEnoughUpdates.INSTANCE.config.misc.guiButtonClicks || !gui) {
-			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(sound, 1.0F));
+			Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(sound, 1.0F));
 		}
 	}
 
@@ -1046,7 +1046,7 @@ public class Utils {
 	}
 
 	public static void drawStringF(String str, float x, float y, boolean shadow, int colour) {
-		drawStringF(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour);
+		drawStringF(str, Minecraft.getInstance().font, x, y, shadow, colour);
 	}
 
 	@Deprecated
@@ -1074,7 +1074,7 @@ public class Utils {
 	}
 
 	public static void drawStringVertical(String str, float x, float y, boolean shadow, int colour) {
-		drawStringVertical(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour);
+		drawStringVertical(str, Minecraft.getInstance().font, x, y, shadow, colour);
 	}
 
 	@Deprecated
@@ -1093,7 +1093,7 @@ public class Utils {
 	}
 
 	public static void renderShadowedString(String str, float x, float y, int maxLength) {
-		int strLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(str);
+		int strLen = Minecraft.getInstance().font.getStringWidth(str);
 		float factor;
 		if (maxLength < 0) {
 			factor = 1;
@@ -1126,14 +1126,14 @@ public class Utils {
 	}
 
 	public static void renderAlignedString(String first, String second, float x, float y, int length) {
-		FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
-		if (fontRendererObj.getStringWidth(first + " " + second) >= length) {
+		FontRenderer font = Minecraft.getInstance().font;
+		if (font.getStringWidth(first + " " + second) >= length) {
 			renderShadowedString(first + " " + second, x + length / 2f, y, length);
 		} else {
 			for (int xOff = -2; xOff <= 2; xOff++) {
 				for (int yOff = -2; yOff <= 2; yOff++) {
 					if (Math.abs(xOff) != Math.abs(yOff)) {
-						fontRendererObj.drawString(cleanColourNotModifiers(first),
+						font.drawString(cleanColourNotModifiers(first),
 							x + xOff / 2f, y + yOff / 2f,
 							new Color(0, 0, 0, 200 / Math.max(Math.abs(xOff), Math.abs(yOff))).getRGB(), false
 						);
@@ -1141,13 +1141,13 @@ public class Utils {
 				}
 			}
 
-			int secondLen = fontRendererObj.getStringWidth(second);
+			int secondLen = font.getStringWidth(second);
 			GlStateManager.color(1, 1, 1, 1);
-			fontRendererObj.drawString(first, x, y, 4210752, false);
+			font.drawString(first, x, y, 4210752, false);
 			for (int xOff = -2; xOff <= 2; xOff++) {
 				for (int yOff = -2; yOff <= 2; yOff++) {
 					if (Math.abs(xOff) != Math.abs(yOff)) {
-						fontRendererObj.drawString(cleanColourNotModifiers(second),
+						font.drawString(cleanColourNotModifiers(second),
 							x + length - secondLen + xOff / 2f, y + yOff / 2f,
 							new Color(0, 0, 0, 200 / Math.max(Math.abs(xOff), Math.abs(yOff))).getRGB(), false
 						);
@@ -1156,7 +1156,7 @@ public class Utils {
 			}
 
 			GlStateManager.color(1, 1, 1, 1);
-			fontRendererObj.drawString(second, x + length - secondLen, y, 4210752, false);
+			font.drawString(second, x + length - secondLen, y, 4210752, false);
 		}
 	}
 
@@ -1168,7 +1168,7 @@ public class Utils {
 		int len,
 		int colour
 	) {
-		drawStringScaledMaxWidth(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, len, colour);
+		drawStringScaledMaxWidth(str, Minecraft.getInstance().font, x, y, shadow, len, colour);
 	}
 
 	@Deprecated
@@ -1189,11 +1189,11 @@ public class Utils {
 	}
 
 	public static void drawStringCentered(String str, float x, float y, boolean shadow, int colour) {
-		drawStringCentered(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour);
+		drawStringCentered(str, Minecraft.getInstance().font, x, y, shadow, colour);
 	}
 
 	public static void drawStringCentered(String str, int x, int y, boolean shadow, int colour) {
-		drawStringCentered(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour);
+		drawStringCentered(str, Minecraft.getInstance().font, x, y, shadow, colour);
 	}
 
 	@Deprecated
@@ -1216,7 +1216,7 @@ public class Utils {
 		int colour,
 		float factor
 	) {
-		drawStringScaled(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour, factor);
+		drawStringScaled(str, Minecraft.getInstance().font, x, y, shadow, colour, factor);
 	}
 
 	@Deprecated
@@ -1255,7 +1255,7 @@ public class Utils {
 	) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, 0);
-		var fr = Minecraft.getMinecraft().fontRendererObj;
+		var fr = Minecraft.getInstance().font;
 		var width = fr.getStringWidth(str);
 		float scale = ((float) availableSpace) / width;
 		GlStateManager.scale(scale, scale, 1f);
@@ -1272,7 +1272,7 @@ public class Utils {
 		float factor,
 		int len
 	) {
-		drawStringScaledMax(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, colour, factor, len);
+		drawStringScaledMax(str, Minecraft.getInstance().font, x, y, shadow, colour, factor, len);
 	}
 
 	@Deprecated
@@ -1303,7 +1303,7 @@ public class Utils {
 		int len,
 		int colour
 	) {
-		drawStringCenteredScaledMaxWidth(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, len, colour);
+		drawStringCenteredScaledMaxWidth(str, Minecraft.getInstance().font, x, y, shadow, len, colour);
 	}
 
 	@Deprecated
@@ -1346,7 +1346,7 @@ public class Utils {
 		int len,
 		int colour
 	) {
-		int strLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(str);
+		int strLen = Minecraft.getInstance().font.getStringWidth(str);
 		float factor = len / (float) strLen;
 		float fontHeight = 8 * factor;
 
@@ -1365,7 +1365,7 @@ public class Utils {
 		boolean shadow,
 		float factor
 	) {
-		drawStringCenteredScaled(str, Minecraft.getMinecraft().fontRendererObj, x, y, shadow, factor);
+		drawStringCenteredScaled(str, Minecraft.getInstance().font, x, y, shadow, factor);
 	}
 
 	@Deprecated
@@ -1484,7 +1484,7 @@ public class Utils {
 	}
 
 	public static String trimToWidth(String str, int len) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		String trim = fr.trimStringToWidth(str, len);
 
 		if (str.length() != trim.length() && !trim.endsWith(" ")) {
@@ -1572,7 +1572,7 @@ public class Utils {
 			screenWidth,
 			screenHeight,
 			maxTextWidth,
-			Minecraft.getMinecraft().fontRendererObj
+			Minecraft.getInstance().font
 		);
 	}
 
@@ -1712,7 +1712,7 @@ public class Utils {
 	}
 
 	public static Color getPrimaryColour(String displayName) {
-		int colourInt = Minecraft.getMinecraft().fontRendererObj.getColorCode(getPrimaryColourCode(displayName));
+		int colourInt = Minecraft.getInstance().font.getColorCode(getPrimaryColourCode(displayName));
 		return new Color(colourInt).darker();
 	}
 
@@ -1743,10 +1743,10 @@ public class Utils {
 			textLines = TooltipTextScrolling.handleTextLineRendering(textLines);
 			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) {
 				ScaledResolution scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale);
-				mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+				mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getInstance().displayWidth;
 
 				mouseY = scaledResolution.getScaledHeight() -
-					Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+					Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getInstance().displayHeight;
 
 				screenWidth = scaledResolution.getScaledWidth();
 
@@ -2190,7 +2190,7 @@ public class Utils {
 	}
 
 	public static boolean sendCloseScreenPacket() {
-		EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP thePlayer = Minecraft.getInstance().player;
 		if (thePlayer.openContainer == null) return false;
 		thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(
 			thePlayer.openContainer.windowId));
@@ -2220,11 +2220,11 @@ public class Utils {
 
 	public static int getMouseY() {
 		int height = peekGuiScale().getScaledHeight();
-		return height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		return height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 	}
 
 	public static int getMouseX() {
-		return Mouse.getX() * peekGuiScale().getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+		return Mouse.getX() * peekGuiScale().getScaledWidth() / Minecraft.getInstance().displayWidth;
 	}
 
 	public static boolean isWithinRect(int x, int y, int left, int top, int width, int height) {
@@ -2370,7 +2370,7 @@ public class Utils {
 	}
 
 	public static void addChatMessage(@NotNull IChatComponent message) {
-		EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP thePlayer = Minecraft.getInstance().player;
 		if (thePlayer != null) {
 			thePlayer.addChatMessage(message);
 		} else {
@@ -2396,16 +2396,16 @@ public class Utils {
 	}
 
 	public static void sendLeftMouseClick(int windowId, int slot) {
-		Minecraft.getMinecraft().playerController.windowClick(
+		Minecraft.getInstance().playerController.windowClick(
 			windowId,
-			slot, 0, 0, Minecraft.getMinecraft().thePlayer
+			slot, 0, 0, Minecraft.getInstance().player
 		);
 	}
 
 	public static void sendMiddleMouseClick(int windowId, int slot) {
-		Minecraft.getMinecraft().playerController.windowClick(
+		Minecraft.getInstance().playerController.windowClick(
 			windowId,
-			slot, 2, 3, Minecraft.getMinecraft().thePlayer
+			slot, 2, 3, Minecraft.getInstance().player
 		);
 	}
 

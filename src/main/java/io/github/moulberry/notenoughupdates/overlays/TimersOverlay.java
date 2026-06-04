@@ -317,8 +317,8 @@ public class TimersOverlay extends TextTabOverlay {
 		long catacombsDiffNow = catacombsReset + TimeEnums.DAY.time - currentTime;
 		long fetchurComplete = hidden.fetchurCompleted;
 
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -1107,10 +1107,10 @@ public class TimersOverlay extends TextTabOverlay {
 	public void onMatriarchTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
 		if (!"crimson_isle".equals(SBInfo.getInstance().getLocation())) return;
-		var player = Minecraft.getMinecraft().thePlayer;
+		var player = Minecraft.getInstance().player;
 		if (player == null) return;
 		if (!matriarchArea.isVecInside(player.getPositionVector())) return;
-		var matriarchRelevantArmorStands = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABB(
+		var matriarchRelevantArmorStands = Minecraft.getInstance().level.getEntitiesWithinAABB(
 			EntityArmorStand.class,
 			matriarchArea
 		);

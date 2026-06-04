@@ -57,19 +57,19 @@ public class AnimatedSkullExporter {
 	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!isRecording()) return;
-		if (Minecraft.getMinecraft().theWorld == null) {
+		if (Minecraft.getInstance().level == null) {
 			finishRecording(true, true);
 			return;
 		}
 
 		if (recordingState == RecordingType.HEAD) {
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP player = Minecraft.getInstance().player;
 			ItemStack currentArmor = player.getCurrentArmor(3);
 			NBTTagCompound skullOwner = getSkullOwner(currentArmor);
 			if (skullOwner != null) skullsList.add(skullOwner);
 
 		} else if (recordingState == RecordingType.PET) {
-			for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+			for (Entity entity : Minecraft.getInstance().level.loadedEntityList) {
 				if (entity instanceof EntityArmorStand) {
 					EntityArmorStand armorStand = (EntityArmorStand) entity;
 					ItemStack[] currentArmorS = armorStand.getInventory();
@@ -85,7 +85,7 @@ public class AnimatedSkullExporter {
 			}
 
 		} else if (recordingState == RecordingType.PLAYER) {
-			for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+			for (Entity entity : Minecraft.getInstance().level.loadedEntityList) {
 				if (entity instanceof EntityOtherPlayerMP) {
 					EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 					if (otherPlayer.getName().toLowerCase(Locale.ROOT).contains(trackedPlayer.toLowerCase(Locale.ROOT))) {

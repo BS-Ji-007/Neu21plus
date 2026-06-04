@@ -80,10 +80,10 @@ public class MinionHelperManager {
 	public boolean inCraftedMinionsInventory() {
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock()) return false;
 
-		Minecraft minecraft = Minecraft.getMinecraft();
-		if (minecraft == null || minecraft.thePlayer == null) return false;
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft == null || minecraft.player == null) return false;
 
-		Container inventoryContainer = minecraft.thePlayer.openContainer;
+		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
 		String name = containerChest.getLowerChestInventory().getDisplayName().getUnformattedText();

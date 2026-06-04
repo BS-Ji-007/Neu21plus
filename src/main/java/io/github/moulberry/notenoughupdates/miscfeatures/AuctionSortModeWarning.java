@@ -46,12 +46,12 @@ public class AuctionSortModeWarning {
 
 	public void onPostGuiRender() {
 		if (!isAuctionBrowser()) return;
-		GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 
 		ItemStack stack = chest.inventorySlots.getSlot(50).getStack();
 
 		if (stack == null) return;
-		List<String> tooltip = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+		List<String> tooltip = stack.getTooltip(Minecraft.getInstance().player, false);
 
 		String selectedSort = null;
 		for (String line : tooltip) {
@@ -73,7 +73,7 @@ public class AuctionSortModeWarning {
 		}
 
 		String warningText = "\u00a7aSort: " + selectedColour + selectedSort;
-		int warningLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth(warningText);
+		int warningLength = Minecraft.getInstance().font.getStringWidth(warningText);
 
 		int centerX =
 			((AccessorGuiContainer) chest).getGuiLeft() + ((AccessorGuiContainer) chest).getXSize() / 2 + 9;

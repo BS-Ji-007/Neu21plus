@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.updater.ConfigVersionGu
 import io.github.moulberry.notenoughupdates.options.NEUConfig
 import io.github.moulberry.notenoughupdates.options.customtypes.ConfigVersionDisplay
 import io.github.moulberry.notenoughupdates.util.brigadier.*
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.lang.reflect.Field
 

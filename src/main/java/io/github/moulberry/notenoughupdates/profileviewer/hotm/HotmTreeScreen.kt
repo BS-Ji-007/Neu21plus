@@ -40,7 +40,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.floor
 
@@ -97,7 +97,7 @@ class HotmTreeRenderer(val hotmLayout: HotmTreeLayout, val prelude: List<String>
         gridSize: Int,
         gridSpacing: Int,
     ) {
-        val sr = ScaledResolution(Minecraft.getMinecraft())
+        val sr = ScaledResolution(Minecraft.getInstance())
         val relX = mouseX - x
         val relY = mouseY - y
         val gridOffset = (gridSize - 16) / 2
@@ -106,7 +106,7 @@ class HotmTreeRenderer(val hotmLayout: HotmTreeLayout, val prelude: List<String>
             val (values, bindings) = calculatePerkProperties(perk, level, levels, hotmLevelingInfo)
             val tooltip = createPerkTooltip(perk, level, values, bindings)
             val perkItem = getPerkItem(perk, level, values, bindings, tooltip) ?: ItemStack(Items.painting, 1, 10)
-            Minecraft.getMinecraft().textureManager.bindTexture(perkBackground)
+            Minecraft.getInstance().textureManager.bindTexture(perkBackground)
             Utils.drawTexturedRect(
                 (perk.x * gridSize + x + gridSpacing / 2).toFloat(),
                 (perk.y * gridSize + y + gridSpacing / 2).toFloat(),
@@ -114,7 +114,7 @@ class HotmTreeRenderer(val hotmLayout: HotmTreeLayout, val prelude: List<String>
                 0F, 1f, 0f, 1f
             )
             if (Pair(perk.x - 1, perk.y) in gridNodes) {
-                Minecraft.getMinecraft().textureManager.bindTexture(perkConnectionX)
+                Minecraft.getInstance().textureManager.bindTexture(perkConnectionX)
                 Utils.drawTexturedRect(
                     (perk.x * gridSize + x - gridSpacing / 2).toFloat(),
                     (perk.y * gridSize + y).toFloat(),
@@ -123,7 +123,7 @@ class HotmTreeRenderer(val hotmLayout: HotmTreeLayout, val prelude: List<String>
                 )
             }
             if (Pair(perk.x, perk.y - 1) in gridNodes) {
-                Minecraft.getMinecraft().textureManager.bindTexture(perkConnectionY)
+                Minecraft.getInstance().textureManager.bindTexture(perkConnectionY)
                 Utils.drawTexturedRect(
                     (perk.x * gridSize + x).toFloat(),
                     (perk.y * gridSize + y - gridSpacing / 2).toFloat(),

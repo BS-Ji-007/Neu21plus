@@ -28,7 +28,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3;
 import org.lwjgl.util.vector.Vector3f;
@@ -82,17 +82,17 @@ public class BonemerangOverlay extends TextOverlay {
 		overlayStrings = new ArrayList<>();
 
 		bonemeragedEntities.clear();
-		if (Minecraft.getMinecraft().thePlayer == null) return;
-		if (Minecraft.getMinecraft().theWorld == null) return;
+		if (Minecraft.getInstance().player == null) return;
+		if (Minecraft.getInstance().level == null) return;
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 
 		String internal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 
 		if (internal != null && (internal.equals("BONE_BOOMERANG") || internal.equals("STARRED_BONE_BOOMERANG"))) {
 			HashMap<Integer, String> map = new HashMap<>();
 
-			EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP p = Minecraft.getInstance().player;
 			float stepSize = 0.15f;
 			float bonemerangDistance = 15;
 
@@ -109,14 +109,14 @@ public class BonemerangOverlay extends TextOverlay {
 
 				BlockPos blockPos = new BlockPos(position.x, position.y, position.z);
 
-				if (!Minecraft.getMinecraft().theWorld.isAirBlock(blockPos) &&
-					Minecraft.getMinecraft().theWorld.getBlockState(blockPos).getBlock().isFullCube()) {
+				if (!Minecraft.getInstance().level.isAirBlock(blockPos) &&
+					Minecraft.getInstance().level.getBlockState(blockPos).getBlock().isFullCube()) {
 					map.put(0, EnumChatFormatting.RED + "Bonemerang will break!");
 					break;
 				}
 
-				List<Entity> entities = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABBExcludingEntity(
-					Minecraft.getMinecraft().thePlayer,
+				List<Entity> entities = Minecraft.getInstance().level.getEntitiesWithinAABBExcludingEntity(
+					Minecraft.getInstance().player,
 					bb
 				);
 				for (Entity entity : entities) {

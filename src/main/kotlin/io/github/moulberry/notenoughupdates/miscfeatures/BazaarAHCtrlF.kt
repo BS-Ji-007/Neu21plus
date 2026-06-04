@@ -44,7 +44,7 @@ class BazaarAHCtrlF {
         val inBZ = inBZ(chestName)
         val inAH = inAH(chestName)
         if (!inBZ && !inAH) return
-        val openSlots = Minecraft.getMinecraft().thePlayer?.openContainer?.inventorySlots ?: return
+        val openSlots = Minecraft.getInstance().player?.openContainer?.inventorySlots ?: return
 
         var slotId = 0;
         if (inBZ) {

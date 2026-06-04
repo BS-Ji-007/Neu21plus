@@ -40,7 +40,7 @@ import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustom
 import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -75,7 +75,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		if (slot.getStack() == null && NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen &&
 			NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(0, 0, 100 + Minecraft.getMinecraft().getRenderItem().zLevel);
+			GlStateManager.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
 			GlStateManager.depthMask(false);
 			Gui.drawRect(slot.xDisplayPosition, slot.yDisplayPosition,
 				slot.xDisplayPosition + 16, slot.yDisplayPosition + 16, NEUOverlay.overlayColourDark
@@ -245,7 +245,7 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		if (event.usePickblockInstead) {
 			$this.mc.playerController.windowClick(
 				$this.inventorySlots.windowId,
-				slotId, 2, 3, $this.mc.thePlayer
+				slotId, 2, 3, $this.mc.player
 			);
 			ci.cancel();
 		}

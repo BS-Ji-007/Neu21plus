@@ -60,7 +60,7 @@ public class MinionHelperApiLoader {
 	}
 
 	private String getUuid() {
-		EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP thePlayer = Minecraft.getInstance().player;
 		if (thePlayer == null) return null;
 
 		String debugPlayerUuid = manager.getDebugPlayerUuid();

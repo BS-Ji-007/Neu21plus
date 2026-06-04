@@ -27,17 +27,17 @@ object MinecraftExecutor {
 
     @JvmField
     val OnThread = Executor {
-        val mc = Minecraft.getMinecraft()
+        val mc = Minecraft.getInstance()
         if (mc.isCallingFromMinecraftThread) {
             it.run()
         } else {
-            Minecraft.getMinecraft().addScheduledTask(it)
+            Minecraft.getInstance().addScheduledTask(it)
         }
     }
 
     @JvmField
     val OffThread = Executor {
-        val mc = Minecraft.getMinecraft()
+        val mc = Minecraft.getInstance()
         if (mc.isCallingFromMinecraftThread) {
             ForkJoinPool.commonPool().execute(it)
         } else {

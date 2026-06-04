@@ -80,7 +80,7 @@ public class MinionHelperInventoryLoader {
 	}
 
 	private void checkInventory() {
-		Container openContainer = Minecraft.getMinecraft().thePlayer.openContainer;
+		Container openContainer = Minecraft.getInstance().player.openContainer;
 		if (openContainer instanceof ContainerChest) {
 			if (dirty) {
 				dirty = false;

@@ -38,7 +38,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -234,7 +234,7 @@ public class ExtraPage extends GuiProfileViewerPage {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_extra);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_extra);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();

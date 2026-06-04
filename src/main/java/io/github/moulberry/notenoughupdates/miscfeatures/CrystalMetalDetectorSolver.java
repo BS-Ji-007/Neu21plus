@@ -30,7 +30,7 @@ import io.github.moulberry.notenoughupdates.util.TitleUtil;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Vec3i;
@@ -54,7 +54,7 @@ public class CrystalMetalDetectorSolver {
 		INVALID,
 	}
 
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	private static final Minecraft mc = Minecraft.getInstance();
 
 	private static Vec3Comparable prevPlayerPos;
 	private static double prevDistToTreasure;
@@ -386,7 +386,7 @@ public class CrystalMetalDetectorSolver {
 			return false;
 		}
 
-		List<EntityArmorStand> keeperEntities = mc.theWorld.getEntities(EntityArmorStand.class, (entity) -> {
+		List<EntityArmorStand> keeperEntities = mc.level.getEntities(EntityArmorStand.class, (entity) -> {
 			if (!entity.hasCustomName()) return false;
 			return entity.getCustomNameTag().contains(KEEPER_OF_STRING);
 		});
@@ -470,9 +470,9 @@ public class CrystalMetalDetectorSolver {
 
 	private static Vec3Comparable getPlayerPosAdjustedForEyeHeight() {
 		return new Vec3Comparable(
-			mc.thePlayer.posX,
-			mc.thePlayer.posY + (mc.thePlayer.getEyeHeight() - mc.thePlayer.getDefaultEyeHeight()),
-			mc.thePlayer.posZ
+			mc.player.posX,
+			mc.player.posY + (mc.player.getEyeHeight() - mc.player.getDefaultEyeHeight()),
+			mc.player.posZ
 		);
 	}
 
@@ -481,17 +481,17 @@ public class CrystalMetalDetectorSolver {
 	}
 
 	static boolean isAllowedBlockType(BlockPos pos) {
-		return mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:gold_block") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:prismarine") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:chest") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_glass") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_glass_pane") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:wool") ||
-			mc.theWorld.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_hardened_clay");
+		return mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:gold_block") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:prismarine") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:chest") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_glass") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_glass_pane") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:wool") ||
+			mc.level.getBlockState(pos).getBlock().getRegistryName().equals("minecraft:stained_hardened_clay");
 	}
 
 	static boolean isAirAbove(BlockPos pos) {
-		return mc.theWorld.
+		return mc.level.
 			getBlockState(pos.add(0, 1, 0)).getBlock().getRegistryName().equals("minecraft:air");
 	}
 

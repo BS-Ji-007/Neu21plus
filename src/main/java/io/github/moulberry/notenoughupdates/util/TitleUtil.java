@@ -52,14 +52,14 @@ public class TitleUtil {
 	 * @author BiscuitDevelopment
 	 */
 	private void renderTitles (ScaledResolution scaledResolution) {
-		Minecraft mc = Minecraft.getMinecraft();
-		if (mc.theWorld == null || mc.thePlayer == null || !NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
+		Minecraft mc = Minecraft.getInstance();
+		if (mc.level == null || mc.player == null || !NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 
 		int scaledWidth = scaledResolution.getScaledWidth();
 		int scaledHeight = scaledResolution.getScaledHeight();
 
 		if (this.title != null) {
-			int stringWidth = mc.fontRendererObj.getStringWidth(this.title);
+			int stringWidth = mc.font.getStringWidth(this.title);
 			float scale = 4f; // Scale is normally 4, but if it's larger than the screen, scale it down...
 			if (stringWidth * scale > scaledWidth * 0.9f) {
 				scale = scaledWidth * 0.9f / (float) stringWidth;
@@ -70,9 +70,9 @@ public class TitleUtil {
 			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(scale, scale, scale);
-			mc.fontRendererObj.drawString(
+			mc.font.drawString(
 				this.title,
-				((float)-mc.fontRendererObj.getStringWidth(this.title) / 2),
+				((float)-mc.font.getStringWidth(this.title) / 2),
 				-20.0f,
 				color,
 				true

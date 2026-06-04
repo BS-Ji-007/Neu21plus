@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import io.github.moulberry.notenoughupdates.util.GuiTextures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
 import java.util.function.Consumer;
@@ -63,7 +63,7 @@ public class GuiElementBoolean extends GuiElement {
 	@Override
 	public void render() {
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.BAR);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.BAR);
 		RenderUtils.drawTexturedRect(x, y, xSize, ySize);
 
 		ResourceLocation buttonLoc = GuiTextures.ON;
@@ -111,7 +111,7 @@ public class GuiElementBoolean extends GuiElement {
 			buttonLoc = GuiTextures.THREE;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(buttonLoc);
+		Minecraft.getInstance().getTextureManager().bindTexture(buttonLoc);
 		RenderUtils.drawTexturedRect(x + animation, y, 12, 14);
 	}
 

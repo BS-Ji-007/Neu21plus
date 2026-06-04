@@ -79,7 +79,7 @@ public class PresetWarning extends GuiElement {
 		if (event.slotId == -999) return;
 		if (event.clickedButton == 0) return;
 
-		GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 
 		ItemStack clickedPreset = chest.inventorySlots.getSlot(event.slotId).getStack();
 		if (clickedPreset == null) return;
@@ -104,7 +104,7 @@ public class PresetWarning extends GuiElement {
 
 	@Override
 	public void render() {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		final int width = scaledResolution.getScaledWidth();
 		final int height = scaledResolution.getScaledHeight();
 
@@ -117,27 +117,27 @@ public class PresetWarning extends GuiElement {
 
 		RenderUtils.drawFloatingRectDark(width / 2 - 90, height / 2 - 45, 180, 90);
 
-		int neuLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth("\u00a7lNEU");
-		Minecraft.getMinecraft().fontRendererObj.drawString(
+		int neuLength = Minecraft.getInstance().font.getStringWidth("\u00a7lNEU");
+		Minecraft.getInstance().font.drawString(
 			"\u00a7lNEU",
 			width / 2 + 90 - neuLength - 3,
 			height / 2 - 45 + 4,
 			0xff000000
 		);
 
-		TextRenderUtils.drawStringCenteredScaledMaxWidth("Are you SURE?", Minecraft.getMinecraft().fontRendererObj,
+		TextRenderUtils.drawStringCenteredScaledMaxWidth("Are you SURE?", Minecraft.getInstance().font,
 			width / 2, height / 2 - 45 + 10, false, 170, 0xffff4040
 		);
 
 		String sellLine = "\u00a77[ \u00a7r" + presetName + "\u00a77 ]";
 
-		TextRenderUtils.drawStringCenteredScaledMaxWidth(sellLine, Minecraft.getMinecraft().fontRendererObj,
+		TextRenderUtils.drawStringCenteredScaledMaxWidth(sellLine, Minecraft.getInstance().font,
 			width / 2, height / 2 - 45 + 25, false, 170, 0xffffffff
 		);
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(
 			"Continue removing this preset?",
-			Minecraft.getMinecraft().fontRendererObj,
+			Minecraft.getInstance().font,
 			width / 2,
 			height / 2 - 45 + 50,
 			false,
@@ -150,7 +150,7 @@ public class PresetWarning extends GuiElement {
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(
 			EnumChatFormatting.GREEN + "[Y]es",
-			Minecraft.getMinecraft().fontRendererObj,
+			Minecraft.getInstance().font,
 			width / 2 - 23,
 			height / 2 + 31,
 			true,
@@ -159,7 +159,7 @@ public class PresetWarning extends GuiElement {
 		);
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(
 			EnumChatFormatting.RED + "[N]o",
-			Minecraft.getMinecraft().fontRendererObj,
+			Minecraft.getInstance().font,
 			width / 2 + 23,
 			height / 2 + 31,
 			true,
@@ -172,7 +172,7 @@ public class PresetWarning extends GuiElement {
 
 	@Override
 	public boolean mouseInput(int mouseX, int mouseY) {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		final int width = scaledResolution.getScaledWidth();
 		final int height = scaledResolution.getScaledHeight();
 
@@ -207,9 +207,9 @@ public class PresetWarning extends GuiElement {
 
 	private void makeClick() {
 		if (presetSlot != -1) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
-			Minecraft.getMinecraft().playerController.windowClick(chest.inventorySlots.windowId,
-				presetSlot, 1, 0, Minecraft.getMinecraft().thePlayer
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
+			Minecraft.getInstance().playerController.windowClick(chest.inventorySlots.windowId,
+				presetSlot, 1, 0, Minecraft.getInstance().player
 			);
 			presetSlot = -1;
 		}

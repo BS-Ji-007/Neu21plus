@@ -75,7 +75,7 @@ class MiscCommands {
         }.withHelp("Display help for NEUs calculator")
         event.command("neucalendar") {
             thenExecute {
-                Minecraft.getMinecraft().thePlayer.closeScreen()
+                Minecraft.getInstance().player.closeScreen()
                 CalendarOverlay.setEnabled(true)
                 NotEnoughUpdates.INSTANCE.sendChatMessage("/calendar")
             }
@@ -92,7 +92,7 @@ class MiscCommands {
         }.withHelp("Equip NEU cosmetics")
         event.command("neucustomize", "neurename") {
             thenExecute {
-                val held = Minecraft.getMinecraft().thePlayer.heldItem
+                val held = Minecraft.getInstance().player.heldItem
                 if (held == null) {
                     reply("${RED}You can't customize your hand...")
                     return@thenExecute
@@ -112,7 +112,7 @@ class MiscCommands {
         }.withHelp("Customize your items")
         event.command("neupronouns", "neuliberals") {
             thenArgument("user", string()) {user->
-                suggestsList { Minecraft.getMinecraft().theWorld.playerEntities.map { it.name } }
+                suggestsList { Minecraft.getInstance().level.playerEntities.map { it.name } }
                 thenArgumentExecute("platform", string()) { platform ->
                     fetchPronouns(this[platform], this[user])
                 }.withHelp("Look up someones pronouns using their username on a platform")
@@ -129,7 +129,7 @@ class MiscCommands {
     }
 
     fun fetchPronouns(platform: String, user: String) {
-        val nc = Minecraft.getMinecraft().ingameGUI.chatGUI
+        val nc = Minecraft.getInstance().ingameGUI.chatGUI
         val id = Random().nextInt()
         nc.printChatMessageWithOptionalDeletion(ChatComponentText("§e[NEU] Fetching Pronouns..."), id)
 

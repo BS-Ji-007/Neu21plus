@@ -27,7 +27,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -86,7 +86,7 @@ public class GuiElementColour extends GuiElement {
 		int x, int y, Supplier<String> colour, Consumer<String> colourChangedCallback,
 		Runnable closeCallback, boolean opacitySlider, boolean valueSlider
 	) {
-		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		this.y = Math.max(10, Math.min(scaledResolution.getScaledHeight() - ySize - 10, y));
 		this.x = Math.max(10, Math.min(scaledResolution.getScaledWidth() - xSize - 10, x));
@@ -176,11 +176,11 @@ public class GuiElementColour extends GuiElement {
 		if (valueSlider) {
 			valueOffset = 15;
 
-			Minecraft.getMinecraft().getTextureManager().loadTexture(
+			Minecraft.getInstance().getTextureManager().loadTexture(
 				colourPickerBarValueLocation,
 				new DynamicTexture(bufferedImageValue)
 			);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(colourPickerBarValueLocation);
+			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarValueLocation);
 			GlStateManager.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
@@ -189,15 +189,15 @@ public class GuiElementColour extends GuiElement {
 		if (opacitySlider) {
 			opacityOffset = 15;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(colour_selector_bar_alpha);
+			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar_alpha);
 			GlStateManager.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
-			Minecraft.getMinecraft().getTextureManager().loadTexture(
+			Minecraft.getInstance().getTextureManager().loadTexture(
 				colourPickerBarOpacityLocation,
 				new DynamicTexture(bufferedImageOpacity)
 			);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(colourPickerBarOpacityLocation);
+			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarOpacityLocation);
 			GlStateManager.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
@@ -219,7 +219,7 @@ public class GuiElementColour extends GuiElement {
 			);
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(colour_selector_bar);
+		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar);
 		GlStateManager.color(1, 1, 1, 1);
 		if (valueSlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		if (opacitySlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
@@ -227,7 +227,7 @@ public class GuiElementColour extends GuiElement {
 		if (chromaSpeed > 0) {
 			RenderUtils.drawTexturedRect(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		} else {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(colour_selector_chroma);
+			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_chroma);
 			RenderUtils.drawTexturedRect(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5 + 27, 10, 10, GL11.GL_NEAREST);
 		}
 
@@ -245,12 +245,12 @@ public class GuiElementColour extends GuiElement {
 			);
 		}
 
-		Minecraft.getMinecraft().getTextureManager().loadTexture(colourPickerLocation, new DynamicTexture(bufferedImage));
-		Minecraft.getMinecraft().getTextureManager().bindTexture(colourPickerLocation);
+		Minecraft.getInstance().getTextureManager().loadTexture(colourPickerLocation, new DynamicTexture(bufferedImage));
+		Minecraft.getInstance().getTextureManager().bindTexture(colourPickerLocation);
 		GlStateManager.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(x + 1, y + 1, 72, 72, GL11.GL_LINEAR);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(colour_selector_dot);
+		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_dot);
 		GlStateManager.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
 
@@ -288,11 +288,11 @@ public class GuiElementColour extends GuiElement {
 	}
 
 	public boolean mouseInput(int mouseX, int mouseY) {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		float mouseXF = (float) (Mouse.getX() * scaledResolution.getScaledWidth_double() /
-			Minecraft.getMinecraft().displayWidth);
+			Minecraft.getInstance().displayWidth);
 		float mouseYF = (float) (scaledResolution.getScaledHeight_double() - Mouse.getY() *
-			scaledResolution.getScaledHeight_double() / Minecraft.getMinecraft().displayHeight - 1);
+			scaledResolution.getScaledHeight_double() / Minecraft.getInstance().displayHeight - 1);
 
 		if ((Mouse.getEventButton() == 0 || Mouse.getEventButton() == 1) && Mouse.getEventButtonState()) {
 			if (mouseX > x + 5 + 8 && mouseX < x + 5 + 8 + 48) {

@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.util.JsonUtils
 import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.set
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.inventory.ContainerChest
 import net.minecraft.item.ItemStack
@@ -57,9 +57,9 @@ class ItemShopExporter : RepoExporter {
             3,
             NBTTagCompound()
         )
-        baseNPCJson["x"] = context.mc.thePlayer.posX.toInt()
-        baseNPCJson["y"] = context.mc.thePlayer.posY.toInt()
-        baseNPCJson["z"] = context.mc.thePlayer.posZ.toInt()
+        baseNPCJson["x"] = context.mc.player.posX.toInt()
+        baseNPCJson["y"] = context.mc.player.posY.toInt()
+        baseNPCJson["z"] = context.mc.player.posZ.toInt()
         baseNPCJson["island"] = SBInfo.getInstance().getLocation() ?: "none"
 
         val recipes = mutableListOf<ItemShopRecipe>()

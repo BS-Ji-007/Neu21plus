@@ -81,7 +81,7 @@ class CountdownCalculator {
             2 -> "EEEE, MMM d HH:mm"
             else -> return
         }
-        if (event.itemStack != null && Minecraft.getMinecraft().thePlayer?.openContainer != null) {
+        if (event.itemStack != null && Minecraft.getInstance().player?.openContainer != null) {
             var i = -1
             var lastTimer: ZonedDateTime? = null
             while (++i < event.toolTip.size) {

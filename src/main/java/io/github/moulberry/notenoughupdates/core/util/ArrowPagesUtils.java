@@ -24,7 +24,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -46,11 +46,11 @@ public class ArrowPagesUtils {
 	public static void onDraw(int guiLeft, int guiTop, int[] topLeftButton, int currentPage, int totalPages) {
 		if (totalPages < 2) return;
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		int buttonPositionLeftX = topLeftButton[0];
 		int buttonPositionRightX = buttonPositionLeftX + BUTTON_POSITION_RIGHT_OFFSET_X;
@@ -74,7 +74,7 @@ public class ArrowPagesUtils {
 			BUTTON_WIDTH,
 			BUTTON_HEIGHT
 		);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(resourcePacksTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(resourcePacksTexture);
 		GlStateManager.color(1f, 1f, 1f, 1f);
 
 		if (currentPage != 0)
@@ -140,11 +140,11 @@ public class ArrowPagesUtils {
 			return true;
 		}
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		int buttonPositionLeftX = topLeft[0];
 		int buttonPositionRightX = buttonPositionLeftX + BUTTON_POSITION_RIGHT_OFFSET_X;

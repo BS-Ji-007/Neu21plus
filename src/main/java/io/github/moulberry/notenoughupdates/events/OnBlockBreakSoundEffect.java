@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.events;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.audio.ISound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class OnBlockBreakSoundEffect extends NEUEvent {
 

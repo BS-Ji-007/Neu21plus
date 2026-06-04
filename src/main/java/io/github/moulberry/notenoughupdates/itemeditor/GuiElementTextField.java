@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.itemeditor;
 
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -52,7 +52,7 @@ public class GuiElementTextField extends GuiElement {
 
 	private String prependText = "";
 
-	private final GuiTextField textField = new GuiTextField(0, Minecraft.getMinecraft().fontRendererObj,
+	private final GuiTextField textField = new GuiTextField(0, Minecraft.getInstance().font,
 		0, 0, 0, 0
 	);
 
@@ -104,7 +104,7 @@ public class GuiElementTextField extends GuiElement {
 
 	@Override
 	public int getHeight() {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int paddingUnscaled = searchBarPadding / scaledresolution.getScaleFactor();
 
 		int numLines = StringUtils.countMatches(textField.getText(), "\n") + 1;
@@ -116,7 +116,7 @@ public class GuiElementTextField extends GuiElement {
 
 	@Override
 	public int getWidth() {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int paddingUnscaled = searchBarPadding / scaledresolution.getScaleFactor();
 
 		return searchBarXSize + paddingUnscaled * 2;
@@ -139,7 +139,7 @@ public class GuiElementTextField extends GuiElement {
 	}
 
 	private static int getStringWidth0(String str) {
-		return Minecraft.getMinecraft().fontRendererObj.getStringWidth(str);
+		return Minecraft.getInstance().font.getStringWidth(str);
 	}
 
 	public int getCursorPos(int mouseX, int mouseY) {
@@ -188,12 +188,12 @@ public class GuiElementTextField extends GuiElement {
 		String line = lines[0];
 
 		int padding = Math.min(5, searchBarXSize - strLenNoColor(line)) / 2;
-		String trimmed = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(line, xComp - padding);
+		String trimmed = Minecraft.getInstance().font.trimStringToWidth(line, xComp - padding);
 		int linePos = strLenNoColor(trimmed);
 		if (linePos != strLenNoColor(line)) {
 			char after = line.charAt(linePos);
 			int trimmedWidth = getStringWidth0(trimmed);
-			int charWidth = Minecraft.getMinecraft().fontRendererObj.getCharWidth(after);
+			int charWidth = Minecraft.getInstance().font.getCharWidth(after);
 			if (trimmedWidth + charWidth / 2 < xComp - padding) {
 				linePos++;
 			}
@@ -312,13 +312,13 @@ public class GuiElementTextField extends GuiElement {
 					} else {
 						return;
 					}
-					String trimmed = Minecraft.getMinecraft().fontRendererObj
+					String trimmed = Minecraft.getInstance().font
 						.trimStringToWidth(lineBefore, textBeforeCursorWidth);
 					int linePos = strLenNoColor(trimmed);
 					if (linePos != strLenNoColor(lineBefore)) {
 						char after = lineBefore.charAt(linePos);
 						int trimmedWidth = getStringWidth0(trimmed);
-						int charWidth = Minecraft.getMinecraft().fontRendererObj.getCharWidth(after);
+						int charWidth = Minecraft.getInstance().font.getCharWidth(after);
 						if (trimmedWidth + charWidth / 2 < textBeforeCursorWidth) {
 							linePos++;
 						}
@@ -354,13 +354,13 @@ public class GuiElementTextField extends GuiElement {
 					String[] split2 = textNoColour.split("\n");
 					if (split2.length > numLinesBeforeCursor + 1) {
 						String lineAfter = split2[numLinesBeforeCursor + 1];
-						String trimmed = Minecraft.getMinecraft().fontRendererObj
+						String trimmed = Minecraft.getInstance().font
 							.trimStringToWidth(lineAfter, textBeforeCursorWidth);
 						int linePos = strLenNoColor(trimmed);
 						if (linePos != strLenNoColor(lineAfter)) {
 							char after = lineAfter.charAt(linePos);
 							int trimmedWidth = getStringWidth0(trimmed);
-							int charWidth = Minecraft.getMinecraft().fontRendererObj.getCharWidth(after);
+							int charWidth = Minecraft.getInstance().font.getCharWidth(after);
 							if (trimmedWidth + charWidth / 2 < textBeforeCursorWidth) {
 								linePos++;
 							}
@@ -415,7 +415,7 @@ public class GuiElementTextField extends GuiElement {
 		int x, int y, int searchBarXSize, int searchBarYSize, int searchBarPadding,
 		GuiTextField textField, boolean focus
 	) {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		String renderText = prependText + textField.getText();
 
 		GlStateManager.disableLighting();
@@ -487,7 +487,7 @@ public class GuiElementTextField extends GuiElement {
 					Color.WHITE.getRGB()
 				);
 			} else {
-				Minecraft.getMinecraft().fontRendererObj.drawString(Utils.trimToWidth(texts[yOffI], searchBarXSize - 10), x + 5,
+				Minecraft.getInstance().font.drawString(Utils.trimToWidth(texts[yOffI], searchBarXSize - 10), x + 5,
 					y + (searchBarYSize - 8) / 2 + yOff, Color.WHITE.getRGB()
 				);
 			}

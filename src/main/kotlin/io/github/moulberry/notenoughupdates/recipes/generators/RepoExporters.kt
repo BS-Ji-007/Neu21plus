@@ -60,7 +60,7 @@ object RepoExporters {
                     "Run Exporter: ${exporter.name}"
                 ).also {
                     it.drawButton(
-                        Minecraft.getMinecraft(),
+                        Minecraft.getInstance(),
                         mouseX - gui.guiLeft,
                         mouseY - gui.guiTop
                     )
@@ -80,7 +80,7 @@ object RepoExporters {
         val exporter = synchronized(this) {
             if (lastGui !== event.gui) return
             lastRenderedButtons.forEach { (button, exporter) ->
-                if (button.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+                if (button.mousePressed(Minecraft.getInstance(), mouseX, mouseY)) {
                     return@synchronized exporter
                 }
             }

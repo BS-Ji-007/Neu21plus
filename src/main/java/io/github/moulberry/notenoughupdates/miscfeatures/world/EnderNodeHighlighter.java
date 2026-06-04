@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,7 +85,7 @@ public class EnderNodeHighlighter extends GenericBlockHighlighter {
 
 	@Override
 	protected boolean isValidHighlightSpot(BlockPos key) {
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return false;
 		Block b = w.getBlockState(key).getBlock();
 		return b == Blocks.end_stone || b == Blocks.obsidian ||b == Blocks.stained_hardened_clay;

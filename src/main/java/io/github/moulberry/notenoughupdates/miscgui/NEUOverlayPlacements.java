@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.mbgui.MBGuiGroupFloating;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
@@ -52,7 +52,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 		drawDefaultBackground();
 
 		/*GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(icons);
+		Minecraft.getInstance().getTextureManager().bindTexture(icons);
 		GlStateManager.enableBlend();
 
 		GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
@@ -67,7 +67,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 
 		EnumChatFormatting GOLD = EnumChatFormatting.GOLD;
 
-		guiButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+		guiButton.drawButton(Minecraft.getInstance(), mouseX, mouseY);
 
 		NotEnoughUpdates.INSTANCE.overlay.updateGuiGroupSize();
 
@@ -194,7 +194,7 @@ public class NEUOverlayPlacements extends GuiScreen {
 			index++;
 		}
 
-		if (guiButton.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY)) {
+		if (guiButton.mousePressed(Minecraft.getInstance(), mouseX, mouseY)) {
 			NotEnoughUpdates.INSTANCE.config.hidden.overlayQuickCommand = "";
 			NotEnoughUpdates.INSTANCE.config.hidden.overlaySearchBar = "";
 			NotEnoughUpdates.INSTANCE.overlay.resetAnchors(false);

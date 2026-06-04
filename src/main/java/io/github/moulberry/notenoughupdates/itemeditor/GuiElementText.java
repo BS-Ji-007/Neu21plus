@@ -38,7 +38,7 @@ public class GuiElementText extends GuiElement {
 
 	@Override
 	public int getWidth() {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		return fr.getStringWidth(text);
 	}
 
@@ -52,7 +52,7 @@ public class GuiElementText extends GuiElement {
 
 	@Override
 	public void render(int x, int y) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		fr.drawString(text, x, y + 6, colour);
 	}

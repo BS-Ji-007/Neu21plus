@@ -156,7 +156,7 @@ public abstract class MixinRenderItem {
 
 	@Inject(method = "renderItemIntoGUI", at = @At("HEAD"))
 	public void renderItemHead(ItemStack stack, int x, int y, CallbackInfo ci) {
-		if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getMinecraft().currentScreen instanceof GuiProfileViewer)) {
+		if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getInstance().currentScreen instanceof GuiProfileViewer)) {
 			boolean matches = false;
 
 			GuiTextField textField = NEUOverlay.getTextField();
@@ -170,7 +170,7 @@ public abstract class MixinRenderItem {
 			}
 			if (matches) {
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(0, 0, 100 + Minecraft.getMinecraft().getRenderItem().zLevel);
+				GlStateManager.translate(0, 0, 100 + Minecraft.getInstance().getRenderItem().zLevel);
 				GlStateManager.depthMask(false);
 				Gui.drawRect(x, y, x + 16, y + 16, NEUOverlay.overlayColourLight);
 				GlStateManager.depthMask(true);
@@ -182,7 +182,7 @@ public abstract class MixinRenderItem {
 	@Inject(method = "renderItemIntoGUI", at = @At("RETURN"))
 	public void renderItemReturn(ItemStack stack, int x, int y, CallbackInfo ci) {
 		if (stack != null && stack.stackSize != 1) return;
-		if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getMinecraft().currentScreen instanceof GuiProfileViewer)) {
+		if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getInstance().currentScreen instanceof GuiProfileViewer)) {
 			boolean matches = false;
 
 			GuiTextField textField = NEUOverlay.getTextField();
@@ -196,7 +196,7 @@ public abstract class MixinRenderItem {
 			}
 			if (!matches) {
 				GlStateManager.pushMatrix();
-				GlStateManager.translate(0, 0, 110 + Minecraft.getMinecraft().getRenderItem().zLevel);
+				GlStateManager.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
 				Gui.drawRect(x, y, x + 16, y + 16, NEUOverlay.overlayColourDark);
 				GlStateManager.popMatrix();
 			}
@@ -213,7 +213,7 @@ public abstract class MixinRenderItem {
 		CallbackInfo ci
 	) {
 		if (stack != null && stack.stackSize != 1) {
-			if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getMinecraft().currentScreen instanceof GuiProfileViewer)) {
+			if (NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen && NotEnoughUpdates.INSTANCE.isOnSkyblock() && !(Minecraft.getInstance().currentScreen instanceof GuiProfileViewer)) {
 				boolean matches = false;
 
 				GuiTextField textField = NEUOverlay.getTextField();
@@ -227,7 +227,7 @@ public abstract class MixinRenderItem {
 				}
 				if (!matches) {
 					GlStateManager.pushMatrix();
-					GlStateManager.translate(0, 0, 110 + Minecraft.getMinecraft().getRenderItem().zLevel);
+					GlStateManager.translate(0, 0, 110 + Minecraft.getInstance().getRenderItem().zLevel);
 					GlStateManager.disableDepth();
 					Gui.drawRect(xPosition, yPosition, xPosition + 16, yPosition + 16, NEUOverlay.overlayColourDark);
 					GlStateManager.enableDepth();

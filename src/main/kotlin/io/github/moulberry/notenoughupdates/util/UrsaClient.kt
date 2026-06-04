@@ -71,11 +71,11 @@ class UrsaClient(val apiUtil: ApiUtil) {
         } else {
             logger.log("Authorizing request using username and serverId")
             val serverId = UUID.randomUUID().toString()
-            val session = Minecraft.getMinecraft().session
+            val session = Minecraft.getInstance().session
             val name = session.username
             connection.header("x-ursa-username", name).header("x-ursa-serverid", serverId)
             continueOn(MinecraftExecutor.OffThread)
-            Minecraft.getMinecraft().sessionService.joinServer(session.profile, session.token, serverId)
+            Minecraft.getInstance().sessionService.joinServer(session.profile, session.token, serverId)
             logger.log("Authorizing request using username and serverId complete")
         }
     }

@@ -87,7 +87,7 @@ public abstract class MixinGuiTextField {
 		}
 	}
 
-	@Inject(method = "textboxKeyTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiScreen;isKeyComboCtrlA(I)Z"), cancellable = true)
+	@Inject(method = "textboxKeyTyped", at = @At(value = "INVOKE", target = "Lnet.minecraft.client.gui.screens.Screen;isKeyComboCtrlA(I)Z"), cancellable = true)
 	public void textboxKeyTyped_stringStack(char c, int i, CallbackInfoReturnable<Boolean> cir) {
 		if (NotEnoughUpdates.INSTANCE.config.misc.textFieldTweaksEnabled) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {

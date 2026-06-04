@@ -97,9 +97,9 @@ public class MiningSkillOverlay
 		xpGainHourLast = xpGainHour;
 		compact = -1;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
-		ItemStack stack = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
 		if (stack != null && stack.hasTagCompound()) {
 			NBTTagCompound tag = stack.getTagCompound();
 
@@ -375,7 +375,7 @@ public class MiningSkillOverlay
 
 			}
 
-			float yaw = Minecraft.getMinecraft().thePlayer.rotationYawHead;
+			float yaw = Minecraft.getInstance().player.rotationYawHead;
 			yaw %= 360;
 			if (yaw < 0) yaw += 360;
 			if (yaw > 180) yaw -= 360;

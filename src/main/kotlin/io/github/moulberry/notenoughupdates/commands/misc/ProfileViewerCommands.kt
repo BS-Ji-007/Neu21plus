@@ -38,7 +38,7 @@ class ProfileViewerCommands {
     companion object {
         fun CommandContext<ICommandSender>.openPv(name: String?) {
             if (!NotEnoughUpdates.INSTANCE.isOnSkyblock) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/pv ${name ?: ""}")
+                Minecraft.getInstance().player.sendChatMessage("/pv ${name ?: ""}")
                 return
             }
             if (!OpenGlHelper.isFramebufferEnabled()) {
@@ -46,7 +46,7 @@ class ProfileViewerCommands {
             }
 
             NotEnoughUpdates.profileViewer.loadPlayerByName(
-                name ?: Minecraft.getMinecraft().thePlayer.name
+                name ?: Minecraft.getInstance().player.name
             ) { profile ->
                 if (profile == null) {
                     reply("${RED}Invalid player name. Maybe the API is down? Try again later.")
@@ -69,7 +69,7 @@ class ProfileViewerCommands {
                     openPv(null)
                 }
                 thenArgument("player", RestArgumentType) { player ->
-                    suggestsList { Minecraft.getMinecraft().theWorld.playerEntities.map { it.name } }
+                    suggestsList { Minecraft.getInstance().level.playerEntities.map { it.name } }
                     thenExecute {
                         before()
                         openPv(this[player])

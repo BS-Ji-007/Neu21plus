@@ -115,7 +115,7 @@ object AutoUpdater {
                     }
                     updateState = UpdateState.AVAILABLE
                     if (Launch.blackboard["fml.deobfuscatedEnvironment"] != true) {
-                        Minecraft.getMinecraft().thePlayer?.addChatMessage(ChatComponentText("§e[NEU] §aNEU found a new update: ${it.update.versionName}. Click here to automatically install this update.").apply {
+                        Minecraft.getInstance().player?.addChatMessage(ChatComponentText("§e[NEU] §aNEU found a new update: ${it.update.versionName}. Click here to automatically install this update.").apply {
                             this.chatStyle = this.chatStyle.setChatClickEvent(
                                 ClickEvent(
                                     ClickEvent.Action.RUN_COMMAND,
@@ -175,7 +175,7 @@ object AutoUpdater {
 
     @SubscribeEvent
     fun onPlayerAvailableOnce(event: TickEvent.ClientTickEvent) {
-        val p = Minecraft.getMinecraft().thePlayer ?: return
+        val p = Minecraft.getInstance().player ?: return
         MinecraftForge.EVENT_BUS.unregister(this)
         if (config.autoUpdates)
             checkUpdate()

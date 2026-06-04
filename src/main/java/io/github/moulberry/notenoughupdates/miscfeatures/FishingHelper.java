@@ -37,9 +37,9 @@ import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -113,7 +113,7 @@ public class FishingHelper {
 		float offset = warningState == PlayerWarningState.FISH_HOOKED ? 0.5f : 0f;
 
 		float centerOffset = 0.5f / 8f;
-		Minecraft.getMinecraft().getTextureManager().bindTexture(FISHING_WARNING_EXCLAM);
+		Minecraft.getInstance().getTextureManager().bindTexture(FISHING_WARNING_EXCLAM);
 		Utils.drawTexturedRect(
 			centerOffset - 4f / 8f,
 			-20 / 8f,
@@ -129,7 +129,7 @@ public class FishingHelper {
 	}
 
 	public void onRenderBobber(EntityFishHook hook) {
-		if (Minecraft.getMinecraft().thePlayer.fishEntity != hook) return;
+		if (Minecraft.getInstance().player.fishEntity != hook) return;
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
@@ -172,10 +172,10 @@ public class FishingHelper {
 					attenuationType = ISound.AttenuationType.NONE;
 				}};
 
-				float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.RECORDS);
-				Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
-				Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-				Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
+				float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.RECORDS);
+				Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
+				Minecraft.getInstance().getSoundHandler().playSound(sound);
+				Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
 				playedSound = true;
 			}
 		} else {
@@ -185,7 +185,7 @@ public class FishingHelper {
 
 		Utils.drawStringCentered(
 			String.format("%.02fs", seconds),
-			0, -baseHeight - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, false, color
+			0, -baseHeight - Minecraft.getInstance().font.FONT_HEIGHT, false, color
 		);
 
 	}
@@ -194,7 +194,7 @@ public class FishingHelper {
 		if (entity instanceof EntityFishHook) {
 			hookEntities.put(entityId, (EntityFishHook) entity);
 
-			if (((EntityFishHook) entity).angler == Minecraft.getMinecraft().thePlayer) {
+			if (((EntityFishHook) entity).angler == Minecraft.getInstance().player) {
 				long currentTime = System.currentTimeMillis();
 				long delay = currentTime - lastCastRodMillis;
 				if (delay > 0 && delay < 500) {
@@ -218,7 +218,7 @@ public class FishingHelper {
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR &&
-			event.entityPlayer == Minecraft.getMinecraft().thePlayer) {
+			event.entityPlayer == Minecraft.getInstance().player) {
 
 			ItemStack heldItem = event.entityPlayer.getHeldItem();
 
@@ -235,12 +235,12 @@ public class FishingHelper {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (Minecraft.getMinecraft().thePlayer != null && event.phase == TickEvent.Phase.END) {
+		if (Minecraft.getInstance().player != null && event.phase == TickEvent.Phase.END) {
 			if (buildupSoundDelay > 0) buildupSoundDelay--;
 
 			if (NotEnoughUpdates.INSTANCE.config.fishing.incomingFishWarning ||
 				NotEnoughUpdates.INSTANCE.config.fishing.incomingFishWarningR) {
-				if (Minecraft.getMinecraft().thePlayer.fishEntity != null) {
+				if (Minecraft.getInstance().player.fishEntity != null) {
 					if (!pingDelayList.isEmpty()) {
 						while (pingDelayList.size() > 5) pingDelayList.remove(pingDelayList.size() - 1);
 
@@ -259,8 +259,8 @@ public class FishingHelper {
 					warningState = PlayerWarningState.FISH_HOOKED;
 				} else {
 					warningState = PlayerWarningState.NOTHING;
-					if (Minecraft.getMinecraft().thePlayer.fishEntity != null) {
-						int fishEntityId = Minecraft.getMinecraft().thePlayer.fishEntity.getEntityId();
+					if (Minecraft.getInstance().player.fishEntity != null) {
+						int fishEntityId = Minecraft.getInstance().player.fishEntity.getEntityId();
 						for (Map.Entry<WakeChain, List<Integer>> entry : chains.entrySet()) {
 							if (entry.getKey().particleNum >= 3 && entry.getValue().contains(fishEntityId)) {
 								warningState = PlayerWarningState.FISH_INCOMING;
@@ -476,8 +476,8 @@ public class FishingHelper {
 									if (newDistance < 0.2 || (delta > -0.1 && delta < 0.3)) {
 										if ((NotEnoughUpdates.INSTANCE.config.fishing.incomingFishWarning ||
 											NotEnoughUpdates.INSTANCE.config.fishing.incomingFishWarningR) &&
-											Minecraft.getMinecraft().thePlayer.fishEntity != null &&
-											Minecraft.getMinecraft().thePlayer.fishEntity.getEntityId() == hookEntityId &&
+											Minecraft.getInstance().player.fishEntity != null &&
+											Minecraft.getInstance().player.fishEntity.getEntityId() == hookEntityId &&
 											chain.particleNum > 3) {
 											float lavaOffset = 0.1f;
 											if (particleType == EnumParticleTypes.SMOKE_NORMAL) {
@@ -502,10 +502,10 @@ public class FishingHelper {
 															attenuationType = ISound.AttenuationType.NONE;
 														}};
 
-														float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.RECORDS);
-														Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
-														Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-														Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
+														float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.RECORDS);
+														Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
+														Minecraft.getInstance().getSoundHandler().playSound(sound);
+														Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
 													}
 												}
 
@@ -527,10 +527,10 @@ public class FishingHelper {
 															attenuationType = ISound.AttenuationType.NONE;
 														}};
 
-														float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.RECORDS);
-														Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
-														Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-														Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
+														float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.RECORDS);
+														Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, 1);
+														Minecraft.getInstance().getSoundHandler().playSound(sound);
+														Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.RECORDS, oldLevel);
 														buildupSoundDelay = 4;
 													}
 												}
@@ -553,7 +553,7 @@ public class FishingHelper {
 
 						for (int i : entry.getValue()) {
 							EntityFishHook hook = hookEntities.get(i);
-							if (hook != null && hook.angler == Minecraft.getMinecraft().thePlayer) {
+							if (hook != null && hook.angler == Minecraft.getInstance().player) {
 								isMainPlayer = true;
 								break;
 							}
@@ -572,7 +572,7 @@ public class FishingHelper {
 					if (!possibleHooks1.isEmpty()) {
 						for (int i : possibleHooks1) {
 							EntityFishHook hook = hookEntities.get(i);
-							if (hook != null && hook.angler == Minecraft.getMinecraft().thePlayer) {
+							if (hook != null && hook.angler == Minecraft.getInstance().player) {
 								isMainPlayer = true;
 								break;
 							}
@@ -593,7 +593,7 @@ public class FishingHelper {
 					} else if (!possibleHooks2.isEmpty()) {
 						for (int i : possibleHooks2) {
 							EntityFishHook hook = hookEntities.get(i);
-							if (hook != null && hook.angler == Minecraft.getMinecraft().thePlayer) {
+							if (hook != null && hook.angler == Minecraft.getInstance().player) {
 								isMainPlayer = true;
 								break;
 							}
@@ -640,11 +640,11 @@ public class FishingHelper {
 					return;
 				}
 
-				if (Minecraft.getMinecraft() != null && Minecraft.getMinecraft().getRenderViewEntity() != null &&
-					Minecraft.getMinecraft().effectRenderer != null) {
-					int i = Minecraft.getMinecraft().gameSettings.particleSetting;
+				if (Minecraft.getInstance() != null && Minecraft.getInstance().getRenderViewEntity() != null &&
+					Minecraft.getInstance().effectRenderer != null) {
+					int i = Minecraft.getInstance().gameSettings.particleSetting;
 
-					if (i == 1 && Minecraft.getMinecraft().theWorld.rand.nextInt(3) == 0) {
+					if (i == 1 && Minecraft.getInstance().level.rand.nextInt(3) == 0) {
 						event.cancel();
 						return;
 					}
@@ -654,9 +654,9 @@ public class FishingHelper {
 						return;
 					}
 
-					double xDist = Minecraft.getMinecraft().getRenderViewEntity().posX - x;
-					double yDist = Minecraft.getMinecraft().getRenderViewEntity().posY - y;
-					double zDist = Minecraft.getMinecraft().getRenderViewEntity().posZ - z;
+					double xDist = Minecraft.getInstance().getRenderViewEntity().posX - x;
+					double yDist = Minecraft.getInstance().getRenderViewEntity().posY - y;
+					double zDist = Minecraft.getInstance().getRenderViewEntity().posZ - z;
 					double distSq = xDist * xDist + yDist * yDist + zDist * zDist;
 
 					if (distSq < 32 * 32) {
@@ -696,7 +696,7 @@ public class FishingHelper {
 							return;
 						}
 
-						EntityFX fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(
+						EntityFX fx = Minecraft.getInstance().effectRenderer.spawnEffectParticle(
 							particleType.getParticleID(),
 							x,
 							y,

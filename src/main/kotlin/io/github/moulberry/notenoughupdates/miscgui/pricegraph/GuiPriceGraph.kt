@@ -25,11 +25,11 @@ import io.github.moulberry.notenoughupdates.util.SpecialColour
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.roundToDecimals
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -107,7 +107,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
         if (customSelecting) customSelectionEnd = // Update custom selecting box
             if (mouseX < guiLeft + 17) guiLeft + 17 else mouseX.coerceAtMost(guiLeft + 315)
 
-        Minecraft.getMinecraft().textureManager.bindTexture(TEXTURE)
+        Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
         GlStateManager.color(1f, 1f, 1f, 1f)
         Utils.drawTexturedRect( // Draw main background
             guiLeft.toFloat(), guiTop.toFloat(), X_SIZE.toFloat(), Y_SIZE.toFloat(),
@@ -209,7 +209,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
                 Utils.drawStringF(
                     formatPrice(price), guiLeft + 320f,
                     map(i.toDouble(), 0.0, 6.0, guiTop + 35.0, guiTop + 198.0).toFloat()
-                            - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2f, false, 0x8b8b8b
+                            - Minecraft.getInstance().font.FONT_HEIGHT / 2f, false, 0x8b8b8b
                 )
             }
             // X-axis with hour or date
@@ -278,7 +278,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
                     x.toFloat(), (guiTop + 198).toFloat(),
                     2, 0x4D8b8b8b
                 )
-                Minecraft.getMinecraft().textureManager.bindTexture(TEXTURE)
+                Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
                 GlStateManager.color(1f, 1f, 1f, 1f)
                 Utils.drawTexturedRect(
                     x.toFloat() - 2.5f, y.toFloat() - 2.5f, 5f, 5f,
@@ -539,7 +539,7 @@ class GuiPriceGraph(itemId: String) : GuiScreen() {
     }
 
     private fun drawCoveringQuad(x: Double, y: Double, prevX: Double, prevY: Double) {
-        Minecraft.getMinecraft().textureManager.bindTexture(TEXTURE)
+        Minecraft.getInstance().textureManager.bindTexture(TEXTURE)
         GlStateManager.color(1f, 1f, 1f, 1f)
         Utils.drawTexturedQuad(
             prevX.toFloat(), prevY.toFloat(),

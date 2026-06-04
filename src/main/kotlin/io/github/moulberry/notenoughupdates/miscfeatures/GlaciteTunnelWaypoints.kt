@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.util.kotlin.KSerializable
 import io.github.moulberry.notenoughupdates.util.kotlin.KotlinTypeAdapterFactory
 import io.github.moulberry.notenoughupdates.util.kotlin.fromJson
 import net.minecraft.client.Minecraft
-import net.minecraft.util.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -80,7 +80,7 @@ object GlaciteTunnelWaypoints {
             waypointsForQuest.keys
         else
             MiningOverlay.commissionProgress.entries.filter { it.value < 1 }.map { it.key }
-        val player = Minecraft.getMinecraft().thePlayer?.position ?: return
+        val player = Minecraft.getInstance().player?.position ?: return
         for (entry in wantedGemstones) {
             val waypoints = waypointsForQuest[entry] ?: continue
             val waypointLocations = when (NotEnoughUpdates.INSTANCE.config.mining.tunnelWaypoints.get()) {

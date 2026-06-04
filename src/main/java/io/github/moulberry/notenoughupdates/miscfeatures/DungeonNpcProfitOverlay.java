@@ -45,7 +45,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jetbrains.annotations.Nullable;
@@ -245,7 +245,7 @@ public class DungeonNpcProfitOverlay {
 		int xSize = ((AccessorGuiContainer) guiChest).getXSize();
 		int guiLeft = ((AccessorGuiContainer) guiChest).getGuiLeft();
 		int guiTop = ((AccessorGuiContainer) guiChest).getGuiTop();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(dungeonProfitResource);
+		Minecraft.getInstance().getTextureManager().bindTexture(dungeonProfitResource);
 		GL11.glColor4f(1, 1, 1, 1);
 		GlStateManager.disableLighting();
 		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
@@ -264,7 +264,7 @@ public class DungeonNpcProfitOverlay {
 				160
 			);
 
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
 

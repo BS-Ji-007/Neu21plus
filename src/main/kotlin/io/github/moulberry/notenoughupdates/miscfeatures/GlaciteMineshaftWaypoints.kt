@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils
 import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent
 import net.minecraft.client.Minecraft
-import net.minecraft.util.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -37,7 +37,7 @@ class GlaciteMineshaftWaypoints {
     @SubscribeEvent
     fun onLocationChange(event: LocationChangeEvent) {
         entrance = if (event.newLocation == "mineshaft") {
-            Minecraft.getMinecraft().thePlayer?.position
+            Minecraft.getInstance().player?.position
         } else {
             null
         }

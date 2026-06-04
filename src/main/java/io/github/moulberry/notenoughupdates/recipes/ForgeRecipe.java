@@ -33,7 +33,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,7 +134,7 @@ public class ForgeRecipe implements NeuRecipe {
 
 	@Override
 	public void drawExtraBackground(GuiItemRecipe gui, int mouseX, int mouseY) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		for (int i = 0; i < inputs.size(); i++) {
 			int[] slotCoordinates = getSlotCoordinates(i, inputs.size());
 			gui.drawTexturedModalRect(

@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.IMetadataSerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;

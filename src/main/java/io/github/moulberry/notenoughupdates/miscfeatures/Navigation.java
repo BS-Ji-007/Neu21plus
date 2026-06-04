@@ -37,7 +37,7 @@ import io.github.moulberry.notenoughupdates.util.brigadier.DslKt;
 import kotlin.Unit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Vec3i;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -201,7 +201,7 @@ public class Navigation {
 					useWarpCommand();
 				}
 			} else {
-				Minecraft.getMinecraft().displayGuiScreen(new GuiNavigation());
+				Minecraft.getInstance().displayGuiScreen(new GuiNavigation());
 			}
 		}
 	}
@@ -263,7 +263,7 @@ public class Navigation {
 	}
 
 	public void useWarpCommand() {
-		EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP thePlayer = Minecraft.getInstance().player;
 		if (currentlyTrackedWaypoint == null || thePlayer == null) return;
 		WarpPoint closestWarp = getClosestWarp(island, position, true);
 		if (closestWarp == null) {
@@ -286,14 +286,14 @@ public class Navigation {
 	@SubscribeEvent
 	public void onTeleportDone(EntityJoinWorldEvent event) {
 		if (neu.config.misc.warpTwice
-			&& event.entity == Minecraft.getMinecraft().thePlayer
+			&& event.entity == Minecraft.getInstance().player
 			&& warpAgainTo != null
 			&& warpAgainTiming != null
 			&& warpAgainTiming.plusSeconds(1).isAfter(Instant.now())) {
 			warpAgainTiming = null;
 			String savedWarpAgain = warpAgainTo;
 			warpAgainTo = null;
-			Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp " + savedWarpAgain);
+			Minecraft.getInstance().player.sendChatMessage("/warp " + savedWarpAgain);
 		}
 	}
 
@@ -387,7 +387,7 @@ public class Navigation {
 	}
 
 	private void showError(String message, boolean log) {
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP player = Minecraft.getInstance().player;
 		if (player != null)
 			Utils.addChatMessage(EnumChatFormatting.DARK_RED + "[NEU-Waypoint] " + message);
 		if (log)
@@ -399,7 +399,7 @@ public class Navigation {
 		if (event.phase == TickEvent.Phase.END && currentlyTrackedWaypoint != null
 			&& NotEnoughUpdates.INSTANCE.config.misc.untrackCloseWaypoints
 			&& island.equals(SBInfo.getInstance().mode)) {
-			EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP thePlayer = Minecraft.getInstance().player;
 			if (thePlayer != null && thePlayer.getDistanceSq(position) < 16) {
 				untrackWaypoint();
 				AbiphoneContactHelper.getInstance().resetMarker();

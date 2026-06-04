@@ -73,7 +73,7 @@ public class PowerStoneStatsDisplay {
 		if (!dirty) return;
 		if (!Utils.getOpenChestName().equals("Your Bags")) return;
 
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		Container openContainer = p.openContainer;
 		for (Slot slot : openContainer.inventorySlots) {
 			ItemStack stack = slot.getStack();

@@ -154,7 +154,7 @@ public class SBInfo {
 	public void onGuiTick(TickEvent event) {
 		if (tickCount++ % 10 != 0) return;
 		if (Utils.getOpenChestName().equals("Profile Management")) {
-			ContainerChest container = (ContainerChest) ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
+			ContainerChest container = (ContainerChest) ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
 			updateProfileInformation(container);
 		}
 	}
@@ -321,8 +321,8 @@ public class SBInfo {
 
 		long currentTime = System.currentTimeMillis();
 
-		if (Minecraft.getMinecraft().thePlayer != null &&
-			Minecraft.getMinecraft().theWorld != null &&
+		if (Minecraft.getInstance().player != null &&
+			Minecraft.getInstance().level != null &&
 			locraw == null &&
 			(currentTime - joinedWorld) > 1000 &&
 			(currentTime - lastLocRaw) > 15000) {

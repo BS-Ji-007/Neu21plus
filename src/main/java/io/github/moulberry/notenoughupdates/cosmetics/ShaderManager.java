@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.cosmetics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL43;
 import org.lwjgl.util.vector.Vector2f;
@@ -171,7 +171,7 @@ public class ShaderManager implements IResourceManagerReloadListener {
 			shaderLocation.getResourceDomain(),
 			shaderLocation.getResourcePath() + "/" + name + ext
 		);
-		try (InputStream is = Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream()) {
+		try (InputStream is = Minecraft.getInstance().getResourceManager().getResource(location).getInputStream()) {
 			StringBuilder source = new StringBuilder();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 

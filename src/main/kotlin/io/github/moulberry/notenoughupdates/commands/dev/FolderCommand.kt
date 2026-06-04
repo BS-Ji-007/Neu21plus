@@ -37,38 +37,38 @@ class FolderCommand {
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neufolder") {
             thenLiteralExecute("config") {
-                Desktop.getDesktop().open(File(Minecraft.getMinecraft().mcDataDir, "config"));
+                Desktop.getDesktop().open(File(Minecraft.getInstance().mcDataDir, "config"));
                 reply("Opened .minecraft/config")
 
             }.withHelp("Opens the .minecraft/config folder")
 
             thenLiteralExecute("mods") {
-                Desktop.getDesktop().open(File(Minecraft.getMinecraft().mcDataDir, "mods"));
+                Desktop.getDesktop().open(File(Minecraft.getInstance().mcDataDir, "mods"));
                 reply("Opened .minecraft/mods")
 
             }.withHelp("Opens the .minecraft/mods folder")
 
             thenLiteralExecute("logs") {
-                Desktop.getDesktop().open(File(Minecraft.getMinecraft().mcDataDir, "logs"));
+                Desktop.getDesktop().open(File(Minecraft.getInstance().mcDataDir, "logs"));
                 reply("Opened .minecraft/logs")
 
             }.withHelp("Opens the .minecraft/logs folder")
 
             thenLiteralExecute("crash") {
-                Desktop.getDesktop().open(File(Minecraft.getMinecraft().mcDataDir, "crash-reports"));
+                Desktop.getDesktop().open(File(Minecraft.getInstance().mcDataDir, "crash-reports"));
                 reply("Opened .minecraft/crash-reports")
 
             }.withHelp("Opens the .minecraft/crash-reports folder")
 
             thenLiteralExecute("minecraft") {
-                Desktop.getDesktop().open(Minecraft.getMinecraft().mcDataDir);
+                Desktop.getDesktop().open(Minecraft.getInstance().mcDataDir);
                 reply("Opened .minecraft")
 
             }.withHelp("Opens the .minecraft folder")
 
 
             thenExecute {
-                Desktop.getDesktop().open(Minecraft.getMinecraft().mcDataDir);
+                Desktop.getDesktop().open(Minecraft.getInstance().mcDataDir);
                 reply("Opened .minecraft")
             }
         }.withHelp("Opens the .minecraft folder")

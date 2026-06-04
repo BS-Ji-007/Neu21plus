@@ -56,7 +56,7 @@ public class GlScissorStack {
 		}
 
 		public void set(ScaledResolution scaledResolution) {
-			int height = Minecraft.getMinecraft().displayHeight;
+			int height = Minecraft.getInstance().displayHeight;
 			int scale = scaledResolution.getScaleFactor();
 			GL11.glScissor(left * scale, height - bottom * scale, (right - left) * scale, (bottom - top) * scale);
 		}

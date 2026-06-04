@@ -27,7 +27,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -304,7 +304,7 @@ public class DungeonWin {
 		}
 
 		for (Confetti c : confetti) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(CONFETTI);
+			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
 			GlStateManager.color(1, 1, 1, 1);
 			if (c.life >= 15) {
 				GlStateManager.color(1, 1, 1, Math.min(1, c.life / 4f));
@@ -322,7 +322,7 @@ public class DungeonWin {
 			}
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEAM_SCORE);
+		Minecraft.getInstance().getTextureManager().bindTexture(TEAM_SCORE);
 		GlStateManager.color(1, 1, 1, alpha);
 
 		GlStateManager.pushMatrix();
@@ -477,7 +477,7 @@ public class DungeonWin {
 		GlStateManager.popMatrix();
 
 		for (Confetti c : confetti) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(CONFETTI);
+			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
 			GlStateManager.color(1, 1, 1, 1);
 			if (c.life > 0 && c.life < 15) {
 				GlStateManager.color(1, 1, 1, Math.min(1, c.life / 4f));

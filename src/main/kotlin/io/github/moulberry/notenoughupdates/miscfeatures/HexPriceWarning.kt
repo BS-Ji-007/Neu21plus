@@ -58,10 +58,10 @@ object HexPriceWarning : WarningPopUp() {
     }
 
     override fun confirmClick() {
-        val chest = Minecraft.getMinecraft().currentScreen as GuiChest
-        Minecraft.getMinecraft().playerController.windowClick(
+        val chest = Minecraft.getInstance().currentScreen as GuiChest
+        Minecraft.getInstance().playerController.windowClick(
             chest.inventorySlots.windowId,
-            lastClickedSlot, 0, 0, Minecraft.getMinecraft().thePlayer
+            lastClickedSlot, 0, 0, Minecraft.getInstance().player
         )
     }
 

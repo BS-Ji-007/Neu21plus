@@ -138,7 +138,7 @@ public class CapeNode {
                     MathHelper.floor_double(position.x),
                     MathHelper.floor_double(position.y),
                     MathHelper.floor_double(position.z));
-            Block block = Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
+            Block block = Minecraft.getInstance().level.getBlockState(pos).getBlock();
             if(block.getMaterial().isLiquid()) {
                 actualResistance = 0.8f;
             }*/

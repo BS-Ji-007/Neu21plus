@@ -31,7 +31,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S22PacketMultiBlockChange;
 import net.minecraft.network.play.server.S23PacketBlockChange;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -63,8 +63,8 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 	}
 
 	public static void checkForChest(BlockPos pos, IBlockState blockState) {
-		val world = Minecraft.getMinecraft().theWorld;
-		val player = Minecraft.getMinecraft().thePlayer;
+		val world = Minecraft.getInstance().level;
+		val player = Minecraft.getInstance().player;
 		if (world == null || player == null) return;
 		IBlockState oldState = world.getBlockState(pos);
 
@@ -88,7 +88,7 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 		// any highlighted blocks in which the chest despawned in
 		List<BlockPos> blockToRemove = new ArrayList<>();
 		highlightedBlocks.forEach(it -> {
-			if (Minecraft.getMinecraft().theWorld.getBlockState(it).getBlock() != Blocks.chest) {
+			if (Minecraft.getInstance().level.getBlockState(it).getBlock() != Blocks.chest) {
 				blockToRemove.add(it);
 			}
 		});
@@ -108,7 +108,7 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 	@Override
 	public void onWorldRenderLast(RenderWorldLastEvent event) {
 		if (!isEnabled()) return;
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return;
 		for (BlockPos blockPos : highlightedBlocks) {
 			RenderUtils.renderBoundingBox(blockPos, getColor(blockPos), event.partialTicks, false);
@@ -123,7 +123,7 @@ public class CrystalHollowChestHighlighter extends GenericBlockHighlighter {
 
 	@Override
 	protected boolean isValidHighlightSpot(BlockPos key) {
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return false;
 		Block b = w.getBlockState(key).getBlock();
 		return b == Blocks.chest;

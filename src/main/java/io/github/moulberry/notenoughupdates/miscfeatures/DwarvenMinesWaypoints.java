@@ -144,8 +144,8 @@ public class DwarvenMinesWaypoints {
 		NEUConfig.HiddenProfileSpecific hidden = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 		if (hidden == null) return;
 
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 
@@ -195,13 +195,13 @@ public class DwarvenMinesWaypoints {
 			String name = event.entity.getDisplayName().getFormattedText();
 			if (emissaryRemovedDistSq > 0 && name.equals(
 				EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.BOLD + "CLICK" + EnumChatFormatting.RESET)) {
-				EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+				EntityPlayerSP p = Minecraft.getInstance().player;
 				double distSq = event.entity.getDistanceSq(p.posX, p.posY, p.posZ);
 				if (Math.abs(distSq - emissaryRemovedDistSq) < 1) {
 					event.setCanceled(true);
 				}
 			} else if (emissaryNames.contains(name)) {
-				EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+				EntityPlayerSP p = Minecraft.getInstance().player;
 				double distSq = event.entity.getDistanceSq(p.posX, p.posY, p.posZ);
 				if (distSq >= 12 * 12) {
 					emissaryRemovedDistSq = distSq;
@@ -283,7 +283,7 @@ public class DwarvenMinesWaypoints {
 				if (hidden != null) {
 					if (hidden.commissionMilestone >= emissary.minMilestone) {
 
-						EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+						EntityPlayerSP p = Minecraft.getInstance().player;
 						double dX = emissary.loc.x + 0.5f - p.posX;
 						double dY = emissary.loc.y + 0.188f - p.posY;
 						double dZ = emissary.loc.z + 0.5f - p.posZ;

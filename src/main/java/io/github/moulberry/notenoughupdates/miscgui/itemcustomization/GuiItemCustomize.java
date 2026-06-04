@@ -37,7 +37,7 @@ import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.model.IBakedModel;
@@ -45,7 +45,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -99,7 +99,7 @@ public class GuiItemCustomize extends GuiScreen {
 		this.itemUUID = itemUUID;
 		this.customItemStack = ItemCustomizationUtils.copy(stack, this);
 
-		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
+		IBakedModel model = Minecraft.getInstance().getRenderItem().getItemModelMesher().getItemModel(stack);
 		boolean stackHasEffect = stack.hasEffect() && !model.isBuiltInRenderer();
 
 		ItemCustomizeManager.ItemData data = ItemCustomizeManager.getDataForItem(stack);
@@ -202,7 +202,7 @@ public class GuiItemCustomize extends GuiScreen {
 	public void updateData() {
 		ItemCustomizeManager.ItemData data = new ItemCustomizeManager.ItemData();
 
-		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
+		IBakedModel model = Minecraft.getInstance().getRenderItem().getItemModelMesher().getItemModel(stack);
 		boolean stackHasEffect = stack.hasEffect() && !model.isBuiltInRenderer();
 
 		this.customItemStack = ItemCustomizationUtils.copy(stack, this);
@@ -296,7 +296,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		List<String> tooltipToDisplay = null;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTopStart = (scaledResolution.getScaledHeight() - renderHeight) / 2;
@@ -310,7 +310,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		int yTopText = yTop;
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.help);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 		GlStateManager.color(1, 1, 1, 1);
 		int helpX = xCenter + textFieldRename.getWidth() / 2 - 5 + 10;
 		Utils.drawTexturedRect(helpX, yTop, 20, 20, GL11.GL_LINEAR);
@@ -320,7 +320,7 @@ public class GuiItemCustomize extends GuiScreen {
 			tooltipToDisplay = ItemCustomizationUtils.customizeColourGuide;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(ItemCustomizationUtils.RESET);
+		Minecraft.getInstance().getTextureManager().bindTexture(ItemCustomizationUtils.RESET);
 		GlStateManager.color(1, 1, 1, 1);
 		int resetX = xCenter + textFieldRename.getWidth() / 2 - 15;
 		Utils.drawTexturedRect(resetX, yTop + 5, 10, 11, GL11.GL_LINEAR);
@@ -344,7 +344,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		RenderUtils.drawFloatingRectDark(xCenter - 90, yTop, 180, 20);
 
-		Minecraft.getMinecraft().fontRendererObj.drawString("Enchant Glint", xCenter - 85, yTop + 6, 0xff8040cc);
+		Minecraft.getInstance().font.drawString("Enchant Glint", xCenter - 85, yTop + 6, 0xff8040cc);
 
 		enchantGlintButton.x = xCenter + 90 - 5 - 48;
 		enchantGlintButton.y = yTop + 3;
@@ -406,7 +406,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		List<String> animatedSkullHelp = ItemCustomizeManager.getAnimatedSkullHelp(textFieldCustomItem.getText());
 		if (animatedSkullHelp != null) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.help);
+			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 			GlStateManager.color(1, 1, 1, 1);
 			int skullHelpX = xCenter + textFieldRename.getWidth() / 2;
 			Utils.drawTexturedRect(skullHelpX, yTop -1, 20, 20, GL11.GL_LINEAR);
@@ -439,7 +439,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		List<String> tooltipToDisplay = null;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTopStart = (scaledResolution.getScaledHeight() - renderHeight) / 2;
@@ -479,7 +479,7 @@ public class GuiItemCustomize extends GuiScreen {
 			yTop += 20;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(PLUS);
+		Minecraft.getInstance().getTextureManager().bindTexture(PLUS);
 		GlStateManager.color(1, 1, 1, 1);
 		RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 4, 10, 10, GL11.GL_NEAREST);
 
@@ -542,7 +542,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		List<String> tooltipToDisplay = null;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTopStart = (scaledResolution.getScaledHeight() - renderHeight) / 2;
@@ -605,7 +605,7 @@ public class GuiItemCustomize extends GuiScreen {
 				Utils.renderShadowedString(displayName, xCenter, yTop + 4, 180);
 			} else if (color == null && colours != null) {
 				String colourHex = colours.get(
-					(Minecraft.getMinecraft().thePlayer.ticksExisted / this.animatedDyeTicks) % colours.size()).getAsString();
+					(Minecraft.getInstance().player.ticksExisted / this.animatedDyeTicks) % colours.size()).getAsString();
 				int colourFromHex = ItemCustomizationUtils.rgbToInt(ItemCustomizationUtils.getColourFromHex(colourHex));
 				ItemCustomizationUtils.renderColourBlob(xCenter, yTop, colourFromHex, displayName, false, false);
 			} else {
@@ -686,7 +686,7 @@ public class GuiItemCustomize extends GuiScreen {
 		//large 3
 		//medium 2
 		//small 1
-		int scale = Minecraft.getMinecraft().gameSettings.guiScale;
+		int scale = Minecraft.getInstance().gameSettings.guiScale;
 		if (scale == 0) return 80;
 		if (scale == 1) return 680;
 		if (scale == 2) return 280;
@@ -792,7 +792,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	private void mouseClickedDefault(int mouseX, int mouseY, int mouseButton) throws IOException {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTop = (scaledResolution.getScaledHeight() - renderHeight) / 2;
 
@@ -904,7 +904,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	private void mouseClickedAnimatedDyes(int mouseX, int mouseY, int mouseButton) throws IOException {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTop = (scaledResolution.getScaledHeight() - renderHeight) / 2;
 		int topOffset = yTop + 129;
@@ -1039,7 +1039,7 @@ public class GuiItemCustomize extends GuiScreen {
 	}
 
 	private void mouseClickedHypixel(int mouseX, int mouseY, int mouseButton) throws IOException {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int yTop = (scaledResolution.getScaledHeight() - renderHeight) / 2;
 		int topOffset = yTop + 129;

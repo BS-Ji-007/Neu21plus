@@ -32,7 +32,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -194,7 +194,7 @@ public class ItemCustomizationUtils {
 	}
 
 	public static GuiType getButtonClicked(int mouseX, int mouseY, GuiType guiType, float offset) {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int xCenter = scaledResolution.getScaledWidth() / 2;
 		int xCentreLeft = xCenter - 90;
 		int xCentreRight = xCenter;
@@ -221,7 +221,7 @@ public class ItemCustomizationUtils {
 				i++;
 			}
 			int dyeColour2 = ChromaColour.specialToChromaRGB(dyeColours[i]);
-			return blendColors(dyeColour1, dyeColour2, (float) (Minecraft.getMinecraft().thePlayer.ticksExisted % ticks) / ticks);
+			return blendColors(dyeColour1, dyeColour2, (float) (Minecraft.getInstance().player.ticksExisted % ticks) / ticks);
 		}
 		return ChromaColour.specialToChromaRGB(
 			dyeColours[getTicksForList(ticks, dyeColours.length)]);
@@ -239,13 +239,13 @@ public class ItemCustomizationUtils {
 		Utils.renderShadowedString(text, xCenter, yTop + 4, 180);
 
 		if (renderReset) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(RESET);
+			Minecraft.getInstance().getTextureManager().bindTexture(RESET);
 			GlStateManager.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 2, 10, 11, GL11.GL_NEAREST);
 		}
 
 		if (renderCross) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(CROSS);
+			Minecraft.getInstance().getTextureManager().bindTexture(CROSS);
 			GlStateManager.color(1, 1, 1, 1);
 			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 3, 9, 9, GL11.GL_NEAREST);
 		}
@@ -265,7 +265,7 @@ public class ItemCustomizationUtils {
 		if (!textField.getFocus()) {
 			textField.setSize(maxTextSize, 20);
 		} else {
-			int textSize = Minecraft.getMinecraft().fontRendererObj.getStringWidth(textField.getTextDisplay()) + 10;
+			int textSize = Minecraft.getInstance().font.getStringWidth(textField.getTextDisplay()) + 10;
 			textField.setSize(Math.max(textSize, maxTextSize), 20);
 		}
 
@@ -287,7 +287,7 @@ public class ItemCustomizationUtils {
 	}
 
 	public static void renderPresetButtons(int x, int y, boolean valid, boolean secondValid, String preset) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(custom_ench_colour);
+		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(
 			x - 88 + 198,
@@ -392,7 +392,7 @@ public class ItemCustomizationUtils {
 	}
 
 	public static int getTicksForList(int speedTicks, int listSize, int presetIndex) {
-		int animatedIndex = (Minecraft.getMinecraft().thePlayer.ticksExisted / speedTicks) % listSize;
+		int animatedIndex = (Minecraft.getInstance().player.ticksExisted / speedTicks) % listSize;
 		if (presetIndex >= 0 && presetIndex < listSize) {
 			animatedIndex = presetIndex;
 		}

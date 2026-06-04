@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -92,7 +92,7 @@ public class NPCRetexturing implements IResourceManagerReloadListener {
 
 		try (
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-				Minecraft.getMinecraft().getResourceManager().getResource(npcRetexturingJson).getInputStream(),
+				Minecraft.getInstance().getResourceManager().getResource(npcRetexturingJson).getInputStream(),
 				StandardCharsets.UTF_8
 			))
 		) {

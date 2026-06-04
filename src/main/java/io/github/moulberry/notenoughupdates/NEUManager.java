@@ -55,7 +55,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
 
@@ -876,8 +876,8 @@ public class NEUManager {
 
 	public void showRecipe(JsonObject item) {
 		ContainerChest container = null;
-		if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest)
-			container = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
+		if (Minecraft.getInstance().player.openContainer instanceof ContainerChest)
+			container = (ContainerChest) Minecraft.getInstance().player.openContainer;
 		String internalName = item.get("internalname").getAsString();
 		Set<NeuRecipe> recipesFor = getRecipesFor(internalName);
 		if (container != null &&
@@ -1626,7 +1626,7 @@ public class NEUManager {
 
 	public CompletableFuture<Void> reloadRepository() {
 		CompletableFuture<Void> comp = new CompletableFuture<>();
-		Minecraft.getMinecraft().addScheduledTask(() -> {
+		Minecraft.getInstance().addScheduledTask(() -> {
 			try {
 				File items = new File(repoLocation, "items");
 				if (items.exists()) {

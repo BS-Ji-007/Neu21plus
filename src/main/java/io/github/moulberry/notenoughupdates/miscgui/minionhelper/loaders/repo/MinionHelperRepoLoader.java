@@ -64,7 +64,7 @@ public class MinionHelperRepoLoader {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 		ticks++;

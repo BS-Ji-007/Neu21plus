@@ -40,7 +40,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -307,13 +307,13 @@ public class TradeWindow {
 	}
 
 	public static void render(int mouseX, int mouseY) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		guiLeft = (scaledResolution.getScaledWidth() - xSize) / 2;
 		guiTop = (scaledResolution.getScaledHeight() - ySize) / 2;
@@ -554,7 +554,7 @@ public class TradeWindow {
 		}
 
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
 
 		Utils.drawStringF(new ChatComponentTranslation("container.inventory").getUnformattedText(),
@@ -564,19 +564,19 @@ public class TradeWindow {
 		String[] split = containerName.split(" ");
 		if (split.length >= 1) {
 			Utils.drawStringF(split[split.length - 1],
-				guiLeft + 167 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(split[split.length - 1]),
+				guiLeft + 167 - Minecraft.getInstance().font.getStringWidth(split[split.length - 1]),
 				guiTop + 5, false, 4210752
 			);
 		}
 
 		int index = 0;
-		for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+		for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			int x = 8 + 18 * (index % 9);
 			int y = 104 + 18 * (index / 9);
 			if (index < 9) y = 180;
 
 			((AccessorGuiContainer) chest).doDrawSlot(new Slot(
-				Minecraft.getMinecraft().thePlayer.inventory,
+				Minecraft.getInstance().player.inventory,
 				index,
 				guiLeft + x,
 				guiTop + y
@@ -641,8 +641,8 @@ public class TradeWindow {
 			if (mouseX > guiLeft + 10 - 1 && mouseX < guiLeft + 10 + 18) {
 				if (mouseY > guiTop + 90 - 1 && mouseY < guiTop + 90 + 18) {
 					tooltipToDisplay = bidStack.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -655,13 +655,13 @@ public class TradeWindow {
 				if (mouseX > guiLeft + 81 - 51 && mouseX < guiLeft + 81) {
 					if (mouseY > guiTop + 91 && mouseY < guiTop + 91 + 14) {
 						tooltipToDisplay = confirmStack.getTooltip(
-							Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+							Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips
 						);
 					}
 				}
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+				Minecraft.getInstance().getTextureManager().bindTexture(location);
 				Utils.drawTexturedRect(guiLeft + 81 - 51, guiTop + 91, 51, 14,
 					0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
 				);
@@ -726,14 +726,14 @@ public class TradeWindow {
 			if (mouseX > guiLeft + 95 && mouseX < guiLeft + 95 + 51) {
 				if (mouseY > guiTop + 91 && mouseY < guiTop + 91 + 14) {
 					tooltipToDisplay = theirConfirmStack.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
 
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft + 95, guiTop + 91, 51, 14,
 				0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
 			);
@@ -762,7 +762,7 @@ public class TradeWindow {
 			if (currentTime % 400 > 200 && theirTradeChangesMillis[i] != null && theirTradeChangesMillis[i] > 0) {
 				GlStateManager.translate(0, 0, 200);
 				GlStateManager.color(1, 1, 1, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+				Minecraft.getInstance().getTextureManager().bindTexture(location);
 				Utils.drawTexturedRect(guiLeft + 96 + x * 18, guiTop + 15 + y * 18, 16, 16,
 					51 / 256f, 67 / 256f, 204 / 256f, 220 / 256f, GL11.GL_NEAREST
 				);
@@ -818,7 +818,7 @@ public class TradeWindow {
 
 			GlStateManager.disableLighting();
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft - 80 - 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
@@ -881,7 +881,7 @@ public class TradeWindow {
 			}
 
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
@@ -946,7 +946,7 @@ public class TradeWindow {
 		boolean button3 = NotEnoughUpdates.INSTANCE.config.tradeMenu.enableCustomTrade;
 
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop + ySize - 19, 17, 17,
 			(button3 ? 17 : 0) / 256f, (button3 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST
 		);
@@ -981,8 +981,8 @@ public class TradeWindow {
 
 		if (stackToRender != null) {
 			tooltipToDisplay = stackToRender.getTooltip(
-				Minecraft.getMinecraft().thePlayer,
-				Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+				Minecraft.getInstance().player,
+				Minecraft.getInstance().gameSettings.advancedItemTooltips
 			);
 		}
 
@@ -999,20 +999,20 @@ public class TradeWindow {
 	}
 
 	public static void handleMouseInput() {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 
-		int mouseX = Mouse.getEventX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getEventY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getEventX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getEventY() * height / Minecraft.getInstance().displayHeight - 1;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 		if (Mouse.getEventButtonState() && Mouse.isButtonDown(0)) {
 			int index = 0;
-			for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+			for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 				if (stack == null) {
 					index++;
 					continue;
@@ -1024,12 +1024,12 @@ public class TradeWindow {
 
 				if (mouseX > guiLeft + x && mouseX < guiLeft + x + 16) {
 					if (mouseY > guiTop + y && mouseY < guiTop + y + 16) {
-						Slot slot = chest.inventorySlots.getSlotFromInventory(Minecraft.getMinecraft().thePlayer.inventory, index);
+						Slot slot = chest.inventorySlots.getSlotFromInventory(Minecraft.getInstance().player.inventory, index);
 						if (!NotEnoughUpdates.INSTANCE.config.slotLocking.lockSlotsInTrade ||
 							!SlotLocking.getInstance().isSlotLocked(slot)) {
-							Minecraft.getMinecraft().playerController.windowClick(
+							Minecraft.getInstance().playerController.windowClick(
 								chest.inventorySlots.windowId,
-								slot.slotNumber, 0, 0, Minecraft.getMinecraft().thePlayer
+								slot.slotNumber, 0, 0, Minecraft.getInstance().player
 							);
 						}
 						return;
@@ -1048,9 +1048,9 @@ public class TradeWindow {
 
 				if (mouseX > guiLeft + 10 + x * 18 - 1 && mouseX < guiLeft + 10 + x * 18 + 18) {
 					if (mouseY > guiTop + 15 + y * 18 - 1 && mouseY < guiTop + 15 + y * 18 + 18) {
-						Minecraft.getMinecraft().playerController.windowClick(
+						Minecraft.getInstance().playerController.windowClick(
 							chest.inventorySlots.windowId,
-							containerIndex, 2, 3, Minecraft.getMinecraft().thePlayer
+							containerIndex, 2, 3, Minecraft.getInstance().player
 						);
 						return;
 					}
@@ -1059,9 +1059,9 @@ public class TradeWindow {
 
 			if (mouseX > guiLeft + 10 - 1 && mouseX < guiLeft + 10 + 18) {
 				if (mouseY > guiTop + 90 - 1 && mouseY < guiTop + 90 + 18) {
-					Minecraft.getMinecraft().playerController.windowClick(
+					Minecraft.getInstance().playerController.windowClick(
 						chest.inventorySlots.windowId,
-						36, 2, 3, Minecraft.getMinecraft().thePlayer
+						36, 2, 3, Minecraft.getInstance().player
 					);
 					return;
 				}
@@ -1077,9 +1077,9 @@ public class TradeWindow {
 								confirmDisplay.equals(EnumChatFormatting.YELLOW + "Deal!")) && lastTradeMillis < 0) {
 								lastTradeMillis = System.currentTimeMillis();
 							} else if (lastTradeMillis < 0 || System.currentTimeMillis() - lastTradeMillis > 2000) {
-								Minecraft.getMinecraft().playerController.windowClick(
+								Minecraft.getInstance().playerController.windowClick(
 									chest.inventorySlots.windowId,
-									39, 2, 3, Minecraft.getMinecraft().thePlayer
+									39, 2, 3, Minecraft.getInstance().player
 								);
 								return;
 							}
@@ -1109,15 +1109,15 @@ public class TradeWindow {
 			NotEnoughUpdates.INSTANCE.config.slotLocking.lockSlotsInTrade &&
 			!Keyboard.isRepeatEvent() &&
 			KeybindHelper.isKeyPressed(NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey)) {
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
 
-			int mouseX = Mouse.getEventX() * width / Minecraft.getMinecraft().displayWidth;
-			int mouseY = height - Mouse.getEventY() * height / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getEventX() * width / Minecraft.getInstance().displayWidth;
+			int mouseY = height - Mouse.getEventY() * height / Minecraft.getInstance().displayHeight - 1;
 
 			int index = 0;
-			for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+			for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 				if (stack == null) {
 					index++;
 					continue;

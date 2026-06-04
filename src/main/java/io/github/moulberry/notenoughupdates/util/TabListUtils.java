@@ -66,7 +66,7 @@ public class TabListUtils {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 		if (event.phase != TickEvent.Phase.END) return;
 		tabListLastTick = tabList;
 		tabList = getTabList0();
@@ -80,18 +80,18 @@ public class TabListUtils {
 
 	private List<String> getTabList0() {
 		List<NetworkPlayerInfo> players =
-			playerOrdering.sortedCopy(Minecraft.getMinecraft().thePlayer.sendQueue.getPlayerInfoMap());
+			playerOrdering.sortedCopy(Minecraft.getInstance().player.sendQueue.getPlayerInfoMap());
 
 		List<String> result = new ArrayList<>();
 
 		for (NetworkPlayerInfo info : players) {
-			String name = Minecraft.getMinecraft().ingameGUI.getTabList().getPlayerName(info);
+			String name = Minecraft.getInstance().ingameGUI.getTabList().getPlayerName(info);
 			result.add(name);
 		}
 
 		ArrayList<String> lines = null;
 		try {
-			String[] footer = ((AccessorGuiPlayerTabOverlay) Minecraft.getMinecraft().ingameGUI.getTabList())
+			String[] footer = ((AccessorGuiPlayerTabOverlay) Minecraft.getInstance().ingameGUI.getTabList())
 				.getFooter().getFormattedText()
 				.split("\n");
 			lines = new ArrayList<>();

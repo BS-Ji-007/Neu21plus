@@ -40,7 +40,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -110,11 +110,11 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 	@Override
 	public void drawPage(int mouseX, int mouseY, float partialTicks) {
-		FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer font = Minecraft.getInstance().font;
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dung);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_dung);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		JsonObject leveling = Constants.LEVELING;
@@ -340,7 +340,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 			dungeonLevelTextField.setSize(20, 10);
 			dungeonLevelTextField.render(x + 22, y + 29);
-			int calcLen = fontRendererObj.getStringWidth("Calculate");
+			int calcLen = font.getStringWidth("Calculate");
 			Utils.renderShadowedString(
 				EnumChatFormatting.WHITE + "Calculate",
 				x + sectionWidth - 17 - calcLen / 2f,
@@ -428,7 +428,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			int y3 = y + 117;
 
 			for (int i = 1; i <= 7; i++) {
-				int w = fontRendererObj.getStringWidth(String.valueOf(i));
+				int w = font.getStringWidth(String.valueOf(i));
 				int bx = x + sectionWidth * i / 8 - w / 2;
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.renderShadowedString(EnumChatFormatting.WHITE.toString() + i, bx + w / 2, y3, 10);
@@ -614,7 +614,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer font = Minecraft.getInstance().font;
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
@@ -624,7 +624,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			dungeonLevelTextField.otherComponentClick();
 		}
 
-		int cW = fontRendererObj.getStringWidth("Calculate");
+		int cW = font.getStringWidth("Calculate");
 		if (mouseX >= guiLeft + 23 + 110 - 17 - cW && mouseX <= guiLeft + 23 + 110 - 17 && mouseY >= guiTop + 55 &&
 			mouseY <= guiTop + 65) {
 			calculateFloorLevelXP();
@@ -634,7 +634,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 
 		if (mouseY >= y - 2 && mouseY <= y + 9) {
 			for (int i = 1; i <= 7; i++) {
-				int w = fontRendererObj.getStringWidth(String.valueOf(i));
+				int w = font.getStringWidth(String.valueOf(i));
 
 				int x = guiLeft + 23 + 110 * i / 8 - w / 2;
 

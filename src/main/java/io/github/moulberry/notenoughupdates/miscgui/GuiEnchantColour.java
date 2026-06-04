@@ -31,11 +31,11 @@ import io.github.moulberry.notenoughupdates.util.TemplateUtil;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -114,15 +114,15 @@ public class GuiEnchantColour extends GuiScreen {
 			scroll.resetTimer();
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(custom_ench_colour);
+		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, 21, 0, 1, 0, 21 / 78f, GL11.GL_NEAREST);
 		Utils.drawTexturedRect(guiLeft, guiTop + ySize - 32, xSize, 32, 0, 1, 46 / 78f, 1, GL11.GL_NEAREST);
 
-		fontRendererObj.drawString("Ench Name", guiLeft + 10, guiTop + 7, 4210752);
-		fontRendererObj.drawString("CMP", guiLeft + 86, guiTop + 7, 4210752);
-		fontRendererObj.drawString("LVL", guiLeft + 111, guiTop + 7, 4210752);
-		fontRendererObj.drawString("COL", guiLeft + 136, guiTop + 7, 4210752);
-		fontRendererObj.drawString("DEL", guiLeft + 161, guiTop + 7, 4210752);
+		font.drawString("Ench Name", guiLeft + 10, guiTop + 7, 4210752);
+		font.drawString("CMP", guiLeft + 86, guiTop + 7, 4210752);
+		font.drawString("LVL", guiLeft + 111, guiTop + 7, 4210752);
+		font.drawString("COL", guiLeft + 136, guiTop + 7, 4210752);
+		font.drawString("DEL", guiLeft + 161, guiTop + 7, 4210752);
 
 		Utils.drawStringCentered(
 			"Add Ench Colour",
@@ -134,7 +134,7 @@ public class GuiEnchantColour extends GuiScreen {
 
 		int yIndex = 0;
 		for (String str : enchantColours) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(custom_ench_colour);
+			Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft, guiTop + 21 + yIndex * 25, xSize, 25, 0, 1, 21 / 78f, 46 / 78f, GL11.GL_NEAREST);
 
@@ -180,7 +180,7 @@ public class GuiEnchantColour extends GuiScreen {
 
 			int modifierI = getIntModifier(modifier);
 			if ((modifierI & GuiEnchantColour.BOLD_MODIFIER) != 0) {
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 181,
 					guiTop + 23 + 25 * yIndex - 2,
@@ -189,7 +189,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.ITALIC_MODIFIER) != 0) {
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 181,
 					guiTop + 23 + 25 * yIndex + 10,
@@ -198,7 +198,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.UNDERLINE_MODIFIER) != 0) {
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 196,
 					guiTop + 23 + 25 * yIndex - 2,
@@ -207,7 +207,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.STRIKETHROUGH_MODIFIER) != 0) {
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 196,
 					guiTop + 23 + 25 * yIndex + 10,
@@ -221,7 +221,7 @@ public class GuiEnchantColour extends GuiScreen {
 		renderSideBar(mouseX, mouseY, partialTicks);
 		List<String> tooltipToDisplay = null;
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(help);
+		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTopSidebar - 18, 16, 16, GL11.GL_NEAREST);
 		if (maxedBookFound == 0) {
 			try {
@@ -266,13 +266,13 @@ public class GuiEnchantColour extends GuiScreen {
 			boolean renderingTooltip = false;
 
 			if (mouseY >= guiTopSidebar - 34 && mouseY <= guiTopSidebar - 18 && maxedBookFound == 1) {
-				tooltipToDisplay = maxedBook.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+				tooltipToDisplay = maxedBook.getTooltip(Minecraft.getInstance().player, false);
 				Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
 				tooltipToDisplay = null;
 				renderingTooltip = true;
 			}
 			if (mouseY >= guiTopSidebar - 52 && mouseY <= guiTopSidebar - 34 && maxedAttBookFound == 1 && !renderingTooltip) {
-				tooltipToDisplay = maxedAttBook.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+				tooltipToDisplay = maxedAttBook.getTooltip(Minecraft.getInstance().player, false);
 				Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
 				tooltipToDisplay = null;
 				renderingTooltip = true;
@@ -345,7 +345,7 @@ public class GuiEnchantColour extends GuiScreen {
 			scrollSideBar.resetTimer();
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(custom_ench_colour);
+		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(
 			guiLeft + xSize + 3,

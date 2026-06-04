@@ -101,9 +101,9 @@ public class CombatSkillOverlay
 		kill = -1;
 		championXp = -1;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
-		ItemStack stack = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
 		if (stack != null && stack.hasTagCompound()) {
 			NBTTagCompound tag = stack.getTagCompound();
 

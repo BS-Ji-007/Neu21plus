@@ -85,10 +85,10 @@ public class SunTzu {
 	public void onOverlayDrawn(RenderGameOverlayEvent event) {
 		if (enabled && ((event.type == null && Loader.isModLoaded("labymod")) ||
 			event.type == RenderGameOverlayEvent.ElementType.ALL)) {
-			if (Minecraft.getMinecraft().gameSettings.showDebugInfo ||
-				(Minecraft.getMinecraft().gameSettings.keyBindPlayerList.isKeyDown() &&
-					(!Minecraft.getMinecraft().isIntegratedServerRunning() ||
-						Minecraft.getMinecraft().thePlayer.sendQueue.getPlayerInfoMap().size() > 1))) {
+			if (Minecraft.getInstance().gameSettings.showDebugInfo ||
+				(Minecraft.getInstance().gameSettings.keyBindPlayerList.isKeyDown() &&
+					(!Minecraft.getInstance().isIntegratedServerRunning() ||
+						Minecraft.getInstance().player.sendQueue.getPlayerInfoMap().size() > 1))) {
 				return;
 			}
 
@@ -104,8 +104,8 @@ public class SunTzu {
 				-1
 			);
 			String sunTzu = "- Sun Tzu, The Art of War";
-			int sunTzuLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth(sunTzu);
-			Minecraft.getMinecraft().fontRendererObj.drawString(EnumChatFormatting.GOLD + sunTzu,
+			int sunTzuLength = Minecraft.getInstance().font.getStringWidth(sunTzu);
+			Minecraft.getInstance().font.drawString(EnumChatFormatting.GOLD + sunTzu,
 				sr.getScaledWidth() / 2f + 100 - sunTzuLength, 15 + height, 0, true
 			);
 

@@ -37,8 +37,8 @@ import io.github.moulberry.notenoughupdates.util.brigadier.thenLiteralExecute
 import io.github.moulberry.notenoughupdates.util.brigadier.withHelp
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.event.ClickEvent
-import net.minecraft.util.BlockPos
-import net.minecraft.util.ResourceLocation
+import net.minecraft.core.BlockPos
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @NEUAutoSubscribe

@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.miscfeatures.customblockzones;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class MineshaftTextures implements IslandZoneSubdivider {
 			public SpecialBlockZone getSpecialZoneForBlock(String location, BlockPos pos) {

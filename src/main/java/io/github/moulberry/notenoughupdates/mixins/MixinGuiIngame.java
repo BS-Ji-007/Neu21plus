@@ -63,7 +63,7 @@ public class MixinGuiIngame {
 
 	@Inject(method = "renderTooltip", at = @At("HEAD"))
 	protected void renderTooltip(ScaledResolution sr, float partialTicks, CallbackInfo ci) {
-		if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer) {
+		if (Minecraft.getInstance().getRenderViewEntity() instanceof EntityPlayer) {
 			InventoryStorageSelector.getInstance().render(sr, partialTicks);
 		}
 	}

@@ -72,14 +72,14 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 	}
 
 	public static boolean shouldReplace() {
-		return Minecraft.getMinecraft().currentScreen instanceof BazaarSearchOverlay;
+		return Minecraft.getInstance().currentScreen instanceof BazaarSearchOverlay;
 	}
 
 	public static boolean isinBzSign() {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return false;
 		if (!NotEnoughUpdates.INSTANCE.config.bazaarTweaks.enableSearchOverlay) return false;
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiEditSign)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiEditSign)) {
 			if (!NotEnoughUpdates.INSTANCE.config.bazaarTweaks.keepPreviousSearch) searchString = "";
 			return false;
 		}
@@ -87,7 +87,7 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 		String lastContainer = Utils.getLastOpenChestName();
 		if (!lastContainer.startsWith("Bazaar ➜ ")) return false;
 
-		TileEntitySign tes = ((AccessorGuiEditSign) Minecraft.getMinecraft().currentScreen).getTileSign();
+		TileEntitySign tes = ((AccessorGuiEditSign) Minecraft.getInstance().currentScreen).getTileSign();
 
 		if (tes == null) return false;
 		if (tes.getPos().getY() != 0) return false;
@@ -111,7 +111,7 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 		if (!Utils.getOpenChestName().startsWith("Bazaar ➜")) return;
 		if (event.slot.slotNumber == 45 && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getDisplayName().equals("§aSearch")) {
 			event.setCanceled(true);
-			Minecraft.getMinecraft().currentScreen = null;
+			Minecraft.getInstance().currentScreen = null;
 			NotEnoughUpdates.INSTANCE.openGui = new BazaarSearchOverlay();
 		}
 	}
@@ -124,7 +124,7 @@ public class BazaarSearchOverlay extends SearchOverlayScreen {
 		TileEntitySign tileSign = ((AccessorGuiEditSign) guiEditSign).getTileSign();
 		if (tileSign != null) {
 			event.setCanceled(true);
-			Minecraft.getMinecraft().displayGuiScreen(new BazaarSearchOverlay(tileSign));
+			Minecraft.getInstance().displayGuiScreen(new BazaarSearchOverlay(tileSign));
 		}
 	}
 

@@ -37,7 +37,7 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 
 class HoppityPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance) {

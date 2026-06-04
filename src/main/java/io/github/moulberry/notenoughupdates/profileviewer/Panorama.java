@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;
 
@@ -49,7 +49,7 @@ public class Panorama {
 			for (int i = 0; i < 6; i++) {
 				panoramasArray[i] =
 					new ResourceLocation("notenoughupdates:panoramas/" + location + "_" + identifier + "/panorama_" + i + ".jpg");
-				Minecraft.getMinecraft().getResourceManager().getResource(panoramasArray[i]);
+				Minecraft.getInstance().getResourceManager().getResource(panoramasArray[i]);
 			}
 			panoramasMap.put(location + identifier, panoramasArray);
 			return panoramasArray;
@@ -58,7 +58,7 @@ public class Panorama {
 				ResourceLocation[] panoramasArray = new ResourceLocation[6];
 				for (int i = 0; i < 6; i++) {
 					panoramasArray[i] = new ResourceLocation("notenoughupdates:panoramas/" + location + "/panorama_" + i + ".jpg");
-					Minecraft.getMinecraft().getResourceManager().getResource(panoramasArray[i]);
+					Minecraft.getInstance().getResourceManager().getResource(panoramasArray[i]);
 				}
 				panoramasMap.put(location + identifier, panoramasArray);
 				return panoramasArray;
@@ -84,7 +84,7 @@ public class Panorama {
 		ResourceLocation[] panoramas
 	) {
 		if (!OpenGlHelper.isFramebufferEnabled()) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(panoramas[0]);
+			Minecraft.getInstance().getTextureManager().bindTexture(panoramas[0]);
 
 			float aspect = width / (float) height;
 			Utils.drawTexturedRect(x, y, width, height, 0.5f - aspect / 2, 0.5f + aspect / 2, 0, 1);
@@ -92,9 +92,9 @@ public class Panorama {
 			return;
 		}
 
-		Minecraft.getMinecraft().getFramebuffer().unbindFramebuffer();
+		Minecraft.getInstance().getFramebuffer().unbindFramebuffer();
 
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 
 		GL11.glViewport(0, 0, width * scaledresolution.getScaleFactor(), height * scaledresolution.getScaleFactor());
 
@@ -148,7 +148,7 @@ public class Panorama {
 						break;
 				}
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(panoramas[k]);
+				Minecraft.getInstance().getTextureManager().bindTexture(panoramas[k]);
 				float splits = 0.1f;
 				for (float x1 = 0; x1 < 1; x1 += splits) {
 					for (float y1 = 0; y1 < 1; y1 += splits) {
@@ -197,12 +197,12 @@ public class Panorama {
 				width * scaledresolution.getScaleFactor(),
 				height * scaledresolution.getScaleFactor()
 			);
-			backgroundTexture = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("background", viewportTexture);
+			backgroundTexture = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation("background", viewportTexture);
 			lastWidth = width * scaledresolution.getScaleFactor();
 			lastHeight = height * scaledresolution.getScaleFactor();
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(backgroundTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(backgroundTexture);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		GL11.glCopyTexSubImage2D(
@@ -216,7 +216,7 @@ public class Panorama {
 			height * scaledresolution.getScaleFactor()
 		);
 
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);

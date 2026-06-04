@@ -53,7 +53,7 @@ class PackDevCommand {
     ) {
         fun getEntities(distance: Double): List<T> {
             val distanceSquared = distance * distance
-            val thePlayer = Minecraft.getMinecraft().thePlayer
+            val thePlayer = Minecraft.getInstance().player
             return provider()
                 .asSequence()
                 .filterIsInstance(clazz)
@@ -65,7 +65,7 @@ class PackDevCommand {
         thenLiteral(singleCommand) {
             thenArgumentExecute("distance", doubleArg(0.0)) { dist ->
                 val dist = this[dist]
-                val entity = getEntities(dist).minByOrNull { it.getDistanceSqToEntity(Minecraft.getMinecraft().thePlayer) }
+                val entity = getEntities(dist).minByOrNull { it.getDistanceSqToEntity(Minecraft.getInstance().player) }
                 if (entity == null) {
                     reply("No $name found within $dist blocks")
                     return@thenArgumentExecute
@@ -144,23 +144,23 @@ class PackDevCommand {
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neupackdev") {
             npcListCommand("Player", "getplayer", "getplayers", AbstractClientPlayer::class.java) {
-                Minecraft.getMinecraft().theWorld.playerEntities
+                Minecraft.getInstance().level.playerEntities
             }
             npcListCommand("NPC", "getnpc", "getnpcs", AbstractClientPlayer::class.java) {
-                Minecraft.getMinecraft().theWorld.playerEntities.filter { it.uniqueID?.version() != 4 }
+                Minecraft.getInstance().level.playerEntities.filter { it.uniqueID?.version() != 4 }
             }
             npcListCommand("mob", "getmob", "getmobs", EntityLiving::class.java) {
-                Minecraft.getMinecraft().theWorld.loadedEntityList
+                Minecraft.getInstance().level.loadedEntityList
             }
             npcListCommand("armor stand", "getarmorstand", "getarmorstands", EntityArmorStand::class.java) {
-                Minecraft.getMinecraft().theWorld.loadedEntityList
+                Minecraft.getInstance().level.loadedEntityList
             }
             thenLiteralExecute("block") {
-                val pos = Minecraft.getMinecraft().thePlayer.rayTrace(4.0, 10f).blockPos
+                val pos = Minecraft.getInstance().player.rayTrace(4.0, 10f).blockPos
 
-                val block: IBlockState = Minecraft.getMinecraft().theWorld.getBlockState(pos)
+                val block: IBlockState = Minecraft.getInstance().level.getBlockState(pos)
                 if (block.block.hasTileEntity(block)) {
-                    val te = Minecraft.getMinecraft().theWorld.getTileEntity(pos)
+                    val te = Minecraft.getInstance().level.getTileEntity(pos)
                     val s = StringBuilder().also {
                         it.appendLine("NBT: ${te.tileData}")
                         if (te is TileEntitySkull && te.playerProfile != null) {

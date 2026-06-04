@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumFacing;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -54,7 +54,7 @@ public class MixinPlayerControllerMP {
 		OnBlockBreakSoundEffect onBlockBreakSoundEffect = new OnBlockBreakSoundEffect(
 			p_playSound_1_,
 			p_onPlayerDamageBlock_1_,
-			Minecraft.getMinecraft().theWorld.getBlockState(p_onPlayerDamageBlock_1_)
+			Minecraft.getInstance().level.getBlockState(p_onPlayerDamageBlock_1_)
 		);
 		if (!onBlockBreakSoundEffect.post()) {
 			instance.playSound(onBlockBreakSoundEffect.getSound());

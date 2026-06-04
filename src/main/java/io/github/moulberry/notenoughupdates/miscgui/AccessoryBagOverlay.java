@@ -38,7 +38,7 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils;
 import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -133,8 +133,8 @@ public class AccessoryBagOverlay {
 	private static Tabs currentTab = Tabs.TAB_BASIC;
 
 	public static boolean mouseClick() {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 			if (!containerName.trim().startsWith("Accessory Bag")) {
@@ -146,7 +146,7 @@ public class AccessoryBagOverlay {
 
 		if (!Mouse.getEventButtonState()) return false;
 		try {
-			AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getMinecraft().currentScreen;
+			AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
 			int xSize = accessor.getXSize();
 			int guiLeft = accessor.getGuiLeft();
 			int guiTop = accessor.getGuiTop();
@@ -580,21 +580,21 @@ public class AccessoryBagOverlay {
 	public static void renderOverlay() {
 		inAccessoryBag = false;
 		offsetButtons = false;
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 			if (containerName.trim().startsWith("Accessory Bag") && !containerName.contains("Thaumaturgy") &&
 				!containerName.contains("Upgrades")) {
 				inAccessoryBag = true;
 				try {
-					AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getMinecraft().currentScreen;
+					AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
 					int xSize = accessor.getXSize();
 					int guiLeft = accessor.getGuiLeft();
 					int guiTop = accessor.getGuiTop();
 
 					if (accessoryStacks.isEmpty()) {
-						for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+						for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 							if (stack != null && isAccessory(stack)) {
 								accessoryStacks.add(stack);
 							}
@@ -605,9 +605,9 @@ public class AccessoryBagOverlay {
 						String first = containerName.trim().split("\\(")[1].split("/")[0];
 						Integer currentPageNumber = Integer.parseInt(first);
 						boolean hasStack = false;
-						if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
+						if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
 							IInventory inv =
-								((ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer).getLowerChestInventory();
+								((ContainerChest) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
 							for (int i = 0; i < inv.getSizeInventory(); i++) {
 								ItemStack stack = inv.getStackInSlot(i);
 								if (stack != null) {
@@ -642,7 +642,7 @@ public class AccessoryBagOverlay {
 
 						if (secondInt > pagesVisited.size()) {
 							GlStateManager.color(1, 1, 1, 1);
-							Minecraft.getMinecraft().getTextureManager().bindTexture(accessory_bag_overlay);
+							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							GlStateManager.disableLighting();
 							Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
@@ -651,9 +651,9 @@ public class AccessoryBagOverlay {
 						}
 					} else if (pagesVisited.isEmpty()) {
 						boolean hasStack = false;
-						if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
+						if (Minecraft.getInstance().player.openContainer instanceof ContainerChest) {
 							IInventory inv =
-								((ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer).getLowerChestInventory();
+								((ContainerChest) Minecraft.getInstance().player.openContainer).getLowerChestInventory();
 							for (int i = 0; i < inv.getSizeInventory(); i++) {
 								ItemStack stack = inv.getStackInSlot(i);
 								if (stack != null) {
@@ -674,7 +674,7 @@ public class AccessoryBagOverlay {
 					for (int i = 0; i <= Tabs.values().length - 1; i++) {
 						if (i != currentTab.ordinal()) {
 							GlStateManager.color(1, 1, 1, 1);
-							Minecraft.getMinecraft().getTextureManager().bindTexture(accessory_bag_overlay);
+							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							Utils.drawTexturedRect(guiLeft + xSize + 168, guiTop + 20 * i, 25, 22,
 								168 / 196f, 193f / 196f, 0f, 22 / 128f, GL11.GL_NEAREST
 							);
@@ -684,7 +684,7 @@ public class AccessoryBagOverlay {
 					}
 
 					GlStateManager.color(1, 1, 1, 1);
-					Minecraft.getMinecraft().getTextureManager().bindTexture(accessory_bag_overlay);
+					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 					Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
 					if (pagesVisited.isEmpty()) {
@@ -692,7 +692,7 @@ public class AccessoryBagOverlay {
 						return;
 					}
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(accessory_bag_overlay);
+					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 					Utils.drawTexturedRect(guiLeft + xSize + 168, guiTop + 20 * currentTab.ordinal(), 28, 22,
 						168 / 196f, 1f, 22 / 128f, 44 / 128f, GL11.GL_NEAREST
 					);
@@ -864,7 +864,7 @@ public class AccessoryBagOverlay {
 	}
 
 	public static ScaledResolution getScaledResolution() {
-		return new ScaledResolution(Minecraft.getMinecraft());
+		return new ScaledResolution(Minecraft.getInstance());
 	}
 
 	public static int mouseX() {
@@ -919,11 +919,11 @@ public class AccessoryBagOverlay {
 
 	public static void renderButton(ItemStack stack, int x, int y, List<String> tooltip) {
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(accessory_bag_overlay);
+		Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 		GlStateManager.disableLighting();
 		Utils.drawTexturedRect(x, y, 17, 17, 168f / 196f, 184f / 196f, 112f / 128f, 1f, GL11.GL_NEAREST); // slot
 		RenderHelper.enableGUIStandardItemLighting();
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, x, y); // item
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(stack, x, y); // item
 		if (new Rectangle(x, y, 16, 16).contains(mouseX(), mouseY())) {
 			Utils.drawHoveringText(
 				tooltip,
@@ -936,11 +936,11 @@ public class AccessoryBagOverlay {
 	}
 
 	public static void highlightDuplicates() {
-		AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getMinecraft().currentScreen;
+		AccessorGuiContainer accessor = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
 		int guiLeft = accessor.getGuiLeft();
 		int guiTop = accessor.getGuiTop();
 
-		for (Slot slot : Minecraft.getMinecraft().thePlayer.openContainer.inventorySlots) {
+		for (Slot slot : Minecraft.getInstance().player.openContainer.inventorySlots) {
 			ItemStack stack = slot.getStack();
 			if (stack != null && isAccessory(stack)) {
 				if (!dupe_showPersonal && NotEnoughUpdates.INSTANCE.manager

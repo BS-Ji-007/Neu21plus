@@ -44,7 +44,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -83,7 +83,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		guiLeft = GuiProfileViewer.getGuiLeft();
 		guiTop = GuiProfileViewer.getGuiTop();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_rift);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_rift);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
@@ -119,7 +119,7 @@ public class RiftPage extends GuiProfileViewerPage {
 
 		// pet
 		GlStateManager.color(1,1,1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 		Utils.drawTexturedRect(guiLeft + 35, guiTop + 156, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
 		APIDataJson.Rift.RiftDeadCats deadCats = rift.dead_cats;
@@ -143,8 +143,8 @@ public class RiftPage extends GuiProfileViewerPage {
 
 				if ((mouseX > guiLeft + 37 && mouseX < guiLeft + 37 + 20) &&
 					(mouseY > guiTop + 158 && mouseY < guiTop + 158 + 20)) {
-					List<String> tooltip = petItemStackFromPetInfo.getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+					List<String> tooltip = petItemStackFromPetInfo.getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 					ListIterator<String> iterator = tooltip.listIterator();
 					while (iterator.hasNext()) {
 						String next = iterator.next();
@@ -290,7 +290,7 @@ public class RiftPage extends GuiProfileViewerPage {
 			addInventoryButton(222, 16, guiLeft, guiTop, mouseX, mouseY, "§7Ender Chest", "ENDER_CHEST");
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 			int inventoryRows = inInventory ? 4 : 5;
 			int invSizeY = inventoryRows * 18 + 17 + 7;
@@ -349,8 +349,8 @@ public class RiftPage extends GuiProfileViewerPage {
 										(mouseY >= guiTop + y && mouseY <= guiTop + y + 16)) {
 										getInstance().tooltipToDisplay =
 											itemStack.getTooltip(
-												Minecraft.getMinecraft().thePlayer,
-												Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+												Minecraft.getInstance().player,
+												Minecraft.getInstance().gameSettings.advancedItemTooltips
 											);
 									}
 									renderItem(itemStack, x, y, guiLeft, guiTop);
@@ -384,8 +384,8 @@ public class RiftPage extends GuiProfileViewerPage {
 									(mouseY >= guiTop + 154 && mouseY <= guiTop + 154 + 16)) {
 									getInstance().tooltipToDisplay =
 										itemStack.getTooltip(
-											Minecraft.getMinecraft().thePlayer,
-											Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+											Minecraft.getInstance().player,
+											Minecraft.getInstance().gameSettings.advancedItemTooltips
 										);
 								}
 
@@ -412,8 +412,8 @@ public class RiftPage extends GuiProfileViewerPage {
 									(mouseY >= guiTop + y1 && mouseY <= guiTop + y1 + 16)) {
 									getInstance().tooltipToDisplay =
 										itemStack.getTooltip(
-											Minecraft.getMinecraft().thePlayer,
-											Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+											Minecraft.getInstance().player,
+											Minecraft.getInstance().gameSettings.advancedItemTooltips
 										);
 								}
 								renderItem(itemStack, x1, y1, guiLeft, guiTop);
@@ -484,7 +484,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		String title,
 		String internalNameForItem
 	) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 		if (internalNameForItem.equals("CHEST") && inInventory) {
 			Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
 		} else if (internalNameForItem.equals("ENDER_CHEST") && !inInventory) {
@@ -545,8 +545,8 @@ public class RiftPage extends GuiProfileViewerPage {
 				(mouseY >= guiTop + y + (i * 18) && mouseY <= guiTop + y + (i * 18) + 16)) {
 				getInstance().tooltipToDisplay =
 					stack.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 			}
 		}

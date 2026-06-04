@@ -54,6 +54,6 @@ public class MixinMinecraft {
 
 	@Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/player/InventoryPlayer;currentItem:I", opcode = Opcodes.PUTFIELD))
 	public void currentItemMixin(CallbackInfo ci) {
-		SlotLocking.getInstance().changedSlot(Minecraft.getMinecraft().thePlayer.inventory.currentItem);
+		SlotLocking.getInstance().changedSlot(Minecraft.getInstance().player.inventory.currentItem);
 	}
 }

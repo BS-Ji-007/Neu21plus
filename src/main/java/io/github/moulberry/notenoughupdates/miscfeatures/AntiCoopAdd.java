@@ -66,7 +66,7 @@ public class AntiCoopAdd {
 				)));
 			ChatComponentText storageChatMessage = new ChatComponentText("");
 			storageChatMessage.appendSibling(storageMessage);
-			Minecraft.getMinecraft().thePlayer.addChatMessage(storageChatMessage);
+			Minecraft.getInstance().player.addChatMessage(storageChatMessage);
 			event.setCanceled(true);
 		}
 	}

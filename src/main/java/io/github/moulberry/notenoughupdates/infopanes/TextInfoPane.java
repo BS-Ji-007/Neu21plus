@@ -47,7 +47,7 @@ public class TextInfoPane extends ScrollableInfoPane {
 		int mouseX,
 		int mouseY
 	) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		int paneWidth = (int) (width / 3 * overlay.getWidthMult());
 		int rightSide = (int) (width * overlay.getInfoPaneOffsetFactor());

@@ -30,7 +30,7 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -53,7 +53,7 @@ public class NullzeeSphere {
 	public ReverseWorldRenderer getOverlayVBO() {
 		if (overlayVBO != null) return overlayVBO;
 
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return null;
 
 		//per vertex = 6
@@ -113,7 +113,7 @@ public class NullzeeSphere {
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (!enabled) return;
 
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return;
 
 		if (event.phase == TickEvent.Phase.START) {
@@ -152,7 +152,7 @@ public class NullzeeSphere {
 	public void onRenderLast(RenderWorldLastEvent event) {
 		if (!enabled) return;
 
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
 		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;

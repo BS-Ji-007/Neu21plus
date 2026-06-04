@@ -87,7 +87,7 @@ public abstract class LateBindingChroma {
 					text = (chunk.color.isEmpty() ? "" : ("§" + chunk.color)) + chunk.extraFormatting + chunk.text;
 				}
 				sb.append(text);
-				offset += Minecraft.getMinecraft().fontRendererObj.getStringWidth(text);
+				offset += Minecraft.getInstance().font.getStringWidth(text);
 			}
 			return sb.toString();
 		}

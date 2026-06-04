@@ -25,7 +25,7 @@ import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -64,7 +64,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -158,7 +158,7 @@ public class EntityViewer extends GuiScreen {
 		Gson gson = NotEnoughUpdates.INSTANCE.manager.gson;
 		try (
 			Reader is = new InputStreamReader(
-				Minecraft.getMinecraft().getResourceManager().getResource(resourceLocation).getInputStream(),
+				Minecraft.getInstance().getResourceManager().getResource(resourceLocation).getInputStream(),
 				StandardCharsets.UTF_8
 			)
 		) {
@@ -213,7 +213,7 @@ public class EntityViewer extends GuiScreen {
 		this.guiLeft = (width - this.xSize) / 2;
 		this.guiTop = (height - this.ySize) / 2;
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
 
 		Utils.drawStringScaledMaxWidth(label, guiLeft + 10, guiTop + 10, false, 100, 0xFF00FF);
@@ -245,7 +245,7 @@ public class EntityViewer extends GuiScreen {
 				scale = 8;
 				bottomOffset = -2F;
 			}
-			stack.ticksExisted = Minecraft.getMinecraft().thePlayer.ticksExisted;
+			stack.ticksExisted = Minecraft.getInstance().player.ticksExisted;
 			drawEntityOnScreen(
 				posX,
 				(int) (posY - bottomOffset * scale),
@@ -285,7 +285,7 @@ public class EntityViewer extends GuiScreen {
 		ent.rotationYawHead = ent.rotationYaw;
 		ent.prevRotationYawHead = ent.rotationYaw;
 		GlStateManager.translate(0.0F, 0.0F, 0.0F);
-		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+		RenderManager renderManager = Minecraft.getInstance().getRenderManager();
 		renderManager.setPlayerViewY(180.0F);
 		renderManager.setRenderShadow(false);
 		renderManager.renderEntityWithPosYaw(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);

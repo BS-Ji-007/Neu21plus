@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 import static io.github.moulberry.notenoughupdates.util.Utils.showOutdatedRepoNotification;
 
 public class CrystalHollowOverlay extends TextOverlay {
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	private static final Minecraft mc = Minecraft.getInstance();
 	private final StorageManager storageManager = StorageManager.getInstance();
 	private final Pattern notFoundPattern = Pattern.compile(
 		"\\[NPC] Keeper of \\w+: Talk to me when you have found a (?<item>[a-z-A-Z ]+)!");
@@ -119,8 +119,8 @@ public class CrystalHollowOverlay extends TextOverlay {
 
 	@Override
 	public void updateFrequent() {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -152,7 +152,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 		for (String key : hidden.divanMinesParts.keySet())
 			inventoryData.put(key, 0);
 		HashMap<String, Integer> storageData = new HashMap<>(inventoryData);
-		for (ItemStack item : mc.thePlayer.inventory.mainInventory)
+		for (ItemStack item : mc.player.inventory.mainInventory)
 			if (item != null) {
 				String name = Utils.cleanColour(item.getDisplayName());
 				if (inventoryData.containsKey(name))

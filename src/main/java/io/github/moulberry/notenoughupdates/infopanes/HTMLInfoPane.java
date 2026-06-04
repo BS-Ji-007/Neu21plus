@@ -38,7 +38,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -466,7 +466,7 @@ public class HTMLInfoPane extends TextInfoPane {
 	) {
 		if (imageTemp != null && imageTexture == null) {
 			DynamicTexture tex = new DynamicTexture(imageTemp);
-			imageTexture = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(
+			imageTexture = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation(
 				"notenoughupdates/informationPaneImage", tex);
 			imageHeight = imageTemp.getHeight();
 			imageWidth = imageTemp.getWidth();
@@ -476,7 +476,7 @@ public class HTMLInfoPane extends TextInfoPane {
 			return;
 		}
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		int paneWidth = (int) (width / 3 * overlay.getWidthMult());
 		int rightSide = (int) (width * overlay.getInfoPaneOffsetFactor());
@@ -496,7 +496,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		int imageW = paneWidth - overlay.getBoxPadding() * 2;
 		float scaleF = IMAGE_WIDTH * ZOOM_FACTOR / (float) imageW;
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(imageTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(imageTexture);
 		GlStateManager.color(1f, 1f, 1f, 1f);
 		if (height - overlay.getBoxPadding() * 3 < imageHeight / scaleF) {
 			if (scrollHeight.getValue() > imageHeight / scaleF - height + overlay.getBoxPadding() * 3) {

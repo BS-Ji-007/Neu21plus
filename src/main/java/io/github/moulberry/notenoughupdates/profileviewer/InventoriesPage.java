@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.profileviewer.SacksPage
 import io.github.moulberry.notenoughupdates.profileviewer.info.QuiverInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,7 +37,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -174,7 +174,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_invs);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_invs);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 		getInstance().inventoryTextField.setSize(88, 20);
 
@@ -193,7 +193,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			int x = 19 + 34 * xIndex;
 			int y = 26 + 34 * yIndex;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 			if (entry.getKey().equals(selectedInventory)) {
 				Utils.drawTexturedRect(guiLeft + x - 2, guiTop + y - 2, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
 				x++;
@@ -206,8 +206,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 			if (mouseX >= guiLeft + x && mouseX <= guiLeft + x + 16) {
 				if (mouseY >= guiTop + y && mouseY <= guiTop + y + 16) {
-					getInstance().tooltipToDisplay = entry.getValue().getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+					getInstance().tooltipToDisplay = entry.getValue().getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 					if (Objects.equals(entry.getKey(), "talisman_bag")) {
 						StringBuilder magicalPowerString = new StringBuilder(EnumChatFormatting.DARK_GRAY + "Magical Power: ");
 						int magicalPower = getSelectedProfile().getMagicalPower();
@@ -272,8 +272,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 						if (mouseY >= guiTop + 67 - 18 * i - 1 && mouseY <= guiTop + 67 - 18 * i + 16 + 1) {
 							getInstance().tooltipToDisplay =
 								stack.getTooltip(
-									Minecraft.getMinecraft().thePlayer,
-									Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+									Minecraft.getInstance().player,
+									Minecraft.getInstance().gameSettings.advancedItemTooltips
 								);
 						}
 					}
@@ -300,8 +300,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 						if (mouseY >= guiTop + 13 + 18 * i - 1 && mouseY <= guiTop + 13 + 18 * i + 16 + 1) {
 							getInstance().tooltipToDisplay =
 								stack.getTooltip(
-									Minecraft.getMinecraft().thePlayer,
-									Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+									Minecraft.getInstance().player,
+									Minecraft.getInstance().gameSettings.advancedItemTooltips
 								);
 						}
 					}
@@ -341,8 +341,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			Utils.drawItemStack(stack, guiLeft + 143, guiTop + 13 + 18 * i, true);
 			if (mouseX >= guiLeft + 143 - 1 && mouseX <= guiLeft + 143 + 16 + 1) {
 				if (mouseY >= guiTop + 13 + 18 * i - 1 && mouseY <= guiTop + 13 + 18 * i + 16 + 1) {
-					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 				}
 			}
 		}
@@ -353,8 +353,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			Utils.drawItemStack(stack, guiLeft + 143, guiTop + 137 + 18 * i, true);
 			if (mouseX >= guiLeft + 143 - 1 && mouseX <= guiLeft + 143 + 16 + 1) {
 				if (mouseY >= guiTop + 137 + 18 * i - 1 && mouseY <= guiTop + 137 + 18 * i + 16 + 1) {
-					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 				}
 			}
 		}
@@ -436,7 +436,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		int inventoryRows = inventory.length;
 
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int invSizeY = inventoryRows * 18 + 17 + 7;
 
@@ -460,7 +460,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 				}
 			}
 		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (currentInventoryIndex > 0) {
 			Utils.drawTexturedRect(
@@ -491,9 +491,9 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		if (inventories.length > 1) {
 			String text = "Page " + (currentInventoryIndex + 1) + "/" + inventories.length;
-			Minecraft.getMinecraft().fontRendererObj.drawString(
+			Minecraft.getInstance().font.drawString(
 				text,
-				guiLeft + 320 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) / 2,
+				guiLeft + 320 - Minecraft.getInstance().font.getStringWidth(text) / 2,
 				staticSelectorHeight - 10,
 				9737364
 			);
@@ -501,7 +501,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		Minecraft
 			.getMinecraft()
-			.fontRendererObj.drawString(
+			.font.drawString(
 				Utils.cleanColour(invNameToDisplayMap.get(selectedInventory).getDisplayName()),
 				x + 8,
 				y + 6,
@@ -550,8 +550,8 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			}
 		}
 		if (stackToRender != null) {
-			getInstance().tooltipToDisplay = stackToRender.getTooltip(Minecraft.getMinecraft().thePlayer,
-				Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+			getInstance().tooltipToDisplay = stackToRender.getTooltip(Minecraft.getInstance().player,
+				Minecraft.getInstance().gameSettings.advancedItemTooltips);
 		}
 	}
 

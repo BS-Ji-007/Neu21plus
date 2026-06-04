@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.mixins;
 
 import io.github.moulberry.notenoughupdates.miscfeatures.NPCRetexturing;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,7 +37,7 @@ public class MixinAbstractClientPlayer {
 		}
 	}
 
-	@Inject(method = "getLocationSkin()Lnet/minecraft/util/ResourceLocation;", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getLocationSkin()Lnet.minecraft.resources.ResourceLocation;", at = @At("HEAD"), cancellable = true)
 	public void getLocationSkin(CallbackInfoReturnable<ResourceLocation> cir) {
 		AbstractClientPlayer $this = (AbstractClientPlayer) (Object) this;
 		NPCRetexturing.Skin skin = NPCRetexturing.getInstance().getSkin($this);

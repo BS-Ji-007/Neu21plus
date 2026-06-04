@@ -218,9 +218,9 @@ public class FarmingSkillOverlay extends TextOverlay {
 		xpGainHourLast = xpGainHour;
 		counter = -1;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
-		ItemStack stack = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
 
 		updateCounter(stack);
 
@@ -433,8 +433,8 @@ public class FarmingSkillOverlay extends TextOverlay {
 			cpsResetTimer = 1;
 		}
 
-		String currentItemHeld = NEUManager.getUUIDForItem(Minecraft.getMinecraft().thePlayer.getHeldItem()) == null
-			? "null" : NEUManager.getUUIDForItem(Minecraft.getMinecraft().thePlayer.getHeldItem());
+		String currentItemHeld = NEUManager.getUUIDForItem(Minecraft.getInstance().player.getHeldItem()) == null
+			? "null" : NEUManager.getUUIDForItem(Minecraft.getInstance().player.getHeldItem());
 		if (!lastItemHeld.equals(currentItemHeld)) {
 			lastItemHeld = currentItemHeld;
 			resetCropsPerSecond();
@@ -647,8 +647,8 @@ public class FarmingSkillOverlay extends TextOverlay {
 	}
 
 	private void renderYawPitch() {
-		float yaw = Minecraft.getMinecraft().thePlayer.rotationYawHead;
-		float pitch = Minecraft.getMinecraft().thePlayer.rotationPitch;
+		float yaw = Minecraft.getInstance().player.rotationYawHead;
+		float pitch = Minecraft.getInstance().player.rotationPitch;
 		yaw %= 360;
 		if (yaw < 0) yaw += 360;
 		if (yaw > 180) yaw -= 360;

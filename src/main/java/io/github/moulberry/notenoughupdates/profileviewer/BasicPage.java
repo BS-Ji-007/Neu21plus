@@ -38,7 +38,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -51,7 +51,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -133,7 +133,7 @@ public class BasicPage extends GuiProfileViewerPage {
 
 	@Override
 	public void drawPage(int mouseX, int mouseY, float partialTicks) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		SkyblockProfiles profile = GuiProfileViewer.getProfile();
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
@@ -201,7 +201,7 @@ public class BasicPage extends GuiProfileViewerPage {
 			}
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_basic);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_basic);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 		String profileName = GuiProfileViewer.getProfileName();
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
@@ -416,13 +416,13 @@ public class BasicPage extends GuiProfileViewerPage {
 					NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("POTATO_CROWN")
 				);
 				potato_crown.addEnchantment(Enchantment.unbreaking, 1656638942); // this number may be useful
-				Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
+				Minecraft.getInstance().getRenderItem().renderItemIntoGUI(
 					new ItemStack(Items.potato),
 					guiLeft + 35,
 					guiTop + 160
 				);
-				Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(potato_crown, guiLeft + 50, guiTop + 162);
-				Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
+				Minecraft.getInstance().getRenderItem().renderItemIntoGUI(potato_crown, guiLeft + 50, guiTop + 162);
+				Minecraft.getInstance().getRenderItem().renderItemIntoGUI(
 					new ItemStack(Items.potato),
 					guiLeft + 63,
 					guiTop + 160
@@ -471,9 +471,9 @@ public class BasicPage extends GuiProfileViewerPage {
 						.getMinecraft()
 						.getSessionService()
 						.fillProfileProperties(new GameProfile(playerUUID, "CoolGuy123"), false);
-					Minecraft.getMinecraft().addScheduledTask(() -> {
+					Minecraft.getInstance().addScheduledTask(() -> {
 						entityPlayer =
-							new EntityOtherPlayerMP(Minecraft.getMinecraft().theWorld, fakeProfile) {
+							new EntityOtherPlayerMP(Minecraft.getInstance().level, fakeProfile) {
 								public ResourceLocation getLocationSkin() {
 									return playerLocationSkin == null
 										? DefaultPlayerSkin.getDefaultSkin(this.getUniqueID())
@@ -873,7 +873,7 @@ public class BasicPage extends GuiProfileViewerPage {
 			return;
 		}
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
@@ -1019,7 +1019,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		ent.rotationPitch = -((float) Math.atan(mouseY / 40.0F)) * 20.0F;
 		ent.rotationYawHead = ent.rotationYaw;
 		ent.prevRotationYawHead = ent.rotationYaw;
-		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
 		rendermanager.renderEntityWithPosYaw(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);

@@ -84,7 +84,7 @@ public class KatSitterOverlay {
 	}
 
 	public void renderPetInformation(int currentLevel, Integer upgradedLevel, GuiChest gui) {
-		FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer font = Minecraft.getInstance().font;
 		String currentText = "Current pet level: " + currentLevel;
 		int currentWidth = font.getStringWidth(currentText);
 		String upgradedText = "Upgraded pet level: " + upgradedLevel;

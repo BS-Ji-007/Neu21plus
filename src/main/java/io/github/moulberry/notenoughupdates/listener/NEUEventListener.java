@@ -59,7 +59,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -95,8 +95,8 @@ public class NEUEventListener {
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.START) return;
-		if (Minecraft.getMinecraft().theWorld == null) return;
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().level == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
 		if ((Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) && Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4) && Keyboard.isKeyDown(
 			Keyboard.KEY_NUMPAD9))) {
@@ -107,7 +107,7 @@ public class NEUEventListener {
 			component.appendText("\n");
 			component.appendText("\n\u00a77Ban ID: \u00a7r#49871982");
 			component.appendText("\n\u00a77Sharing your Ban ID may affect the processing of your appeal!");
-			Minecraft.getMinecraft().getNetHandler().getNetworkManager().closeChannel(component);
+			Minecraft.getInstance().getNetHandler().getNetworkManager().closeChannel(component);
 			return;
 		}
 
@@ -132,7 +132,7 @@ public class NEUEventListener {
 						}
 					}
 
-					SkinManager skinManager = Minecraft.getMinecraft().getSkinManager();
+					SkinManager skinManager = Minecraft.getInstance().getSkinManager();
 					if (gameprofile != null) {
 						Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> typeMinecraftProfileTextureMap =
 							skinManager.loadSkinFromCache(gameprofile);
@@ -141,7 +141,7 @@ public class NEUEventListener {
 							typeMinecraftProfileTextureMap.get(MinecraftProfileTexture.Type.SKIN),
 							MinecraftProfileTexture.Type.SKIN
 						);
-						Minecraft.getMinecraft().getTextureManager().bindTexture(resourceLocation);
+						Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
 					}
 				}
 				toPreload.remove(0);
@@ -166,8 +166,8 @@ public class NEUEventListener {
 		DungeonWin.tick();
 
 		String containerName = null;
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 
@@ -192,7 +192,7 @@ public class NEUEventListener {
 
 		if (longUpdate) {
 
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiItemRecipe)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof GuiItemRecipe)) {
 				RecipeHistory.clear();
 			}
 
@@ -214,8 +214,8 @@ public class NEUEventListener {
 			NotEnoughUpdates.INSTANCE.overlay.redrawItems();
 
 			NotEnoughUpdates.profileViewer.putNameUuid(
-				Minecraft.getMinecraft().thePlayer.getName(),
-				Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", "")
+				Minecraft.getInstance().player.getName(),
+				Minecraft.getInstance().player.getUniqueID().toString().replace("-", "")
 			);
 
 			if (NotEnoughUpdates.INSTANCE.config.dungeons.slowDungeonBlocks) {
@@ -273,13 +273,13 @@ public class NEUEventListener {
 							ChatComponentText clickTextFeatures = new ChatComponentText(EnumChatFormatting.YELLOW +
 								"Click this message if you would like to view a list of NotEnoughUpdate's Features.");
 							clickTextFeatures.setChatStyle(Utils.createClickStyle(ClickEvent.Action.OPEN_URL, url));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(clickTextFeatures);
+							Minecraft.getInstance().player.addChatMessage(clickTextFeatures);
 						}
 						Utils.addChatMessage("");
 						ChatComponentText clickTextHelp = new ChatComponentText(EnumChatFormatting.YELLOW +
 							"Click this message if you would like to view a list of NotEnoughUpdate's commands.");
 						clickTextHelp.setChatStyle(Utils.createClickStyle(ClickEvent.Action.RUN_COMMAND, "/neuhelp"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(clickTextHelp);
+						Minecraft.getInstance().player.addChatMessage(clickTextHelp);
 						Utils.addChatMessage("");
 					}
 				}

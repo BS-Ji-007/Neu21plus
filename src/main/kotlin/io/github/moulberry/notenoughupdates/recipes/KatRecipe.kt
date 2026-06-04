@@ -31,7 +31,7 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.toJsonArray
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import java.time.Duration
 import kotlin.math.PI
 import kotlin.math.cos
@@ -52,8 +52,8 @@ data class KatRecipe(
     val textPosition get() = circleCenter.first to circleCenter.second + 90 / 2
     val sliderPos get() = 40 to 15
     val levelTextPos
-        get() = sliderPos.first - 4 - Minecraft.getMinecraft().fontRendererObj.getStringWidth("100") to
-                sliderPos.second + 16 / 2 - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2
+        get() = sliderPos.first - 4 - Minecraft.getInstance().font.getStringWidth("100") to
+                sliderPos.second + 16 / 2 - Minecraft.getInstance().font.FONT_HEIGHT / 2
 
     val levelSlider = GuiElementSlider(0, 0, 100, 1F, 100F, 1F, inputLevel.toFloat()) { inputLevel = it.toInt() }
     val coinsAdjustedForLevel: Int
@@ -90,7 +90,7 @@ data class KatRecipe(
         levelSlider.x = gui.guiLeft + sliderPos.first
         levelSlider.y = gui.guiTop + sliderPos.second
         levelSlider.render()
-        Minecraft.getMinecraft().fontRendererObj.drawString(
+        Minecraft.getInstance().font.drawString(
             "$inputLevel",
             gui.guiLeft + levelTextPos.first,
             gui.guiTop + levelTextPos.second,

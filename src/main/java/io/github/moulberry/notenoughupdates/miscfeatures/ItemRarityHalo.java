@@ -68,7 +68,7 @@ public class ItemRarityHalo {
 		//if(neu.manager.config.itemHighlightOpacity.value <= 1) return;
 		if (neu.manager.getInternalNameForItem(stack) == null) return;
 
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int size = 16 * scaledresolution.getScaleFactor();
 
 		if (projectionMatrix == null) {
@@ -80,14 +80,14 @@ public class ItemRarityHalo {
 
 		try {
 			if (colourShader == null) {
-				colourShader = new Shader(new NEUResourceManager(Minecraft.getMinecraft().getResourceManager()),
+				colourShader = new Shader(new NEUResourceManager(Minecraft.getInstance().getResourceManager()),
 					"setrgbtoalpha", itemFramebuffer1, itemFramebuffer2
 				);
 				upload(colourShader, size, size);
 			}
 
 			if (blurShaderHorz == null) {
-				blurShaderHorz = new Shader(new NEUResourceManager(Minecraft.getMinecraft().getResourceManager()),
+				blurShaderHorz = new Shader(new NEUResourceManager(Minecraft.getInstance().getResourceManager()),
 					"blur", itemFramebuffer2, itemFramebuffer1
 				);
 				blurShaderHorz.getShaderManager().getShaderUniform("BlurDir").set(1, 0);
@@ -97,7 +97,7 @@ public class ItemRarityHalo {
 			}
 
 			if (blurShaderVert == null) {
-				blurShaderVert = new Shader(new NEUResourceManager(Minecraft.getMinecraft().getResourceManager()),
+				blurShaderVert = new Shader(new NEUResourceManager(Minecraft.getInstance().getResourceManager()),
 					"blur", itemFramebuffer1, itemFramebuffer2
 				);
 				blurShaderVert.getShaderManager().getShaderUniform("BlurDir").set(0, 1);
@@ -180,7 +180,7 @@ public class ItemRarityHalo {
 
 					itemFramebuffer1.bindFramebuffer(true);
 
-					RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+					RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 					RenderHelper.enableGUIStandardItemLighting();
 					float zLevel = itemRender.zLevel;
 					itemRender.zLevel = -145; //Negates the z-offset of the below method.
@@ -269,7 +269,7 @@ public class ItemRarityHalo {
 	}
 
 	public static void resetItemHaloCache() {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int size = 16 * scaledresolution.getScaleFactor();
 
 		for (int tex : itemHaloTexMap.values()) {

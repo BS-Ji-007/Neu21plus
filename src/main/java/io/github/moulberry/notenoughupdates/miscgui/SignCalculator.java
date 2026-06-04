@@ -80,7 +80,7 @@ public class SignCalculator {
 		if (lastResult != null) {
 			DecimalFormat formatter = new DecimalFormat("#,##0.##");
 			String lr = formatter.format(lastResult);
-			if (Minecraft.getMinecraft().fontRendererObj.getStringWidth(lr) > 90) {
+			if (Minecraft.getInstance().font.getStringWidth(lr) > 90) {
 				return EnumChatFormatting.WHITE + lastSource + " " + EnumChatFormatting.YELLOW + "= " + EnumChatFormatting.RED +
 					"Result too long";
 			}

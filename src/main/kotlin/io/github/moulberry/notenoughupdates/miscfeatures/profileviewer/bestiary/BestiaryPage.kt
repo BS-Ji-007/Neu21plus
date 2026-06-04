@@ -32,7 +32,7 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -135,7 +135,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
 
         // Render the category list
         for ((categoryXIndex, category) in computedCategories.withIndex()) {
-            Minecraft.getMinecraft().textureManager.bindTexture(GuiProfileViewer.pv_elements)
+            Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
 
             if (mouseX > guiLeft + 30 + bestiaryXSize * categoryXIndex &&
                 mouseX < guiLeft + 30 + bestiaryXSize * categoryXIndex + 20
@@ -177,11 +177,11 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             Utils.drawItemStack(category.icon, guiLeft + 32 + bestiaryXSize * categoryXIndex, guiTop + 12)
         }
 
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val scaledResolution = ScaledResolution(Minecraft.getInstance())
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 
-        Minecraft.getMinecraft().textureManager.bindTexture(bestiaryTexture)
+        Minecraft.getInstance().textureManager.bindTexture(bestiaryTexture)
         Utils.drawTexturedRect(guiLeft.toFloat(), guiTop.toFloat(), 431f, 202f, GL11.GL_NEAREST)
         GlStateManager.color(1f, 1f, 1f, 1f)
         val color = Color(128, 128, 128, 255)
@@ -208,7 +208,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             val xStart = (guiLeft + 280).toFloat()
             val y = (guiTop + 175).toFloat()
             for ((i, subCategory) in selectedCategory.subCategories.withIndex()) {
-                Minecraft.getMinecraft().textureManager.bindTexture(GuiProfileViewer.pv_elements)
+                Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
 
                 if (subCategory.id == selectedSubCategory) {
                     Utils.drawTexturedRect(
@@ -328,7 +328,7 @@ class BestiaryPage(instance: GuiProfileViewer?) : GuiProfileViewerPage(instance)
             GlStateManager.disableLighting()
             RenderHelper.enableGUIStandardItemLighting()
             GlStateManager.color(1f, 1f, 1f, 1f)
-            Minecraft.getMinecraft().textureManager.bindTexture(GuiProfileViewer.pv_elements)
+            Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
             Utils.drawTexturedRect(
                 guiLeft + x,
                 guiTop + y,

@@ -29,7 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -85,7 +85,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_cols);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_cols);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
@@ -113,7 +113,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 			int yIndex = 0;
 			for (ItemStack stack : ProfileViewer.getCollectionCatToCollectionMap().keySet()) {
 				if (selectedCollectionCategory == null) selectedCollectionCategory = stack;
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				if (stack == selectedCollectionCategory) {
 					Utils.drawTexturedRect(
 						guiLeft + 7,
@@ -162,7 +162,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					}
 				}
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
+			Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 			if (page > 0) {
 				Utils.drawTexturedRect(
@@ -242,7 +242,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				}
 
 				GlStateManager.color(1, 1, 1, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
 					guiTop + y,
@@ -255,7 +255,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					GL11.GL_NEAREST
 				);
 				GlStateManager.color(1, 185 / 255f, 0, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
 					guiTop + y + 20 * (1 - completedness),
@@ -340,7 +340,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				}
 
 				GlStateManager.color(1, 1, 1, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
 					guiTop + y,
@@ -353,7 +353,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					GL11.GL_NEAREST
 				);
 				GlStateManager.color(1, 185 / 255f, 0, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(
 					guiLeft + x,
 					guiTop + y + 20 * (1 - completedness),
@@ -377,7 +377,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 						tooltipToDisplay =
 							NotEnoughUpdates.INSTANCE.manager
 								.jsonToStack(minionJson)
-								.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+								.getTooltip(Minecraft.getInstance().player, false);
 					}
 				}
 

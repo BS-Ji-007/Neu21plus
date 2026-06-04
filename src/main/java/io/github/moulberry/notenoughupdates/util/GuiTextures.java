@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.util;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class GuiTextures {
 	private GuiTextures() {

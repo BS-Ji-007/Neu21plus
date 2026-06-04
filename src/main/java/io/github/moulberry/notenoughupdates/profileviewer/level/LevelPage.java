@@ -40,7 +40,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class LevelPage extends GuiProfileViewerPage {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_levels);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_levels);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();

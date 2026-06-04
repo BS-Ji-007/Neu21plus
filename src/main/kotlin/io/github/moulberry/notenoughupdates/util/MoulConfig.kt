@@ -23,8 +23,8 @@ import io.github.notenoughupdates.moulconfig.gui.GuiContext
 import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapperNew
 import io.github.notenoughupdates.moulconfig.xml.XMLUniverse
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.resources.ResourceLocation
 
 
 fun XMLUniverse.loadResourceLocation(obj: Any, resourceLocation: ResourceLocation): GuiScreen {
@@ -32,7 +32,7 @@ fun XMLUniverse.loadResourceLocation(obj: Any, resourceLocation: ResourceLocatio
         GuiContext(
             load(
                 obj,
-                Minecraft.getMinecraft().resourceManager.getResource(resourceLocation).inputStream
+                Minecraft.getInstance().resourceManager.getResource(resourceLocation).inputStream
             )
         )
     )

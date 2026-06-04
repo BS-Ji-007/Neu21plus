@@ -32,7 +32,7 @@ import io.github.moulberry.notenoughupdates.miscgui.pricegraph.GuiPriceGraph
 import io.github.moulberry.notenoughupdates.util.*
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.command.ICommandSender
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.launchwrapper.Launch
@@ -131,7 +131,7 @@ class DevTestCommand {
                 }.withHelp("Search for an item id by name")
             }
             thenLiteralExecute("garden") {
-                val player = Minecraft.getMinecraft().thePlayer
+                val player = Minecraft.getInstance().player
                 reply("Is in Garden: ${SBInfo.getInstance().getLocation() == "garden"}")
                 val pp = player.position
                 reply("Plot X: ${floor((pp.getX() + 48) / 96F)}")
@@ -170,8 +170,8 @@ class DevTestCommand {
                 }
             }.withHelp("Update the price data from the bazaar")
             thenLiteralExecute("zone") {
-                val target = Minecraft.getMinecraft().objectMouseOver.blockPos
-                    ?: Minecraft.getMinecraft().thePlayer.position
+                val target = Minecraft.getInstance().objectMouseOver.blockPos
+                    ?: Minecraft.getInstance().player.position
                 val zone = CustomBiomes.INSTANCE.getSpecialZone(target)
                 listOf(
                     ChatComponentText("Showing Zone Info for: $target"),
@@ -225,7 +225,7 @@ class DevTestCommand {
                 reply(AQUA.toString() + "I would never search")
             }.withHelp("Reset your search data to redisplay the search tutorial")
             thenLiteralExecute("bluehair") {
-                PronounDB.test(MC.thePlayer.uniqueID)
+                PronounDB.test(MC.player.uniqueID)
             }.withHelp("Test the pronoundb integration")
             thenLiteral("opengui") {
                 thenArgumentExecute("class", StringArgumentType.string()) { className ->
@@ -240,9 +240,9 @@ class DevTestCommand {
                 }.withHelp("Open a gui by class name")
             }
             thenLiteralExecute("center") {
-                val x = floor(Minecraft.getMinecraft().thePlayer.posX) + 0.5f
-                val z = floor(Minecraft.getMinecraft().thePlayer.posZ) + 0.5f
-                Minecraft.getMinecraft().thePlayer.setPosition(x, Minecraft.getMinecraft().thePlayer.posY, z)
+                val x = floor(Minecraft.getInstance().player.posX) + 0.5f
+                val z = floor(Minecraft.getInstance().player.posZ) + 0.5f
+                Minecraft.getInstance().player.setPosition(x, Minecraft.getInstance().player.posY, z)
                 reply("Literal hacks")
             }.withHelp("Center yourself on the block you are currently standing (like using AOTE)")
             thenLiteral("minion") {
@@ -295,7 +295,7 @@ class DevTestCommand {
                     component.appendText("\n")
                     component.appendText("\n\u00a77Ban ID: \u00a7r#49871982")
                     component.appendText("\n\u00a77Sharing your Ban ID may affect the processing of your appeal!")
-                    Minecraft.getMinecraft().netHandler.networkManager.closeChannel(component)
+                    Minecraft.getInstance().netHandler.networkManager.closeChannel(component)
                 } else {
                     it.context.source.addChatMessage(ChatComponentText("$RED$text"))
                 }

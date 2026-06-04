@@ -42,7 +42,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import org.lwjgl.opengl.GL11
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -186,7 +186,7 @@ class GardenPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance
         val left = guiLeft + 192
         GlStateManager.color(1f, 1f, 1f, 1f)
         for (value in repoData.plots) {
-            Minecraft.getMinecraft().textureManager.bindTexture(GuiProfileViewer.pv_elements)
+            Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
             val x = left + value.value.x * 22
             val y = top + value.value.y * 22
             Utils.drawTexturedRect(
@@ -213,7 +213,7 @@ class GardenPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstance
             }
         }
 
-        Minecraft.getMinecraft().textureManager.bindTexture(GuiProfileViewer.pv_elements)
+        Minecraft.getInstance().textureManager.bindTexture(GuiProfileViewer.pv_elements)
         Utils.drawTexturedRect(
             (left + 2 * 22).toFloat(),
             (top + 2 * 22).toFloat(),

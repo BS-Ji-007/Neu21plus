@@ -27,7 +27,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S23PacketBlockChange;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -101,7 +101,7 @@ public class ItemCooldowns {
 
 		public BlockData(BlockPos pos) {
 			this.blockPos = pos;
-			this.blockState = Minecraft.getMinecraft().theWorld.getBlockState(pos);
+			this.blockState = Minecraft.getInstance().level.getBlockState(pos);
 		}
 	}
 
@@ -176,12 +176,12 @@ public class ItemCooldowns {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR ||
 			event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-			ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+			ItemStack held = Minecraft.getInstance().player.getHeldItem();
 			String internalname =
 				NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(held).resolveInternalName();
 			if (internalname != null) {
 				if (grappleCooldownMillisRemaining < 0 && internalname.equals("GRAPPLING_HOOK") &&
-					Minecraft.getMinecraft().thePlayer.fishEntity != null) {
+					Minecraft.getInstance().player.fishEntity != null) {
 					grappleCooldownMillisRemaining = getGrappleCooldownWithArmor();
 				}
 			}
@@ -211,7 +211,7 @@ public class ItemCooldowns {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			ItemStack armorPiece = Minecraft.getMinecraft().thePlayer.getCurrentArmor(i);
+			ItemStack armorPiece = Minecraft.getInstance().player.getCurrentArmor(i);
 			String internal =
 				NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(armorPiece).resolveInternalName();
 			if (internal != null) {
@@ -232,7 +232,7 @@ public class ItemCooldowns {
 	}
 
 	public static void checkForBlockChange(BlockPos pos, IBlockState blockState) {
-		Minecraft.getMinecraft().addScheduledTask(() -> {
+		Minecraft.getInstance().addScheduledTask(() -> {
 			BlockData oldBlockData = null;
 
 			for (BlockData value : blocksClicked.values()) {
@@ -250,7 +250,7 @@ public class ItemCooldowns {
 	}
 
 	public static void onBlockMined() {
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		String internalname =
 			NotEnoughUpdates.INSTANCE.manager.createItemResolutionQuery().withItemStack(held).resolveInternalName();
 		if (internalname != null) {
@@ -300,12 +300,12 @@ public class ItemCooldowns {
 	}
 
 	private static void findCooldownInTooltip(Item item) {
-		for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+		for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			setSpecificCooldown(stack, item);
 		}
 
 		// Check helmet slot for items that can also be equipped as a helmet
-		ItemStack stack = Minecraft.getMinecraft().thePlayer.inventory.armorInventory[3];
+		ItemStack stack = Minecraft.getInstance().player.inventory.armorInventory[3];
 		setSpecificCooldown(stack, item);
 	}
 
@@ -350,7 +350,7 @@ public class ItemCooldowns {
 	}
 
 	public static float getDurabilityOverride(ItemStack stack) {
-		if (Minecraft.getMinecraft().theWorld == null) return -1;
+		if (Minecraft.getInstance().level == null) return -1;
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return -1;
 
 		if (durabilityOverrideMap.containsKey(stack)) {

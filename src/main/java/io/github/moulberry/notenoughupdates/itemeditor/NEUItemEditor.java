@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.core.util.lerp.LerpingInteger;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -40,7 +40,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -158,7 +158,7 @@ public class NEUItemEditor extends GuiScreen {
 		this.damage = addTextFieldWithSupplier(damage, NO_SPACE | NUM_ONLY);
 
 		rightOptions.add(new GuiElementButton("Close (discards changes)", Color.LIGHT_GRAY.getRGB(), () ->
-			Minecraft.getMinecraft().displayGuiScreen(null)));
+			Minecraft.getInstance().displayGuiScreen(null)));
 
 		rightOptions.add(new GuiElementText("", Color.WHITE.getRGB()));
 
@@ -292,14 +292,14 @@ public class NEUItemEditor extends GuiScreen {
 			totalHeight += gui.getHeight();
 		}
 
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int height = scaledresolution.getScaledHeight();
 
 		scrollHeight.setValue(totalHeight - height + PADDING);
 	}
 
 	public int calculateYScroll() {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int height = scaledresolution.getScaledHeight();
 
 		int totalHeight = PADDING;
@@ -327,7 +327,7 @@ public class NEUItemEditor extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		scrollHeight.tick();
 
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledresolution.getScaledWidth();
 		int height = scaledresolution.getScaledHeight();
 
@@ -391,7 +391,7 @@ public class NEUItemEditor extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) {
 		boolean hasChanges = false;
 		if (keyCode == Keyboard.KEY_ESCAPE && !hasChanges) {
-			Minecraft.getMinecraft().displayGuiScreen(null);
+			Minecraft.getInstance().displayGuiScreen(null);
 			return;
 		}
 
@@ -402,7 +402,7 @@ public class NEUItemEditor extends GuiScreen {
 
 	@Override
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledresolution.getScaledWidth();
 
 		int yScroll = calculateYScroll();
@@ -429,7 +429,7 @@ public class NEUItemEditor extends GuiScreen {
 
 	@Override
 	public void handleMouseInput() throws IOException {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 
 		int maxWidth = 0;
 		for (GuiElement gui : options) {
@@ -453,7 +453,7 @@ public class NEUItemEditor extends GuiScreen {
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledresolution.getScaledWidth();
 
 		int yScroll = calculateYScroll();
@@ -499,8 +499,8 @@ public class NEUItemEditor extends GuiScreen {
 	}
 
 	private void drawItemStack(ItemStack stack, int x, int y) {
-		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-		FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
+		RenderItem itemRender = Minecraft.getInstance().getRenderItem();
+		FontRenderer font = Minecraft.getInstance().font;
 
 		RenderHelper.enableGUIStandardItemLighting();
 		itemRender.renderItemAndEffectIntoGUI(stack, x, y);

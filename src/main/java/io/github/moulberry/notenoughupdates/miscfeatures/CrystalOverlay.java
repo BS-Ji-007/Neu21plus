@@ -35,7 +35,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -87,7 +87,7 @@ public class CrystalOverlay {
 		public ReverseWorldRenderer getOverlayVBO() {
 			if (overlayVBO != null) return overlayVBO;
 
-			EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP p = Minecraft.getInstance().player;
 			if (p == null) return null;
 
 			if (!crystals.containsKey(this)) {
@@ -148,9 +148,9 @@ public class CrystalOverlay {
 
 	public static void tick() {
 		if (!NotEnoughUpdates.INSTANCE.config.itemOverlays.enableCrystalOverlay) return;
-		if (Minecraft.getMinecraft().theWorld == null) return;
+		if (Minecraft.getInstance().level == null) return;
 
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return;
 
 		long currentTime = System.currentTimeMillis();
@@ -177,7 +177,7 @@ public class CrystalOverlay {
 		}
 
 		Set<CrystalType> foundTypes = new HashSet<>();
-		for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+		for (Entity entity : Minecraft.getInstance().level.loadedEntityList) {
 			if (entity instanceof EntityArmorStand) {
 				EntityArmorStand armorStand = (EntityArmorStand) entity;
 
@@ -227,7 +227,7 @@ public class CrystalOverlay {
 			return;
 		}
 
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return;
 
 		if (event.phase == TickEvent.Phase.START) {
@@ -280,7 +280,7 @@ public class CrystalOverlay {
 			return;
 		}
 
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
 		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;

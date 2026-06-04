@@ -50,7 +50,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -217,11 +217,11 @@ public class SlotLocking {
 	}
 
 	private Slot getFocusedSlot(GuiContainer container) {
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 		return ((AccessorGuiContainer) container).doGetSlotAtPosition(mouseX, mouseY);
 	}
 
@@ -231,15 +231,15 @@ public class SlotLocking {
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
 			return;
 		}
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 			return;
 		}
-		GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 
 		int key = NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey;
 		if (!lockKeyHeld && KeybindHelper.isKeyPressed(key) && !Keyboard.isRepeatEvent()) {
 			Slot slot = getFocusedSlot(container);
-			if (slot != null && slot.getSlotIndex() != 8 && slot.inventory == Minecraft.getMinecraft().thePlayer.inventory) {
+			if (slot != null && slot.getSlotIndex() != 8 && slot.inventory == Minecraft.getInstance().player.inventory) {
 				int slotNum = slot.getSlotIndex();
 				if (slotNum >= 0 && slotNum <= 39) {
 					boolean isHotbar = slotNum < 9;
@@ -276,10 +276,10 @@ public class SlotLocking {
 									attenuationType = ISound.AttenuationType.NONE;
 								}};
 
-								float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
-								Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
-								Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-								Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
+								float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
+								Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
+								Minecraft.getInstance().getSoundHandler().playSound(sound);
+								Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
 							}
 						}
 
@@ -306,20 +306,20 @@ public class SlotLocking {
 			!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking) {
 			return;
 		}
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 			return;
 		}
-		GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 
 		if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && lockKeyHeld && pairingSlot != null) {
-			final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+			final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 			final int scaledWidth = scaledresolution.getScaledWidth();
 			final int scaledHeight = scaledresolution.getScaledHeight();
-			int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-			int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+			int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 			Slot slot = ((AccessorGuiContainer) container).doGetSlotAtPosition(mouseX, mouseY);
-			if (slot != null && slot.getSlotIndex() != 8 && slot.inventory == Minecraft.getMinecraft().thePlayer.inventory) {
+			if (slot != null && slot.getSlotIndex() != 8 && slot.inventory == Minecraft.getInstance().player.inventory) {
 				int slotNum = slot.getSlotIndex();
 				if (slotNum >= 0 && slotNum <= 39) {
 
@@ -386,10 +386,10 @@ public class SlotLocking {
 						attenuationType = ISound.AttenuationType.NONE;
 					}};
 
-					float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
-					Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
-					Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-					Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
+					float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
+					Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
+					Minecraft.getInstance().getSoundHandler().playSound(sound);
+					Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
 				}
 			}
 
@@ -413,10 +413,10 @@ public class SlotLocking {
 				return;
 			}
 
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 				return;
 			}
-			AccessorGuiContainer container = (AccessorGuiContainer) Minecraft.getMinecraft().currentScreen;
+			AccessorGuiContainer container = (AccessorGuiContainer) Minecraft.getInstance().currentScreen;
 
 			int x1 = container.getGuiLeft() + pairingSlot.xDisplayPosition + 8;
 			int y1 = container.getGuiTop() + pairingSlot.yDisplayPosition + 8;
@@ -485,7 +485,7 @@ public class SlotLocking {
 			&& slotClickEvent.clickType == 1 &&
 			locked.boundTo != -1) {
 			Slot boundSlot = slotClickEvent.guiContainer.inventorySlots.getSlotFromInventory(
-				Minecraft.getMinecraft().thePlayer.inventory,
+				Minecraft.getInstance().player.inventory,
 				locked.boundTo
 			);
 
@@ -495,10 +495,10 @@ public class SlotLocking {
 
 			LockedSlot boundLocked = getLockedSlot(boundSlot);
 
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 				return;
 			}
-			GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+			GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 			int size = container.inventorySlots.inventorySlots.size();
 
 			int from, to;
@@ -530,9 +530,9 @@ public class SlotLocking {
 			if (from == 38) from = 6;
 			if (from == 37) from = 7;
 			if (from == 36) from = 8;
-			Minecraft.getMinecraft().playerController.windowClick(
+			Minecraft.getInstance().playerController.windowClick(
 				slotClickEvent.guiContainer.inventorySlots.windowId,
-				from, to, 2, Minecraft.getMinecraft().thePlayer
+				from, to, 2, Minecraft.getInstance().player
 			);
 			slotClickEvent.setCanceled(true);
 		} else if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && locked.boundTo != -1 &&
@@ -546,7 +546,7 @@ public class SlotLocking {
 		if (locked != null) {
 			if (locked.locked) {
 				GlStateManager.translate(0, 0, 400);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(LOCK);
+				Minecraft.getInstance().getTextureManager().bindTexture(LOCK);
 				GlStateManager.color(1, 1, 1, 0.5f);
 				GlStateManager.depthMask(false);
 				RenderUtils.drawTexturedRect(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, 0, 1, 0, 1, GL11.GL_NEAREST);
@@ -555,19 +555,19 @@ public class SlotLocking {
 				GlStateManager.translate(0, 0, -400);
 			} else if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && slot.canBeHovered() &&
 				locked.boundTo >= 0 && locked.boundTo <= 39) {
-				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+				if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 					return;
 				}
-				GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+				GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 
-				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 				final int scaledWidth = scaledresolution.getScaledWidth();
 				final int scaledHeight = scaledresolution.getScaledHeight();
-				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 				Slot boundSlot = container.inventorySlots.getSlotFromInventory(
-					Minecraft.getMinecraft().thePlayer.inventory,
+					Minecraft.getInstance().player.inventory,
 					locked.boundTo
 				);
 				if (boundSlot == null) {
@@ -577,7 +577,7 @@ public class SlotLocking {
 				boolean hoverOverSlot = ((AccessorGuiContainer) container).doIsMouseOverSlot(slot, mouseX, mouseY);
 
 				if (hoverOverSlot || slot.getSlotIndex() >= 9) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(BOUND);
+					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
 					GlStateManager.color(1, 1, 1, 0.7f);
 					GlStateManager.depthMask(false);
 					RenderUtils.drawTexturedRect(
@@ -596,8 +596,8 @@ public class SlotLocking {
 
 					//Rerender Text over Top
 					if (slot.getStack() != null) {
-						Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(
-							Minecraft.getMinecraft().fontRendererObj,
+						Minecraft.getInstance().getRenderItem().renderItemOverlayIntoGUI(
+							Minecraft.getInstance().font,
 							slot.getStack(),
 							slot.xDisplayPosition,
 							slot.yDisplayPosition,
@@ -628,7 +628,7 @@ public class SlotLocking {
 						return;
 					}
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(BOUND);
+					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
 					GlStateManager.color(1, 1, 1, 0.7f);
 					GlStateManager.depthMask(false);
 					RenderUtils.drawTexturedRect(
@@ -647,8 +647,8 @@ public class SlotLocking {
 
 					//Rerender Text over Top
 					if (boundSlot.getStack() != null) {
-						Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(
-							Minecraft.getMinecraft().fontRendererObj,
+						Minecraft.getInstance().getRenderItem().renderItemOverlayIntoGUI(
+							Minecraft.getInstance().font,
 							boundSlot.getStack(),
 							boundSlot.xDisplayPosition,
 							boundSlot.yDisplayPosition,
@@ -683,16 +683,16 @@ public class SlotLocking {
 				}
 			} else if (NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotBinding && slot.getSlotIndex() < 8 &&
 				pairingSlot != null && lockKeyHeld) {
-				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) {
+				if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) {
 					return;
 				}
-				GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+				GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 
-				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+				final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 				final int scaledWidth = scaledresolution.getScaledWidth();
 				final int scaledHeight = scaledresolution.getScaledHeight();
-				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+				int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+				int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 				int x1 = ((AccessorGuiContainer) container).getGuiLeft() + pairingSlot.xDisplayPosition;
 				int y1 = ((AccessorGuiContainer) container).getGuiTop() + pairingSlot.yDisplayPosition;
@@ -718,7 +718,7 @@ public class SlotLocking {
 		if (slot == null) {
 			return null;
 		}
-		if (slot.inventory != Minecraft.getMinecraft().thePlayer.inventory) {
+		if (slot.inventory != Minecraft.getInstance().player.inventory) {
 			return null;
 		}
 		int index = slot.getSlotIndex();
@@ -778,11 +778,11 @@ public class SlotLocking {
 		var slot = getFocusedSlot(gui);
 		if (slot == null || !shouldShowBarrier(slot.getSlotIndex(), slot.inventory))
 			return;
-		final var scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final var scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 		Utils.drawHoveringText(
 			Arrays.asList(
 				"§cYou cannot bind slots to anything except the hotbar.",

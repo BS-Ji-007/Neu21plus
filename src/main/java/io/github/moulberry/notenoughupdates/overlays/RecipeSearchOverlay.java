@@ -44,7 +44,7 @@ public class RecipeSearchOverlay extends SearchOverlayScreen {
 	}
 
 	public static boolean shouldReplace() {
-		return Minecraft.getMinecraft().currentScreen instanceof RecipeSearchOverlay;
+		return Minecraft.getInstance().currentScreen instanceof RecipeSearchOverlay;
 	}
 
 	@SubscribeEvent

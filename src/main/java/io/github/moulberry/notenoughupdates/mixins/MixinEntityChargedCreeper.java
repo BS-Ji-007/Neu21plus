@@ -37,7 +37,7 @@ public abstract class MixinEntityChargedCreeper {
 		//Wither Cloak Creepers: Is toggled on, Are invisible, 20 max health, usually less than 7.5M from the player, only existent when active, and only in sb obviously
 		boolean isWitherCloak =
 			NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakToggle && creeper.isInvisible() &&
-				creeper.getMaxHealth() == 20.0f && creeper.getDistanceToEntity(Minecraft.getMinecraft().thePlayer) < 7.5f &&
+				creeper.getMaxHealth() == 20.0f && creeper.getDistanceToEntity(Minecraft.getInstance().player) < 7.5f &&
 				(WitherCloakChanger.isCloakActive || System.currentTimeMillis() - WitherCloakChanger.lastDeactivate < 300) &&
 				NotEnoughUpdates.INSTANCE.isOnSkyblock();
 		if (isWitherCloak) {

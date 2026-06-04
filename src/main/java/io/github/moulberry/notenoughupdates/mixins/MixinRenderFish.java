@@ -60,7 +60,7 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 		CallbackInfo ci
 	) {
 		if (NotEnoughUpdates.INSTANCE.config.fishing.hideOtherPlayerAll &&
-			entity != null && entity.angler != Minecraft.getMinecraft().thePlayer) {
+			entity != null && entity.angler != Minecraft.getInstance().player) {
 			ci.cancel();
 			return;
 		}
@@ -101,7 +101,7 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 				double playerVecY;
 				double playerVecZ;
 				double startY;
-				if (this.renderManager.options.thirdPersonView == 0 && entity.angler == Minecraft.getMinecraft().thePlayer) {
+				if (this.renderManager.options.thirdPersonView == 0 && entity.angler == Minecraft.getInstance().player) {
 					float f7 = entity.angler.getSwingProgress(partialTicks);
 					float sqrtSinSwing = MathHelper.sin(MathHelper.sqrt_float(f7) * (float) Math.PI);
 
@@ -160,7 +160,7 @@ public abstract class MixinRenderFish extends Render<EntityFishHook> {
 				worldrenderer.begin(3, DefaultVertexFormats.POSITION_COLOR);
 
 				String specialColour;
-				if (entity.angler.getUniqueID().equals(Minecraft.getMinecraft().thePlayer.getUniqueID())) {
+				if (entity.angler.getUniqueID().equals(Minecraft.getInstance().player.getUniqueID())) {
 					specialColour = NotEnoughUpdates.INSTANCE.config.fishing.ownRodColour;
 				} else {
 					specialColour = NotEnoughUpdates.INSTANCE.config.fishing.otherRodColour;

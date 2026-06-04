@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -84,7 +84,7 @@ public class WitherCloakChanger {
 
 		if (!NotEnoughUpdates.INSTANCE.isOnSkyblock() || !isCloakActive ||
 			!NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakToggle) return;
-		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft mc = Minecraft.getInstance();
 
 		//CONSTANTS (Other contribs, mess with these as you wish, but you should know I chose these for a reason)
 		final double shieldWidth = 0.8d; //How wide they are
@@ -98,29 +98,29 @@ public class WitherCloakChanger {
 					-0.5 * accuracy)) % (360 * accuracy)) / accuracy;
 			angle += (360d / NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakCount) * i;
 			angle %= 360;
-			double posX = mc.thePlayer.posX - (shieldWidth / 2);
-			double posY = mc.thePlayer.posY;
-			double posZ = mc.thePlayer.posZ + NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakDistance;
+			double posX = mc.player.posX - (shieldWidth / 2);
+			double posY = mc.player.posY;
+			double posZ = mc.player.posZ + NotEnoughUpdates.INSTANCE.config.itemOverlays.customWitherCloakDistance;
 
 			Vec3 topLeft = rotateAboutOrigin(
-				mc.thePlayer.posX,
-				mc.thePlayer.posZ,
+				mc.player.posX,
+				mc.player.posZ,
 				angle,
 				new Vec3(posX, posY + shieldHeight, posZ)
 			);
 			Vec3 topRight = rotateAboutOrigin(
-				mc.thePlayer.posX,
-				mc.thePlayer.posZ,
+				mc.player.posX,
+				mc.player.posZ,
 				angle,
 				new Vec3(posX + shieldWidth, posY + shieldHeight, posZ)
 			);
 			Vec3 bottomRight = rotateAboutOrigin(
-				mc.thePlayer.posX,
-				mc.thePlayer.posZ,
+				mc.player.posX,
+				mc.player.posZ,
 				angle,
 				new Vec3(posX + shieldWidth, posY, posZ)
 			);
-			Vec3 bottomLeft = rotateAboutOrigin(mc.thePlayer.posX, mc.thePlayer.posZ, angle, new Vec3(posX, posY, posZ));
+			Vec3 bottomLeft = rotateAboutOrigin(mc.player.posX, mc.player.posZ, angle, new Vec3(posX, posY, posZ));
 			RenderUtils.drawFilledQuadWithTexture(
 				topLeft,
 				topRight,

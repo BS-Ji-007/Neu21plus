@@ -36,7 +36,7 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumParticleTypes;
@@ -104,7 +104,7 @@ public class CrystalWishingCompassSolver {
 		return INSTANCE;
 	}
 
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	private static final Minecraft mc = Minecraft.getInstance();
 	private static boolean isSkytilsPresent = false;
 	private static final ArrayDeque<ParticleData> seenParticles = new ArrayDeque<>();
 
@@ -213,7 +213,7 @@ public class CrystalWishingCompassSolver {
 		if (!NotEnoughUpdates.INSTANCE.config.mining.wishingCompassSolver ||
 			SBInfo.getInstance().getLocation() == null ||
 			!SBInfo.getInstance().getLocation().equals("crystal_hollows") ||
-			event.entityPlayer != mc.thePlayer ||
+			event.entityPlayer != mc.player ||
 			(event.action != PlayerInteractEvent.Action.RIGHT_CLICK_AIR &&
 				event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
 		) {
@@ -230,7 +230,7 @@ public class CrystalWishingCompassSolver {
 			return;
 		}
 
-		BlockPos playerPos = mc.thePlayer.getPosition().getImmutable();
+		BlockPos playerPos = mc.player.getPosition().getImmutable();
 
 		try {
 			HandleCompassResult result = handleCompassUse(playerPos);
@@ -492,7 +492,7 @@ public class CrystalWishingCompassSolver {
 	}
 
 	private boolean isKeyInInventory() {
-		for (ItemStack item : mc.thePlayer.inventory.mainInventory) {
+		for (ItemStack item : mc.player.inventory.mainInventory) {
 			if (item != null && item.getDisplayName().contains("Jungle Key")) {
 				return true;
 			}
@@ -808,7 +808,7 @@ public class CrystalWishingCompassSolver {
 		if (NotEnoughUpdates.INSTANCE.config.mining.wishingCompassAutocreateKnownWaypoints &&
 			solutionPossibleTargets.size() == 1) {
 			Utils.addChatMessage(destinationMessage);
-			int commandResult = ClientCommandHandler.instance.executeCommand(mc.thePlayer, skytilsCommand);
+			int commandResult = ClientCommandHandler.instance.executeCommand(mc.player, skytilsCommand);
 			if (commandResult == 1) {
 				return;
 			}
@@ -823,7 +823,7 @@ public class CrystalWishingCompassSolver {
 			skytilsCommand,
 			EnumChatFormatting.YELLOW + "Set waypoint for wishing target"
 		));
-		mc.thePlayer.addChatMessage(chatMessage);
+		mc.player.addChatMessage(chatMessage);
 	}
 
 	private String getDiagnosticMessage() {
@@ -882,7 +882,7 @@ public class CrystalWishingCompassSolver {
 		diagsMessage.append(EnumChatFormatting.AQUA);
 		diagsMessage.append("Current Calculated Targets: ");
 		diagsMessage.append(EnumChatFormatting.WHITE);
-		diagsMessage.append(calculatePossibleTargets(mc.thePlayer.getPosition()));
+		diagsMessage.append(calculatePossibleTargets(mc.player.getPosition()));
 		diagsMessage.append("\n");
 
 		diagsMessage.append(EnumChatFormatting.AQUA);

@@ -39,7 +39,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
@@ -310,7 +310,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	 */
 	private void drawSlot(int x, int y) {
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		Utils.drawTexturedRect(
 			x,
 			y,
@@ -364,7 +364,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	private void drawButtons(int mouseX, int mouseY) {
 		for (int i = 0; i < amountOfTiers; i++) {
 			if (i >= buttonLocations.size()) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+				Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
 					EnumChatFormatting.RED + "[NEU] Error: Item has more than " + buttonLocations.size() +
 						" possible star upgrades"));
 				break;
@@ -379,7 +379,7 @@ public class EssenceUpgrades implements NeuRecipe {
 				slots = buildSlotList();
 			}
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+			Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 			GlStateManager.color(1, 1, 1, 1);
 			drawButton(x, y, i + 1 == selectedTier);
 			Utils.drawStringCentered(String.valueOf(i + 1), x + 8, y + 9, false, 0x2d4ffc);

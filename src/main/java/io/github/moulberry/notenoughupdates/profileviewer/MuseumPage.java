@@ -27,13 +27,13 @@ import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -94,7 +94,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_museum);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_museum);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile.MuseumData museumData = selectedProfile.getMuseumData();
@@ -120,7 +120,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 		int xIndex = 0;
 		for (Map.Entry<String, ItemStack> entry : museumCategories.entrySet()) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 
 			if (entry.getKey().equals(selectedMuseumCategory)) {
 				Utils.drawTexturedRect(
@@ -236,7 +236,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				}
 			}
 		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (onPage > 1) {
 			Utils.drawTexturedRect(
@@ -266,7 +266,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		}
 
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int inventoryRows = 4;
 		int invSizeY = inventoryRows * 18 + 17 + 7;
@@ -318,7 +318,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 
 					if ((mouseX >= x && mouseX <= x + 16) &&
 						(mouseY >= y && mouseY <= y + 16)) {
-						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 						String itemID = item.get("internalname").getAsString();
 						if (Mouse.isButtonDown(0) && museumData.getSavedItems().containsKey(itemID)) {
 							selectedItem = items;
@@ -375,7 +375,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 						selectedItem = items;
 						currentItemSelected = itemID;
 					}
-					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 				}
 				Utils.drawItemStack(stack, x, y);
 				highlightMatchingItem(stack, x, y);
@@ -385,7 +385,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		if (currentItemSelected != null) {
 			int size = selectedItem.size();
 			int startX = guiLeft + 375 + 5;
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_inventories);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_inventories);
 			switch (size) {
 				case 1:
 					Utils.drawTexturedRect(
@@ -469,7 +469,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				if ((mouseX >= x && mouseX <= x + 16) &&
 					(mouseY >= y && mouseY <= y + 16)) {
 					if (!is_five || i < 5) {
-						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 					}
 				}
 				row++;

@@ -74,7 +74,7 @@ public class ChatListener {
 			"crystal_hollows"))
 			return text;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return text;
+		if (Minecraft.getInstance().player == null) return text;
 		if (!NotEnoughUpdates.INSTANCE.config.mining.drillFuelBar) return text;
 
 		return Utils.trimIgnoreColour(text.replaceAll(EnumChatFormatting.DARK_GREEN + "\\S+ Drill Fuel", ""));
@@ -252,7 +252,7 @@ public class ChatListener {
 			if (Math.random() < 0.2) {
 				if (NotEnoughUpdates.INSTANCE.config.misc.calculationMode == 2) {
 					ClientCommandHandler.instance.executeCommand(
-						Minecraft.getMinecraft().thePlayer,
+						Minecraft.getInstance().player,
 						"/neucalc " + unformatted.substring("QUICK MATHS! Solve: ".length())
 					);
 				}
@@ -285,7 +285,7 @@ public class ChatListener {
 		if (LvlMatcher.matches()) {
 			if (Integer.parseInt(LvlMatcher.group(1)) < NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel &&
 				NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel != 0) {
-				if (!unformatted.contains(Minecraft.getMinecraft().thePlayer.getName())) {
+				if (!unformatted.contains(Minecraft.getInstance().player.getName())) {
 					e.setCanceled(true);
 				}
 			}

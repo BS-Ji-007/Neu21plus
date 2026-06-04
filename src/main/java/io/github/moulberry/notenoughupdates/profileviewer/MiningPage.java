@@ -38,7 +38,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Mouse;
@@ -83,7 +83,7 @@ public class MiningPage extends GuiProfileViewerPage {
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(miningPageTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(miningPageTexture);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
@@ -265,7 +265,7 @@ public class MiningPage extends GuiProfileViewerPage {
 				EnumChatFormatting.BLUE + "Nucleus Runs Completed:",
 				EnumChatFormatting.WHITE + StringUtils.formatNumber(nucleusRunsCompleted),
 				guiLeft + rectStartX,
-				guiTop + rectStartY + originalRectYSize - padding - 1.5F * Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT,
+				guiTop + rectStartY + originalRectYSize - padding - 1.5F * Minecraft.getInstance().font.FONT_HEIGHT,
 				rectXSize
 			);
 		}
@@ -284,7 +284,7 @@ public class MiningPage extends GuiProfileViewerPage {
 		int forgeX = guiLeft + 149;
 		int forgeY = guiTop + 20;
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(FORGE_SLOT_BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(FORGE_SLOT_BACKGROUND);
 		Utils.drawTexturedRect(
 			forgeX, forgeY,
 			16, 16, 0F, 1f, 0f, 1f
@@ -420,7 +420,7 @@ public class MiningPage extends GuiProfileViewerPage {
 		int mouseY,
 		@Nullable ProfileViewer.Level hotmLevelingInfo
 	) {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution sr = new ScaledResolution(Minecraft.getInstance());
 		GlScissorStack.push(left, top, right, bottom, sr);
 		var isHovered = left < mouseX && mouseX < right &&
 			top < mouseY && mouseY < bottom;

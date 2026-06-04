@@ -65,7 +65,7 @@ public class FlipperInfoPane extends InfoPane {
 		int mouseX,
 		int mouseY
 	) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		int paneWidth = (int) (width / 3 * overlay.getWidthMult());
 		int rightSide = (int) (width * overlay.getInfoPaneOffsetFactor());
@@ -110,7 +110,7 @@ public class FlipperInfoPane extends InfoPane {
 
 	private void drawButton(int x, int y, boolean enabled) {
 		GlStateManager.color(1f, 1f, 1f, 1f);
-		Minecraft.getMinecraft().getTextureManager().bindTexture((enabled) ? on : off);
+		Minecraft.getInstance().getTextureManager().bindTexture((enabled) ? on : off);
 		Utils.drawTexturedRect(x, y, 48, 16);
 	}
 

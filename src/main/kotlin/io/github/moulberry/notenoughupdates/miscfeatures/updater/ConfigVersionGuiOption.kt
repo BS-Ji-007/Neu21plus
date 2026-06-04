@@ -32,7 +32,7 @@ import org.lwjgl.input.Mouse
 class ConfigVersionGuiOption(option: ProcessedOption) : GuiOptionEditor(option) {
     val button = GuiElementButton("", -1) { }
     override fun render(x: Int, y: Int, width: Int) {
-        val fr = Minecraft.getMinecraft().fontRendererObj
+        val fr = Minecraft.getInstance().font
         GlStateManager.pushMatrix()
         GlStateManager.translate(x.toFloat() + 10, y.toFloat(), 1F)
         val width = width - 20

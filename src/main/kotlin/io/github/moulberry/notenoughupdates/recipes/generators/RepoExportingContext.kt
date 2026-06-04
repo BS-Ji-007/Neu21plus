@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.util.MinecraftExecutor
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines.continueOn
 import io.github.moulberry.notenoughupdates.util.kotlin.Coroutines.waitTicks
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.GuiYesNo
 import java.io.File
 import kotlin.coroutines.resume
@@ -35,7 +35,7 @@ class RepoExportingContext(
     val manager: NEUManager,
     val gui: GuiScreen,
 ) {
-    val mc = Minecraft.getMinecraft()
+    val mc = Minecraft.getInstance()
     val nameToItemCache = mutableMapOf<String, String>()
 
     suspend fun writeFile(file: File, json: JsonObject) {

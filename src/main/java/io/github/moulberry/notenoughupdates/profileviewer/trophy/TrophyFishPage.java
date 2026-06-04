@@ -34,7 +34,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
@@ -157,7 +157,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 
 		loadTrophyInformation(trophyObject);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TROPHY_FISH_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(TROPHY_FISH_TEXTURE);
 		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		GlStateManager.color(1, 1, 1, 1);
@@ -171,7 +171,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		ItemStack thunder_sc = NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 			NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("THUNDER_SC")
 		);
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(thunder_sc, guiLeft + 16, guiTop + 108);
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(thunder_sc, guiLeft + 16, guiTop + 108);
 
 		Utils.drawStringF(
 			EnumChatFormatting.AQUA + "Thunder Kills: §f" + thunderKills,
@@ -181,7 +181,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		ItemStack lord_jawbus_sc = NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 			NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("LORD_JAWBUS_SC")
 		);
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(lord_jawbus_sc, guiLeft + 16, guiTop + 120);
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(lord_jawbus_sc, guiLeft + 16, guiTop + 120);
 		int jawbusKills = Utils.getElementAsInt(Utils.getElement(
 			selectedProfile.getProfileJson(),
 			"bestiary.kills.lord_jawbus_600"
@@ -195,7 +195,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		ItemStack fishing_rod = NotEnoughUpdates.INSTANCE.manager.jsonToStack(
 			NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("FISHING_ROD")
 		);
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(fishing_rod, guiLeft + 20, guiTop + 21);
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(fishing_rod, guiLeft + 20, guiTop + 21);
 
 		Utils.drawStringF(EnumChatFormatting.AQUA + "Total Caught: §f" + totalCount, guiLeft + 38, guiTop + 25, true, 0);
 
@@ -208,7 +208,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			x = guiLeft + slotLocations.get(arrayList.indexOf(value)).getLeft();
 			y = guiTop + slotLocations.get(arrayList.indexOf(value)).getRight();
 			RenderHelper.enableGUIStandardItemLighting();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 			Map<TrophyFish.TrophyFishRarity, Integer> trophyFishRarityIntegerMap = value.getTrophyFishRarityIntegerMap();
 			TrophyFish.TrophyFishRarity highestRarity = getHighestRarity(trophyFishRarityIntegerMap).orElse(null);
 
@@ -226,7 +226,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			}
 			Utils.drawTexturedRect(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(getItem(value.getName(), highestRarity), x, y);
+			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(getItem(value.getName(), highestRarity), x, y);
 
 			if (mouseX >= x && mouseX < x + 24) {
 				if (mouseY >= y && mouseY <= y + 24) {
@@ -245,7 +245,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 				x = guiLeft + slotLocations.get(clonedList.indexOf(difference) + (trophyFishList.keySet().size())).getLeft();
 				y = guiTop + slotLocations.get(clonedList.indexOf(difference) + (trophyFishList.keySet().size())).getRight();
 				ItemStack itemStack = new ItemStack(Items.dye, 1, 8);
-				Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(itemStack, x, y);
+				Minecraft.getInstance().getRenderItem().renderItemIntoGUI(itemStack, x, y);
 				if (mouseX >= x && mouseX < x + 24) {
 					if (mouseY >= y && mouseY <= y + 24) {
 						tooltipToDisplay = new ArrayList<>();
@@ -253,7 +253,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 						GlStateManager.color(1, 1, 1, 1);
 					}
 				}
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.drawTexturedRect(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 			}
 		}
@@ -268,7 +268,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			x = guiLeft + 15;
 			y = guiTop + 50 + i;
 
-			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(itemStack, x, y);
+			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(itemStack, x, y);
 			Utils.drawStringF(armorHelmets.get(itemStack).getLeft(), x + 20, y + 4, true, 0);
 
 			int hasValue = trophiesPerTier[integer - 1];
@@ -296,7 +296,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 				getInstance().width,
 				getInstance().height,
 				-1,
-				Minecraft.getMinecraft().fontRendererObj
+				Minecraft.getInstance().font
 			);
 			tooltipToDisplay = null;
 		}

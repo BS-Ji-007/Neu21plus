@@ -79,7 +79,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Matrix4f;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
 import org.lwjgl.input.Keyboard;
@@ -297,12 +297,12 @@ public class NEUOverlay extends Gui {
 				if (!NotEnoughUpdates.INSTANCE.config.toolbar.searchBar) {
 					return;
 				}
-				FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+				FontRenderer fr = Minecraft.getInstance().font;
 				int paddingUnscaled = getPaddingUnscaled();
 
 				GlStateManager.color(1, 1, 1, 1);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(searchMode ? SEARCH_BAR_GOLD : SEARCH_BAR);
+				Minecraft.getInstance().getTextureManager().bindTexture(searchMode ? SEARCH_BAR_GOLD : SEARCH_BAR);
 
 				int w = getWidth();
 				int h = getHeight();
@@ -422,13 +422,13 @@ public class NEUOverlay extends Gui {
 				if (!NotEnoughUpdates.INSTANCE.config.toolbar.enableSettingsButton) {
 					return;
 				}
-				Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
+				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(x, y,
 					searchYSize + paddingUnscaled * 2, searchYSize + paddingUnscaled * 2, GL11.GL_NEAREST
 				);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.settings);
+				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.settings);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 				Utils.drawTexturedRect((int) x + paddingUnscaled, (int) y + paddingUnscaled,
 					searchYSize, searchYSize
@@ -478,13 +478,13 @@ public class NEUOverlay extends Gui {
 					return;
 				}
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
+				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(x, y,
 					searchYSize + paddingUnscaled * 2, searchYSize + paddingUnscaled * 2, GL11.GL_NEAREST
 				);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(SEARCH_MODE_BUTTON);
+				Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_MODE_BUTTON);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 				Utils.drawTexturedRect((int) x + paddingUnscaled, (int) y + paddingUnscaled,
 					getSearchBarYSize(), getSearchBarYSize()
@@ -523,7 +523,7 @@ public class NEUOverlay extends Gui {
 						if (command.startsWith("/")) {
 							NotEnoughUpdates.INSTANCE.sendChatMessage(command);
 						} else {
-							ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/" + command);
+							ClientCommandHandler.instance.executeCommand(Minecraft.getInstance().player, "/" + command);
 						}
 						Utils.playPressSound();
 					}
@@ -582,15 +582,15 @@ public class NEUOverlay extends Gui {
 					tag.setString("qc_id", quickCommandStrSplit[0].toLowerCase(Locale.ROOT).trim());
 					render.setTagCompound(tag);
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
+					Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 					GlStateManager.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(x, y,
 						bigItemSize + paddingUnscaled * 2, bigItemSize + paddingUnscaled * 2, GL11.GL_NEAREST
 					);
 
-					int mouseX = Mouse.getX() * Utils.peekGuiScale().getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+					int mouseX = Mouse.getX() * Utils.peekGuiScale().getScaledWidth() / Minecraft.getInstance().displayWidth;
 					int mouseY = Utils.peekGuiScale().getScaledHeight() -
-						Mouse.getY() * Utils.peekGuiScale().getScaledHeight() / Minecraft.getMinecraft().displayHeight - 1;
+						Mouse.getY() * Utils.peekGuiScale().getScaledHeight() / Minecraft.getInstance().displayHeight - 1;
 
 					if (mouseX > x && mouseX < x + bigItemSize) {
 						if (mouseY > y && mouseY < y + bigItemSize) {
@@ -763,10 +763,10 @@ public class NEUOverlay extends Gui {
 	}
 
 	public void mouseInputInv() {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
+		if (Minecraft.getInstance().currentScreen instanceof GuiContainer) {
 			if (Mouse.getEventButton() == manager.keybindItemSelect.getKeyCode() + 100 &&
 				NotEnoughUpdates.INSTANCE.config.toolbar.searchBar) {
-				Slot slot = Utils.getSlotUnderMouse((GuiContainer) Minecraft.getMinecraft().currentScreen);
+				Slot slot = Utils.getSlotUnderMouse((GuiContainer) Minecraft.getInstance().currentScreen);
 				if (slot != null) {
 					ItemStack hover = slot.getStack();
 					if (hover != null) {
@@ -793,8 +793,8 @@ public class NEUOverlay extends Gui {
 
 		int width = Utils.peekGuiScale().getScaledWidth();
 		int height = Utils.peekGuiScale().getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		//if(lastMouseX != mouseX || lastMouseY != mouseY) {
 		//    millisLastMouseMove = System.currentTimeMillis();
@@ -880,7 +880,7 @@ public class NEUOverlay extends Gui {
 				int rightSide = leftSide + paneWidth - getBoxPadding() - getItemBoxXPadding();
 				leftSide = leftSide + getBoxPadding() + getItemBoxXPadding();
 
-				FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+				FontRenderer fr = Minecraft.getInstance().font;
 				int maxPages = getMaxPages();
 				String name = Utils.peekGuiScale().getScaleFactor() < 4 ? "Page: " : "";
 				float maxStrLen = fr.getStringWidth(EnumChatFormatting.BOLD + name + maxPages + "/" + maxPages);
@@ -1017,12 +1017,12 @@ public class NEUOverlay extends Gui {
 
 		int xComp = mouseX - (width / 2 - getSearchBarXSize() / 2 + 5);
 
-		String trimmed = Minecraft.getMinecraft().fontRendererObj.trimStringToWidth(textField.getText(), xComp);
+		String trimmed = Minecraft.getInstance().font.trimStringToWidth(textField.getText(), xComp);
 		int linePos = trimmed.length();
 		if (linePos != textField.getText().length()) {
 			char after = textField.getText().charAt(linePos);
-			int trimmedWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(trimmed);
-			int charWidth = Minecraft.getMinecraft().fontRendererObj.getCharWidth(after);
+			int trimmedWidth = Minecraft.getInstance().font.getStringWidth(trimmed);
+			int charWidth = Minecraft.getInstance().font.getCharWidth(after);
 			if (trimmedWidth + charWidth / 2 < xComp - 5) {
 				linePos++;
 			}
@@ -1041,7 +1041,7 @@ public class NEUOverlay extends Gui {
 	 * Handles the keyboard input, cancelling the forge event if the search bar has focus.
 	 */
 	public boolean keyboardInput(boolean hoverInv) {
-		if (Minecraft.getMinecraft().currentScreen == null) return false;
+		if (Minecraft.getInstance().currentScreen == null) return false;
 
 		int keyPressed = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
 
@@ -1116,9 +1116,9 @@ public class NEUOverlay extends Gui {
 
 				AtomicReference<String> internalname = new AtomicReference<>(null);
 				AtomicReference<ItemStack> itemstack = new AtomicReference<>(null);
-				if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer &&
-					Utils.getSlotUnderMouse((GuiContainer) Minecraft.getMinecraft().currentScreen) != null) {
-					Slot slot = Utils.getSlotUnderMouse((GuiContainer) Minecraft.getMinecraft().currentScreen);
+				if (Minecraft.getInstance().currentScreen instanceof GuiContainer &&
+					Utils.getSlotUnderMouse((GuiContainer) Minecraft.getInstance().currentScreen) != null) {
+					Slot slot = Utils.getSlotUnderMouse((GuiContainer) Minecraft.getInstance().currentScreen);
 					ItemStack hover = slot.getStack();
 					if (hover != null) {
 						internalname.set(manager.getInternalNameForItem(hover));
@@ -1129,8 +1129,8 @@ public class NEUOverlay extends Gui {
 
 					int width = Utils.peekGuiScale().getScaledWidth();
 					int height = Utils.peekGuiScale().getScaledHeight();
-					int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-					int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+					int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+					int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 					if (selectedItemGroup != null) {
 						int selectedX = Math.min(selectedItemGroupX, width - getBoxPadding() - 18 * selectedItemGroup.size());
@@ -1161,7 +1161,7 @@ public class NEUOverlay extends Gui {
 					ApiData apiData = NotEnoughUpdates.INSTANCE.config.apiData;
 					if (itemstack.get() != null) {
 						if (apiData.repositoryEditing && Keyboard.getEventKey() == apiData.repositoryEditingKeybind) {
-							Minecraft.getMinecraft().displayGuiScreen(new NEUItemEditor(
+							Minecraft.getInstance().displayGuiScreen(new NEUItemEditor(
 								internalname.get(),
 								manager.getJsonForItem(itemstack.get())
 							));
@@ -1191,8 +1191,8 @@ public class NEUOverlay extends Gui {
 							NotEnoughUpdates.INSTANCE.navigation.isValidWaypoint(item)) {
 							NotEnoughUpdates.INSTANCE.navigation.trackWaypoint(item);
 						} else if (keyPressed == manager.keybindGive.getKeyCode()) {
-							if (Minecraft.getMinecraft().thePlayer.capabilities.isCreativeMode) {
-								Minecraft.getMinecraft().thePlayer.inventory.addItemStackToInventory(
+							if (Minecraft.getInstance().player.capabilities.isCreativeMode) {
+								Minecraft.getInstance().player.inventory.addItemStackToInventory(
 									manager.jsonToStack(item));
 							}
 						} else if (apiData.repositoryEditing &&
@@ -1218,7 +1218,7 @@ public class NEUOverlay extends Gui {
 									}
 								}
 							} else {
-								Minecraft.getMinecraft().displayGuiScreen(new NEUItemEditor(internalname.get(), item));
+								Minecraft.getInstance().displayGuiScreen(new NEUItemEditor(internalname.get(), item));
 							}
 							return true;
 						} else if (keyPressed == manager.keybindItemSelect.getKeyCode() &&
@@ -1692,7 +1692,7 @@ public class NEUOverlay extends Gui {
 	 * Renders "prev" button, index/maxIndex string, "next" button.
 	 */
 	public void renderNavElement(int leftSide, int rightSide, int maxPages, int page, String name) {
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		String pageText = EnumChatFormatting.BOLD + name + page + "/" + maxPages;
 
@@ -1710,8 +1710,8 @@ public class NEUOverlay extends Gui {
 			int width = Utils.peekGuiScale().getScaledWidth();
 			int height = Utils.peekGuiScale().getScaledHeight();
 
-			int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-			int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+			int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 			if (mouseY >= top && mouseY <= top + ySize) {
 				int leftPrev = leftSide - 1;
@@ -1727,12 +1727,12 @@ public class NEUOverlay extends Gui {
 
 		drawRect(leftSide - 1, top, leftSide - 1 + buttonXSize, top + ySize, fg.getRGB());
 		GlStateManager.color(1f, 1f, 1f, 1f);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.rightarrow);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow);
 		Utils.drawTexturedRect(leftSide - 1 + leftPressed,
 			top + leftPressed,
 			buttonXSize, ySize, 1, 0, 0, 1
 		);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
 		Utils.drawTexturedRect(leftSide - 1,
 			top,
 			buttonXSize, ySize, 1 - leftPressed, leftPressed, 1 - leftPressed, leftPressed
@@ -1746,12 +1746,12 @@ public class NEUOverlay extends Gui {
 
 		drawRect(rightSide + 1 - buttonXSize, top, rightSide + 1, top + ySize, fg.getRGB());
 		GlStateManager.color(1f, 1f, 1f, 1f);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.rightarrow);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow);
 		Utils.drawTexturedRect(rightSide + 1 - buttonXSize + rightPressed,
 			top + rightPressed,
 			buttonXSize, ySize
 		);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
 		Utils.drawTexturedRect(rightSide + 1 - buttonXSize,
 			top,
 			buttonXSize, ySize, 1 - rightPressed, rightPressed, 1 - rightPressed, rightPressed
@@ -1806,7 +1806,7 @@ public class NEUOverlay extends Gui {
 				if (clazz == null) continue;
 
 				EntityLivingBase newEnt =
-					clazz.getConstructor(new Class[]{World.class}).newInstance(Minecraft.getMinecraft().theWorld);
+					clazz.getConstructor(new Class[]{World.class}).newInstance(Minecraft.getInstance().level);
 
 				//newEnt.renderYawOffset = yaw;
 				//newEnt.rotationYaw = yaw;
@@ -1843,7 +1843,7 @@ public class NEUOverlay extends Gui {
 		GlStateManager.rotate(pitch, 1.0F, 0.0F, 0.0F);
 		GlStateManager.rotate(yaw, 0.0F, 1.0F, 0.0F);
 
-		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+		RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
 		rendermanager.setPlayerViewY(180.0F);
 		rendermanager.setRenderShadow(false);
 		for (EntityLivingBase ent : entities) {
@@ -1924,8 +1924,8 @@ public class NEUOverlay extends Gui {
 
 		int width = Utils.peekGuiScale().getScaledWidth();
 		int height = Utils.peekGuiScale().getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		if (showVanillaLast != NotEnoughUpdates.INSTANCE.config.itemlist.showVanillaItems) {
 			showVanillaLast = NotEnoughUpdates.INSTANCE.config.itemlist.showVanillaItems;
@@ -1933,14 +1933,14 @@ public class NEUOverlay extends Gui {
 		}
 
 		if (textField.getText().toLowerCase(Locale.ROOT).contains("bald")) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(SUPERGEHEIMNISVERMOGEN);
+			Minecraft.getInstance().getTextureManager().bindTexture(SUPERGEHEIMNISVERMOGEN);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect((width - 64) / 2f, (height - 64) / 2f - 114, 64, 64, GL11.GL_LINEAR);
 			GlStateManager.bindTexture(0);
 		}
 
 		if (textField.getText().toLowerCase(Locale.ROOT).contains("lunar")) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(ATMOULBERRYWHYISMYLUNARCLIENTBUGGING);
+			Minecraft.getInstance().getTextureManager().bindTexture(ATMOULBERRYWHYISMYLUNARCLIENTBUGGING);
 			GlStateManager.color(1, 1, 1, 1);
 			GlStateManager.translate(0, 0, 100);
 			Utils.drawTexturedRect((width + 410) / 2f, (height + 450) / 2f - 114, 113, 64, GL11.GL_LINEAR);
@@ -2026,7 +2026,7 @@ public class NEUOverlay extends Gui {
 
 		//Tab
 		if (NotEnoughUpdates.INSTANCE.config.itemlist.tabOpen) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.itemPaneTabArrow);
+			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.itemPaneTabArrow);
 			GlStateManager.color(1f, 1f, 1f, 0.3f);
 			Utils.drawTexturedRect(width - itemPaneTabOffset.getValue() * 64 / 20f, height / 2f - 32, 64, 64);
 			GlStateManager.bindTexture(0);
@@ -2082,12 +2082,12 @@ public class NEUOverlay extends Gui {
 				int orderIconX = leftSide + getBoxPadding() + getItemBoxXPadding() + i * scaledItemPaddedSize;
 				drawRect(orderIconX, iconTop, scaledITEM_SIZE + orderIconX, iconTop + scaledITEM_SIZE, fg.getRGB());
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(
+				Minecraft.getInstance().getTextureManager().bindTexture(
 					getCompareMode() == i ? orderIconsActive[i] : orderIcons[i]);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 				Utils.drawTexturedRect(orderIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(getCompareAscending().get(i)
+				Minecraft.getInstance().getTextureManager().bindTexture(getCompareAscending().get(i)
 					? GuiTextures.ascending_overlay
 					: GuiTextures.descending_overlay);
 				GlStateManager.color(1f, 1f, 1f, 1f);
@@ -2112,7 +2112,7 @@ public class NEUOverlay extends Gui {
 			for (int i = 0; i < sortIcons.length; i++) {
 				int sortIconX = rightSide - scaledITEM_SIZE - i * scaledItemPaddedSize;
 				drawRect(sortIconX, iconTop, scaledITEM_SIZE + sortIconX, iconTop + scaledITEM_SIZE, fg.getRGB());
-				Minecraft.getMinecraft().getTextureManager().bindTexture(
+				Minecraft.getInstance().getTextureManager().bindTexture(
 					getSortMode() == i ? sortIconsActive[i] : sortIcons[i]);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 				Utils.drawTexturedRect(sortIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
@@ -2273,7 +2273,7 @@ public class NEUOverlay extends Gui {
 			activeInfoPane.render(width, height, bg, fg, Utils.peekGuiScale(), mouseX, mouseY);
 
 			GlStateManager.color(1f, 1f, 1f, 1f);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.close);
+			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.close);
 			Utils.drawTexturedRect(rightSide - getBoxPadding() - 8, getBoxPadding() - 8, 16, 16);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		}
@@ -2289,8 +2289,8 @@ public class NEUOverlay extends Gui {
 				stack.setTagCompound(tag);
 			}
 
-			List<String> text = stack.getTooltip(Minecraft.getMinecraft().thePlayer,
-				Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+			List<String> text = stack.getTooltip(Minecraft.getInstance().player,
+				Minecraft.getInstance().gameSettings.advancedItemTooltips);
 
 			String internalname = json.get("internalname").getAsString();
 			if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoInvItem) {
@@ -2379,7 +2379,7 @@ public class NEUOverlay extends Gui {
 
 	private void cleanupFramebuffer(Framebuffer buffer, int sw, int sh) {
 		buffer.unbindFramebuffer();
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 	}
 
 	/**
@@ -2442,11 +2442,11 @@ public class NEUOverlay extends Gui {
 	 */
 	private void renderEnchOverlay() {
 		ItemStack stack = new ItemStack(Items.apple);
-		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+		IBakedModel model = Minecraft.getInstance().getRenderItem().getItemModelMesher()
 																 .getItemModel(stack);
 		float f = (float) (Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
 		float f1 = (float) (Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
-		Minecraft.getMinecraft().getTextureManager().bindTexture(RES_ITEM_GLINT);
+		Minecraft.getInstance().getTextureManager().bindTexture(RES_ITEM_GLINT);
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef(0, 0, -7.5001f + itemRenderOffset);
@@ -2549,7 +2549,7 @@ public class NEUOverlay extends Gui {
 					return;
 				}
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.item_mask);
+				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.item_mask);
 				if (getFavourites().contains(json.get("internalname").getAsString())) {
 					if (NotEnoughUpdates.INSTANCE.config.itemlist.itemStyle == 0) {
 						GlStateManager.color(fgFavourite2.getRed() / 255f, fgFavourite2.getGreen() / 255f,
@@ -2631,7 +2631,7 @@ public class NEUOverlay extends Gui {
 
 				GlStateManager.translate(0, 0, 50);
 				if (searchedItemsSubgroup.containsKey(json.get("internalname").getAsString())) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.item_haschild);
+					Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.item_haschild);
 					GlStateManager.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
 				}

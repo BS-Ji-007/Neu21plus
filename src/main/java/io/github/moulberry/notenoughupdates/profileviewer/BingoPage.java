@@ -33,7 +33,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class BingoPage extends GuiProfileViewerPage {
 	public void drawPage(int mouseX, int mouseY, float partialTicks) {
 		loadBingoResources();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 
@@ -82,7 +82,7 @@ public class BingoPage extends GuiProfileViewerPage {
 		}
 
 		List<String> completedGoals = jsonArrayToStringList(lastEvent.get("completed_goals").getAsJsonArray());
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BINGO_GUI_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(BINGO_GUI_TEXTURE);
 		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		GlStateManager.color(1, 1, 1, 1);
@@ -128,7 +128,7 @@ public class BingoPage extends GuiProfileViewerPage {
 			int x = col == 0 ? initialX + xAdjustment : initialX + (24 * col) + xAdjustment;
 			int y = row == 0 ? initialY + yAdjustment : initialY + (24 * row) + yAdjustment;
 
-			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(itemStack, x, y);
+			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(itemStack, x, y);
 			y = communityGoal ? y - 1 : y;
 			if (mouseX >= x && mouseX < x + 24) {
 				if (mouseY >= y && mouseY <= y + 24) {

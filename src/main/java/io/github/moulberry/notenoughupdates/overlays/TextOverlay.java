@@ -105,7 +105,7 @@ public abstract class TextOverlay {
 			}
 
 			for (String s2 : s.split("\n")) {
-				int sWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(s2);
+				int sWidth = Minecraft.getInstance().font.getStringWidth(s2);
 				if (sWidth > overlayWidth) {
 					overlayWidth = sWidth;
 				}
@@ -130,7 +130,7 @@ public abstract class TextOverlay {
 	protected Vector2f getPosition(int overlayWidth, int overlayHeight, boolean scaled) {
 		GlStateManager.pushMatrix();
 		ScaledResolution scaledResolution;
-		if (!scaled) scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		if (!scaled) scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		else scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 		int x = position.getAbsX(scaledResolution, overlayWidth);
@@ -200,7 +200,7 @@ public abstract class TextOverlay {
 						for (int xO = -2; xO <= 2; xO++) {
 							for (int yO = -2; yO <= 2; yO++) {
 								if (Math.abs(xO) != Math.abs(yO)) {
-									Minecraft.getMinecraft().fontRendererObj.drawString(clean,
+									Minecraft.getInstance().font.drawString(clean,
 										xPad + xO / 2f, yPad + yO / 2f,
 										new Color(0, 0, 0, 200 / Math.max(Math.abs(xO), Math.abs(yO))).getRGB(), false
 									);
@@ -208,7 +208,7 @@ public abstract class TextOverlay {
 							}
 						}
 					}
-					Minecraft.getMinecraft().fontRendererObj.drawString(s2,
+					Minecraft.getInstance().font.drawString(s2,
 						xPad, yPad, 0xffffff, style == TextOverlayStyle.MC_SHADOW
 					);
 

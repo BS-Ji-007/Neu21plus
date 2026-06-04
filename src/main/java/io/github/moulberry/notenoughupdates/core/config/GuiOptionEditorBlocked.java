@@ -26,7 +26,7 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class GuiOptionEditorBlocked extends GuiOptionEditor {
 	public static final ResourceLocation blockedTexture = new ResourceLocation(
@@ -43,7 +43,7 @@ public class GuiOptionEditorBlocked extends GuiOptionEditor {
 		// No super. We delegate and overlay ourselves instead.
 		base.render(x, y, width);
 
-		var mc = Minecraft.getMinecraft();
+		var mc = Minecraft.getInstance();
 
 		// Depress original option
 		Gui.drawRect(x, y, x + width, y + getHeight(), 0x80000000);
@@ -56,7 +56,7 @@ public class GuiOptionEditorBlocked extends GuiOptionEditor {
 
 		TextRenderUtils.drawStringScaledMaxWidth(
 			"This option is currently not available.",
-			x + iconWidth,y + getHeight() / 2F - mc.fontRendererObj.FONT_HEIGHT / 2F,
+			x + iconWidth,y + getHeight() / 2F - mc.font.FONT_HEIGHT / 2F,
 			true, (int) (width - iconWidth), 0xFFFF4444
 		);
 		GlStateManager.color(1, 1, 1, 1);

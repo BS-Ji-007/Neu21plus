@@ -31,7 +31,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -72,7 +72,7 @@ public class CustomBiomes {
 	 * Returns null on error
 	 */
 	public SpecialBlockZone getSpecialZone(BlockPos pos) {
-		if (Minecraft.getMinecraft().theWorld == null) return null;
+		if (Minecraft.getInstance().level == null) return null;
 		String location = SBInfo.getInstance().getLocation();
 		IslandZoneSubdivider subdivider = subdividers.get(location);
 		if (subdivider == null) return SpecialBlockZone.NON_SPECIAL_ZONE;
@@ -158,7 +158,7 @@ public class CustomBiomes {
 
 	@SubscribeEvent
 	public void onLocationChange(LocationChangeEvent event) {
-		WorldClient world = Minecraft.getMinecraft().theWorld;
+		WorldClient world = Minecraft.getInstance().level;
 		String location = event.newLocation;
 		if (world == null) return;
 		if (location == null) return;
@@ -166,7 +166,7 @@ public class CustomBiomes {
 			case "crystal_hollows":
 			case "mining_3":
 				//if has custom biome, do chunk update or something
-				EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+				EntityPlayerSP player = Minecraft.getInstance().player;
 				if (player == null) return;
 
 				world.markBlocksDirtyVertical((int) player.posX, (int) player.posX, (int) player.posZ, (int) player.posZ);

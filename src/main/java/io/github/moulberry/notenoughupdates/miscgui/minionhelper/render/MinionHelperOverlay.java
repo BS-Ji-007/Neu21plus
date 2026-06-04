@@ -40,14 +40,14 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -145,7 +145,7 @@ public class MinionHelperOverlay {
 	}
 
 	private void renderArrows() {
-		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+		GuiScreen gui = Minecraft.getInstance().currentScreen;
 		if (gui instanceof AccessorGuiContainer) {
 			AccessorGuiContainer container = (AccessorGuiContainer) gui;
 			int guiLeft = container.getGuiLeft();
@@ -183,18 +183,18 @@ public class MinionHelperOverlay {
 	}
 
 	private void checkButtonClick() {
-		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+		GuiScreen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof GuiChest)) return;
 
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
 		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
 		int guiTop = ((AccessorGuiContainer) gui).getGuiTop();
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		int x = guiLeft + xSize + 4 + 149 - 3;
 		int y = guiTop + 109 - 3;
@@ -240,8 +240,8 @@ public class MinionHelperOverlay {
 	}
 
 	private void render(Map<String, OverviewLine> renderMap) {
-		Minecraft minecraft = Minecraft.getMinecraft();
-		Gui gui = Minecraft.getMinecraft().currentScreen;
+		Minecraft minecraft = Minecraft.getInstance();
+		Gui gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof GuiChest)) return;
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
 		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
@@ -266,7 +266,7 @@ public class MinionHelperOverlay {
 		} else {
 			itemStack = ItemUtils.getCoinItemStack(100_000);
 		}
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(
 			itemStack,
 			guiLeft + xSize + 4 + 149 - 3 - 16 - 3,
 			guiTop + 109 - 3
@@ -277,7 +277,7 @@ public class MinionHelperOverlay {
 		int x = guiLeft + xSize + 10;
 		int i = 0;
 		int y = guiTop + 6;
-		FontRenderer fontRendererObj = minecraft.fontRendererObj;
+		FontRenderer font = minecraft.font;
 		for (Map.Entry<String, OverviewLine> entry : renderMap.entrySet()) {
 			String line = entry.getKey();
 
@@ -297,15 +297,15 @@ public class MinionHelperOverlay {
 					String newPrice = split[0];
 					String stuffBehindPricePart = "§8" + price.substring(newPrice.length() + 2);
 					price = newPrice;
-					int lineLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(line + price);
-					fontRendererObj.drawString(stuffBehindPricePart, x + lineLen, y, -1, false);
+					int lineLen = Minecraft.getInstance().font.getStringWidth(line + price);
+					font.drawString(stuffBehindPricePart, x + lineLen, y, -1, false);
 				}
 
-				int lineLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(line);
-				fontRendererObj.drawString(price, x + lineLen, y, -1, true);
+				int lineLen = Minecraft.getInstance().font.getStringWidth(line);
+				font.drawString(price, x + lineLen, y, -1, true);
 			}
 
-			fontRendererObj.drawString(line, x, y, -1, false);
+			font.drawString(line, x, y, -1, false);
 			i++;
 			if (i == 3) {
 				y += 13;
@@ -460,7 +460,7 @@ public class MinionHelperOverlay {
 	}
 
 	OverviewLine getObjectOverMouse(LinkedHashMap<String, OverviewLine> renderMap) {
-		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+		GuiScreen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof GuiChest)) return null;
 
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
@@ -470,14 +470,14 @@ public class MinionHelperOverlay {
 		int x = guiLeft + xSize + 9;
 		int y = guiTop + 5;
 
-		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
+		final ScaledResolution scaledresolution = new ScaledResolution(Minecraft.getInstance());
 		final int scaledWidth = scaledresolution.getScaledWidth();
 		final int scaledHeight = scaledresolution.getScaledHeight();
-		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getMinecraft().displayWidth;
-		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * scaledWidth / Minecraft.getInstance().displayWidth;
+		int mouseY = scaledHeight - Mouse.getY() * scaledHeight / Minecraft.getInstance().displayHeight - 1;
 
 		int i = 0;
-		FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fontRenderer = Minecraft.getInstance().font;
 		for (Map.Entry<String, OverviewLine> entry : renderMap.entrySet()) {
 			String text = entry.getKey();
 			int width = fontRenderer.getStringWidth(StringUtils.cleanColour(text));

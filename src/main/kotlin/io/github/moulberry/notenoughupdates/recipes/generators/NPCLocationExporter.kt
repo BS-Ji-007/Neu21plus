@@ -30,12 +30,12 @@ import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.kotlin.set
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.item.ItemStack
-import net.minecraft.util.BlockPos
+import net.minecraft.core.BlockPos
 import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
@@ -98,7 +98,7 @@ class NPCLocationExporter {
             json["island"] = island
             NotEnoughUpdates.INSTANCE.manager.writeJsonDefaultDir(json, "$id.json")
             Utils.addChatMessage("§a[NEU] Saved to file")
-            Minecraft.getMinecraft().displayGuiScreen(null)
+            Minecraft.getInstance().displayGuiScreen(null)
         }
 
         override fun keyTyped(typedChar: Char, keyCode: Int) {
@@ -133,13 +133,13 @@ class NPCLocationExporter {
             Utils.addChatMessage("§c[NEU] No location found")
             return
         }
-        val pointedEntity = Minecraft.getMinecraft().pointedEntity
+        val pointedEntity = Minecraft.getInstance().pointedEntity
         if (pointedEntity == null) {
             Utils.addChatMessage("§e[NEU] Could not find entity under cursor")
             return
         }
         if (pointedEntity is EntityVillager) {
-            Minecraft.getMinecraft().displayGuiScreen(
+            Minecraft.getInstance().displayGuiScreen(
                 NPCNamePrompt(
                     // Just use jerry pet skin, idk, this will probably cause texture packs to overwrite us, but uhhhhh uhhhhhhh
                     UUID.fromString("c9540683-51e4-3942-ad17-4f2c3f3ae4b7"),
@@ -152,7 +152,7 @@ class NPCLocationExporter {
         }
         if (pointedEntity !is AbstractClientPlayer) {
             if (pointedEntity is EntityLivingBase) {
-                Minecraft.getMinecraft().displayGuiScreen(
+                Minecraft.getInstance().displayGuiScreen(
                     NPCNamePrompt(
                         pointedEntity.uniqueID,
                         pointedEntity.position,
@@ -173,6 +173,6 @@ class NPCLocationExporter {
             Utils.addChatMessage("§c[NEU] Could not load skin")
             return
         }
-        Minecraft.getMinecraft().displayGuiScreen(NPCNamePrompt(uuid, position, location, skin))
+        Minecraft.getInstance().displayGuiScreen(NPCNamePrompt(uuid, position, location, skin))
     }
 }

@@ -88,7 +88,7 @@ public class ItemResolutionQuery {
 	}
 
 	public ItemResolutionQuery withCurrentGuiContext() {
-		this.guiContext = Minecraft.getMinecraft().currentScreen;
+		this.guiContext = Minecraft.getInstance().currentScreen;
 		return this;
 	}
 

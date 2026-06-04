@@ -31,13 +31,13 @@ import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -124,7 +124,7 @@ public class PetsPage extends GuiProfileViewerPage {
 			Panorama.getPanoramasForLocation(location == null ? "dynamic" : location, panoramaIdentifier)
 		);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_pets);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_pets);
 		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		Utils.drawStringCentered(EnumChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
@@ -152,7 +152,7 @@ public class PetsPage extends GuiProfileViewerPage {
 				}
 			}
 		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (petsPage > 0) {
 			Utils.drawTexturedRect(
@@ -201,7 +201,7 @@ public class PetsPage extends GuiProfileViewerPage {
 				float x = 5 + COLLS_XPADDING + (COLLS_XPADDING + 20) * xIndex;
 				float y = 7 + COLLS_YPADDING + (COLLS_YPADDING + 20) * yIndex;
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
+				Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 				if (i == selectedPet) {
 					GlStateManager.color(1, 185 / 255f, 0, 1);
 				} else {
@@ -213,7 +213,7 @@ public class PetsPage extends GuiProfileViewerPage {
 
 				if (mouseX > guiLeft + x && mouseX < guiLeft + x + 20) {
 					if (mouseY > guiTop + y && mouseY < guiTop + y + 20) {
-						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+						getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 					}
 				}
 			}
@@ -233,7 +233,7 @@ public class PetsPage extends GuiProfileViewerPage {
 			float y = guiTop + 67 + 15 * (float) Math.sin(
 				((getInstance().currentTime - getInstance().startTime) / 800f) % (2 * Math.PI));
 
-			int displayLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(display);
+			int displayLen = Minecraft.getInstance().font.getStringWidth(display);
 			int halfDisplayLen = displayLen / 2;
 
 			GlStateManager.pushMatrix();
@@ -241,7 +241,7 @@ public class PetsPage extends GuiProfileViewerPage {
 
 			GuiScreen.drawRect(-halfDisplayLen - 1 - 28, -1, halfDisplayLen + 1 - 28, 8, new Color(0, 0, 0, 100).getRGB());
 
-			Minecraft.getMinecraft().fontRendererObj.drawString(display, -halfDisplayLen - 28, 0, 0, true);
+			Minecraft.getInstance().font.drawString(display, -halfDisplayLen - 28, 0, 0, true);
 
 			GlStateManager.enableDepth();
 			GlStateManager.translate(-55, 0, 0);
@@ -266,7 +266,7 @@ public class PetsPage extends GuiProfileViewerPage {
 				98
 			);
 
-			//Utils.drawStringCenteredScaledMaxWidth(, Minecraft.getMinecraft().fontRendererObj, guiLeft+368, guiTop+28+4, true, 98, 0);
+			//Utils.drawStringCenteredScaledMaxWidth(, Minecraft.getInstance().font, guiLeft+368, guiTop+28+4, true, 98, 0);
 			//renderAlignedString(display, EnumChatFormatting.YELLOW+"[LVL "+Math.floor(level)+"]", guiLeft+319, guiTop+28, 98);
 			getInstance().renderBar(guiLeft + 319, guiTop + 38, 98, (float) Math.floor(level) / 100f);
 
@@ -313,7 +313,7 @@ public class PetsPage extends GuiProfileViewerPage {
 	}
 
 	private void renderSortingButton(int guiLeft, int guiTop) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(
 			switchSortingMethodButton.getX() + guiLeft - 2,
 			switchSortingMethodButton.getY() + guiTop - 2,
@@ -327,7 +327,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		);
 
 		ItemStack itemStack = new ItemStack(Blocks.hopper);
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
+		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(
 			itemStack,
 			switchSortingMethodButton.getX() + guiLeft,
 			switchSortingMethodButton.getY() + guiTop

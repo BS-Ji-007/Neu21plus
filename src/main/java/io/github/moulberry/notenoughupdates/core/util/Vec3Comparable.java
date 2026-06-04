@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.core.util;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 

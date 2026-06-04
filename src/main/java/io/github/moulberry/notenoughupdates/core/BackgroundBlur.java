@@ -72,7 +72,7 @@ public class BackgroundBlur {
 	private static boolean shouldBlur = true;
 
 	public static void markDirty() {
-		if (Minecraft.getMinecraft().theWorld != null) {
+		if (Minecraft.getInstance().level != null) {
 			shouldBlur = true;
 		}
 	}
@@ -87,8 +87,8 @@ public class BackgroundBlur {
 				lastBlur = currentTime;
 				lastBlurUse.put(blur, currentTime);
 
-				int width = Minecraft.getMinecraft().displayWidth;
-				int height = Minecraft.getMinecraft().displayHeight;
+				int width = Minecraft.getInstance().displayWidth;
+				int height = Minecraft.getInstance().displayHeight;
 
 				OutputStuff output = blurOutput.computeIfAbsent(blur, k -> {
 					Framebuffer fb = new Framebuffer(width, height, false);
@@ -143,7 +143,7 @@ public class BackgroundBlur {
 		if (event.type == RenderGameOverlayEvent.ElementType.ALL) {
 			processBlurs();
 		}
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 	}
 
 	@SubscribeEvent
@@ -181,8 +181,8 @@ public class BackgroundBlur {
 	private static void blurBackground(OutputStuff output, float blurFactor) {
 		if (!OpenGlHelper.isFramebufferEnabled() || !OpenGlHelper.areShadersSupported()) return;
 
-		int width = Minecraft.getMinecraft().displayWidth;
-		int height = Minecraft.getMinecraft().displayHeight;
+		int width = Minecraft.getInstance().displayWidth;
+		int height = Minecraft.getInstance().displayHeight;
 
 		GlStateManager.matrixMode(GL11.GL_PROJECTION);
 		GlStateManager.loadIdentity();
@@ -200,12 +200,12 @@ public class BackgroundBlur {
 		}
 		if (blurOutputHorz.framebufferWidth != width || blurOutputHorz.framebufferHeight != height) {
 			blurOutputHorz.createBindFramebuffer(width, height);
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 
 		if (output.blurShaderHorz == null) {
 			try {
-				output.blurShaderHorz = new Shader(Minecraft.getMinecraft().getResourceManager(), "blur",
+				output.blurShaderHorz = new Shader(Minecraft.getInstance().getResourceManager(), "blur",
 					output.framebuffer, blurOutputHorz
 				);
 				output.blurShaderHorz.getShaderManager().getShaderUniform("BlurDir").set(1, 0);
@@ -215,7 +215,7 @@ public class BackgroundBlur {
 		}
 		if (output.blurShaderVert == null) {
 			try {
-				output.blurShaderVert = new Shader(Minecraft.getMinecraft().getResourceManager(), "blur",
+				output.blurShaderVert = new Shader(Minecraft.getInstance().getResourceManager(), "blur",
 					blurOutputHorz, output.framebuffer
 				);
 				output.blurShaderVert.getShaderManager().getShaderUniform("BlurDir").set(0, 1);
@@ -233,7 +233,7 @@ public class BackgroundBlur {
 			output.blurShaderVert.getShaderManager().getShaderUniform("Radius").set(blurFactor);
 
 			GL11.glPushMatrix();
-			GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, Minecraft.getMinecraft().getFramebuffer().framebufferObject);
+			GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, Minecraft.getInstance().getFramebuffer().framebufferObject);
 			GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, output.framebuffer.framebufferObject);
 			GL30.glBlitFramebuffer(0, 0, width, height,
 				0, 0, output.framebuffer.framebufferWidth, output.framebuffer.framebufferHeight,
@@ -245,7 +245,7 @@ public class BackgroundBlur {
 			GlStateManager.enableDepth();
 			GL11.glPopMatrix();
 		}
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 	}
 
 	public static void renderBlurredBackground(

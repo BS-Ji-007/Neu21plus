@@ -147,7 +147,7 @@ class NEUStatsCommand {
         builder.category("Java Stats")
         builder.append(
             "Java",
-            "${System.getProperty("java.version")} ${if (Minecraft.getMinecraft().isJava64bit) 64 else 32}bit",
+            "${System.getProperty("java.version")} ${if (Minecraft.getInstance().isJava64bit) 64 else 32}bit",
         )
         builder.append(
             "Memory", String.format(

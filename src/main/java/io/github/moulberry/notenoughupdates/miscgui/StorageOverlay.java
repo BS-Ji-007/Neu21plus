@@ -57,7 +57,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -252,7 +252,7 @@ public class StorageOverlay extends GuiElement {
 				break;
 		}
 		if (rgb != -1) return rgb;
-		return 0xff000000 | Minecraft.getMinecraft().fontRendererObj.getColorCode(formatting.toString().charAt(1));
+		return 0xff000000 | Minecraft.getInstance().font.getColorCode(formatting.toString().charAt(1));
 	}
 
 	public static int getPaneType(ItemStack stack, int index, int[] cache) {
@@ -346,17 +346,17 @@ public class StorageOverlay extends GuiElement {
 
 	@Override
 	public void render() {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
 
-		GuiChest guiChest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest guiChest = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest containerChest = (ContainerChest) guiChest.inventorySlots;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
-		FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
+		FontRenderer font = Minecraft.getInstance().font;
 
 		scroll.tick();
 
@@ -391,7 +391,7 @@ public class StorageOverlay extends GuiElement {
 		lastMillis = currentTime;
 		rollIndex %= NOT_RICKROLL_SEQ.length * 2;
 
-		ItemStack stackOnMouse = Minecraft.getMinecraft().thePlayer.inventory.getItemStack();
+		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		if (stackOnMouse != null) {
 			String stackDisplay = Utils.cleanColour(stackOnMouse.getDisplayName());
 			if (stackDisplay.startsWith("Backpack Slot ") || stackDisplay.startsWith("Empty Backpack Slot ") ||
@@ -436,7 +436,7 @@ public class StorageOverlay extends GuiElement {
 		boolean hoveringOtherBackpack = false;
 
 		//Gui
-		Minecraft.getMinecraft().getTextureManager().bindTexture(storageTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(0, 0, sizeX, 10, 0, sizeX / 600f, 0, 10 / 400f, GL11.GL_NEAREST);
 		Utils.drawTexturedRect(0, 10, sizeX, storageViewSize - 20, 0, sizeX / 600f, 10 / 400f, 94 / 400f, GL11.GL_NEAREST);
@@ -597,7 +597,7 @@ public class StorageOverlay extends GuiElement {
 										int r = (rgb >> 16) & 0xFF;
 										int g = (rgb >> 8) & 0xFF;
 										int b = rgb & 0xFF;
-										Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
+										Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 										GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
 										Utils.drawTexturedRect(
 											itemX - 1,
@@ -712,9 +712,9 @@ public class StorageOverlay extends GuiElement {
 									GlStateManager.enableDepth();
 									GlStateManager.popMatrix();*/
 
-									RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+									RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 									itemRender.renderItemOverlayIntoGUI(
-										Minecraft.getMinecraft().fontRendererObj,
+										Minecraft.getInstance().font,
 										stack,
 										itemX,
 										itemY,
@@ -771,7 +771,7 @@ public class StorageOverlay extends GuiElement {
 
 		if (OpenGlHelper.isFramebufferEnabled() && doRenderFramebuffer) {
 			GlStateManager.popMatrix();
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 
 			GlStateManager.matrixMode(GL11.GL_PROJECTION);
 			GlStateManager.loadIdentity();
@@ -795,7 +795,7 @@ public class StorageOverlay extends GuiElement {
 			StorageManager.StoragePage page = StorageManager.getInstance().getPage(storageId, false);
 
 			if (editingNameId == storageId) {
-				int len = fontRendererObj.getStringWidth(renameStorageField.getTextDisplay()) + 10;
+				int len = font.getStringWidth(renameStorageField.getTextDisplay()) + 10;
 				renameStorageField.setSize(len, 12);
 				renameStorageField.render(storageX, storageY - 13);
 			} else {
@@ -807,17 +807,17 @@ public class StorageOverlay extends GuiElement {
 				} else {
 					pageTitle = "Backpack Slot " + (storageId - 8);
 				}
-				int titleLen = fontRendererObj.getStringWidth(pageTitle);
+				int titleLen = font.getStringWidth(pageTitle);
 
 				if (mouseX >= guiLeft + storageX && mouseX <= guiLeft + storageX + titleLen + 15 &&
 					mouseY >= guiTop + storageY - 14 && mouseY <= guiTop + storageY + 1) {
 					pageTitle += " \u270E";
 				}
-				fontRendererObj.drawString(pageTitle, storageX, storageY - 11, textColour);
+				font.drawString(pageTitle, storageX, storageY - 11, textColour);
 			}
 
 			if (page == null) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(storageTexture);
+				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 				GlStateManager.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
@@ -845,7 +845,7 @@ public class StorageOverlay extends GuiElement {
 					);
 				}
 			} else if (page.rows <= 0) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(storageTexture);
+				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 				GlStateManager.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
@@ -901,7 +901,7 @@ public class StorageOverlay extends GuiElement {
 								int r = (rgb >> 16) & 0xFF;
 								int g = (rgb >> 8) & 0xFF;
 								int b = rgb & 0xFF;
-								Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
+								Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 								GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
 								GlStateManager.translate(0, 0, 110);
 								Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
@@ -909,8 +909,8 @@ public class StorageOverlay extends GuiElement {
 								);
 								GlStateManager.translate(0, 0, -110);
 
-								RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-								itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRendererObj, stack, itemX, itemY, null);
+								RenderItem itemRender = Minecraft.getInstance().getRenderItem();
+								itemRender.renderItemOverlayIntoGUI(Minecraft.getInstance().font, stack, itemX, itemY, null);
 								GlStateManager.enableDepth();
 							} else if (isPaneCache[k] < 0) {
 								boolean hasConnection = false;
@@ -946,7 +946,7 @@ public class StorageOverlay extends GuiElement {
 											shouldLimitBorder[k] = true;
 											hasConnection = true;
 
-											Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
+											Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 											int rgb = getRGBFromPane(type - 1);
 											int a = (rgb >> 24) & 0xFF;
 											int r = (rgb >> 16) & 0xFF;
@@ -1000,7 +1000,7 @@ public class StorageOverlay extends GuiElement {
 					}
 				}
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(storageTexture);
+				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(
 					storageX,
@@ -1047,8 +1047,8 @@ public class StorageOverlay extends GuiElement {
 
 						if (stack != null && allowHover) {
 							tooltipToDisplay = stack.getTooltip(
-								Minecraft.getMinecraft().thePlayer,
-								Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+								Minecraft.getInstance().player,
+								Minecraft.getInstance().gameSettings.advancedItemTooltips
 							);
 						}
 					}
@@ -1154,7 +1154,7 @@ public class StorageOverlay extends GuiElement {
 							} else {
 								loc = NOT_RICKROLL_SEQ[NOT_RICKROLL_SEQ.length * 2 - rollIndex - 1];
 							}
-							Minecraft.getMinecraft().getTextureManager().bindTexture(loc);
+							Minecraft.getInstance().getTextureManager().bindTexture(loc);
 							GlStateManager.color(1, 1, 1, 1);
 							Utils.drawTexturedRect(storageX, storageY, storageW, storageH, GL11.GL_LINEAR);
 						}
@@ -1200,10 +1200,10 @@ public class StorageOverlay extends GuiElement {
 		GlScissorStack.pop(scaledResolution);
 
 		if (fastRender) {
-			fontRendererObj.drawString(
+			font.drawString(
 				"Fast render and antialiasing do not work with Storage overlay.",
 				sizeX / 2 -
-					fontRendererObj.getStringWidth("Fast render and antialiasing do not work with Storage overlay.") / 2,
+					font.getStringWidth("Fast render and antialiasing do not work with Storage overlay.") / 2,
 				-10,
 				0xFFFF0000
 			);
@@ -1221,12 +1221,12 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		//Inventory Text
-		fontRendererObj.drawString("Inventory", 180, storageViewSize + 6, textColour);
+		font.drawString("Inventory", 180, storageViewSize + 6, textColour);
 		searchBar.setCustomTextColour(searchTextColour);
 		searchBar.render(252, storageViewSize + 5);
 
 		//Player Inventory
-		ItemStack[] playerItems = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+		ItemStack[] playerItems = Minecraft.getInstance().player.inventory.mainInventory;
 		int inventoryStartIndex = containerChest.getLowerChestInventory().getSizeInventory();
 		GlStateManager.enableDepth();
 		for (int i = 0; i < 9; i++) {
@@ -1256,8 +1256,8 @@ public class StorageOverlay extends GuiElement {
 
 				if (playerItems[i] != null) {
 					tooltipToDisplay = playerItems[i].getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -1290,16 +1290,16 @@ public class StorageOverlay extends GuiElement {
 
 				if (playerItems[i + 9] != null) {
 					tooltipToDisplay = playerItems[i + 9].getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
 		}
 
 		//Backpack Selector
-		fontRendererObj.drawString("Ender Chest Pages", 9, storageViewSize + 12, textColour);
-		fontRendererObj.drawString("Storage Pages", 9, storageViewSize + 44, textColour);
+		font.drawString("Ender Chest Pages", 9, storageViewSize + 12, textColour);
+		font.drawString("Storage Pages", 9, storageViewSize + 44, textColour);
 		if (StorageManager.getInstance().onStorageMenu) {
 			for (int i = 0; i < 9; i++) {
 				int itemX = 10 + i * 18;
@@ -1315,8 +1315,8 @@ public class StorageOverlay extends GuiElement {
 					if (stack != null) {
 						if (NotEnoughUpdates.INSTANCE.config.storageGUI.enderchestPreview) slotPreview = i;
 						tooltipToDisplay = stack.getTooltip(
-							Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+							Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips
 						);
 					}
 				}
@@ -1336,8 +1336,8 @@ public class StorageOverlay extends GuiElement {
 						if (NotEnoughUpdates.INSTANCE.config.storageGUI.backpackPreview)
 							slotPreview = i + StorageManager.MAX_ENDER_CHEST_PAGES;
 						tooltipToDisplay = stack.getTooltip(
-							Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+							Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips
 						);
 					}
 				}
@@ -1364,8 +1364,8 @@ public class StorageOverlay extends GuiElement {
 						itemHoverY = itemY;
 						if (NotEnoughUpdates.INSTANCE.config.storageGUI.enderchestPreview) slotPreview = i;
 						tooltipToDisplay = stack.getTooltip(
-							Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+							Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips
 						);
 					}
 				}
@@ -1395,8 +1395,8 @@ public class StorageOverlay extends GuiElement {
 						if (NotEnoughUpdates.INSTANCE.config.storageGUI.backpackPreview)
 							slotPreview = i + StorageManager.MAX_ENDER_CHEST_PAGES;
 						tooltipToDisplay = stack.getTooltip(
-							Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+							Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips
 						);
 
 						if (!StorageManager.getInstance().onStorageMenu) {
@@ -1412,7 +1412,7 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		//Buttons
-		Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_ICONS_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_ICONS_TEXTURE);
 		GlStateManager.color(1, 1, 1, 1);
 		for (int i = 0; i < 10; i++) {
 			int buttonX = 388 + (i % 5) * 18;
@@ -1578,7 +1578,7 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		if (!StorageManager.getInstance().onStorageMenu) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(storageTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(
 				171 - 36,
@@ -1621,7 +1621,7 @@ public class StorageOverlay extends GuiElement {
 				BackgroundBlur.renderBlurredBackground(7, width, height, mouseX + 2, mouseY + 2, 172, 10 + 18 * rows);
 				Utils.drawGradientRect(mouseX + 2, mouseY + 2, mouseX + 174, mouseY + 12 + 18 * rows, 0xc0101010, 0xd0101010);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(storagePreviewTexture);
+				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(mouseX, mouseY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
 				for (int i = 0; i < rows; i++) {
@@ -1701,7 +1701,7 @@ public class StorageOverlay extends GuiElement {
 
 	@Override
 	public boolean mouseInput(int mouseX, int mouseY) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return false;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return false;
 
 		int dWheel = Mouse.getEventDWheel();
 		if (!(NotEnoughUpdates.INSTANCE.config.storageGUI.cancelScrollKey != 0 &&
@@ -1754,7 +1754,7 @@ public class StorageOverlay extends GuiElement {
 			scroll.setTimeToReachTarget(10);
 		}
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 
@@ -1822,7 +1822,7 @@ public class StorageOverlay extends GuiElement {
 					} else {
 						pageTitle = "Backpack Slot " + (entry.getValue() - 8);
 					}
-					int titleLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(pageTitle);
+					int titleLen = Minecraft.getInstance().font.getStringWidth(pageTitle);
 
 					if (mouseX >= guiLeft + pageCoords.x && mouseX <= guiLeft + pageCoords.x + titleLen + 15 &&
 						mouseY >= guiTop + pageCoords.y - 14 && mouseY <= guiTop + pageCoords.y + 1) {
@@ -1852,7 +1852,7 @@ public class StorageOverlay extends GuiElement {
 						return false;
 					} else {
 						if (Mouse.getEventButtonState() && Mouse.getEventButton() == 0 &&
-							Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null &&
+							Minecraft.getInstance().player.inventory.getItemStack() == null &&
 							page != null) {
 							scrollToStorage(entry.getKey(), false);
 							StorageManager.getInstance().sendToPage(entry.getValue());
@@ -1923,7 +1923,7 @@ public class StorageOverlay extends GuiElement {
 						)));
 					ChatComponentText storageChatMessage = new ChatComponentText("");
 					storageChatMessage.appendSibling(storageMessage);
-					Minecraft.getMinecraft().thePlayer.addChatMessage(storageChatMessage);
+					Minecraft.getInstance().player.addChatMessage(storageChatMessage);
 					break;
 				case 1:
 					int size =
@@ -2040,7 +2040,7 @@ public class StorageOverlay extends GuiElement {
 
 	public void overrideIsMouseOverSlot(Slot slot, int mouseX, int mouseY, CallbackInfoReturnable<Boolean> cir) {
 		if (StorageManager.getInstance().shouldRenderStorageOverlayFast()) {
-			boolean playerInv = slot.inventory == Minecraft.getMinecraft().thePlayer.inventory;
+			boolean playerInv = slot.inventory == Minecraft.getInstance().player.inventory;
 
 			int slotId = slot.getSlotIndex();
 			int storageViewSize = getStorageViewSize();
@@ -2140,24 +2140,24 @@ public class StorageOverlay extends GuiElement {
 
 	@Override
 	public boolean keyboardInput() {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-		GuiContainer container = (GuiContainer) Minecraft.getMinecraft().currentScreen;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+		GuiContainer container = (GuiContainer) Minecraft.getInstance().currentScreen;
 
 		int keyPressed = Keyboard.getEventKey();
 		if (keyPressed == Keyboard.KEY_ESCAPE) {
 			clearSearch();
 			return false;
 		}
-		if (keyPressed == Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode()) {
+		if (keyPressed == Minecraft.getInstance().gameSettings.keyBindScreenshot.getKeyCode()) {
 			return false;
 		}
-		if (keyPressed == Minecraft.getMinecraft().gameSettings.keyBindFullscreen.getKeyCode()) {
+		if (keyPressed == Minecraft.getInstance().gameSettings.keyBindFullscreen.getKeyCode()) {
 			return false;
 		}
 
@@ -2188,7 +2188,7 @@ public class StorageOverlay extends GuiElement {
 
 				for (Slot slot : container.inventorySlots.inventorySlots) {
 					if (slot != null &&
-						slot.inventory == Minecraft.getMinecraft().thePlayer.inventory &&
+						slot.inventory == Minecraft.getInstance().player.inventory &&
 						((AccessorGuiContainer) container).doIsMouseOverSlot(slot, mouseX, mouseY)) {
 						SlotLocking.getInstance().toggleLock(slot.getSlotIndex());
 						return true;
@@ -2226,7 +2226,7 @@ public class StorageOverlay extends GuiElement {
 					searchBar.getText().isEmpty()) {
 					searchBar.setFocus(false);
 				}
-			} else return keyPressed != Minecraft.getMinecraft().gameSettings.keyBindInventory.getKeyCode();
+			} else return keyPressed != Minecraft.getInstance().gameSettings.keyBindInventory.getKeyCode();
 
 		}
 
@@ -2237,7 +2237,7 @@ public class StorageOverlay extends GuiElement {
 		float f = (float) (Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
 		float f1 = (float) (Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
 		if (NotEnoughUpdates.INSTANCE.config.storageGUI.showEnchantGlint) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(RES_ITEM_GLINT);
+			Minecraft.getInstance().getTextureManager().bindTexture(RES_ITEM_GLINT);
 		}
 
 		GL11.glPushMatrix();

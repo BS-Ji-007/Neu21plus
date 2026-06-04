@@ -33,7 +33,7 @@ import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -105,9 +105,9 @@ public class FishingSkillOverlay
 		xpGainHourLast = xpGainHour;
 		expertise = -1;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
-		ItemStack stack = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack stack = Minecraft.getInstance().player.getHeldItem();
 		if (stack != null && stack.hasTagCompound()) {
 			NBTTagCompound tag = stack.getTagCompound();
 
@@ -388,7 +388,7 @@ public class FishingSkillOverlay
 
 			}
 
-            /*float yaw = Minecraft.getMinecraft().thePlayer.rotationYawHead;
+            /*float yaw = Minecraft.getInstance().player.rotationYawHead;
             yaw %= 360;
             if(yaw < 0) yaw += 360;
             if(yaw > 180) yaw -= 360;
@@ -422,10 +422,10 @@ public class FishingSkillOverlay
 			}
 			if (System.currentTimeMillis() - timer > funnyCustomTimer &&
 				System.currentTimeMillis() - timer < (funnyCustomTimer + 100) && funnyCustomTimer != 0) {
-				float oldLevel = Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
-				Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
-				Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-				Minecraft.getMinecraft().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
+				float oldLevel = Minecraft.getInstance().gameSettings.getSoundLevel(SoundCategory.PLAYERS);
+				Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, 1);
+				Minecraft.getInstance().getSoundHandler().playSound(sound);
+				Minecraft.getInstance().gameSettings.setSoundLevel(SoundCategory.PLAYERS, oldLevel);
 			}
 
 			for (int strIndex : NotEnoughUpdates.INSTANCE.config.skillOverlays.fishingText) {

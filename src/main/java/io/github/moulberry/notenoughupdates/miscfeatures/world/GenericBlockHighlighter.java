@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.miscfeatures.world;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -46,7 +46,7 @@ public abstract class GenericBlockHighlighter {
 	@SubscribeEvent
 	public void onWorldRenderLast(RenderWorldLastEvent event) {
 		if (!isEnabled()) return;
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return;
 		for (BlockPos blockPos : highlightedBlocks) {
 			RenderUtils.renderBoundingBox(blockPos, getColor(blockPos), event.partialTicks, true);
@@ -61,7 +61,7 @@ public abstract class GenericBlockHighlighter {
 	}
 
 	protected boolean canPlayerSeeBlock(double xCoord, double yCoord, double zCoord) {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return false;
 		Vec3 playerPosition = new Vec3(p.posX, p.posY + p.eyeHeight, p.posZ);
 		MovingObjectPosition hitResult = rayTraceBlocks(p.worldObj, playerPosition, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
@@ -69,7 +69,7 @@ public abstract class GenericBlockHighlighter {
 	}
 
 	protected boolean canPlayerSeeNearBlocks(double x, double y, double z) {
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (p == null) return false;
 		World world = p.worldObj;
 		Vec3 playerPosition = new Vec3(p.posX, p.posY + p.eyeHeight, p.posZ);

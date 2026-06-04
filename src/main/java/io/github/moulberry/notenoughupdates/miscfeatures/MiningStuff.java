@@ -36,7 +36,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -52,7 +52,7 @@ public class MiningStuff {
 	private static Minecraft mc;
 
 	public MiningStuff() {
-		mc = Minecraft.getMinecraft();
+		mc = Minecraft.getInstance();
 	}
 
 	public static void processBlockChangePacket(S23PacketBlockChange packetIn) {
@@ -73,7 +73,7 @@ public class MiningStuff {
 					}
 					BlockPos pos = packetIn.getBlockPosition();
 
-					IBlockState existingBlock = Minecraft.getMinecraft().theWorld.getBlockState(pos);
+					IBlockState existingBlock = Minecraft.getInstance().level.getBlockState(pos);
 					if (existingBlock == null) return;
 					if (existingBlock.getBlock() == Blocks.stone &&
 						existingBlock.getValue(BlockStone.VARIANT) == BlockStone.EnumType.DIORITE_SMOOTH)
@@ -81,7 +81,7 @@ public class MiningStuff {
 					if (!checkIfAnyIsAir(getAttachedBlocks(pos)) &&
 						NotEnoughUpdates.INSTANCE.config.mining.titaniumAlertMustBeVisible)
 						return;
-					BlockPos player = Minecraft.getMinecraft().thePlayer.getPosition();
+					BlockPos player = Minecraft.getInstance().player.getPosition();
 
 					double distSq = pos.distanceSq(player);
 
@@ -107,7 +107,7 @@ public class MiningStuff {
 
 	private static boolean checkIfAnyIsAir(BlockPos[] blocks) {
 		for (BlockPos block : blocks) {
-			if (mc.theWorld.getBlockState(block).getBlock() instanceof BlockAir) {
+			if (mc.level.getBlockState(block).getBlock() instanceof BlockAir) {
 				return true;
 			}
 		}
@@ -125,7 +125,7 @@ public class MiningStuff {
 		int notifLen = 5000;
 		int fadeLen = 500;
 		if (delta > 0 && delta < notifLen && event.type == RenderGameOverlayEvent.ElementType.ALL) {
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
 
@@ -164,7 +164,7 @@ public class MiningStuff {
 	public void renderWorldLast(RenderWorldLastEvent event) {
 		if (overlayLoc == null) return;
 
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * event.partialTicks;
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * event.partialTicks;
 		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * event.partialTicks;

@@ -23,10 +23,10 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.registry.GameRegistry
@@ -68,16 +68,16 @@ class DynamicLightItemsEditor() : GuiScreen() {
         guiTop = (height - ySize) / 2
 
         // Top and bottom half of gui
-        Minecraft.getMinecraft().textureManager.bindTexture(background)
+        Minecraft.getInstance().textureManager.bindTexture(background)
         Utils.drawTexturedRect(guiLeft.toFloat(), guiTop.toFloat(), xSize.toFloat(), 24F,
             0F, 1F, 0F, 24 / 88f, GL11.GL_NEAREST)
         Utils.drawTexturedRect(guiLeft.toFloat(), (guiTop + ySize - 46).toFloat(), xSize.toFloat(), 46F,
             0F, 1F, 42 / 88f, 1F, GL11.GL_NEAREST)
 
-        fontRendererObj.drawString("Dynamic Light Items Editor", guiLeft + 10, guiTop + 7, 4210752)
+        font.drawString("Dynamic Light Items Editor", guiLeft + 10, guiTop + 7, 4210752)
 
         GlStateManager.color(1f, 1f, 1f, 1f)
-        Minecraft.getMinecraft().textureManager.bindTexture(help)
+        Minecraft.getInstance().textureManager.bindTexture(help)
         Utils.drawTexturedRect((guiLeft + xSize + 3).toFloat(), guiTop.toFloat(), 16F, 16F, GL11.GL_NEAREST)
         if (mouseX >= guiLeft + xSize + 3 &&
             mouseX <= guiLeft + xSize + 19 &&
@@ -103,39 +103,39 @@ class DynamicLightItemsEditor() : GuiScreen() {
         }
 
         if (!didApplyMixin) {
-            fontRendererObj.drawString("Could not find OptiFine!", guiLeft + 50, guiTop + 22, Color.RED.rgb)
-            fontRendererObj.drawString("Go to #neu-support in", guiLeft + 50, guiTop + 32, Color.RED.rgb)
-            fontRendererObj.drawString("the discord for help", guiLeft + 52, guiTop + 42, Color.RED.rgb)
+            font.drawString("Could not find OptiFine!", guiLeft + 50, guiTop + 22, Color.RED.rgb)
+            font.drawString("Go to #neu-support in", guiLeft + 50, guiTop + 32, Color.RED.rgb)
+            font.drawString("the discord for help", guiLeft + 52, guiTop + 42, Color.RED.rgb)
             return
         }
         if (!isOfLightsEnabled) {
-            fontRendererObj.drawString("Dynamic lights have", guiLeft + 50, guiTop + 22, Color.RED.rgb)
-            fontRendererObj.drawString("been disabled in OptiFine.", guiLeft + 50, guiTop + 32, Color.RED.rgb)
-            fontRendererObj.drawString("Enable in Video Settings.", guiLeft + 52, guiTop + 42, Color.RED.rgb)
+            font.drawString("Dynamic lights have", guiLeft + 50, guiTop + 22, Color.RED.rgb)
+            font.drawString("been disabled in OptiFine.", guiLeft + 50, guiTop + 32, Color.RED.rgb)
+            font.drawString("Enable in Video Settings.", guiLeft + 52, guiTop + 42, Color.RED.rgb)
             return
         }
 
         // Buttons
         GlStateManager.color(1f, 1f, 1f, 1f)
-        Minecraft.getMinecraft().textureManager.bindTexture(enabledButton)
+        Minecraft.getInstance().textureManager.bindTexture(enabledButton)
         Utils.drawTexturedRect(guiLeft.toFloat() + 15, (guiTop + ySize - 32).toFloat(), 88F, 20F,
             0F, 1F, 0F, 1F, GL11.GL_NEAREST)
 
         if (itemSelected != null) {
-            Minecraft.getMinecraft().textureManager.bindTexture(enabledButton)
+            Minecraft.getInstance().textureManager.bindTexture(enabledButton)
         } else {
-            Minecraft.getMinecraft().textureManager.bindTexture(disabledButton)
+            Minecraft.getInstance().textureManager.bindTexture(disabledButton)
         }
         Utils.drawTexturedRect(guiLeft.toFloat() + 114, (guiTop + ySize - 32).toFloat(), 88F, 20F,
             0F, 1F, 0F, 1F, GL11.GL_NEAREST)
 
-        fontRendererObj.drawString("Add Held Item", guiLeft + 27, guiTop + ySize - 26, 4210752)
-        fontRendererObj.drawString("Remove Item", guiLeft + 130, guiTop + ySize - 26, 4210752)
+        font.drawString("Add Held Item", guiLeft + 27, guiTop + ySize - 26, 4210752)
+        font.drawString("Remove Item", guiLeft + 130, guiTop + ySize - 26, 4210752)
 
         GlStateManager.color(1f, 1f, 1f, 1f)
 
         // Add in some part of the gui for every row
-        Minecraft.getMinecraft().textureManager.bindTexture(background)
+        Minecraft.getInstance().textureManager.bindTexture(background)
         for (i in 0 until numOfRows) {
             Utils.drawTexturedRect(guiLeft.toFloat(), ((guiTop + 24) + (i * 18)).toFloat(), xSize.toFloat(), 18f,
                 0f, 1f, 24 / 88f, 42 / 88f, GL11.GL_NEAREST)
@@ -150,7 +150,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
             val j = index / 9
             GlStateManager.color(1f, 1f, 1f, 1f)
 
-            Minecraft.getMinecraft().textureManager.bindTexture(chestGui)
+            Minecraft.getInstance().textureManager.bindTexture(chestGui)
             drawTexturedModalRect(guiLeft + 27 + i % 9 * 18, guiTop + 24 + j * 18, 7, 17, 18, 18)
 
             val itemStack = resolveItemStack(item) ?: return
@@ -159,8 +159,8 @@ class DynamicLightItemsEditor() : GuiScreen() {
             if (mouseX >= guiLeft + 27 + i % 9 * 18 && mouseX <= guiLeft + 45 + i % 9 * 18) {
                 if (mouseY >= guiTop + 24 + j * 18 && mouseY <= guiTop + 42 + j * 18) {
                     hoveredItem = item
-                    val tooltip = itemStack.getTooltip(Minecraft.getMinecraft().thePlayer,
-                        Minecraft.getMinecraft().gameSettings.advancedItemTooltips)
+                    val tooltip = itemStack.getTooltip(Minecraft.getInstance().player,
+                        Minecraft.getInstance().gameSettings.advancedItemTooltips)
                     Utils.drawHoveringText(tooltip, mouseX, mouseY, width, height, -1)
                 }
             }
@@ -174,7 +174,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
         stackToRender = hoveredItem
 
         GlStateManager.color(1f, 1f, 1f, 1f)
-        Minecraft.getMinecraft().textureManager.bindTexture(widgets)
+        Minecraft.getInstance().textureManager.bindTexture(widgets)
         drawTexturedModalRect(selectedPosition.first, selectedPosition.second, 0, 22, 24, 24)
 
         super.drawScreen(mouseX, mouseY, partialTicks)
@@ -188,7 +188,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
                 mouseY >= (guiTop + ySize - 32) &&
                 mouseY <= (guiTop + ySize - 12)) {
 
-                val heldItem = Minecraft.getMinecraft().thePlayer.heldItem
+                val heldItem = Minecraft.getInstance().player.heldItem
 
                 if (heldItem == null) {
                     Utils.addChatMessage("§c[NEU] You can't add your hand to the list of dynamic light items.")
@@ -227,7 +227,7 @@ class DynamicLightItemsEditor() : GuiScreen() {
 
         @SubscribeEvent
         fun autoloadOptifine(event: TickEvent) {
-            if (Minecraft.getMinecraft().thePlayer == null || hasAttemptedToLoadOptifine) return
+            if (Minecraft.getInstance().player == null || hasAttemptedToLoadOptifine) return
             try {
                 Class.forName("net.optifine.DynamicLights")
                 println("Loaded dynamic lights successfully.")

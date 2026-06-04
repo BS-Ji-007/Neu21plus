@@ -27,7 +27,7 @@ import net.minecraft.util.EnumChatFormatting;
 import java.util.function.Consumer;
 
 public class NEUDebugLogger {
-	private static final Minecraft mc = Minecraft.getMinecraft();
+	private static final Minecraft mc = Minecraft.getInstance();
 	public static Consumer<String> logMethod = NEUDebugLogger::chatLogger;
 	// Used to prevent accessing NEUConfig in unit tests
 	public static boolean allFlagsEnabled = false;

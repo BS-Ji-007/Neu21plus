@@ -47,8 +47,8 @@ public abstract class TextTabOverlay extends TextOverlay {
 
 	public void realTick() {
 		shouldUpdateOverlay = shouldUpdate();
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChat)) {
-			boolean currentTabState = Minecraft.getMinecraft().gameSettings.keyBindPlayerList.isKeyDown();
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChat)) {
+			boolean currentTabState = Minecraft.getInstance().gameSettings.keyBindPlayerList.isKeyDown();
 			if (lastTabState != currentTabState) {
 				lastTabState = currentTabState;
 			}

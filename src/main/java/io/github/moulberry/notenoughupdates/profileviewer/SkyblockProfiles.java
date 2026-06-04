@@ -335,7 +335,7 @@ public class SkyblockProfiles {
 			.get(UrsaClient.profiles(Utils.parseDashlessUUID(uuid)))
 			.handle((profilesJson, throwable) -> {
 				try {
-					if (Utils.parseDashlessUUID(uuid).toString().equals(Minecraft.getMinecraft().thePlayer
+					if (Utils.parseDashlessUUID(uuid).toString().equals(Minecraft.getInstance().player
 						.getUniqueID()
 						.toString())) {
 						new ProfileDataLoadedEvent(uuid, profilesJson).post();
@@ -1234,7 +1234,7 @@ public class SkyblockProfiles {
 		}
 
 		public void updateBeastMasterMultiplier() {
-			if (!getUuid().equals(Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", ""))) return;
+			if (!getUuid().equals(Minecraft.getInstance().player.getUniqueID().toString().replace("-", ""))) return;
 			boolean hasBeastmasterCrest = false;
 			PetInfoOverlay.Rarity currentBeastRarity = PetInfoOverlay.Rarity.COMMON;
 			for (JsonElement talisman : getInventoryInfo().get("talisman_bag")) {
@@ -1273,7 +1273,7 @@ public class SkyblockProfiles {
 		}
 
 		public void updateTamingLevel() {
-			if (!getUuid().equals(Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", ""))) return;
+			if (!getUuid().equals(Minecraft.getInstance().player.getUniqueID().toString().replace("-", ""))) return;
 			if (!getLatestProfile().skillsApiEnabled()) return;
 
 			if (getLevelingInfo() != null && getLevelingInfo().get("taming") != null) { //idfk what else could cause an NPE here

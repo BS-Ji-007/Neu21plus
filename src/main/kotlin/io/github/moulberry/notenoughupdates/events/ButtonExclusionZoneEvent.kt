@@ -21,7 +21,7 @@ package io.github.moulberry.notenoughupdates.events
 
 import io.github.moulberry.notenoughupdates.events.ButtonExclusionZoneEvent.PushDirection.*
 import io.github.moulberry.notenoughupdates.util.Rectangle
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import java.util.*
 
 class ButtonExclusionZoneEvent(

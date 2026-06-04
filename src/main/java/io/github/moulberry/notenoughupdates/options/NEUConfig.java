@@ -81,8 +81,8 @@ import io.github.moulberry.notenoughupdates.util.NotificationHandler;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -102,8 +102,8 @@ public class NEUConfig extends Config {
 		for (TextOverlay overlay : OverlayManager.textOverlays) {
 			overlayPositions.put(overlay, overlay.getPosition());
 		}
-		GuiScreen savedGui = Minecraft.getMinecraft().currentScreen;
-		Minecraft.getMinecraft().displayGuiScreen(new GuiPositionEditor(overlayPositions, () -> {
+		GuiScreen savedGui = Minecraft.getInstance().currentScreen;
+		Minecraft.getInstance().displayGuiScreen(new GuiPositionEditor(overlayPositions, () -> {
 		}, () -> NotEnoughUpdates.INSTANCE.openGui = savedGui));
 	}
 
@@ -185,9 +185,9 @@ public class NEUConfig extends Config {
 	@Override
 	public void executeRunnable(int runnableId) {
 		String activeConfigCategory = null;
-		if (Minecraft.getMinecraft().currentScreen instanceof io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) {
+		if (Minecraft.getInstance().currentScreen instanceof io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) {
 			io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper wrapper =
-				(io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) Minecraft.getMinecraft().currentScreen;
+				(io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper) Minecraft.getInstance().currentScreen;
 			if (wrapper.element instanceof MoulConfigEditor) {
 				activeConfigCategory = ((MoulConfigEditor) wrapper.element).getSelectedCategory();
 			}
@@ -197,7 +197,7 @@ public class NEUConfig extends Config {
 			case -1:
 				return;
 			case 0:
-				GuiScreen savedGui = Minecraft.getMinecraft().currentScreen;
+				GuiScreen savedGui = Minecraft.getInstance().currentScreen;
 				NotEnoughUpdates.INSTANCE.openGui = new GuiDungeonMapEditor(() -> {
 					NotEnoughUpdates.INSTANCE.openGui = savedGui;
 				});
@@ -242,7 +242,7 @@ public class NEUConfig extends Config {
 					.userFacingRepositoryReload()
 					.thenAccept(strings ->
 						NotificationHandler.displayNotification(strings, true, true));
-				Minecraft.getMinecraft().displayGuiScreen(null);
+				Minecraft.getInstance().displayGuiScreen(null);
 				return;
 			case 23:
 				NotEnoughUpdates.INSTANCE.config.apiData.repoUser = "NotEnoughUpdates";
@@ -267,11 +267,11 @@ public class NEUConfig extends Config {
 	 * Adds a check for the player being in a world before executing the given command
 	 */
 	private void executeRunnableCommand(String command) {
-		if (Minecraft.getMinecraft().thePlayer == null) {
+		if (Minecraft.getInstance().player == null) {
 			System.err.println("Command (" + command + ") not executed since you are not in a world.");
 			return;
 		}
-		ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, command);
+		ClientCommandHandler.instance.executeCommand(Minecraft.getInstance().player, command);
 	}
 
 	@Expose

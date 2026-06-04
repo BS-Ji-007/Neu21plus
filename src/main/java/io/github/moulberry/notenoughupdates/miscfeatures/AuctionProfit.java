@@ -37,7 +37,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
@@ -66,10 +66,10 @@ public class AuctionProfit {
 	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
 		if (!inAuctionPage()) return;
 
-		Minecraft minecraft = Minecraft.getMinecraft();
-		Container inventoryContainer = minecraft.thePlayer.openContainer;
+		Minecraft minecraft = Minecraft.getInstance();
+		Container inventoryContainer = minecraft.player.openContainer;
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
 		Gui gui = event.gui;
 		int xSize = ((AccessorGuiContainer) gui).getXSize();
 		int guiLeft = ((AccessorGuiContainer) gui).getGuiLeft();
@@ -152,9 +152,9 @@ public class AuctionProfit {
 			EnumChatFormatting.RED.toString() + expiredAuctions + EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY +
 				" Expired auctions";
 
-		FontRenderer fontRendererObj = minecraft.fontRendererObj;
-		fontRendererObj.drawString(unclaimedAuctionsStr, a + 6, guiTop + 6, -1, false);
-		fontRendererObj.drawString(expiredAuctionsStr, a + 6, guiTop + 16, -1, false);
+		FontRenderer font = minecraft.font;
+		font.drawString(unclaimedAuctionsStr, a + 6, guiTop + 6, -1, false);
+		font.drawString(expiredAuctionsStr, a + 6, guiTop + 16, -1, false);
 
 		String coinsToCollectStr =
 			EnumChatFormatting.BOLD + EnumChatFormatting.DARK_GRAY.toString() + "Coins to collect: " +
@@ -164,8 +164,8 @@ public class AuctionProfit {
 			EnumChatFormatting.RESET + EnumChatFormatting.DARK_GREEN + "" +
 			StringUtils.shortNumberFormat(coinsIfAllSold);
 
-		fontRendererObj.drawString(coinsToCollectStr, a + 6, guiTop + 32, -1, false);
-		fontRendererObj.drawString(valueIfSoldStr, a + 6, guiTop + 42, -1, false);
+		font.drawString(coinsToCollectStr, a + 6, guiTop + 32, -1, false);
+		font.drawString(valueIfSoldStr, a + 6, guiTop + 42, -1, false);
 	}
 
 	private double removeTax(double coins) {
@@ -190,10 +190,10 @@ public class AuctionProfit {
 		if (!NotEnoughUpdates.INSTANCE.config.ahTweaks.enableAhSellValue
 			|| !NotEnoughUpdates.INSTANCE.isOnSkyblock()) return false;
 
-		Minecraft minecraft = Minecraft.getMinecraft();
-		if (minecraft == null || minecraft.thePlayer == null) return false;
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft == null || minecraft.player == null) return false;
 
-		Container inventoryContainer = minecraft.thePlayer.openContainer;
+		Container inventoryContainer = minecraft.player.openContainer;
 		if (!(inventoryContainer instanceof ContainerChest)) return false;
 		ContainerChest containerChest = (ContainerChest) inventoryContainer;
 		return containerChest.getLowerChestInventory().getDisplayName()

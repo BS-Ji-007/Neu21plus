@@ -38,7 +38,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.imageio.ImageIO;
@@ -93,7 +93,7 @@ public class BetterContainers {
 			int invHashcode = lastInvHashcode;
 
 			if (currentMillis - lastHashcodeCheck > 50) {
-				Container container = ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
+				Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
 				invHashcode = container.getInventory().hashCode();
 			}
 
@@ -123,7 +123,7 @@ public class BetterContainers {
 	public static boolean isBlacklistedInventory() {
 		if (!isChestOpen()) return false;
 
-		GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 		return containerName.toLowerCase(Locale.ROOT).trim().startsWith("navigate the maze");
@@ -200,11 +200,11 @@ public class BetterContainers {
 				} catch (Exception e) {
 					textColour = 4210752;
 				}
-				bufferedImageOn = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(TOGGLE_ON).getInputStream());
-				bufferedImageOff = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(TOGGLE_OFF).getInputStream());
-				bufferedImageBase = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(DYNAMIC_54_BASE).getInputStream());
-				bufferedImageSlot = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(DYNAMIC_54_SLOT).getInputStream());
-				bufferedImageButton = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(DYNAMIC_54_BUTTON).getInputStream());
+				bufferedImageOn = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(TOGGLE_ON).getInputStream());
+				bufferedImageOff = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(TOGGLE_OFF).getInputStream());
+				bufferedImageBase = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(DYNAMIC_54_BASE).getInputStream());
+				bufferedImageSlot = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(DYNAMIC_54_SLOT).getInputStream());
+				bufferedImageButton = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(DYNAMIC_54_BUTTON).getInputStream());
 				try {
 					bufferedImageBase = ImageIO.read(Minecraft
 						.getMinecraft()
@@ -244,8 +244,8 @@ public class BetterContainers {
 		if (!hasItem()) return;
 
 		loaded = true;
-		Container container = ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
-		List<Slot> inventorySlots = ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots.inventorySlots;
+		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
+		List<Slot> inventorySlots = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots.inventorySlots;
 
 		if (hasNullPane() && container instanceof ContainerChest) {
 			if (lastSlots != inventorySlots) {
@@ -386,14 +386,14 @@ public class BetterContainers {
 	}
 
 	private static boolean isChestOpen() {
-		return Minecraft.getMinecraft().currentScreen instanceof GuiChest &&
+		return Minecraft.getInstance().currentScreen instanceof GuiChest &&
 			NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() &&
 			NotEnoughUpdates.INSTANCE.config.improvedSBMenu.enableSbMenus;
 	}
 
 	private static boolean hasItem() {
 		if (!isChestOpen()) return false;
-		Container container = ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
+		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
 		if (container instanceof ContainerChest) {
 			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();
@@ -410,7 +410,7 @@ public class BetterContainers {
 
 	private static boolean hasNullPane() {
 		if (!isChestOpen()) return false;
-		Container container = ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
+		Container container = ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
 		if (container instanceof ContainerChest) {
 			IInventory lower = ((ContainerChest) container).getLowerChestInventory();
 			int size = lower.getSizeInventory();

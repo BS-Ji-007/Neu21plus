@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.util.Debouncer;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerChest;
@@ -67,7 +67,7 @@ public class RecipeGenerator {
 	@SubscribeEvent
 	public void onTick(TickEvent event) {
 		if (!neu.config.apiData.repositoryEditing) return;
-		GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen currentScreen = Minecraft.getInstance().currentScreen;
 		if (currentScreen == null) return;
 		if (!(currentScreen instanceof GuiChest)) return;
 		analyzeUI((GuiChest) currentScreen);
@@ -81,7 +81,7 @@ public class RecipeGenerator {
 		ContainerChest container = (ContainerChest) gui.inventorySlots;
 		IInventory menu = container.getLowerChestInventory();
 		String uiTitle = menu.getDisplayName().getUnformattedText();
-		EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP p = Minecraft.getInstance().player;
 		if (uiTitle.startsWith("Item Casting") || uiTitle.startsWith("Refine")) {
 			if (durationDebouncer.trigger())
 				parseAllForgeItemMetadata(menu);
@@ -327,7 +327,7 @@ public class RecipeGenerator {
 			if (stack == null) continue;
 			String internalName = neu.manager.getInternalNameForItem(stack);
 			if (internalName == null) continue;
-			List<String> tooltip = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+			List<String> tooltip = stack.getTooltip(Minecraft.getInstance().player, false);
 			String durationInfo = null;
 			for (String s : tooltip) {
 				String info = Utils.cleanColour(s);

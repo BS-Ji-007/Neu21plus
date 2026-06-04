@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.miscfeatures.customblockzones;
 
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Vec3;
 
 public class CrimsonIsleTextures implements IslandZoneSubdivider {

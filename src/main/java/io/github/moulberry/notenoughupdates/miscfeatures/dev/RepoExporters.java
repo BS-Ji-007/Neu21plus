@@ -66,11 +66,11 @@ public class RepoExporters {
 
 	public void essenceExporter() {
 		try {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			IInventory lower = cc.getLowerChestInventory();
 			File file = new File(
-				Minecraft.getMinecraft().mcDataDir.getAbsolutePath(),
+				Minecraft.getInstance().mcDataDir.getAbsolutePath(),
 				"config/notenoughupdates/repo/constants/essencecosts.json"
 			);
 			String fileContent;
@@ -212,7 +212,7 @@ public class RepoExporters {
 				JsonObject newEntry = new JsonObject();
 				JsonObject jsonObject = null;
 				String id = null;
-				GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+				GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 				ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 				IInventory lower = cc.getLowerChestInventory();
 				ItemStack stack = lower.getStackInSlot(i);
@@ -228,7 +228,7 @@ public class RepoExporters {
 						if (!NotEnoughUpdates.INSTANCE.manager.isValidInternalName(id)) continue;
 
 						file = new File(
-							Minecraft.getMinecraft().mcDataDir.getAbsolutePath(),
+							Minecraft.getInstance().mcDataDir.getAbsolutePath(),
 							"config/notenoughupdates/repo/items/" + id + ".json"
 						);
 						fileContent = new BufferedReader(new InputStreamReader(
@@ -294,14 +294,14 @@ public class RepoExporters {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+			Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
 				EnumChatFormatting.RED + "Error while parsing inventory. Try again or check logs for details."));
 		}
 	}
 
 
 	public void essenceExporter2() {
-		GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		IInventory lower = cc.getLowerChestInventory();
 

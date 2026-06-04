@@ -51,7 +51,7 @@ import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelRotation;
 import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -105,7 +105,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 
 		try (
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-				Minecraft.getMinecraft().getResourceManager().getResource(config).getInputStream(),
+				Minecraft.getInstance().getResourceManager().getResource(config).getInputStream(),
 				StandardCharsets.UTF_8
 			))
 		) {
@@ -146,7 +146,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 						if ((skull = cache.get(loc.toString())) == null) {
 							skull = new CustomSkull();
 							skull.texture = loc;
-							Minecraft.getMinecraft().getTextureManager().deleteTexture(skull.texture);
+							Minecraft.getInstance().getTextureManager().deleteTexture(skull.texture);
 
 							cache.put(loc.toString(), skull);
 						}
@@ -177,7 +177,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 				}
 			);
 
-			Minecraft.getMinecraft().getTextureManager().loadTexture(atlas, textureMap);
+			Minecraft.getInstance().getTextureManager().loadTexture(atlas, textureMap);
 		} catch (Exception ignored) {}
 	}
 
@@ -190,7 +190,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 				CustomSkulls.this.sprites.put(resourcelocation, textureatlassprite);
 			}
 		};
-		this.textureMap.loadSprites(Minecraft.getMinecraft().getResourceManager(), iiconcreator);
+		this.textureMap.loadSprites(Minecraft.getInstance().getResourceManager(), iiconcreator);
 		this.sprites.put(new ResourceLocation("missingno"), this.textureMap.getMissingSprite());
 	}
 
@@ -348,7 +348,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 		}
 
 		if (skull.modelBaked != null && skull.model != null) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(atlas);
+			Minecraft.getInstance().getTextureManager().bindTexture(atlas);
 			GlStateManager.pushMatrix();
 			GlStateManager.disableCull();
 			GlStateManager.enableLighting();
@@ -399,7 +399,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 			renderModel(skull.modelBaked, 0xffffffff);
 			GlStateManager.popMatrix();
 		} else if (skull.texture != null) {
-			if (Minecraft.getMinecraft().getTextureManager().getTexture(skull.texture) == null) {
+			if (Minecraft.getInstance().getTextureManager().getTexture(skull.texture) == null) {
 				try {
 					BufferedImage image = ImageIO.read(Minecraft
 						.getMinecraft()
@@ -408,7 +408,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 						.getInputStream());
 					int size = Math.max(image.getHeight(), image.getWidth());
 
-					Minecraft.getMinecraft().getTextureManager().loadTexture(skull.texture, new AbstractTexture() {
+					Minecraft.getInstance().getTextureManager().loadTexture(skull.texture, new AbstractTexture() {
 						@Override
 						public void loadTexture(IResourceManager resourceManager) {
 							TextureUtil.allocateTexture(this.getGlTextureId(), size, size);
@@ -424,7 +424,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 				}
 			}
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(skull.texture);
+			Minecraft.getInstance().getTextureManager().bindTexture(skull.texture);
 
 			GlStateManager.pushMatrix();
 			GlStateManager.disableCull();

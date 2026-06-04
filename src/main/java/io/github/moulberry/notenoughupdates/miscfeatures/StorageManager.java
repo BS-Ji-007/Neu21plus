@@ -339,7 +339,7 @@ public class StorageManager {
 			return false;
 		}
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			shouldRenderStorageOverlayCached = false;
 			return false;
 		}
@@ -398,7 +398,7 @@ public class StorageManager {
 	}
 
 	public int getCurrentPageId() {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			currentStoragePage = -1;
 			return -1;
 		}
@@ -407,12 +407,12 @@ public class StorageManager {
 	}
 
 	public int getCurrentWindowId() {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			currentStoragePage = -1;
 			return -1;
 		}
 
-		GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 
 		return chest.inventorySlots.windowId;
 	}
@@ -689,8 +689,8 @@ public class StorageManager {
 	public void clientSendWindowClick(C0EPacketClickWindow packet) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (getCurrentWindowId() == -1 || getCurrentWindowId() != packet.getWindowId()) return;
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
-		ContainerChest containerChest = (ContainerChest) ((GuiChest) Minecraft.getMinecraft().currentScreen).inventorySlots;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) return;
+		ContainerChest containerChest = (ContainerChest) ((GuiChest) Minecraft.getInstance().currentScreen).inventorySlots;
 
 		if (getCurrentPageId() != -1) {
 			StoragePage page = getCurrentPage();

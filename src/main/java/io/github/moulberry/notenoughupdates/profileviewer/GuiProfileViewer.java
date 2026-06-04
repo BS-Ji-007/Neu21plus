@@ -38,7 +38,7 @@ import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -51,7 +51,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Matrix4f;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -318,17 +318,17 @@ public class GuiProfileViewer extends GuiScreen {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(516, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_bg);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
 		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		if (page != ProfileViewerPage.LOADING) {
 			playerNameTextField.render(guiLeft + sizeX - 100, guiTop + sizeY + 5);
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 			if (profile != null) {
 				//Render Profile chooser button
 				renderBlurredBackground(width, height, guiLeft + 2, guiTop + sizeY + 3 + 2, 100 - 4, 20 - 4);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dropdown);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 				Utils.drawTexturedRect(guiLeft, guiTop + sizeY + 3, 100, 20, 0, 100 / 200f, 0, 20 / 185f, GL11.GL_NEAREST);
 				Utils.drawStringCenteredScaledMaxWidth(
 					profileName,
@@ -345,13 +345,13 @@ public class GuiProfileViewer extends GuiScreen {
 						selectedProfile.getGamemode(),
 						gamemodeIconUnknown
 					);
-					Minecraft.getMinecraft().getTextureManager().bindTexture(gamemodeIcon);
+					Minecraft.getInstance().getTextureManager().bindTexture(gamemodeIcon);
 					Utils.drawTexturedRect(guiLeft - 16 - 5, guiTop + sizeY + 5, 16, 16, GL11.GL_NEAREST);
 				}
 
 				// Render Open In SkyCrypt button
 				renderBlurredBackground(width, height, guiLeft + 100 + 6 + 2, guiTop + sizeY + 3 + 2, 100 - 4, 20 - 4);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dropdown);
+				Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 				Utils.drawTexturedRect(
 					guiLeft + 100 + 6,
 					guiTop + sizeY + 3,
@@ -376,7 +376,7 @@ public class GuiProfileViewer extends GuiScreen {
 					int dropdownOptionSize = scaledResolution.getScaleFactor() == 3 ? 10 : 20;
 					int sizeYDropdown = profile.getProfileNames().size() * dropdownOptionSize;
 					renderBlurredBackground(width, height, guiLeft + 2, guiTop + sizeY + 23, 100 - 4, sizeYDropdown - 2);
-					Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dropdown);
+					Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 					Utils.drawTexturedRect(guiLeft, guiTop + sizeY + 23 - 3, 100, 3, 100 / 200f, 1, 0, 3 / 185f, GL11.GL_NEAREST);
 					Utils.drawTexturedRect(
 						guiLeft,
@@ -420,7 +420,7 @@ public class GuiProfileViewer extends GuiScreen {
 								selectedProfile.getGamemode(),
 								gamemodeIconUnknown
 							);
-							Minecraft.getMinecraft().getTextureManager().bindTexture(gamemodeIcon);
+							Minecraft.getInstance().getTextureManager().bindTexture(gamemodeIcon);
 							Utils.drawTexturedRect(
 								guiLeft - 16 - 5,
 								guiTop + sizeY + 2 + 23 + dropdownOptionSize * yIndex,
@@ -613,10 +613,10 @@ public class GuiProfileViewer extends GuiScreen {
 				if (mouseX > x && mouseX < x + 28) {
 					if (mouseY > y && mouseY < y + 32) {
 						if (!iPage.stack
-							.getTooltip(Minecraft.getMinecraft().thePlayer, false)
+							.getTooltip(Minecraft.getInstance().player, false)
 							.isEmpty()) {
 							tooltipToDisplay = Collections.singletonList(iPage.stack
-								.getTooltip(Minecraft.getMinecraft().thePlayer, false)
+								.getTooltip(Minecraft.getInstance().player, false)
 								.get(0));
 						}
 					}
@@ -630,7 +630,7 @@ public class GuiProfileViewer extends GuiScreen {
 		if (mouseX > x && mouseX < x + 29) {
 			if (mouseY > y && mouseY < y + 28) {
 				tooltipToDisplay = new ArrayList<>();
-				tooltipToDisplay.add(Minecraft.getMinecraft().thePlayer.getName());
+				tooltipToDisplay.add(Minecraft.getInstance().player.getName());
 			}
 		}
 
@@ -704,7 +704,7 @@ public class GuiProfileViewer extends GuiScreen {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(516, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		GlStateManager.enableDepth();
@@ -722,9 +722,9 @@ public class GuiProfileViewer extends GuiScreen {
 	private void renderRecentPlayers(boolean renderCurrent) {
 		String playerName = getDisplayName();
 
-		boolean selected = Objects.equals(Minecraft.getMinecraft().thePlayer.getName(), playerName);
+		boolean selected = Objects.equals(Minecraft.getInstance().player.getName(), playerName);
 		if (selected == renderCurrent) {
-			renderRecentPlayer(Minecraft.getMinecraft().thePlayer.getName().toLowerCase(Locale.ROOT), 0, selected);
+			renderRecentPlayer(Minecraft.getInstance().player.getName().toLowerCase(Locale.ROOT), 0, selected);
 		}
 
 		List<String> previousProfileSearches = NotEnoughUpdates.INSTANCE.config.hidden.previousProfileSearches;
@@ -772,7 +772,7 @@ public class GuiProfileViewer extends GuiScreen {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x - 3, y, 32, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		GlStateManager.enableDepth();
@@ -833,8 +833,8 @@ public class GuiProfileViewer extends GuiScreen {
 
 		if (mouseX > x && mouseX < x + 29) {
 			if (mouseY > y && mouseY < y + 28) {
-				if (!playerName.equals(Minecraft.getMinecraft().thePlayer.getName().toLowerCase(Locale.ROOT))) {
-					NotEnoughUpdates.profileViewer.loadPlayerByName(Minecraft.getMinecraft().thePlayer.getName(), profile -> {
+				if (!playerName.equals(Minecraft.getInstance().player.getName().toLowerCase(Locale.ROOT))) {
+					NotEnoughUpdates.profileViewer.loadPlayerByName(Minecraft.getInstance().player.getName(), profile -> {
 						profile.resetCache();
 						NotEnoughUpdates.INSTANCE.openGui = new GuiProfileViewer(profile);
 					});
@@ -883,7 +883,7 @@ public class GuiProfileViewer extends GuiScreen {
 		}
 
 		if (mouseX > guiLeft && mouseX < guiLeft + 100 && profile != null && !profile.getProfileNames().isEmpty()) {
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			if (mouseY > guiTop + sizeY + 3 && mouseY < guiTop + sizeY + 23) {
 				if (scaledResolution.getScaleFactor() >= 4) {
 					profileDropdownSelected = false;
@@ -960,7 +960,7 @@ public class GuiProfileViewer extends GuiScreen {
 							profile.resetCache();
 							ProfileViewerUtils.saveSearch(name);
 						}
-						Minecraft.getMinecraft().displayGuiScreen(new GuiProfileViewer(profile));
+						Minecraft.getInstance().displayGuiScreen(new GuiProfileViewer(profile));
 					}
 				);
 			}
@@ -1069,7 +1069,7 @@ public class GuiProfileViewer extends GuiScreen {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(icons);
+		Minecraft.getInstance().getTextureManager().bindTexture(icons);
 		ShaderManager shaderManager = ShaderManager.getInstance();
 		shaderManager.loadShader("make_gold");
 		shaderManager.loadData("make_gold", "amount", (startTime - System.currentTimeMillis()) / 10000f);
@@ -1091,7 +1091,7 @@ public class GuiProfileViewer extends GuiScreen {
 	}
 
 	public void renderBar(float x, float y, float xSize, float completed) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(icons);
+		Minecraft.getInstance().getTextureManager().bindTexture(icons);
 
 		completed = Math.round(completed / 0.05f) * 0.05f;
 		float notCompleted = 1 - completed;
@@ -1174,8 +1174,8 @@ public class GuiProfileViewer extends GuiScreen {
 	private void blurBackground() {
 		if (!OpenGlHelper.isFramebufferEnabled()) return;
 
-		int width = Minecraft.getMinecraft().displayWidth;
-		int height = Minecraft.getMinecraft().displayHeight;
+		int width = Minecraft.getInstance().displayWidth;
+		int height = Minecraft.getInstance().displayHeight;
 
 		if (blurOutputHorz == null) {
 			blurOutputHorz = new Framebuffer(width, height, false);
@@ -1188,21 +1188,21 @@ public class GuiProfileViewer extends GuiScreen {
 		if (blurOutputHorz.framebufferWidth != width || blurOutputHorz.framebufferHeight != height) {
 			blurOutputHorz.createBindFramebuffer(width, height);
 			blurShaderHorz.setProjectionMatrix(createProjectionMatrix(width, height));
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 		if (blurOutputVert.framebufferWidth != width || blurOutputVert.framebufferHeight != height) {
 			blurOutputVert.createBindFramebuffer(width, height);
 			blurShaderVert.setProjectionMatrix(createProjectionMatrix(width, height));
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 
 		if (blurShaderHorz == null) {
 			try {
 				blurShaderHorz =
 					new Shader(
-						Minecraft.getMinecraft().getResourceManager(),
+						Minecraft.getInstance().getResourceManager(),
 						"blur",
-						Minecraft.getMinecraft().getFramebuffer(),
+						Minecraft.getInstance().getFramebuffer(),
 						blurOutputHorz
 					);
 				blurShaderHorz.getShaderManager().getShaderUniform("BlurDir").set(1, 0);
@@ -1213,7 +1213,7 @@ public class GuiProfileViewer extends GuiScreen {
 		if (blurShaderVert == null) {
 			try {
 				blurShaderVert = new Shader(
-					Minecraft.getMinecraft().getResourceManager(),
+					Minecraft.getInstance().getResourceManager(),
 					"blur",
 					blurOutputHorz,
 					blurOutputVert
@@ -1235,7 +1235,7 @@ public class GuiProfileViewer extends GuiScreen {
 			GlStateManager.enableDepth();
 			GL11.glPopMatrix();
 
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 	}
 

@@ -51,7 +51,7 @@ abstract class WarningPopUp : ScreenReplacer() {
     abstract fun getWarningLines(): List<String>
 
     override fun render() {
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val scaledResolution = ScaledResolution(Minecraft.getInstance())
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 
@@ -64,8 +64,8 @@ abstract class WarningPopUp : ScreenReplacer() {
 
         RenderUtils.drawFloatingRectDark(width / 2 - 90, height / 2 - 45, 180, 90)
 
-        val neuLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth("\u00a7lNEU")
-        Minecraft.getMinecraft().fontRendererObj.drawString(
+        val neuLength = Minecraft.getInstance().font.getStringWidth("\u00a7lNEU")
+        Minecraft.getInstance().font.drawString(
             "\u00a7lNEU",
             width / 2 + 90 - neuLength - 3,
             height / 2 - 45 + 4,
@@ -105,10 +105,10 @@ abstract class WarningPopUp : ScreenReplacer() {
         )
 
         getWarningPopup()?.let { tooltip ->
-            val mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth
-            val mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1
+            val mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth
+            val mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1
 
-            val itemNameLength = Minecraft.getMinecraft().fontRendererObj.getStringWidth(itemNameLine)
+            val itemNameLength = Minecraft.getInstance().font.getStringWidth(itemNameLine)
 
             if (mouseX >= width / 2 - itemNameLength / 2 && mouseX <= width / 2 + itemNameLength / 2 && mouseY >= height / 2 - 45 + 20 && mouseY <= height / 2 - 45 + 30) {
                 Utils.drawHoveringText(tooltip, mouseX, mouseY, width, height, -1)
@@ -121,7 +121,7 @@ abstract class WarningPopUp : ScreenReplacer() {
     abstract fun confirmClick()
 
     override fun mouseInput(mouseX: Int, mouseY: Int): Boolean {
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val scaledResolution = ScaledResolution(Minecraft.getInstance())
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 

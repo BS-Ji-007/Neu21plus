@@ -25,7 +25,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,7 +58,7 @@ public abstract class MixinEntityPlayer {
 		return instance.isRemote;
 	}
 
-	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getSpawnPoint()Lnet/minecraft/util/BlockPos;"))
+	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getSpawnPoint()Lnet.minecraft.core.BlockPos;"))
 	public BlockPos onGetSpawnPoint(World instance) {
 		if (instance == null)
 			return new BlockPos(0, 0, 0);

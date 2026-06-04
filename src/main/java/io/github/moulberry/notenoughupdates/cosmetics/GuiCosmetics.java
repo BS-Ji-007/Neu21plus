@@ -28,7 +28,7 @@ import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.GuiTextures;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
@@ -36,7 +36,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Matrix4f;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -119,7 +119,7 @@ public class GuiCosmetics extends GuiScreen {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(516, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_bg);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
 		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		GlStateManager.color(1, 1, 1, 1);
@@ -151,9 +151,9 @@ public class GuiCosmetics extends GuiScreen {
 			statusMsg.append(60 - (System.currentTimeMillis() - CapeManager.INSTANCE.lastCapeUpdate) / 1000).append("s");
 		}
 
-		Minecraft.getMinecraft().fontRendererObj.drawString(
+		Minecraft.getInstance().font.drawString(
 			EnumChatFormatting.AQUA + statusMsg.toString(),
-			guiLeft + sizeX - Minecraft.getMinecraft().fontRendererObj.getStringWidth(statusMsg.toString()) - 20,
+			guiLeft + sizeX - Minecraft.getInstance().font.getStringWidth(statusMsg.toString()) - 20,
 			guiTop - 12,
 			0,
 			true
@@ -161,7 +161,7 @@ public class GuiCosmetics extends GuiScreen {
 
 		if (currentPage == CosmeticsPage.CAPES) {
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dropdown);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 			Utils.drawTexturedRect(
 				guiLeft + sizeX / 2f - 50,
 				guiTop + sizeY + 5,
@@ -196,7 +196,7 @@ public class GuiCosmetics extends GuiScreen {
 		unlockTextField.setSize(80, 20);
 		unlockTextField.render(guiLeft + sizeX - 80, guiTop + sizeY + 2);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(GuiTextures.help);
+		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(helpX, guiTop - 20, 20, 20, GL11.GL_LINEAR);
 
@@ -251,7 +251,7 @@ public class GuiCosmetics extends GuiScreen {
 		GlStateManager.enableAlpha();
 		GlStateManager.alphaFunc(516, 0.1F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		GlStateManager.enableDepth();
@@ -331,11 +331,11 @@ public class GuiCosmetics extends GuiScreen {
 				if (mouseY > guiTop + 123 && mouseY < guiTop + 123 + 20) {
 					if (CapeManager.INSTANCE.localCape != null &&
 						CapeManager.INSTANCE.localCape.getRight().equals(cape.capeName)) {
-						CapeManager.INSTANCE.setCape(Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", ""),
+						CapeManager.INSTANCE.setCape(Minecraft.getInstance().player.getUniqueID().toString().replace("-", ""),
 							"null", true
 						);
 					} else {
-						CapeManager.INSTANCE.setCape(Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", ""),
+						CapeManager.INSTANCE.setCape(Minecraft.getInstance().player.getUniqueID().toString().replace("-", ""),
 							cape.capeName, true
 						);
 					}
@@ -355,7 +355,7 @@ public class GuiCosmetics extends GuiScreen {
 		}
 
 		if (currentPage == CosmeticsPage.CAPES) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_dropdown);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
 			Utils.drawTexturedRect(
 				guiLeft + sizeX / 2f - 50,
 				guiTop + sizeY + 5,
@@ -371,22 +371,22 @@ public class GuiCosmetics extends GuiScreen {
 			if (mouseX > guiLeft + sizeX / 2f - 50 && mouseX < guiLeft + sizeX / 2f + 50) {
 				if (mouseY > guiTop + sizeY + 5 && mouseY < guiTop + sizeY + 25) {
 					if (System.currentTimeMillis() - lastCapeEquip > 20 * 1000) {
-						CapeManager.INSTANCE.setCape(Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", ""),
+						CapeManager.INSTANCE.setCape(Minecraft.getInstance().player.getUniqueID().toString().replace("-", ""),
 							wantToEquipCape, true
 						);
 
 						lastCapeEquip = System.currentTimeMillis();
 
 						try {
-							String userName = Minecraft.getMinecraft().thePlayer.getName();
-							String accessToken = Minecraft.getMinecraft().getSession().getToken();
+							String userName = Minecraft.getInstance().player.getName();
+							String accessToken = Minecraft.getInstance().getSession().getToken();
 							Random r1 = new Random();
 							Random r2 = new Random(System.identityHashCode(new Object()));
 							BigInteger random1Bi = new BigInteger(128, r1);
 							BigInteger random2Bi = new BigInteger(128, r2);
 							BigInteger serverBi = random1Bi.xor(random2Bi);
 							String serverId = serverBi.toString(16);
-							Minecraft.getMinecraft().getSessionService().joinServer(Minecraft
+							Minecraft.getInstance().getSessionService().joinServer(Minecraft
 								.getMinecraft()
 								.getSession()
 								.getProfile(), accessToken, serverId);
@@ -433,17 +433,17 @@ public class GuiCosmetics extends GuiScreen {
 	private int scrollClickedX = -1;
 
 	private void drawCapesPage(int mouseX, int mouseY, float partialTicks) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(cosmetics_fg);
+		Minecraft.getInstance().getTextureManager().bindTexture(cosmetics_fg);
 		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 		Utils.drawTexturedRect(guiLeft + 15 + 371 * scroll, guiTop + 177, 32, 12,
 			0, 32 / 256f, 192 / 256f, 204 / 256f, GL11.GL_NEAREST
 		);
 
 		GL11.glEnable(GL11.GL_SCISSOR_TEST);
-		GL11.glScissor(Minecraft.getMinecraft().displayWidth * (guiLeft + 3) / width, 0,
-			Minecraft.getMinecraft().displayWidth * (sizeX - 6) / width, Minecraft.getMinecraft().displayHeight
+		GL11.glScissor(Minecraft.getInstance().displayWidth * (guiLeft + 3) / width, 0,
+			Minecraft.getInstance().displayWidth * (sizeX - 6) / width, Minecraft.getInstance().displayHeight
 		);
 
 		int displayingCapes = 0;
@@ -465,7 +465,7 @@ public class GuiCosmetics extends GuiScreen {
 				CapeManager.INSTANCE.getAvailableCapes().contains(capeData.capeName);
 			if (!capeData.canShow() && !equipable) continue;
 
-			if (capeData.capeName.equals(CapeManager.INSTANCE.getCape(Minecraft.getMinecraft().thePlayer
+			if (capeData.capeName.equals(CapeManager.INSTANCE.getCape(Minecraft.getInstance().player
 				.getUniqueID()
 				.toString()
 				.replace("-", "")))) {
@@ -488,7 +488,7 @@ public class GuiCosmetics extends GuiScreen {
 					new Color(50, 100, 75, 40).getRGB(), new Color(100, 250, 150, 40).getRGB()
 				);
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 10, 81, 108,
 				0, 81 / 256f, 84 / 256f, 192 / 256f, GL11.GL_NEAREST
 			);
@@ -545,16 +545,16 @@ public class GuiCosmetics extends GuiScreen {
 				capeData.capeName,
 				k -> new ResourceLocation("notenoughupdates", "capes/" + capeData.capeName + "_preview.png")
 			);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(capeTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(capeTexture);
 			Utils.drawTexturedRect(guiLeft + 31 + 91 * displayIndex - xOffset, guiTop + 24, 59, 84, GL11.GL_NEAREST);
 
 			displayIndex++;
 		}
 
-		GL11.glScissor(0, 0, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		GL11.glScissor(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getInstance().displayHeight);
 		GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(pv_elements);
+		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 	}
 
 	Shader blurShaderHorz = null;
@@ -591,8 +591,8 @@ public class GuiCosmetics extends GuiScreen {
 	private double lastBgBlurFactor = -1;
 
 	private void blurBackground() {
-		int width = Minecraft.getMinecraft().displayWidth;
-		int height = Minecraft.getMinecraft().displayHeight;
+		int width = Minecraft.getInstance().displayWidth;
+		int height = Minecraft.getInstance().displayHeight;
 
 		if (blurOutputHorz == null) {
 			blurOutputHorz = new Framebuffer(width, height, false);
@@ -605,18 +605,18 @@ public class GuiCosmetics extends GuiScreen {
 		if (blurOutputHorz.framebufferWidth != width || blurOutputHorz.framebufferHeight != height) {
 			blurOutputHorz.createBindFramebuffer(width, height);
 			blurShaderHorz.setProjectionMatrix(createProjectionMatrix(width, height));
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 		if (blurOutputVert.framebufferWidth != width || blurOutputVert.framebufferHeight != height) {
 			blurOutputVert.createBindFramebuffer(width, height);
 			blurShaderVert.setProjectionMatrix(createProjectionMatrix(width, height));
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 
 		if (blurShaderHorz == null) {
 			try {
-				blurShaderHorz = new Shader(Minecraft.getMinecraft().getResourceManager(), "blur",
-					Minecraft.getMinecraft().getFramebuffer(), blurOutputHorz
+				blurShaderHorz = new Shader(Minecraft.getInstance().getResourceManager(), "blur",
+					Minecraft.getInstance().getFramebuffer(), blurOutputHorz
 				);
 				blurShaderHorz.getShaderManager().getShaderUniform("BlurDir").set(1, 0);
 				blurShaderHorz.setProjectionMatrix(createProjectionMatrix(width, height));
@@ -625,7 +625,7 @@ public class GuiCosmetics extends GuiScreen {
 		}
 		if (blurShaderVert == null) {
 			try {
-				blurShaderVert = new Shader(Minecraft.getMinecraft().getResourceManager(), "blur",
+				blurShaderVert = new Shader(Minecraft.getInstance().getResourceManager(), "blur",
 					blurOutputHorz, blurOutputVert
 				);
 				blurShaderVert.getShaderManager().getShaderUniform("BlurDir").set(0, 1);
@@ -645,7 +645,7 @@ public class GuiCosmetics extends GuiScreen {
 			GlStateManager.enableDepth();
 			GL11.glPopMatrix();
 
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(false);
 		}
 	}
 

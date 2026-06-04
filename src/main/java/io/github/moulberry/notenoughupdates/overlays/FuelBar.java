@@ -32,7 +32,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -59,10 +59,10 @@ public class FuelBar {
 			"crystal_hollows") || SBInfo.getInstance().getLocation().equals("mineshaft")))
 			return;
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 		if (!NotEnoughUpdates.INSTANCE.config.mining.drillFuelBar) return;
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		if (held == null) {
 			return;
 		}
@@ -125,7 +125,7 @@ public class FuelBar {
 			for (int xO = -2; xO <= 2; xO++) {
 				for (int yO = -2; yO <= 2; yO++) {
 					if (Math.abs(xO) != Math.abs(yO)) {
-						Minecraft.getMinecraft().fontRendererObj.drawString(
+						Minecraft.getInstance().font.drawString(
 							clean,
 							x + 2 + xO / 2f,
 							y + yO / 2f,
@@ -135,14 +135,14 @@ public class FuelBar {
 					}
 				}
 			}
-			Minecraft.getMinecraft().fontRendererObj.drawString(str, x + 2, y, 0xffffff, false);
+			Minecraft.getInstance().font.drawString(str, x + 2, y, 0xffffff, false);
 			Utils.pushGuiScale(0);
 			GlStateManager.popMatrix();
 		}
 	}
 
 	private void renderBar(float x, float y, float xSize, float completed) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(FUEL_BAR);
+		Minecraft.getInstance().getTextureManager().bindTexture(FUEL_BAR);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, 0);

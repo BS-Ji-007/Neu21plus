@@ -34,7 +34,7 @@ import io.github.moulberry.notenoughupdates.util.Rectangle
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.stripControlCodes
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.client.renderer.GlStateManager
@@ -44,7 +44,7 @@ import net.minecraft.init.Items
 import net.minecraft.inventory.Slot
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Mouse
@@ -200,7 +200,7 @@ object MuseumCheapestItemOverlay {
         val useCoinsPerXp = config.museumCheapestItemOverlayUseXp == 0
         val mouseX = Utils.getMouseX()
         val mouseY = Utils.getMouseY()
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val scaledResolution = ScaledResolution(Minecraft.getInstance())
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 
@@ -216,7 +216,7 @@ object MuseumCheapestItemOverlay {
             16,
             16
         )
-        Minecraft.getMinecraft().renderItem.renderItemIntoGUI(
+        Minecraft.getInstance().renderItem.renderItemIntoGUI(
             leftItemStack,
             leftButtonRect.x,
             leftButtonRect.y
@@ -259,7 +259,7 @@ object MuseumCheapestItemOverlay {
             16,
             16
         )
-        Minecraft.getMinecraft().renderItem.renderItemIntoGUI(
+        Minecraft.getInstance().renderItem.renderItemIntoGUI(
             rightItemStack,
             rightButtonRect.x,
             rightButtonRect.y
@@ -304,9 +304,9 @@ object MuseumCheapestItemOverlay {
             16,
             16
         )
-        Minecraft.getMinecraft().textureManager.bindTexture(BUTTON)
+        Minecraft.getInstance().textureManager.bindTexture(BUTTON)
         Utils.drawTexturedRect(xpButtonRect.x.toFloat(), xpButtonRect.y.toFloat(), 16f, 16f, 0f, 1f, 0f, 1f, GL11.GL_NEAREST)
-        Minecraft.getMinecraft().renderItem.renderItemIntoGUI(
+        Minecraft.getInstance().renderItem.renderItemIntoGUI(
             skyblockXpItemStack,
             xpButtonRect.x,
             xpButtonRect.y - 1
@@ -406,7 +406,7 @@ object MuseumCheapestItemOverlay {
     private fun drawLines(guiLeft: Int, guiTop: Int) {
         val mouseX = Utils.getMouseX()
         val mouseY = Utils.getMouseY()
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val scaledResolution = ScaledResolution(Minecraft.getInstance())
         val width = scaledResolution.scaledWidth
         val height = scaledResolution.scaledHeight
 
@@ -422,7 +422,7 @@ object MuseumCheapestItemOverlay {
             if (!visitedAllPages() && (index == ITEMS_PER_PAGE || index == lines.size - 1)) {
                 TextRenderUtils.drawStringScaledMaxWidth(
                     "${EnumChatFormatting.RED}Visit all pages for accurate info!",
-                    Minecraft.getMinecraft().fontRendererObj,
+                    Minecraft.getInstance().font,
                     (guiLeft + 185).toFloat(),
                     (guiTop + 95).toFloat(),
                     true,
@@ -499,7 +499,7 @@ object MuseumCheapestItemOverlay {
                         width,
                         height,
                         -1,
-                        Minecraft.getMinecraft().fontRendererObj
+                        Minecraft.getInstance().font
                     )
                 }
             }
@@ -509,7 +509,7 @@ object MuseumCheapestItemOverlay {
         if (lines.isEmpty()) {
             TextRenderUtils.drawStringScaledMaxWidth(
                 "${EnumChatFormatting.RED}No items matching filter!",
-                Minecraft.getMinecraft().fontRendererObj,
+                Minecraft.getInstance().font,
                 (guiLeft + 200).toFloat(),
                 (guiTop + 128 / 2).toFloat(),
                 true,
@@ -638,7 +638,7 @@ object MuseumCheapestItemOverlay {
      * Draw the background texture to the right side of the open Museum Page
      */
     private fun drawBackground(guiLeft: Int, xSize: Int, guiTop: Int) {
-        Minecraft.getMinecraft().textureManager.bindTexture(backgroundResource)
+        Minecraft.getInstance().textureManager.bindTexture(backgroundResource)
         GL11.glColor4f(1F, 1F, 1F, 1F)
         GlStateManager.disableLighting()
         Utils.drawTexturedRect(

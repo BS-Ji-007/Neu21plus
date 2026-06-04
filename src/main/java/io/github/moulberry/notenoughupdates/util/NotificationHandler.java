@@ -64,7 +64,7 @@ public class NotificationHandler {
 			int height = notificationLines.size() * 10 + 10;
 
 			for (String line : notificationLines) {
-				int len = Minecraft.getMinecraft().fontRendererObj.getStringWidth(line) + 8;
+				int len = Minecraft.getInstance().font.getStringWidth(line) + 8;
 				if (len > width) {
 					width = len;
 				}
@@ -80,14 +80,14 @@ public class NotificationHandler {
             Gui.drawRect(midX-width/2+2, sr.getScaledHeight()*3/4-height/2+2,
                     midX+width/2-2, sr.getScaledHeight()*3/4+height/2-2, 0xFFC8C8C8);*/
 
-			int xLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth("[X] Close");
-			Minecraft.getMinecraft().fontRendererObj.drawString(
+			int xLen = Minecraft.getInstance().font.getStringWidth("[X] Close");
+			Minecraft.getInstance().font.drawString(
 				"[X] Close",
 				midX + width / 2f - 3 - xLen, topY + 3, 0xFFFF5555, false
 			);
 
 			if (notificationDisplayMillis > 0) {
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					(timeRemaining / 1000) + "s",
 					midX - width / 2f + 3,
 					topY + 3,

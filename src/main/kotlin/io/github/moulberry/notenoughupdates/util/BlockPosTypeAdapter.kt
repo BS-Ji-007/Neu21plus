@@ -25,7 +25,7 @@ import com.google.gson.TypeAdapterFactory
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
-import net.minecraft.util.BlockPos
+import net.minecraft.core.BlockPos
 
 object BlockPosTypeAdapterFactory : TypeAdapterFactory {
     object Adapter : TypeAdapter<BlockPos>() {

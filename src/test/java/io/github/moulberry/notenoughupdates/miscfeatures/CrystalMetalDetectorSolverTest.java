@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.miscfeatures;
 import io.github.moulberry.notenoughupdates.core.util.Vec3Comparable;
 import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver.SolutionState;
 import io.github.moulberry.notenoughupdates.util.NEUDebugLogger;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

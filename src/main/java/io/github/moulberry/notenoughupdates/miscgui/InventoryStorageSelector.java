@@ -33,7 +33,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -60,14 +60,14 @@ public class InventoryStorageSelector {
 			isOverridingSlot = false;
 			return false;
 		}
-		if (Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getInstance().currentScreen != null) {
 			return false;
 		}
-		if (Minecraft.getMinecraft().thePlayer == null) {
+		if (Minecraft.getInstance().player == null) {
 			isOverridingSlot = false;
 			return false;
 		}
-		if (Minecraft.getMinecraft().thePlayer.inventory.currentItem != 0) {
+		if (Minecraft.getInstance().player.inventory.currentItem != 0) {
 			isOverridingSlot = false;
 			return false;
 		}
@@ -81,9 +81,9 @@ public class InventoryStorageSelector {
 			return;
 		}
 
-		if (Minecraft.getMinecraft().currentScreen == null && isSlotSelected()) {
-			int useKeycode = Minecraft.getMinecraft().gameSettings.keyBindUseItem.getKeyCode() + 100;
-			int attackKeycode = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode() + 100;
+		if (Minecraft.getInstance().currentScreen == null && isSlotSelected()) {
+			int useKeycode = Minecraft.getInstance().gameSettings.keyBindUseItem.getKeyCode() + 100;
+			int attackKeycode = Minecraft.getInstance().gameSettings.keyBindAttack.getKeyCode() + 100;
 
 			if (Mouse.getEventButton() == useKeycode || Mouse.getEventButton() == attackKeycode) {
 				if (Mouse.getEventButtonState() &&
@@ -111,10 +111,10 @@ public class InventoryStorageSelector {
 
 	@SubscribeEvent
 	public void onKeyPress(InputEvent.KeyInputEvent event) {
-		if (Minecraft.getMinecraft().gameSettings.keyBindsHotbar[0].isKeyDown()) {
+		if (Minecraft.getInstance().gameSettings.keyBindsHotbar[0].isKeyDown()) {
 			isOverridingSlot = false;
 		}
-		if (Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getInstance().currentScreen != null) {
 			return;
 		}
 
@@ -124,7 +124,7 @@ public class InventoryStorageSelector {
 		}
 
 		if (KeybindHelper.isKeyPressed(NotEnoughUpdates.INSTANCE.config.storageGUI.backpackHotkey)) {
-			Minecraft.getMinecraft().thePlayer.inventory.currentItem = 0;
+			Minecraft.getInstance().player.inventory.currentItem = 0;
 			isOverridingSlot = true;
 		}
 
@@ -151,8 +151,8 @@ public class InventoryStorageSelector {
 		}
 
 		if (isSlotSelected()) {
-			KeyBinding attack = Minecraft.getMinecraft().gameSettings.keyBindAttack;
-			KeyBinding use = Minecraft.getMinecraft().gameSettings.keyBindUseItem;
+			KeyBinding attack = Minecraft.getInstance().gameSettings.keyBindAttack;
+			KeyBinding use = Minecraft.getInstance().gameSettings.keyBindUseItem;
 
 			if (attack.isPressed() || attack.isKeyDown()) {
 				if (attack.getKeyCode() != NotEnoughUpdates.INSTANCE.config.storageGUI.backpackScrollKey) {
@@ -181,7 +181,7 @@ public class InventoryStorageSelector {
 			!NotEnoughUpdates.INSTANCE.config.storageGUI.showInvBackpack) {
 			return resultantSlot;
 		}
-		if (Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getInstance().currentScreen != null) {
 			return resultantSlot;
 		}
 
@@ -203,15 +203,15 @@ public class InventoryStorageSelector {
 
 		if (allowScroll && resultantSlot == 0 && direction == -1 && !isOverridingSlot) {
 			isOverridingSlot = true;
-			Minecraft.getMinecraft().getItemRenderer().resetEquippedProgress();
+			Minecraft.getInstance().getItemRenderer().resetEquippedProgress();
 			return 0;
 		} else if (resultantSlot == 1 && direction == -1 && isOverridingSlot) {
 			isOverridingSlot = false;
-			Minecraft.getMinecraft().getItemRenderer().resetEquippedProgress();
+			Minecraft.getInstance().getItemRenderer().resetEquippedProgress();
 			return 0;
 		} else if (allowScroll && resultantSlot == 8 && direction == 1 && !isOverridingSlot) {
 			isOverridingSlot = true;
-			Minecraft.getMinecraft().getItemRenderer().resetEquippedProgress();
+			Minecraft.getInstance().getItemRenderer().resetEquippedProgress();
 			return 0;
 		}
 		return resultantSlot;
@@ -254,7 +254,7 @@ public class InventoryStorageSelector {
 			!NotEnoughUpdates.INSTANCE.config.storageGUI.showInvBackpack) {
 			return;
 		}
-		if (Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getInstance().currentScreen != null) {
 			return;
 		}
 
@@ -293,7 +293,7 @@ public class InventoryStorageSelector {
 				GlStateManager.translate(0, 0, 100);
 				GL11.glDepthMask(false);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(storagePreviewTexture);
+				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
 				GlStateManager.color(1, 1, 1,
 					NotEnoughUpdates.INSTANCE.config.storageGUI.backpackOpacity / 100f
 				);
@@ -333,16 +333,16 @@ public class InventoryStorageSelector {
 									int r = (rgb >> 16) & 0xFF;
 									int g = (rgb >> 8) & 0xFF;
 									int b = rgb & 0xFF;
-									Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
+									Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 									GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
 									Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
 										startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 									);
 								}
 
-								RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+								RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 								itemRender.renderItemOverlayIntoGUI(
-									Minecraft.getMinecraft().fontRendererObj,
+									Minecraft.getInstance().font,
 									stack,
 									itemX,
 									itemY,
@@ -384,7 +384,7 @@ public class InventoryStorageSelector {
 									}
 
 									if (renderConnection) {
-										Minecraft.getMinecraft().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
+										Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 										int rgb = StorageOverlay.getRGBFromPane(type - 1);
 										int a = (rgb >> 24) & 0xFF;
 										int r = (rgb >> 16) & 0xFF;
@@ -453,7 +453,7 @@ public class InventoryStorageSelector {
 			}
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(ICONS);
+		Minecraft.getInstance().getTextureManager().bindTexture(ICONS);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(left + 1, top,
 			22, 22, 0, 22 / 64f, 0, 22 / 64f, GL11.GL_NEAREST

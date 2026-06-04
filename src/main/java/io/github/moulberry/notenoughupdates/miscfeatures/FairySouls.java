@@ -34,7 +34,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -116,7 +116,7 @@ public class FairySouls {
 	private void refreshMissingSoulInfo(boolean force) {
 		if (allSoulsInCurrentLocation == null) return;
 
-		BlockPos currentPlayerPos = Minecraft.getMinecraft().thePlayer.getPosition();
+		BlockPos currentPlayerPos = Minecraft.getInstance().player.getPosition();
 		if (lastPlayerPos.equals(currentPlayerPos) && !force) {
 			return;
 		}
@@ -203,7 +203,7 @@ public class FairySouls {
 		for (int i = 0; i < allSoulsInCurrentLocation.size(); i++) {
 			BlockPos pos = allSoulsInCurrentLocation.get(i);
 
-			double distSq = pos.distanceSq(Minecraft.getMinecraft().thePlayer.getPosition());
+			double distSq = pos.distanceSq(Minecraft.getInstance().player.getPosition());
 
 			if (distSq < closestDistSq) {
 				closestDistSq = distSq;

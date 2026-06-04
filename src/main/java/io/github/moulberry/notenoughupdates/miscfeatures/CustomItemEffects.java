@@ -51,7 +51,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
@@ -120,7 +120,7 @@ public class CustomItemEffects {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.RenderTickEvent event) {
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
 		zapperDirty = true;
 
@@ -145,15 +145,15 @@ public class CustomItemEffects {
 
 				float factor = deltaMin / (float) aoteTeleportationMillis;
 
-				float dX = aoteTeleportationCurr.x - (float) Minecraft.getMinecraft().thePlayer.posX;
-				float dY = aoteTeleportationCurr.y - (float) Minecraft.getMinecraft().thePlayer.posY;
-				float dZ = aoteTeleportationCurr.z - (float) Minecraft.getMinecraft().thePlayer.posZ;
+				float dX = aoteTeleportationCurr.x - (float) Minecraft.getInstance().player.posX;
+				float dY = aoteTeleportationCurr.y - (float) Minecraft.getInstance().player.posY;
+				float dZ = aoteTeleportationCurr.z - (float) Minecraft.getInstance().player.posZ;
 
 				aoteTeleportationCurr.x -= dX * factor;
 				aoteTeleportationCurr.y -= dY * factor;
 				aoteTeleportationCurr.z -= dZ * factor;
 
-				if (Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(aoteTeleportationCurr.x,
+				if (Minecraft.getInstance().level.getBlockState(new BlockPos(aoteTeleportationCurr.x,
 					aoteTeleportationCurr.y, aoteTeleportationCurr.z
 				)).getBlock().getMaterial() != Material.air) {
 					aoteTeleportationCurr.y = (float) Math.ceil(aoteTeleportationCurr.y);
@@ -161,9 +161,9 @@ public class CustomItemEffects {
 
 				aoteTeleportationMillis -= deltaMin;
 			} else {
-				aoteTeleportationCurr.x = (float) Minecraft.getMinecraft().thePlayer.posX;
-				aoteTeleportationCurr.y = (float) Minecraft.getMinecraft().thePlayer.posY;
-				aoteTeleportationCurr.z = (float) Minecraft.getMinecraft().thePlayer.posZ;
+				aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.posX;
+				aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.posY;
+				aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.posZ;
 			}
 		} else {
 			aoteUseMillis = 0;
@@ -175,7 +175,7 @@ public class CustomItemEffects {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR ||
 			event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-			ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+			ItemStack held = Minecraft.getInstance().player.getHeldItem();
 			String internal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 			if (internal != null) {
 				boolean shadowWarp = false;
@@ -201,7 +201,7 @@ public class CustomItemEffects {
 					lastEtherwarpUse = tick;
 				}
 
-				if (tpTime <= 0 || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) return;
+				if (tpTime <= 0 || Minecraft.getInstance().gameSettings.thirdPersonView != 0) return;
 
 				boolean aote = NotEnoughUpdates.INSTANCE.config.itemOverlays.enableSmoothAOTE &&
 					aoteNames.contains(internal);
@@ -215,9 +215,9 @@ public class CustomItemEffects {
 					aoteUseMillis = System.currentTimeMillis();
 					if (aoteTeleportationCurr == null) {
 						aoteTeleportationCurr = new Vector3f();
-						aoteTeleportationCurr.x = (float) Minecraft.getMinecraft().thePlayer.posX;
-						aoteTeleportationCurr.y = (float) Minecraft.getMinecraft().thePlayer.posY;
-						aoteTeleportationCurr.z = (float) Minecraft.getMinecraft().thePlayer.posZ;
+						aoteTeleportationCurr.x = (float) Minecraft.getInstance().player.posX;
+						aoteTeleportationCurr.y = (float) Minecraft.getInstance().player.posY;
+						aoteTeleportationCurr.z = (float) Minecraft.getInstance().player.posZ;
 					}
 				}
 			}
@@ -227,7 +227,7 @@ public class CustomItemEffects {
 	@SubscribeEvent
 	public void onGameTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP player = Minecraft.getInstance().player;
 		if (player == null) return;
 
 		if (!usingEtherwarp && wasUsingEtherwarp) {
@@ -295,10 +295,10 @@ public class CustomItemEffects {
 	public void onOverlayDrawn(RenderGameOverlayEvent.Post event) {
 		if (((event.type == null && Loader.isModLoaded("labymod")) ||
 			event.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS)) {
-			ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+			ItemStack held = Minecraft.getInstance().player.getHeldItem();
 			String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 
-			WorldClient world = Minecraft.getMinecraft().theWorld;
+			WorldClient world = Minecraft.getInstance().level;
 			if (usingEtherwarp) {
 				denyTpReason = null;
 				if (etherwarpRaycast == null) {
@@ -335,9 +335,9 @@ public class CustomItemEffects {
 
 				if (NotEnoughUpdates.INSTANCE.config.itemOverlays.enableEtherwarpHelperOverlay) {
 					if (denyTpReason != null && !NotEnoughUpdates.INSTANCE.config.itemOverlays.hideEtherwarpFailText) {
-						ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+						ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 						Utils.drawStringCentered(EnumChatFormatting.RED + "Can't TP: " + denyTpReason,
-							Minecraft.getMinecraft().fontRendererObj,
+							Minecraft.getInstance().font,
 							scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 2f + 10, true, 0
 						);
 						GlStateManager.color(1, 1, 1, 1);
@@ -348,13 +348,13 @@ public class CustomItemEffects {
 			boolean onPrivateIsland = Arrays.asList("dynamic", "garden").contains(SBInfo.getInstance().getLocation());
 
 			if (NotEnoughUpdates.INSTANCE.config.itemOverlays.enableWandOverlay &&
-				Minecraft.getMinecraft().objectMouseOver != null &&
-				Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK &&
+				Minecraft.getInstance().objectMouseOver != null &&
+				Minecraft.getInstance().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK &&
 				onPrivateIsland) {
 
 				IBlockState hover = world.getBlockState(
-					Minecraft.getMinecraft().objectMouseOver.getBlockPos().offset(
-						Minecraft.getMinecraft().objectMouseOver.sideHit, 1));
+					Minecraft.getInstance().objectMouseOver.getBlockPos().offset(
+						Minecraft.getInstance().objectMouseOver.sideHit, 1));
 				if (hover.getBlock() == Blocks.air) {
 
 					if (heldInternal != null && (heldInternal.equals("BUILDERS_WAND"))) buildersWandText(event, world);
@@ -366,13 +366,13 @@ public class CustomItemEffects {
 	}
 
 	public void buildersWandText(RenderGameOverlayEvent.Post event, WorldClient world) {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		HashSet<BlockPos> candidatesOld = new HashSet<>();
 		TreeMap<Float, Set<BlockPos>> candidatesOldSorted = new TreeMap<>();
 
 		IBlockState match =
-			world.getBlockState(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
+			world.getBlockState(Minecraft.getInstance().objectMouseOver.getBlockPos());
 		Item matchItem = Item.getItemFromBlock(match.getBlock());
 		if (matchItem == null) return;
 		ItemStack matchStack;
@@ -382,13 +382,13 @@ public class CustomItemEffects {
 				.getBlock()
 				.getDamageValue(
 					world,
-					Minecraft.getMinecraft().objectMouseOver.getBlockPos()
+					Minecraft.getInstance().objectMouseOver.getBlockPos()
 				)
 		);
 
 		getBuildersWandCandidates(
-			Minecraft.getMinecraft().thePlayer,
-			Minecraft.getMinecraft().objectMouseOver,
+			Minecraft.getInstance().player,
+			Minecraft.getInstance().objectMouseOver,
 			event.partialTicks,
 			candidatesOld,
 			candidatesOldSorted,
@@ -408,7 +408,7 @@ public class CustomItemEffects {
 		if (candidatesOld.size() > MAX_BUILDERS_BLOCKS) {
 			Utils.drawStringCentered(
 				EnumChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
-				Minecraft.getMinecraft().fontRendererObj,
+				Minecraft.getInstance().font,
 				scaledResolution.getScaledWidth() / 2f,
 				scaledResolution.getScaledHeight() / 2f + 10,
 				true,
@@ -421,13 +421,13 @@ public class CustomItemEffects {
 			}
 			Utils.drawStringCentered(pre + Math.min(candidatesOld.size(), itemCount) + "/" +
 					Math.min(candidatesOld.size(), MAX_BUILDERS_BLOCKS),
-				Minecraft.getMinecraft().fontRendererObj,
+				Minecraft.getInstance().font,
 				scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 2f + 10, true, 0
 			);
 		}
 
 		String itemCountS = EnumChatFormatting.DARK_GRAY + "x" + EnumChatFormatting.RESET + itemCount;
-		int itemCountLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(itemCountS);
+		int itemCountLen = Minecraft.getInstance().font.getStringWidth(itemCountS);
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
 			if (usingDirtWand) {
@@ -436,7 +436,7 @@ public class CustomItemEffects {
 					scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 11,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -447,7 +447,7 @@ public class CustomItemEffects {
 				Utils.drawItemStack(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 16,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -462,13 +462,13 @@ public class CustomItemEffects {
 	}
 
 	public void buildersRulerText(RenderGameOverlayEvent.Post event, WorldClient world) {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 
 		HashSet<BlockPos> candidatesOld = new HashSet<>();
 		TreeMap<Float, Set<BlockPos>> candidatesOldSorted = new TreeMap<>();
 
 		IBlockState match =
-			world.getBlockState(Minecraft.getMinecraft().objectMouseOver.getBlockPos());
+			world.getBlockState(Minecraft.getInstance().objectMouseOver.getBlockPos());
 		Item matchItem = Item.getItemFromBlock(match.getBlock());
 		if (matchItem == null) return;
 		ItemStack matchStack;
@@ -478,17 +478,17 @@ public class CustomItemEffects {
 				.getBlock()
 				.getDamageValue(
 					world,
-					Minecraft.getMinecraft().objectMouseOver.getBlockPos()
+					Minecraft.getInstance().objectMouseOver.getBlockPos()
 				)
 		);
-		if (!Minecraft.getMinecraft().thePlayer.isSneaking()) matchStack = getFirstItemInRuler();
+		if (!Minecraft.getInstance().player.isSneaking()) matchStack = getFirstItemInRuler();
 		match = Blocks.dirt.getDefaultState();
 		if (matchStack == null) return;
 		if (matchStack.getItem() == null) return;
 
 		getBuildersRulerCandidates(
-			Minecraft.getMinecraft().thePlayer,
-			Minecraft.getMinecraft().objectMouseOver,
+			Minecraft.getInstance().player,
+			Minecraft.getInstance().objectMouseOver,
 			event.partialTicks,
 			candidatesOld,
 			candidatesOldSorted,
@@ -497,7 +497,7 @@ public class CustomItemEffects {
 
 		boolean usingDirtWand = false;
 		int itemCount;
-		if (Minecraft.getMinecraft().thePlayer.isSneaking()) {
+		if (Minecraft.getInstance().player.isSneaking()) {
 			itemCount = candidatesOld.size();
 		} else {
 			if (match.getBlock() == Blocks.dirt && matchStack.getItemDamage() == 0 && hasDirtWand()) {
@@ -509,11 +509,11 @@ public class CustomItemEffects {
 		}
 		if (candidatesOld.size() == 0) return;
 
-		if (!Minecraft.getMinecraft().thePlayer.isSneaking()) {
+		if (!Minecraft.getInstance().player.isSneaking()) {
 			if (candidatesOld.size() > MAX_BUILDERS_BLOCKS) {
 				Utils.drawStringCentered(
 					EnumChatFormatting.RED.toString() + candidatesOld.size() + "/" + MAX_BUILDERS_BLOCKS,
-					Minecraft.getMinecraft().fontRendererObj,
+					Minecraft.getInstance().font,
 					scaledResolution.getScaledWidth() / 2f,
 					scaledResolution.getScaledHeight() / 2f + 10,
 					true,
@@ -523,14 +523,14 @@ public class CustomItemEffects {
 				String pre = EnumChatFormatting.GREEN.toString();
 				Utils.drawStringCentered(pre + Math.min(candidatesOld.size(), itemCount) + "/" +
 						Math.min(candidatesOld.size(), MAX_BUILDERS_BLOCKS),
-					Minecraft.getMinecraft().fontRendererObj,
+					Minecraft.getInstance().font,
 					scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 2f + 10, true, 0
 				);
 			}
 		}
 
 		String itemCountS = EnumChatFormatting.DARK_GRAY + "x" + EnumChatFormatting.RESET + itemCount;
-		int itemCountLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(itemCountS);
+		int itemCountLen = Minecraft.getInstance().font.getStringWidth(itemCountS);
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
 			if (usingDirtWand) {
@@ -539,7 +539,7 @@ public class CustomItemEffects {
 					scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 11,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -550,7 +550,7 @@ public class CustomItemEffects {
 				Utils.drawItemStack(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getMinecraft().fontRendererObj.drawString(
+				Minecraft.getInstance().font.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 16,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -588,7 +588,7 @@ public class CustomItemEffects {
 		for (int i = 0; i < stepCount; i++) {
 			Vector3f.add(pos, look, pos);
 
-			WorldClient world = Minecraft.getMinecraft().theWorld;
+			WorldClient world = Minecraft.getInstance().level;
 			BlockPos position = new BlockPos(pos.x, pos.y, pos.z);
 			IBlockState state = world.getBlockState(position);
 
@@ -616,7 +616,7 @@ public class CustomItemEffects {
 	}
 
 	public NBTTagCompound getBuildersNbt(boolean isWand) {
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		if (held == null) return null;
 
 		if (held.hasTagCompound() && held.getTagCompound().hasKey("ExtraAttributes", 10) &&
@@ -639,13 +639,13 @@ public class CustomItemEffects {
 		if (match == null) return 0;
 		int count = 0;
 
-		for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+		for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			if (match.isItemEqual(stack)) {
 				count += stack.stackSize;
 			}
 		}
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 
 		boolean isWand = heldInternal != null && heldInternal.equals("BUILDERS_WAND");
@@ -670,7 +670,7 @@ public class CustomItemEffects {
 
 	public ItemStack getFirstItemInRuler() {
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 
 		if (heldInternal == null || !heldInternal.equals("BUILDERS_RULER")) return null;
@@ -692,21 +692,21 @@ public class CustomItemEffects {
 		}
 
 		//the ruler says it uses ur inv but it doesnt
-		/*for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+		/*for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			if (stack != null && stack.getItem() instanceof ItemBlock) return stack;
 		}*/
 		return null;
 	}
 
 	public boolean hasDirtWand() {
-		for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+		for (ItemStack stack : Minecraft.getInstance().player.inventory.mainInventory) {
 			String internalname = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(stack);
 			if (internalname != null && internalname.equals("INFINIDIRT_WAND")) {
 				return true;
 			}
 		}
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 		boolean isWand = heldInternal != null && heldInternal.equals("BUILDERS_WAND");
 		if (heldInternal != null && heldInternal.equals(isWand ? "BUILDERS_WAND" : "BUILDERS_RULER")) {
@@ -782,7 +782,7 @@ public class CustomItemEffects {
 		this.targetFOVMult = 1;
 		this.targetSensMult = 1;
 
-		ItemStack held = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack held = Minecraft.getInstance().player.getHeldItem();
 		String heldInternal = NotEnoughUpdates.INSTANCE.manager.getInternalNameForItem(held);
 		if (heldInternal == null) {
 			return;
@@ -833,7 +833,7 @@ public class CustomItemEffects {
 		double d2,
 		float lastFOVMult
 	) {
-		boolean aotv = Minecraft.getMinecraft().thePlayer.isSneaking() &&
+		boolean aotv = Minecraft.getInstance().player.isSneaking() &&
 			(heldInternal.equals("ASPECT_OF_THE_VOID") || heldInternal.equals("ASPECT_OF_THE_END"));
 		if (!aotv && !heldInternal.equals("ETHERWARP_CONDUIT")) {
 			return false;
@@ -861,13 +861,13 @@ public class CustomItemEffects {
 			}
 		}
 		if(dist == 0)return false;
-		etherwarpRaycast = raycast(Minecraft.getMinecraft().thePlayer, 1f, dist, 0.1f);
+		etherwarpRaycast = raycast(Minecraft.getInstance().player, 1f, dist, 0.1f);
 
 		if (etherwarpRaycast != null &&
 			NotEnoughUpdates.INSTANCE.config.itemOverlays.enableEtherwarpBlockOverlay) {
 			if (denyTpReason == null || !NotEnoughUpdates.INSTANCE.config.itemOverlays.disableOverlayWhenFailed) {
 				AxisAlignedBB box = etherwarpRaycast.state.getBlock().getSelectedBoundingBox(
-					Minecraft.getMinecraft().theWorld,
+					Minecraft.getInstance().level,
 					etherwarpRaycast.pos
 				);
 				String colour;
@@ -897,7 +897,7 @@ public class CustomItemEffects {
 
 			if (NotEnoughUpdates.INSTANCE.config.itemOverlays.etherwarpZoom) {
 				float distFactor = 1 -
-					(float) Math.sqrt(etherwarpRaycast.pos.distanceSq(Minecraft.getMinecraft().thePlayer.getPosition())) /
+					(float) Math.sqrt(etherwarpRaycast.pos.distanceSq(Minecraft.getInstance().player.getPosition())) /
 						60;
 
 				targetFOVMult = distFactor * distFactor * distFactor * 0.75f + 0.25f;
@@ -933,7 +933,7 @@ public class CustomItemEffects {
 					hover.getY() <= 66 || hover.getY() > 76)) {
 				return;
 			}
-			IBlockState hoverState = Minecraft.getMinecraft().theWorld.getBlockState(event.target
+			IBlockState hoverState = Minecraft.getInstance().level.getBlockState(event.target
 				.getBlockPos()
 				.offset(event.target.sideHit, 1));
 			if (hoverState.getBlock() == Blocks.air) {
@@ -944,12 +944,12 @@ public class CustomItemEffects {
 
 				String special = NotEnoughUpdates.INSTANCE.config.itemOverlays.wandOverlayColour;
 
-				AxisAlignedBB bb = Blocks.dirt.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, hover);
+				AxisAlignedBB bb = Blocks.dirt.getSelectedBoundingBox(Minecraft.getInstance().level, hover);
 				drawBlock((int) bb.minX, (int) bb.minY, (int) bb.minZ + 1, Blocks.dirt.getDefaultState(),
 					event.partialTicks, 0.75f
 				);
 
-				AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, hover)
+				AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(Minecraft.getInstance().level, hover)
 																							.expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2);
 				drawOutlineBoundingBox(bbExpanded, 1f, special);
 
@@ -973,7 +973,7 @@ public class CustomItemEffects {
 							(zOff == 0 && yOff == 0)) {
 
 							BlockPos checkPos = hover.add(-xOff, -yOff, -zOff);
-							IBlockState check = Minecraft.getMinecraft().theWorld.getBlockState(checkPos);
+							IBlockState check = Minecraft.getInstance().level.getBlockState(checkPos);
 							if (check.getBlock() == Blocks.prismarine && check.getBlock().getMetaFromState(check) == 2) {
 								for (int i = 0; i < 300; i++) {
 									BlockPos renderPos = hover.add(xOff * i, yOff * i, zOff * i);
@@ -988,7 +988,7 @@ public class CustomItemEffects {
 										break;
 									}
 
-									IBlockState renderState = Minecraft.getMinecraft().theWorld.getBlockState(renderPos);
+									IBlockState renderState = Minecraft.getInstance().level.getBlockState(renderPos);
 
 									if (renderState.getBlock() != Blocks.air && renderState.getBlock() != Blocks.water &&
 										renderState.getBlock() != Blocks.flowing_water) {
@@ -998,7 +998,7 @@ public class CustomItemEffects {
 									if (yOff != 0) {
 										verticalSources.add(renderPos);
 									} else {
-										IBlockState belowState = Minecraft.getMinecraft().theWorld.getBlockState(renderPos.add(
+										IBlockState belowState = Minecraft.getInstance().level.getBlockState(renderPos.add(
 											0,
 											-1,
 											0
@@ -1036,7 +1036,7 @@ public class CustomItemEffects {
 				for (Map.Entry<BlockPos, EnumFacing> entry : blockPoses.entrySet()) {
 					boolean vertical = verticalSources.contains(entry.getKey());
 					AxisAlignedBB bbExpanded = Blocks.water.getSelectedBoundingBox(
-																						 Minecraft.getMinecraft().theWorld,
+																						 Minecraft.getInstance().level,
 																						 entry.getKey()
 																					 )
 																								 .expand(-0.001D, -0.001D - (vertical ? 0 : 0.0625D), -0.001D)
@@ -1052,7 +1052,7 @@ public class CustomItemEffects {
 			NotEnoughUpdates.INSTANCE.config.itemOverlays.enableHoeOverlay && onPrivateIsland) &&
 			event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 			BlockPos target = event.target.getBlockPos();
-			IBlockState targetState = Minecraft.getMinecraft().theWorld.getBlockState(target);
+			IBlockState targetState = Minecraft.getInstance().level.getBlockState(target);
 
 			int radius = heldInternal.equals("HOE_OF_GREAT_TILLING") ? 1 : 2;
 
@@ -1067,12 +1067,12 @@ public class CustomItemEffects {
 					for (int zOff = -radius; zOff <= radius; zOff++) {
 						BlockPos renderPos = target.add(xOff, 0, zOff);
 						BlockPos airPos = renderPos.add(0, 1, 0);
-						IBlockState renderState = Minecraft.getMinecraft().theWorld.getBlockState(renderPos);
-						IBlockState airState = Minecraft.getMinecraft().theWorld.getBlockState(airPos);
+						IBlockState renderState = Minecraft.getInstance().level.getBlockState(renderPos);
+						IBlockState airState = Minecraft.getInstance().level.getBlockState(airPos);
 						if (renderState.getBlock() == Blocks.dirt ||
 							renderState.getBlock() == Blocks.grass && airState.getBlock() == Blocks.air) {
 							AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
-																								 Minecraft.getMinecraft().theWorld,
+																								 Minecraft.getInstance().level,
 																								 renderPos
 																							 )
 																										.expand(0.001D, 0.001D, 0.001D)
@@ -1090,7 +1090,7 @@ public class CustomItemEffects {
 			NotEnoughUpdates.INSTANCE.config.itemOverlays.enableHoeOverlay && onPrivateIsland) &&
 			event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 			BlockPos target = event.target.getBlockPos();
-			IBlockState targetState = Minecraft.getMinecraft().theWorld.getBlockState(target);
+			IBlockState targetState = Minecraft.getInstance().level.getBlockState(target);
 
 			if (targetState.getBlock() == Blocks.dirt || targetState.getBlock() == Blocks.grass) {
 				GlStateManager.enableDepth();
@@ -1117,15 +1117,15 @@ public class CustomItemEffects {
 						BlockPos candidate = candidates.pop();
 						candidatesOld.add(candidate);
 
-						float yaw = Minecraft.getMinecraft().thePlayer.getRotationYawHead();
+						float yaw = Minecraft.getInstance().player.getRotationYawHead();
 						Facing facing = Facing.forDirection(yaw);
 						int xOff = facing == Facing.WEST ? -1 : facing == Facing.EAST ? 1 : 0;
 						int zOff = facing == Facing.NORTH ? -1 : facing == Facing.SOUTH ? 1 : 0;
 
 						BlockPos renderPos = candidate.add(xOff, 0, zOff);
 						BlockPos airPos = renderPos.add(0, 1, 0);
-						IBlockState renderState = Minecraft.getMinecraft().theWorld.getBlockState(renderPos);
-						IBlockState airState = Minecraft.getMinecraft().theWorld.getBlockState(airPos);
+						IBlockState renderState = Minecraft.getInstance().level.getBlockState(renderPos);
+						IBlockState airState = Minecraft.getInstance().level.getBlockState(airPos);
 						if (!candidatesOld.contains(renderPos) && !candidates.contains(renderPos) && !candidatesNew.contains(
 							renderPos)) {
 							if (renderState.getBlock() == Blocks.dirt ||
@@ -1139,7 +1139,7 @@ public class CustomItemEffects {
 
 					for (BlockPos renderPos : candidatesNew) {
 						AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
-																							 Minecraft.getMinecraft().theWorld,
+																							 Minecraft.getInstance().level,
 																							 renderPos
 																						 )
 																									.expand(0.001D, 0.001D, 0.001D)
@@ -1149,7 +1149,7 @@ public class CustomItemEffects {
 				}
 
 				AxisAlignedBB bbExpanded = Blocks.dirt.getSelectedBoundingBox(
-																					 Minecraft.getMinecraft().theWorld,
+																					 Minecraft.getInstance().level,
 																					 target
 																				 )
 																							.expand(0.001D, 0.001D, 0.001D)
@@ -1164,7 +1164,7 @@ public class CustomItemEffects {
 			NotEnoughUpdates.INSTANCE.config.itemOverlays.enableScytheOverlay && onPrivateIsland) &&
 			event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 			BlockPos target = event.target.getBlockPos();
-			IBlockState targetState = Minecraft.getMinecraft().theWorld.getBlockState(target);
+			IBlockState targetState = Minecraft.getInstance().level.getBlockState(target);
 
 			int radius = heldInternal.equals("SAM_SCYTHE") ? 1 : 2;
 
@@ -1179,10 +1179,10 @@ public class CustomItemEffects {
 					for (int yOff = -radius; yOff <= radius; yOff++) {
 						for (int zOff = -radius; zOff <= radius; zOff++) {
 							BlockPos renderPos = target.add(xOff, yOff, zOff);
-							IBlockState renderState = Minecraft.getMinecraft().theWorld.getBlockState(renderPos);
+							IBlockState renderState = Minecraft.getInstance().level.getBlockState(renderPos);
 							if (scytheBlocks.contains(renderState.getBlock())) {
 								AxisAlignedBB bbExpanded = renderState.getBlock().getSelectedBoundingBox(
-																												Minecraft.getMinecraft().theWorld,
+																												Minecraft.getInstance().level,
 																												renderPos
 																											)
 																											.expand(0.001D, 0.001D, 0.001D)
@@ -1217,8 +1217,8 @@ public class CustomItemEffects {
 			GlStateManager.disableTexture2D();
 			GlStateManager.depthMask(false);
 
-			if (Minecraft.getMinecraft().theWorld.getBlockState(event.target.getBlockPos()).getBlock() == Blocks.log ||
-				Minecraft.getMinecraft().theWorld.getBlockState(event.target.getBlockPos()).getBlock() == Blocks.log2) {
+			if (Minecraft.getInstance().level.getBlockState(event.target.getBlockPos()).getBlock() == Blocks.log ||
+				Minecraft.getInstance().level.getBlockState(event.target.getBlockPos()).getBlock() == Blocks.log2) {
 
 				int woods = 0;
 
@@ -1241,7 +1241,7 @@ public class CustomItemEffects {
 
 					while (!candidates.isEmpty()) {
 						BlockPos candidate = candidates.pop();
-						Block block = Minecraft.getMinecraft().theWorld.getBlockState(candidate).getBlock();
+						Block block = Minecraft.getInstance().level.getBlockState(candidate).getBlock();
 
 						candidatesOld.add(candidate);
 
@@ -1252,7 +1252,7 @@ public class CustomItemEffects {
 										BlockPos posNew = candidate.add(x, y, z);
 										if (!candidatesOld.contains(posNew) && !candidates.contains(posNew) && !candidatesNew.contains(
 											posNew)) {
-											Block blockNew = Minecraft.getMinecraft().theWorld.getBlockState(posNew).getBlock();
+											Block blockNew = Minecraft.getInstance().level.getBlockState(posNew).getBlock();
 											if (blockNew == Blocks.log || blockNew == Blocks.log2) {
 												candidatesNew.add(posNew);
 											}
@@ -1262,9 +1262,9 @@ public class CustomItemEffects {
 							}
 						}
 
-						block.setBlockBoundsBasedOnState(Minecraft.getMinecraft().theWorld, candidate);
+						block.setBlockBoundsBasedOnState(Minecraft.getInstance().level, candidate);
 
-						drawFilledBoundingBox(block.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, candidate)
+						drawFilledBoundingBox(block.getSelectedBoundingBox(Minecraft.getInstance().level, candidate)
 																			 .expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2),
 							random ? 0.5f : 1f, NotEnoughUpdates.INSTANCE.config.itemOverlays.treecapOverlayColour
 						);
@@ -1298,15 +1298,15 @@ public class CustomItemEffects {
 			LinkedList<BlockPos> returnablePositions = new LinkedList<>();
 
 			BlockPos pos = event.target.getBlockPos();
-			IBlockState firstBlockState = Minecraft.getMinecraft().theWorld.getBlockState(pos);
+			IBlockState firstBlockState = Minecraft.getInstance().level.getBlockState(pos);
 			Block block = firstBlockState.getBlock();
 
 			BlockPos above = pos.add(0, 1, 0);
-			Block aboveBlock = Minecraft.getMinecraft().theWorld.getBlockState(above).getBlock();
+			Block aboveBlock = Minecraft.getInstance().level.getBlockState(above).getBlock();
 
 			if (!cropBlocksZapper.contains(aboveBlock) && !cropBlocksZapper.contains(block) &&
 				!otherBannedBlocksZapper.contains(block) && !block.hasTileEntity(firstBlockState) &&
-				block.getBlockHardness(Minecraft.getMinecraft().theWorld, pos) >= 0) {
+				block.getBlockHardness(Minecraft.getInstance().level, pos) >= 0) {
 				for (int i = 0; i < 164; i++) {
 					zapperBlocks.add(pos);
 					returnablePositions.remove(pos);
@@ -1318,10 +1318,10 @@ public class CustomItemEffects {
 
 						if (zapperBlocks.contains(newPos)) continue;
 
-						IBlockState state = Minecraft.getMinecraft().theWorld.getBlockState(newPos);
+						IBlockState state = Minecraft.getInstance().level.getBlockState(newPos);
 						if (state != null && state.getBlock() == block) {
 							above = newPos.add(0, 1, 0);
-							aboveBlock = Minecraft.getMinecraft().theWorld.getBlockState(above).getBlock();
+							aboveBlock = Minecraft.getInstance().level.getBlockState(above).getBlock();
 							if (!cropBlocksZapper.contains(aboveBlock)) {
 								availableNeighbors.add(newPos);
 							}
@@ -1343,8 +1343,8 @@ public class CustomItemEffects {
 			}
 		}
 		for (BlockPos pos : zapperBlocks) {
-			Block block = Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
-			drawFilledBoundingBox(block.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, pos)
+			Block block = Minecraft.getInstance().level.getBlockState(pos).getBlock();
+			drawFilledBoundingBox(block.getSelectedBoundingBox(Minecraft.getInstance().level, pos)
 																 .expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2),
 				1f, NotEnoughUpdates.INSTANCE.config.itemOverlays.zapperOverlayColour
 			);
@@ -1356,11 +1356,11 @@ public class CustomItemEffects {
 
 	public void buildersWandOverlay(DrawBlockHighlightEvent event, double d0, double d1, double d2) {
 		if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-			IBlockState hover = Minecraft.getMinecraft().theWorld.getBlockState(event.target
+			IBlockState hover = Minecraft.getInstance().level.getBlockState(event.target
 				.getBlockPos()
 				.offset(event.target.sideHit, 1));
 			if (hover.getBlock() != Blocks.air) return;
-			IBlockState match = Minecraft.getMinecraft().theWorld.getBlockState(event.target.getBlockPos());
+			IBlockState match = Minecraft.getInstance().level.getBlockState(event.target.getBlockPos());
 			Item matchItem = Item.getItemFromBlock(match.getBlock());
 			if (matchItem == null) return;
 			GlStateManager.enableBlend();
@@ -1372,7 +1372,7 @@ public class CustomItemEffects {
 			TreeMap<Float, Set<BlockPos>> candidatesOldSorted = new TreeMap<>();
 
 			getBuildersWandCandidates(
-				Minecraft.getMinecraft().thePlayer,
+				Minecraft.getInstance().player,
 				event.target,
 				event.partialTicks,
 				candidatesOld,
@@ -1385,7 +1385,7 @@ public class CustomItemEffects {
 			matchStack = new ItemStack(
 				matchItem,
 				1,
-				match.getBlock().getDamageValue(Minecraft.getMinecraft().theWorld, event.target.getBlockPos())
+				match.getBlock().getDamageValue(Minecraft.getInstance().level, event.target.getBlockPos())
 			);
 
 			int itemCount;
@@ -1402,10 +1402,10 @@ public class CustomItemEffects {
 			if (candidatesOld.size() <= MAX_BUILDERS_BLOCKS) {
 				for (Set<BlockPos> candidatesSorted : candidatesOldSorted.values()) {
 					for (BlockPos candidate : candidatesSorted) {
-						match.getBlock().setBlockBoundsBasedOnState(Minecraft.getMinecraft().theWorld, candidate);
-						Minecraft.getMinecraft().thePlayer.isSneaking();
+						match.getBlock().setBlockBoundsBasedOnState(Minecraft.getInstance().level, candidate);
+						Minecraft.getInstance().player.isSneaking();
 						AxisAlignedBB bb = match.getBlock().getSelectedBoundingBox(
-							Minecraft.getMinecraft().theWorld,
+							Minecraft.getInstance().level,
 							candidate.add(0, 0, 0)
 						).offset(
 							event.target.sideHit.getFrontOffsetX(),
@@ -1418,10 +1418,10 @@ public class CustomItemEffects {
 				}
 
 				for (BlockPos candidate : candidatesOld) {
-					match.getBlock().setBlockBoundsBasedOnState(Minecraft.getMinecraft().theWorld, candidate);
-					Minecraft.getMinecraft().thePlayer.isSneaking();
+					match.getBlock().setBlockBoundsBasedOnState(Minecraft.getInstance().level, candidate);
+					Minecraft.getInstance().player.isSneaking();
 					AxisAlignedBB bb = match.getBlock().getSelectedBoundingBox(
-						Minecraft.getMinecraft().theWorld,
+						Minecraft.getInstance().level,
 						candidate.add(0, 0, 0)
 					).expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2).offset(
 						event.target.sideHit.getFrontOffsetX(),
@@ -1441,13 +1441,13 @@ public class CustomItemEffects {
 
 	public void buildersRulerOverlay(DrawBlockHighlightEvent event, double d0, double d1, double d2) {
 		if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-			IBlockState hover = Minecraft.getMinecraft().theWorld.getBlockState(event.target
+			IBlockState hover = Minecraft.getInstance().level.getBlockState(event.target
 				.getBlockPos()
 				.offset(event.target.sideHit, 1));
 
 			if (hover.getBlock() != Blocks.air) return;
 
-			IBlockState match = Minecraft.getMinecraft().theWorld.getBlockState(event.target.getBlockPos());
+			IBlockState match = Minecraft.getInstance().level.getBlockState(event.target.getBlockPos());
 			Item matchItem = Item.getItemFromBlock(match.getBlock());
 			if (matchItem == null) return;
 			GlStateManager.enableBlend();
@@ -1459,7 +1459,7 @@ public class CustomItemEffects {
 			TreeMap<Float, Set<BlockPos>> candidatesOldSorted = new TreeMap<>();
 
 			getBuildersRulerCandidates(
-				Minecraft.getMinecraft().thePlayer,
+				Minecraft.getInstance().player,
 				event.target,
 				event.partialTicks,
 				candidatesOld,
@@ -1467,7 +1467,7 @@ public class CustomItemEffects {
 				10
 			);
 			ItemStack firstItemInRuler = getFirstItemInRuler();
-			if (!Minecraft.getMinecraft().thePlayer.isSneaking()) {
+			if (!Minecraft.getInstance().player.isSneaking()) {
 				Item item = firstItemInRuler == null ? null : firstItemInRuler.getItem();
 				if (item != null) {
 					if (item instanceof ItemBlock)
@@ -1477,8 +1477,8 @@ public class CustomItemEffects {
 			}
 
 			ItemStack matchStack;
-			if (Minecraft.getMinecraft().thePlayer.isSneaking()) {
-				matchStack = new ItemStack(Minecraft.getMinecraft().theWorld
+			if (Minecraft.getInstance().player.isSneaking()) {
+				matchStack = new ItemStack(Minecraft.getInstance().level
 					.getBlockState(event.target.getBlockPos())
 					.getBlock());
 			} else {
@@ -1502,8 +1502,8 @@ public class CustomItemEffects {
 			for (Set<BlockPos> candidatesSorted : candidatesOldSorted.values()) {
 				for (BlockPos candidate : candidatesSorted) {
 					AxisAlignedBB bb = match.getBlock().getSelectedBoundingBox(
-						Minecraft.getMinecraft().theWorld,
-						candidate.add(0, Minecraft.getMinecraft().thePlayer.isSneaking() ? -1 : 0, 0)
+						Minecraft.getInstance().level,
+						candidate.add(0, Minecraft.getInstance().player.isSneaking() ? -1 : 0, 0)
 					).offset(
 						event.target.sideHit.getFrontOffsetX(),
 						event.target.sideHit.getFrontOffsetY(),
@@ -1516,8 +1516,8 @@ public class CustomItemEffects {
 
 			for (BlockPos candidate : candidatesOld) {
 				AxisAlignedBB bb = match.getBlock().getSelectedBoundingBox(
-					Minecraft.getMinecraft().theWorld,
-					candidate.add(0, Minecraft.getMinecraft().thePlayer.isSneaking() ? -1 : 0, 0)
+					Minecraft.getInstance().level,
+					candidate.add(0, Minecraft.getInstance().player.isSneaking() ? -1 : 0, 0)
 				).expand(0.001D, 0.001D, 0.001D).offset(-d0, -d1, -d2).offset(
 					event.target.sideHit.getFrontOffsetX(),
 					event.target.sideHit.getFrontOffsetY(),
@@ -1527,7 +1527,7 @@ public class CustomItemEffects {
 				drawOutlineBoundingBox(
 					bb,
 					1f,
-					(Minecraft.getMinecraft().thePlayer.isSneaking())
+					(Minecraft.getInstance().player.isSneaking())
 						? NotEnoughUpdates.INSTANCE.config.itemOverlays.wandOverlayColour
 						: special
 				);
@@ -1543,7 +1543,7 @@ public class CustomItemEffects {
 		EntityPlayer player, MovingObjectPosition target, float partialTicks,
 		HashSet<BlockPos> candidatesOld, TreeMap<Float, Set<BlockPos>> candidatesOldSorted, int extraMax
 	) {
-		IBlockState match = Minecraft.getMinecraft().theWorld.getBlockState(target.getBlockPos());
+		IBlockState match = Minecraft.getInstance().level.getBlockState(target.getBlockPos());
 
 		candidatesOld.clear();
 		candidatesOldSorted.clear();
@@ -1584,7 +1584,7 @@ public class CustomItemEffects {
 								if (((x == 0) && (target.sideHit.getAxis() == EnumFacing.Axis.X)) ||
 									((y == 0) && (target.sideHit.getAxis() == EnumFacing.Axis.Y)) ||
 									((z == 0) && (target.sideHit.getAxis() == EnumFacing.Axis.Z))) {
-									if (Minecraft.getMinecraft().theWorld.getBlockState(candidate.add(
+									if (Minecraft.getInstance().level.getBlockState(candidate.add(
 										x + target.sideHit.getFrontOffsetX(),
 										y + target.sideHit.getFrontOffsetY(),
 										z + target.sideHit.getFrontOffsetZ()
@@ -1592,7 +1592,7 @@ public class CustomItemEffects {
 										BlockPos posNew = candidate.add(x, y, z);
 										if (!candidatesOld.contains(posNew) && !candidates.contains(posNew) && !candidatesNew.contains(
 											posNew)) {
-											IBlockState blockNew = Minecraft.getMinecraft().theWorld.getBlockState(posNew);
+											IBlockState blockNew = Minecraft.getInstance().level.getBlockState(posNew);
 											if (blockNew == match) {
 												candidatesNew.add(posNew);
 											}
@@ -1644,7 +1644,7 @@ public class CustomItemEffects {
 		int extraMax
 	) {
 		if (target.sideHit != EnumFacing.UP) return;
-		boolean sneaking = Minecraft.getMinecraft().thePlayer.isSneaking();
+		boolean sneaking = Minecraft.getInstance().player.isSneaking();
 		candidatesOld.clear();
 		candidatesOldSorted.clear();
 		LinkedList<BlockPos> candidates = new LinkedList<>();
@@ -1681,7 +1681,7 @@ public class CustomItemEffects {
 
 				candidatesOld.add(candidate);
 
-				float yaw = Minecraft.getMinecraft().thePlayer.getRotationYawHead();
+				float yaw = Minecraft.getInstance().player.getRotationYawHead();
 				Facing facing = Facing.forDirection(yaw);
 				int xOff = facing == Facing.WEST ? -1 : facing == Facing.EAST ? 1 : 0;
 				int zOff = facing == Facing.NORTH ? -1 : facing == Facing.SOUTH ? 1 : 0;
@@ -1701,10 +1701,10 @@ public class CustomItemEffects {
 					}
 				}
 				if (!sneaking) {
-					if (Minecraft.getMinecraft().theWorld.getBlockState(candidate.add(xOff, 1, zOff)).getBlock() == Blocks.air) {
+					if (Minecraft.getInstance().level.getBlockState(candidate.add(xOff, 1, zOff)).getBlock() == Blocks.air) {
 
 						if (!candidatesOld.contains(posNew) && !candidates.contains(posNew) && !candidatesNew.contains(posNew)) {
-							IBlockState blockNew = Minecraft.getMinecraft().theWorld.getBlockState(posNew.add(0, 1, 0));
+							IBlockState blockNew = Minecraft.getInstance().level.getBlockState(posNew.add(0, 1, 0));
 							if (blockNew.getBlock() == Blocks.air) {
 								candidatesNew.add(posNew);
 							}
@@ -1713,12 +1713,12 @@ public class CustomItemEffects {
 						break;
 					}
 				} else {
-					if (Minecraft.getMinecraft().theWorld.getBlockState(candidate.add(xOff, 0, zOff)).getBlock()
-						== Minecraft.getMinecraft().theWorld.getBlockState(target.getBlockPos()).getBlock()) {
+					if (Minecraft.getInstance().level.getBlockState(candidate.add(xOff, 0, zOff)).getBlock()
+						== Minecraft.getInstance().level.getBlockState(target.getBlockPos()).getBlock()) {
 						if (!candidatesOld.contains(posNew) && !candidates.contains(posNew) && !candidatesNew.contains(posNew)) {
-							IBlockState blockNew = Minecraft.getMinecraft().theWorld.getBlockState(posNew.add(0, 0, 0));
+							IBlockState blockNew = Minecraft.getInstance().level.getBlockState(posNew.add(0, 0, 0));
 							if (blockNew.getBlock() ==
-								Minecraft.getMinecraft().theWorld.getBlockState(target.getBlockPos()).getBlock()) {
+								Minecraft.getInstance().level.getBlockState(target.getBlockPos()).getBlock()) {
 								candidatesNew.add(posNew);
 							}
 						}
@@ -1732,12 +1732,12 @@ public class CustomItemEffects {
 	}
 
 	public static void drawBlock(int x, int y, int z, IBlockState state, float partialTicks, float brightness) {
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP player = Minecraft.getInstance().player;
 		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
 		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
 		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
 
-		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRendererDispatcher();
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableLighting();
@@ -1756,7 +1756,7 @@ public class CustomItemEffects {
 		if (i == 3) {
 			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(
 				state,
-				Minecraft.getMinecraft().theWorld,
+				Minecraft.getInstance().level,
 				null
 			);
 

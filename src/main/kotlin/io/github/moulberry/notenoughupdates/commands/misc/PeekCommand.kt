@@ -41,7 +41,7 @@ class PeekCommand {
     val executor = Executors.newScheduledThreadPool(1)
 
     fun executePeek(name: String) {
-        val chatGui = Minecraft.getMinecraft().ingameGUI.chatGUI
+        val chatGui = Minecraft.getInstance().ingameGUI.chatGUI
         val id = Random().nextInt(Int.MAX_VALUE / 2) + Int.MAX_VALUE / 2
         fun deleteReply(text: String) {
             chatGui.printChatMessageWithOptionalDeletion(ChatComponentText(text), id)
@@ -301,13 +301,13 @@ class PeekCommand {
     fun onCommand(event: RegisterBrigadierCommandEvent) {
         event.command("peek") {
             thenArgument("player", string()) { player ->
-                suggestsList { Minecraft.getMinecraft().theWorld.playerEntities.map { it.name } }
+                suggestsList { Minecraft.getInstance().level.playerEntities.map { it.name } }
                 thenExecute {
                     executePeek(this[player])
                 }
             }.withHelp("Quickly glance at other peoples stats")
             thenExecute {
-                executePeek(Minecraft.getMinecraft().thePlayer.name)
+                executePeek(Minecraft.getInstance().player.name)
             }
         }.withHelp("Quickly glance at your own stats")
     }

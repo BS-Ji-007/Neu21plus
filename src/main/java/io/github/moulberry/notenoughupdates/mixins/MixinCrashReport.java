@@ -42,7 +42,7 @@ public class MixinCrashReport {
 
 			@Override
 			public String call() throws Exception {
-				return Minecraft.getMinecraft().mcDataDir.getCanonicalPath();
+				return Minecraft.getInstance().mcDataDir.getCanonicalPath();
 			}
 		});
 	}

@@ -70,14 +70,14 @@ public class AuctionSearchOverlay extends SearchOverlayScreen {
 	}
 
 	public static boolean shouldReplace() {
-		return Minecraft.getMinecraft().currentScreen instanceof AuctionSearchOverlay;
+		return Minecraft.getInstance().currentScreen instanceof AuctionSearchOverlay;
 	}
 
 	public static boolean isinAhSign() {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return false;
 		if (!NotEnoughUpdates.INSTANCE.config.ahTweaks.enableSearchOverlay) return false;
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiEditSign)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiEditSign)) {
 			if (!NotEnoughUpdates.INSTANCE.config.ahTweaks.keepPreviousSearch) searchString = "";
 			return false;
 		}
@@ -85,7 +85,7 @@ public class AuctionSearchOverlay extends SearchOverlayScreen {
 		String lastContainer = Utils.getLastOpenChestName();
 		if (!lastContainer.equals("Auctions Browser") && !lastContainer.startsWith("Auctions: ")) return false;
 
-		TileEntitySign tes = ((AccessorGuiEditSign) Minecraft.getMinecraft().currentScreen).getTileSign();
+		TileEntitySign tes = ((AccessorGuiEditSign) Minecraft.getInstance().currentScreen).getTileSign();
 
 		if (tes == null) return false;
 		if (tes.getPos().getY() != 0) return false;
@@ -104,7 +104,7 @@ public class AuctionSearchOverlay extends SearchOverlayScreen {
 		ItemStack stack = event.slot.getStack();
 		if (event.slot.slotNumber == 48 && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getDisplayName().equals("§aSearch")) {
 			event.setCanceled(true);
-			Minecraft.getMinecraft().currentScreen = null;
+			Minecraft.getInstance().currentScreen = null;
 			NotEnoughUpdates.INSTANCE.openGui = new AuctionSearchOverlay();
 		}
 	}
@@ -117,7 +117,7 @@ public class AuctionSearchOverlay extends SearchOverlayScreen {
 		TileEntitySign tileSign = ((AccessorGuiEditSign) guiEditSign).getTileSign();
 		if (tileSign != null) {
 			event.setCanceled(true);
-			Minecraft.getMinecraft().displayGuiScreen(new AuctionSearchOverlay(tileSign));
+			Minecraft.getInstance().displayGuiScreen(new AuctionSearchOverlay(tileSign));
 		}
 	}
 

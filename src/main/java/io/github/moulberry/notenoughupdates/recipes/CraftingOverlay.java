@@ -99,7 +99,7 @@ public class CraftingOverlay {
 		runIfCraftingOverlayIsPresent(event.gui, (guiChest, chest) -> {
 			renderSlots(guiChest, chest);
 			if (currentRecipe.getCraftText() != null) {
-				FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+				FontRenderer fontRenderer = Minecraft.getInstance().font;
 				fontRenderer.drawStringWithShadow(
 					currentRecipe.getCraftText(),
 					Utils.peekGuiScale().getScaledWidth() / 2f - fontRenderer.getStringWidth(currentRecipe.getCraftText()) / 2f,
@@ -139,8 +139,8 @@ public class CraftingOverlay {
 			ItemStack actualItem = slot.getStack();
 			if (actualItem == null && recipeIngredient != null) {
 				Utils.drawHoveringText(
-					recipeIngredient.getItemStack().getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips),
+					recipeIngredient.getItemStack().getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips),
 					mouseX, mouseY,
 					Utils.peekGuiScale().getScaledWidth(), Utils.peekGuiScale().getScaledHeight(), -1
 				);

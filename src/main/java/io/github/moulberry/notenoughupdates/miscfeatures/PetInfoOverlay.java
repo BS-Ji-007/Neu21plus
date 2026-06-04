@@ -783,8 +783,8 @@ public class PetInfoOverlay extends TextOverlay {
 
 		int slotIdMod = (event.slotId - 10) % 9;
 		if (event.slotId >= 10 && event.slotId <= 43 && slotIdMod >= 0 && slotIdMod <= 6 &&
-			Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			Minecraft.getInstance().currentScreen instanceof GuiChest) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -830,8 +830,8 @@ public class PetInfoOverlay extends TextOverlay {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest && RenderListener.inventoryLoaded) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		if (Minecraft.getInstance().currentScreen instanceof GuiChest && RenderListener.inventoryLoaded) {
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -1217,7 +1217,7 @@ public class PetInfoOverlay extends TextOverlay {
 							setCurrentPet(getClosestPetIndex(pet, rarity.petId - 1, petItem, lastLevelHovered));
 						if (getCurrentPet() != null && !"PET_ITEM_TIER_BOOST".equals(getCurrentPet().petItem)) {
 							PetInfoOverlay.config.selectedPet = -1;
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+							Minecraft.getInstance().player.addChatMessage(new ChatComponentText(
 								EnumChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
 									EnumChatFormatting.RED + " try revisiting all pages of /pets."));
 						}

@@ -46,7 +46,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
@@ -126,7 +126,7 @@ public class ItemCustomizeManager {
 		GlStateManager.depthMask(false);
 		GlStateManager.depthFunc(GL11.GL_EQUAL);
 		GlStateManager.disableLighting();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(getCustomGlintTexture());
+		Minecraft.getInstance().getTextureManager().bindTexture(getCustomGlintTexture());
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 
@@ -154,13 +154,13 @@ public class ItemCustomizeManager {
 		GlStateManager.enableLighting();
 		GlStateManager.depthFunc(515);
 		GlStateManager.depthMask(true);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 
 		GL11.glPopMatrix();
 	}
 
 	private static void renderArmorGlint(Runnable renderModelCallback, float existed, int color) {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(getCustomGlintTexture());
+		Minecraft.getInstance().getTextureManager().bindTexture(getCustomGlintTexture());
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		GlStateManager.enableBlend();
@@ -281,7 +281,7 @@ public class ItemCustomizeManager {
 					}
 				}
 
-				Minecraft.getMinecraft().getTextureManager().loadTexture(CUSTOM_GLINT_TEXTURE, new DynamicTexture(newGlint));
+				Minecraft.getInstance().getTextureManager().loadTexture(CUSTOM_GLINT_TEXTURE, new DynamicTexture(newGlint));
 			} catch (Exception e) {
 				e.printStackTrace();
 				CUSTOM_GLINT_TEXTURE = RES_ITEM_GLINT;

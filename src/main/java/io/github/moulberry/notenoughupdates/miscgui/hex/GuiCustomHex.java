@@ -59,7 +59,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -302,7 +302,7 @@ public class GuiCustomHex extends Gui {
 				containerName.substring(0, "Bottles of Enchanting".length())
 			)) &&
 			NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard();
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 		ItemStack hexStack = cc.getLowerChestInventory().getStackInSlot(50);
 		ItemStack bookStack = cc.getLowerChestInventory().getStackInSlot(32);
@@ -343,7 +343,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickEnchants() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		//ItemStack hexStack = cc.getLowerChestInventory().getStackInSlot(12);
@@ -697,7 +697,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickBooks() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(19);
@@ -988,7 +988,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickHex() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(22);
@@ -1107,7 +1107,7 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void tickGemstones() {
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		ItemStack enchantingItemStack = cc.getLowerChestInventory().getStackInSlot(19);
@@ -1304,29 +1304,29 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderEnchantment(float partialTicks) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		int playerXpLevel = Minecraft.getMinecraft().thePlayer.experienceLevel;
+		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
 		rightScroll.tick();
 		arrowAmount.tick();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		guiLeft = (width - X_SIZE) / 2;
 		guiTop = (height - Y_SIZE) / 2;
 
 		List<String> tooltipToDisplay = null;
 		boolean disallowClick = false;
-		ItemStack stackOnMouse = Minecraft.getMinecraft().thePlayer.inventory.getItemStack();
+		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		int itemHoverX = -1;
 		int itemHoverY = -1;
 		boolean hoverLocked = false;
@@ -1335,7 +1335,7 @@ public class GuiCustomHex extends Gui {
 
 		renderBaseTexture();
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		fr.drawString("Applicable", guiLeft + 7, guiTop + 7, 0x404040, false);
 		fr.drawString("Removable", guiLeft + 247, guiTop + 7, 0x404040, false);
 
@@ -1348,7 +1348,7 @@ public class GuiCustomHex extends Gui {
 			);
 
 			//Page Arrows
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
@@ -1415,7 +1415,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = ench.conflicts ? 112 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -1458,7 +1458,7 @@ public class GuiCustomHex extends Gui {
 			int vOffset = enchanterCurrentEnch != null && enchanterCurrentEnch.enchId.equals(ench.enchId) ? 16 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -1491,7 +1491,7 @@ public class GuiCustomHex extends Gui {
 		GlScissorStack.pop(scaledResolution);
 
 		//Player Inventory Items
-		fr.drawString(Minecraft.getMinecraft().thePlayer.inventory
+		fr.drawString(Minecraft.getInstance().player.inventory
 				.getDisplayName()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
@@ -1520,8 +1520,8 @@ public class GuiCustomHex extends Gui {
 
 				if (slot.getHasStack()) {
 					tooltipToDisplay = slot.getStack().getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -1549,7 +1549,7 @@ public class GuiCustomHex extends Gui {
 
 			int uOffset = enchanterCurrentEnch.conflicts ? 112 : 0;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
@@ -1609,7 +1609,7 @@ public class GuiCustomHex extends Gui {
 			Utils.drawStringCentered(name, guiLeft + X_SIZE / 2, top + 8, true, 0xffffffdd);
 
 			if (isChangingEnchLevel) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
@@ -1639,7 +1639,7 @@ public class GuiCustomHex extends Gui {
 				}
 			}
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentEnch.xpCost)) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -1648,7 +1648,7 @@ public class GuiCustomHex extends Gui {
 					guiLeft + X_SIZE / 2 - 1 - 23, top + 18 + 9, false, 0x408040
 				);
 			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -1664,7 +1664,7 @@ public class GuiCustomHex extends Gui {
 
 			//Cancel button
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -1673,7 +1673,7 @@ public class GuiCustomHex extends Gui {
 					guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040
 				);
 			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -1727,7 +1727,7 @@ public class GuiCustomHex extends Gui {
 						yIndex = i - bSize + 1;
 					}
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 					GlStateManager.color(1, 1, 1, 1);
 
 					int type = 0;
@@ -1792,7 +1792,7 @@ public class GuiCustomHex extends Gui {
 			int itemY = guiTop + 58;
 
 			if (itemEnchantInput == null) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
@@ -1808,8 +1808,8 @@ public class GuiCustomHex extends Gui {
 
 				if (itemEnchantInput != null) {
 					tooltipToDisplay = itemEnchantInput.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -1836,29 +1836,29 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderBooks(float partialTicks) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		int playerXpLevel = Minecraft.getMinecraft().thePlayer.experienceLevel;
+		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
 		rightScroll.tick();
 		arrowAmount.tick();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		guiLeft = (width - X_SIZE) / 2;
 		guiTop = (height - Y_SIZE) / 2;
 
 		List<String> tooltipToDisplay = null;
 		boolean disallowClick = false;
-		ItemStack stackOnMouse = Minecraft.getMinecraft().thePlayer.inventory.getItemStack();
+		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		int itemHoverX = -1;
 		int itemHoverY = -1;
 		boolean hoverLocked = false;
@@ -1867,20 +1867,20 @@ public class GuiCustomHex extends Gui {
 
 		renderBaseTexture();
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		fr.drawString("Applicable", guiLeft + 7, guiTop + 7, 0x404040, false);
 		fr.drawString("Applied", guiLeft + 247, guiTop + 7, 0x404040, false);
 
 		//Page Text
 		if (currentState == EnchantState.HAS_ITEM_IN_BOOKS) {
 			String pageStr = "Page: " + currentPage + "/" + expectedMaxPage;
-			int pageStrLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(pageStr);
+			int pageStrLen = Minecraft.getInstance().font.getStringWidth(pageStr);
 			Utils.drawStringCentered(pageStr,
 				guiLeft + X_SIZE / 2, guiTop + 14, false, 0x404040
 			);
 
 			//Page Arrows
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
@@ -1976,7 +1976,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = item.conflicts ? 112 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2019,7 +2019,7 @@ public class GuiCustomHex extends Gui {
 			int vOffset = enchanterCurrentItem != null && enchanterCurrentItem.itemId.equals(item.itemId) ? 16 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2051,7 +2051,7 @@ public class GuiCustomHex extends Gui {
 		GlScissorStack.pop(scaledResolution);
 
 		//Player Inventory Items
-		fr.drawString(Minecraft.getMinecraft().thePlayer.inventory
+		fr.drawString(Minecraft.getInstance().player.inventory
 				.getDisplayName()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
@@ -2080,8 +2080,8 @@ public class GuiCustomHex extends Gui {
 
 				if (slot.getHasStack()) {
 					tooltipToDisplay = slot.getStack().getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2109,7 +2109,7 @@ public class GuiCustomHex extends Gui {
 
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
@@ -2152,7 +2152,7 @@ public class GuiCustomHex extends Gui {
 				}
 			}
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentItem.price)) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -2161,7 +2161,7 @@ public class GuiCustomHex extends Gui {
 					guiLeft + X_SIZE / 2 - 1 - 23, top + 18 + 9, false, 0x408040
 				);
 			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -2177,7 +2177,7 @@ public class GuiCustomHex extends Gui {
 
 			//Cancel button
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -2186,7 +2186,7 @@ public class GuiCustomHex extends Gui {
 					guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040
 				);
 			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -2228,7 +2228,7 @@ public class GuiCustomHex extends Gui {
 			int itemY = guiTop + 58;
 
 			if (itemEnchantInput == null) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
@@ -2244,8 +2244,8 @@ public class GuiCustomHex extends Gui {
 
 				if (itemEnchantInput != null) {
 					tooltipToDisplay = itemEnchantInput.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2272,29 +2272,29 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderHex(float partialTicks) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		int playerXpLevel = Minecraft.getMinecraft().thePlayer.experienceLevel;
+		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
 		//rightScroll.tick();
 		//arrowAmount.tick();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		guiLeft = (width - X_SIZE) / 2;
 		guiTop = (height - Y_SIZE) / 2;
 
 		List<String> tooltipToDisplay = null;
 		boolean disallowClick = false;
-		ItemStack stackOnMouse = Minecraft.getMinecraft().thePlayer.inventory.getItemStack();
+		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		int itemHoverX = -1;
 		int itemHoverY = -1;
 		boolean hoverLocked = false;
@@ -2303,9 +2303,9 @@ public class GuiCustomHex extends Gui {
 
 		renderBaseTexture();
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		fr.drawString("The Hex", guiLeft + 7, guiTop + 7, 0x404040, false);
-		//Minecraft.getMinecraft().fontRendererObj.drawString("Applied", guiLeft + 247, guiTop + 7, 0x404040, false);
+		//Minecraft.getInstance().font.drawString("Applied", guiLeft + 247, guiTop + 7, 0x404040, false);
 
 		tooltipToDisplay = renderSettings(mouseX, mouseY, tooltipToDisplay);
 
@@ -2341,7 +2341,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = item.conflicts ? 112 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2384,7 +2384,7 @@ public class GuiCustomHex extends Gui {
 			int vOffset = enchanterCurrentItem != null && enchanterCurrentItem.itemId.equals(item.itemId) ? 16 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2417,7 +2417,7 @@ public class GuiCustomHex extends Gui {
 
 		//Player Inventory Items
 		fr.drawString(
-			Minecraft.getMinecraft().thePlayer.inventory.getDisplayName().getUnformattedText(),
+			Minecraft.getInstance().player.inventory.getDisplayName().getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
 		int inventoryStartIndex = cc.getLowerChestInventory().getSizeInventory();
@@ -2444,8 +2444,8 @@ public class GuiCustomHex extends Gui {
 
 				if (slot.getHasStack()) {
 					tooltipToDisplay = slot.getStack().getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2458,7 +2458,7 @@ public class GuiCustomHex extends Gui {
 
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
@@ -2504,7 +2504,7 @@ public class GuiCustomHex extends Gui {
 			int itemY = guiTop + 58;
 
 			if (itemEnchantInput == null) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
@@ -2520,8 +2520,8 @@ public class GuiCustomHex extends Gui {
 
 				if (itemEnchantInput != null) {
 					tooltipToDisplay = itemEnchantInput.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2548,29 +2548,29 @@ public class GuiCustomHex extends Gui {
 	}
 
 	private void renderGemstones(float partialTicks) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return;
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return;
 
-		int playerXpLevel = Minecraft.getMinecraft().thePlayer.experienceLevel;
+		int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 
-		GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+		GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 		ContainerChest cc = (ContainerChest) chest.inventorySlots;
 
 		leftScroll.tick();
 		rightScroll.tick();
 		arrowAmount.tick();
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		guiLeft = (width - X_SIZE) / 2;
 		guiTop = (height - Y_SIZE) / 2;
 
 		List<String> tooltipToDisplay = null;
 		boolean disallowClick = false;
-		ItemStack stackOnMouse = Minecraft.getMinecraft().thePlayer.inventory.getItemStack();
+		ItemStack stackOnMouse = Minecraft.getInstance().player.inventory.getItemStack();
 		int itemHoverX = -1;
 		int itemHoverY = -1;
 		boolean hoverLocked = false;
@@ -2579,7 +2579,7 @@ public class GuiCustomHex extends Gui {
 
 		renderBaseTexture();
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 		fr.drawString("Applicable", guiLeft + 7, guiTop + 7, 0x404040, false);
 		fr.drawString("Applied", guiLeft + 247, guiTop + 7, 0x404040, false);
 
@@ -2592,7 +2592,7 @@ public class GuiCustomHex extends Gui {
 			);
 
 			//Page Arrows
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
@@ -2617,7 +2617,7 @@ public class GuiCustomHex extends Gui {
 					}
 				}
 				if (System.currentTimeMillis() - confirmButtonAnimTime < 500) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 					GlStateManager.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 						0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -2626,7 +2626,7 @@ public class GuiCustomHex extends Gui {
 						guiLeft + X_SIZE / 2 - 1 - 23, top + 18 + 9, false, 0x408040
 					);
 				} else {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 					GlStateManager.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 						0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -2640,7 +2640,7 @@ public class GuiCustomHex extends Gui {
 			//Cancel button
 
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
@@ -2649,7 +2649,7 @@ public class GuiCustomHex extends Gui {
 					guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040
 				);
 			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -2682,7 +2682,7 @@ public class GuiCustomHex extends Gui {
 			int uOffset = item.conflicts ? 112 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2725,7 +2725,7 @@ public class GuiCustomHex extends Gui {
 			int vOffset = enchanterCurrentItem != null && enchanterCurrentItem.itemId.equals(item.itemId) ? 16 : 0;
 			int textOffset = vOffset / 16;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
@@ -2757,7 +2757,7 @@ public class GuiCustomHex extends Gui {
 		GlScissorStack.pop(scaledResolution);
 
 		//Player Inventory Items
-		fr.drawString(Minecraft.getMinecraft().thePlayer.inventory
+		fr.drawString(Minecraft.getInstance().player.inventory
 				.getDisplayName()
 				.getUnformattedText(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
@@ -2786,8 +2786,8 @@ public class GuiCustomHex extends Gui {
 
 				if (slot.getHasStack()) {
 					tooltipToDisplay = slot.getStack().getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2800,7 +2800,7 @@ public class GuiCustomHex extends Gui {
 
 			int uOffset = enchanterCurrentItem.conflicts ? 112 : 0;
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
@@ -2846,7 +2846,7 @@ public class GuiCustomHex extends Gui {
 			int itemY = guiTop + 58;
 
 			if (itemEnchantInput == null) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
@@ -2862,8 +2862,8 @@ public class GuiCustomHex extends Gui {
 
 				if (itemEnchantInput != null) {
 					tooltipToDisplay = itemEnchantInput.getTooltip(
-						Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips
+						Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips
 					);
 				}
 			}
@@ -2903,7 +2903,7 @@ public class GuiCustomHex extends Gui {
 			Utils.drawStringCentered(name, guiLeft + X_SIZE / 2, top + 8, true, 0xffffffdd);
 
 			if (isChangingEnchLevel) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
@@ -3107,7 +3107,7 @@ public class GuiCustomHex extends Gui {
 
 	private void renderBaseTexture() {
 		//Base Texture
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(guiLeft, guiTop, X_SIZE, Y_SIZE,
 			0, X_SIZE / 512f, 0, Y_SIZE / 512f, GL11.GL_NEAREST
@@ -3116,7 +3116,7 @@ public class GuiCustomHex extends Gui {
 
 	private List<String> renderSettings(int mouseX, int mouseY, List<String> tooltipToDisplay) {
 		//Settings Buttons
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.color(1, 1, 1, 1);
 		//On Settings Button
 		Utils.drawTexturedRect(guiLeft + 295, guiTop + 147, 16, 16,
@@ -3189,7 +3189,7 @@ public class GuiCustomHex extends Gui {
 			} else {
 				offset = Math.round((96 - 15) * (leftScroll.getValue() / (float) ((applicable.size() - 6) * 16)));
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 104, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
@@ -3207,7 +3207,7 @@ public class GuiCustomHex extends Gui {
 			} else {
 				offset = Math.round((96 - 15) * (rightScroll.getValue() / (float) ((removable.size() - 6) * 16)));
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + 344, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
@@ -3218,7 +3218,7 @@ public class GuiCustomHex extends Gui {
 	private void renderArrow() {
 		//Enchant arrow
 		if (arrowAmount.getValue() > 0) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			float w = 22 * arrowAmount.getValue();
 			if (removingEnchantPlayerLevel < 0) {
@@ -3237,14 +3237,14 @@ public class GuiCustomHex extends Gui {
 		int top = guiTop + 83;
 		//Cancel button
 		if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 				0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 			);
 			Utils.drawStringCentered("Cancel", guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040);
 		} else {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 				0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
@@ -3296,7 +3296,7 @@ public class GuiCustomHex extends Gui {
 		GlStateManager.translate(0.0F, 3.3F, -16.0F);
 		GlStateManager.scale(5, 5, 5);
 		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(ENCHANTMENT_TABLE_BOOK_TEXTURE);
+		Minecraft.getInstance().getTextureManager().bindTexture(ENCHANTMENT_TABLE_BOOK_TEXTURE);
 		GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);
 		float bookOpenAngle = this.bookOpenLast + (this.bookOpen - this.bookOpenLast) * partialTicks;
 		GlStateManager.translate(
@@ -3321,7 +3321,7 @@ public class GuiCustomHex extends Gui {
 		GlStateManager.disableRescaleNormal();
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.matrixMode(5889);
-		GlStateManager.viewport(0, 0, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		GlStateManager.viewport(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getInstance().displayHeight);
 		GlStateManager.popMatrix();
 		GlStateManager.matrixMode(5888);
 		GlStateManager.popMatrix();
@@ -3349,7 +3349,7 @@ public class GuiCustomHex extends Gui {
 	public void overrideIsMouseOverSlot(Slot slot, int mouseX, int mouseY, CallbackInfoReturnable<Boolean> cir) {
 		if ((shouldOverrideFast || shouldOverrideGemstones || shouldOverrideXp) &&
 			currentState != EnchantState.ADDING_ENCHANT) {
-			boolean playerInv = slot.inventory == Minecraft.getMinecraft().thePlayer.inventory;
+			boolean playerInv = slot.inventory == Minecraft.getInstance().player.inventory;
 			int slotId = slot.getSlotIndex();
 			if (playerInv && slotId < 36) {
 				slotId -= 9;
@@ -3383,7 +3383,7 @@ public class GuiCustomHex extends Gui {
 				currentState == EnchantState.HAS_ITEM_IN_BOOKS)) {
 			if (mouseY > guiTop + 6 && mouseY < guiTop + 6 + 15) {
 				String pageStr = "Page: " + currentPage + "/" + expectedMaxPage;
-				int pageStrLen = Minecraft.getMinecraft().fontRendererObj.getStringWidth(pageStr);
+				int pageStrLen = Minecraft.getInstance().font.getStringWidth(pageStr);
 
 				int click = -1;
 				if (mouseX > guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15 &&
@@ -3397,10 +3397,10 @@ public class GuiCustomHex extends Gui {
 				if (click >= 0) {
 					if (currentState == EnchantState.ADDING_ENCHANT || currentState == EnchantState.ADDING_BOOK) {
 						if (Mouse.getEventButtonState()) {
-							if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-							GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+							if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+							GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-							EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+							EntityPlayerSP playerIn = Minecraft.getInstance().player;
 							short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 							ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 							onClick(new C0EPacketClickWindow(
@@ -3409,10 +3409,10 @@ public class GuiCustomHex extends Gui {
 							cancelButtonAnimTime = System.currentTimeMillis();
 						}
 					} else {
-						if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-						GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+						if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+						GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-						EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(click);
 						onClick(new C0EPacketClickWindow(
@@ -3431,13 +3431,13 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
 					leftScroll.setValue(0);
 					rightScroll.setValue(0);
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 					if (currentState != EnchantState.ADDING_BOOK) {
-						EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 						onClick(new C0EPacketClickWindow(
@@ -3477,10 +3477,10 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 					onClick(new C0EPacketClickWindow(
@@ -3492,10 +3492,10 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(
 						enchanterCurrentEnch.slotIndex);
@@ -3504,7 +3504,7 @@ public class GuiCustomHex extends Gui {
 						enchanterCurrentEnch.slotIndex, 0, 0, stack, transactionID
 					));
 
-					int playerXpLevel = Minecraft.getMinecraft().thePlayer.experienceLevel;
+					int playerXpLevel = Minecraft.getInstance().player.experienceLevel;
 					if (playerXpLevel >= enchanterCurrentEnch.xpCost) {
 						if (removingEnchantPlayerLevel >= 0 && enchanterCurrentEnch.level == removingEnchantPlayerLevel) {
 							orbDisplay.spawnExperienceOrbs(X_SIZE / 2, 66, X_SIZE / 2, 36, 3);
@@ -3576,10 +3576,10 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					/*GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					/*GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 					onClick(new C0EPacketClickWindow(
@@ -3593,10 +3593,10 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(
 						enchanterCurrentItem.slotIndex);
@@ -3676,10 +3676,10 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					/*if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					/*if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 					onClick(new C0EPacketClickWindow(
@@ -3693,10 +3693,10 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14)) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(
 						enchanterCurrentItem.slotIndex);
@@ -3776,11 +3776,11 @@ public class GuiCustomHex extends Gui {
 
 				if (!isChangingEnchLevel && mouseX > guiLeft + X_SIZE / 2 + 1 && mouseX <= guiLeft + X_SIZE / 2 + 1 + 48 &&
 					mouseY > top + 18 && mouseY <= top + 18 + 14) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 					if (currentState != EnchantState.APPLYING_GEMSTONE) {
-						EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 						onClick(new C0EPacketClickWindow(
@@ -3798,10 +3798,10 @@ public class GuiCustomHex extends Gui {
 						mouseY > top && mouseY <= top + 16) ||
 					(mouseX > guiLeft + X_SIZE / 2 - 1 - 48 && mouseX <= guiLeft + X_SIZE / 2 - 1 &&
 						mouseY > top + 18 && mouseY <= top + 18 + 14) && currentState == EnchantState.APPLYING_GEMSTONE) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(
 						enchanterCurrentItem.slotIndex);
@@ -4000,7 +4000,7 @@ public class GuiCustomHex extends Gui {
 		if (mouseY > guiTop + 18 && mouseY < guiTop + 18 + 96) {
 			if (mouseX > guiLeft + 8 && mouseX < guiLeft + 8 + 96) {
 				if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() &&
-					Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null) {
+					Minecraft.getInstance().player.inventory.getItemStack() == null) {
 					if (isInEnchanting()) {
 						for (int i = 0; i < 7; i++) {
 							int index = i + leftScroll.getValue() / 16;
@@ -4011,11 +4011,11 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								Enchantment ench = applicable.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM) {
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(ench.slotIndex);
@@ -4024,7 +4024,7 @@ public class GuiCustomHex extends Gui {
 										ench.slotIndex, 0, 0, stack, transactionID
 									));
 								} else if (currentState == EnchantState.ADDING_ENCHANT) {
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 									onClick(new C0EPacketClickWindow(
@@ -4046,15 +4046,15 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM_IN_BOOKS) {
 									currentState = EnchantState.ADDING_BOOK;
 									enchanterCurrentItem = item;
 								} else if (currentState == EnchantState.ADDING_BOOK && enchanterCurrentItem == item) {
 									currentState = EnchantState.HAS_ITEM_IN_BOOKS;
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4082,11 +4082,11 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								currentState = EnchantState.HAS_ITEM_IN_BOOKS;
-								EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 								ItemStack stack =
 									((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4110,15 +4110,15 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.ADDING_GEMSTONE) {
 									currentState = EnchantState.APPLYING_GEMSTONE;
 									enchanterCurrentItem = item;
 								} else if (currentState == EnchantState.APPLYING_GEMSTONE && enchanterCurrentItem == item) {
 									currentState = EnchantState.ADDING_GEMSTONE;
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4148,10 +4148,10 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = applicableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-								EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+								EntityPlayerSP playerIn = Minecraft.getInstance().player;
 								short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 								ItemStack stack =
 									((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4173,7 +4173,7 @@ public class GuiCustomHex extends Gui {
 				isScrollingLeft = true;
 			} else if (mouseX > guiLeft + 248 && mouseX < guiLeft + 248 + 96) {
 				if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() &&
-					Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null) {
+					Minecraft.getInstance().player.inventory.getItemStack() == null) {
 					if (isInEnchanting()) {
 						for (int i = 0; i < 7; i++) {
 							int index = i + rightScroll.getValue() / 16;
@@ -4184,11 +4184,11 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								Enchantment ench = removable.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM || currentState == EnchantState.HAS_ITEM_IN_HEX) {
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(ench.slotIndex);
@@ -4197,7 +4197,7 @@ public class GuiCustomHex extends Gui {
 										ench.slotIndex, 0, 0, stack, transactionID
 									));
 								} else if (currentState == EnchantState.ADDING_ENCHANT) {
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 									onClick(new C0EPacketClickWindow(
@@ -4219,15 +4219,15 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = removableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.ADDING_GEMSTONE) {
 									currentState = EnchantState.APPLYING_GEMSTONE;
 									enchanterCurrentItem = item;
 								} else if (currentState == EnchantState.APPLYING_GEMSTONE && enchanterCurrentItem == item) {
 									currentState = EnchantState.ADDING_GEMSTONE;
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4256,15 +4256,15 @@ public class GuiCustomHex extends Gui {
 								mouseY > top && mouseY <= top + 16) {
 								HexItem item = removableItem.get(index);
 
-								if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-								GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+								if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+								GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
 								if (currentState == EnchantState.HAS_ITEM_IN_BOOKS) {
 									currentState = EnchantState.ADDING_BOOK;
 									enchanterCurrentItem = item;
 								} else if (currentState == EnchantState.ADDING_BOOK && enchanterCurrentItem == item) {
 									currentState = EnchantState.HAS_ITEM_IN_BOOKS;
-									EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+									EntityPlayerSP playerIn = Minecraft.getInstance().player;
 									short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 									ItemStack stack =
 										((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(item.slotIndex);
@@ -4319,10 +4319,10 @@ public class GuiCustomHex extends Gui {
 				(mouseY > guiTop + 133 + 54 + 4 && mouseY < guiTop + 133 + 54 + 4 + 18)) {
 				if (currentState == EnchantState.ADDING_ENCHANT) {
 					if (Mouse.getEventButtonState()) {
-						if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-						GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+						if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+						GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-						EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+						EntityPlayerSP playerIn = Minecraft.getInstance().player;
 						short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 						ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 						onClick(new C0EPacketClickWindow(
@@ -4340,10 +4340,10 @@ public class GuiCustomHex extends Gui {
 			mouseY >= guiTop + 57 && mouseY < guiTop + 57 + 18) {
 			if (currentState == EnchantState.ADDING_ENCHANT) {
 				if (Mouse.getEventButtonState()) {
-					if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer)) return true;
-					GuiContainer chest = ((GuiContainer) Minecraft.getMinecraft().currentScreen);
+					if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer)) return true;
+					GuiContainer chest = ((GuiContainer) Minecraft.getInstance().currentScreen);
 
-					EntityPlayerSP playerIn = Minecraft.getMinecraft().thePlayer;
+					EntityPlayerSP playerIn = Minecraft.getInstance().player;
 					short transactionID = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
 					ItemStack stack = ((ContainerChest) chest.inventorySlots).getLowerChestInventory().getStackInSlot(45);
 					onClick(new C0EPacketClickWindow(
@@ -4360,9 +4360,9 @@ public class GuiCustomHex extends Gui {
 	}
 
 	public void onClick(C0EPacketClickWindow packet) {
-		var cont = Minecraft.getMinecraft().thePlayer.openContainer;
+		var cont = Minecraft.getInstance().player.openContainer;
 		var clickEvent = new SlotClickEvent(
-			(GuiContainer) Minecraft.getMinecraft().currentScreen,
+			(GuiContainer) Minecraft.getInstance().currentScreen,
 			cont.getSlot(packet.getSlotId()),
 			packet.getSlotId(),
 			packet.getUsedButton(),
@@ -4370,7 +4370,7 @@ public class GuiCustomHex extends Gui {
 		);
 		HexPriceWarning.INSTANCE.onClick(clickEvent);
 		if (!clickEvent.isCanceled())
-			Minecraft.getMinecraft().getNetHandler().addToSendQueue(packet);
+			Minecraft.getInstance().getNetHandler().addToSendQueue(packet);
 	}
 
 	public boolean keyboardInput() {
@@ -4380,12 +4380,12 @@ public class GuiCustomHex extends Gui {
 			}
 			return true;
 		}
-		if (Keyboard.getEventKey() == Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode()) {
+		if (Keyboard.getEventKey() == Minecraft.getInstance().gameSettings.keyBindScreenshot.getKeyCode()) {
 			return false;
 		}
 
 		return Keyboard.getEventKey() != Keyboard.KEY_ESCAPE &&
-			Keyboard.getEventKey() != Minecraft.getMinecraft().gameSettings.keyBindInventory.getKeyCode() &&
+			Keyboard.getEventKey() != Minecraft.getInstance().gameSettings.keyBindInventory.getKeyCode() &&
 			(!NotEnoughUpdates.INSTANCE.config.slotLocking.enableSlotLocking ||
 				Keyboard.getEventKey() != NotEnoughUpdates.INSTANCE.config.slotLocking.slotLockKey);
 	}

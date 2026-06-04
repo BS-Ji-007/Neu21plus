@@ -243,7 +243,7 @@ public class ItemTooltipListener {
 							String text = EnumChatFormatting.BLUE + (reforgeName.isEmpty() ? "Bonus: " : reforgeName + " Bonus: ") +
 								EnumChatFormatting.GRAY + reforgeAbility;
 							boolean first = true;
-							for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
+							for (String s : Minecraft.getInstance().font.listFormattedStringToWidth(text, 150)) {
 								newTooltip.add((first ? "" : "  ") + s);
 								first = false;
 							}
@@ -384,7 +384,7 @@ public class ItemTooltipListener {
 								newTooltip.add("");
 								String text = EnumChatFormatting.BLUE + "Chisel bonus: " + formattedChiselBonus;
 								boolean first = true;
-								for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
+								for (String s : Minecraft.getInstance().font.listFormattedStringToWidth(text, 150)) {
 									newTooltip.add((first ? "" : "  ") + s);
 									first = false;
 								}
@@ -473,11 +473,11 @@ public class ItemTooltipListener {
 			}
 
 			if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 2 &&
-				Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+				Minecraft.getInstance().currentScreen instanceof GuiChest) {
 				if (line.contains(EnumChatFormatting.GREEN + "Open Reward Chest")) {
 					dungeonProfit = true;
 				} else if (k == 7 && dungeonProfit) {
-					GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+					GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 					ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 					IInventory lower = cc.getLowerChestInventory();
 
@@ -832,7 +832,7 @@ public class ItemTooltipListener {
 						}
 
 						Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map =
-							Minecraft.getMinecraft().getSkinManager().loadSkinFromCache(gameprofile);
+							Minecraft.getInstance().getSkinManager().loadSkinFromCache(gameprofile);
 
 						if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
 							MinecraftProfileTexture profTex = map.get(MinecraftProfileTexture.Type.SKIN);

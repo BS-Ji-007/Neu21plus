@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.recipes.generators
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.GuiTextField
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.init.Items
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.client.GuiScrollingList
 
 class ItemSearchGui(initialText: String, val onSelect: (String?) -> Unit) : GuiScreen() {
     val textField = GuiTextField(
-        0, Minecraft.getMinecraft().fontRendererObj,
+        0, Minecraft.getInstance().font,
         -1,
         5,
         200,
@@ -44,7 +44,7 @@ class ItemSearchGui(initialText: String, val onSelect: (String?) -> Unit) : GuiS
         screenHeight: Int,
         val callback: (ItemStack) -> Unit
     ) : GuiScrollingList(
-        Minecraft.getMinecraft(),
+        Minecraft.getInstance(),
         200,
         screenHeight - 30,
         30,

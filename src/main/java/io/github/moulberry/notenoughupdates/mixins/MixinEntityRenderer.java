@@ -72,7 +72,7 @@ public abstract class MixinEntityRenderer {
 	public void renderWorldPass_dispatchRenderLast(RenderGlobal context, float partialTicks) {
 		Vector3f currentPosition = CustomItemEffects.INSTANCE.getCurrentPosition();
 		if (currentPosition != null) {
-			Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+			Entity entity = Minecraft.getInstance().getRenderViewEntity();
 			double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
 			double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
 			double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;

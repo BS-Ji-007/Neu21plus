@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -89,7 +89,7 @@ public class DungeonBlocks {
 			return true;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		int w = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
 		int h = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
 
@@ -117,7 +117,7 @@ public class DungeonBlocks {
 			GlStateManager.disableLighting();
 			GlStateManager.disableFog();
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
@@ -133,17 +133,17 @@ public class DungeonBlocks {
 			GL11.glPopMatrix();
 
 			to.bindFramebufferTexture();
-			if (Minecraft.getMinecraft().gameSettings.mipmapLevels >= 0) {
+			if (Minecraft.getInstance().gameSettings.mipmapLevels >= 0) {
 				GL11.glTexParameteri(
 					GL11.GL_TEXTURE_2D,
 					GL12.GL_TEXTURE_MAX_LEVEL,
-					Minecraft.getMinecraft().gameSettings.mipmapLevels
+					Minecraft.getInstance().gameSettings.mipmapLevels
 				);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MIN_LOD, 0.0F);
 				GL11.glTexParameterf(
 					GL11.GL_TEXTURE_2D,
 					GL12.GL_TEXTURE_MAX_LOD,
-					(float) Minecraft.getMinecraft().gameSettings.mipmapLevels
+					(float) Minecraft.getInstance().gameSettings.mipmapLevels
 				);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0.0F);
 				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
@@ -160,14 +160,14 @@ public class DungeonBlocks {
 
 			to.bindFramebufferTexture();
 
-			Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+			Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 			GlStateManager.disableBlend();
 			GlStateManager.enableLighting();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 		GlStateManager.disableBlend();
 		GlStateManager.enableLighting();
 		return false;
@@ -194,7 +194,7 @@ public class DungeonBlocks {
 	}};
 
 	public static void tick() {
-		if (!isOverriding() || Minecraft.getMinecraft().theWorld == null) {
+		if (!isOverriding() || Minecraft.getInstance().level == null) {
 			return;
 		}
 
@@ -204,7 +204,7 @@ public class DungeonBlocks {
 			bindModifiedTexture(entry.getKey(), SpecialColour.specialToChromaRGB(entry.getValue()));
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 		int w = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
 		int h = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
 
@@ -227,25 +227,25 @@ public class DungeonBlocks {
 			GlStateManager.disableLighting();
 			GlStateManager.disableFog();
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
 			HashMap<TextureAtlasSprite, Integer> spriteMap = new HashMap<TextureAtlasSprite, Integer>() {{
 				put(
-					Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/stonebrick_cracked"),
+					Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/stonebrick_cracked"),
 					SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeons.dungCrackedColour)
 				);
 				put(
-					Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/dispenser_front_horizontal"),
+					Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/dispenser_front_horizontal"),
 					SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeons.dungDispenserColour)
 				);
 				put(
-					Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/lever"),
+					Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/lever"),
 					SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeons.dungLeverColour)
 				);
 				put(
-					Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/trip_wire"),
+					Minecraft.getInstance().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/trip_wire"),
 					SpecialColour.specialToChromaRGB(NotEnoughUpdates.INSTANCE.config.dungeons.dungTripWireColour)
 				);
 			}};
@@ -259,7 +259,7 @@ public class DungeonBlocks {
 				);
 			}
 
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			GlStateManager.matrixMode(5889);
 			GlStateManager.loadIdentity();
 			GlStateManager.ortho(0.0D, scaledResolution.getScaledWidth_double(), scaledResolution.getScaledHeight_double(),
@@ -272,17 +272,17 @@ public class DungeonBlocks {
 			GL11.glPopMatrix();
 
 			to.bindFramebufferTexture();
-			if (Minecraft.getMinecraft().gameSettings.mipmapLevels >= 0) {
+			if (Minecraft.getInstance().gameSettings.mipmapLevels >= 0) {
 				GL11.glTexParameteri(
 					GL11.GL_TEXTURE_2D,
 					GL12.GL_TEXTURE_MAX_LEVEL,
-					Minecraft.getMinecraft().gameSettings.mipmapLevels
+					Minecraft.getInstance().gameSettings.mipmapLevels
 				);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MIN_LOD, 0.0F);
 				GL11.glTexParameterf(
 					GL11.GL_TEXTURE_2D,
 					GL12.GL_TEXTURE_MAX_LOD,
-					(float) Minecraft.getMinecraft().gameSettings.mipmapLevels
+					(float) Minecraft.getInstance().gameSettings.mipmapLevels
 				);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0.0F);
 				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
@@ -294,7 +294,7 @@ public class DungeonBlocks {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+		Minecraft.getInstance().getFramebuffer().bindFramebuffer(true);
 		GlStateManager.enableBlend();
 	}
 

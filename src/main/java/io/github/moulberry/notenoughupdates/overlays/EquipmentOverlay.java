@@ -36,7 +36,7 @@ import io.github.moulberry.notenoughupdates.util.Rectangle;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
@@ -44,7 +44,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -188,7 +188,7 @@ public class EquipmentOverlay {
 	@SubscribeEvent
 	public void onGuiTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.START || event.side != Side.CLIENT) return;
-		updateGuiInfo(Minecraft.getMinecraft().currentScreen);
+		updateGuiInfo(Minecraft.getInstance().currentScreen);
 	}
 
 	@SubscribeEvent
@@ -208,8 +208,8 @@ public class EquipmentOverlay {
 	public void renderGuis(GuiInventory inventory) {
 		int width = Utils.peekGuiScale().getScaledWidth();
 		int height = Utils.peekGuiScale().getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		// Draw Backgrounds before anything, so hover overlay isn't occluded by the background
 		renderHudBackground(inventory);
@@ -232,14 +232,14 @@ public class EquipmentOverlay {
 		final int overlayTop = container.getGuiTop();
 		if (shouldRenderArmorHud) {
 			ResourceLocation equipmentTexture = getCustomEquipmentTexture(shouldRenderPets);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(equipmentTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(equipmentTexture);
 
 			Utils.drawTexturedRect(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 		}
 
 		if (shouldRenderPets) {
 			ResourceLocation customPetTexture = getCustomPetTexture(shouldRenderArmorHud);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(customPetTexture);
+			Minecraft.getInstance().getTextureManager().bindTexture(customPetTexture);
 			GlStateManager.color(1, 1, 1, 1);
 
 			Utils.drawTexturedRect(overlayLeft, overlayTop + PET_OVERLAY_OFFSET_Y, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
@@ -260,7 +260,7 @@ public class EquipmentOverlay {
 		drawSlot(slot4, overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 54, mouseX, mouseY, tooltipToDisplay);
 
 		if (slot1 == null) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(QUESTION_MARK);
+			Minecraft.getInstance().getTextureManager().bindTexture(QUESTION_MARK);
 			GlStateManager.color(1, 1, 1, 1);
 			for (int i = 0; i < 4; i++) {
 				Utils.drawTexturedRect(overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 18 * i, 16, 16, GL11.GL_NEAREST);
@@ -274,7 +274,7 @@ public class EquipmentOverlay {
 			if (Utils.isWithinRect(mouseX, mouseY, overlayLeft + 8, overlayTop + 8, 16, 70)
 				&& NotEnoughUpdates.INSTANCE.config.customArmour.sendWardrobeCommand
 				&& Mouse.getEventButtonState()
-				&& Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null) {
+				&& Minecraft.getInstance().player.inventory.getItemStack() == null) {
 				NotEnoughUpdates.INSTANCE.trySendCommand("/equipment");
 			}
 
@@ -338,8 +338,8 @@ public class EquipmentOverlay {
 			// draw the slot overlay
 			drawHoverOverlay(x, y);
 
-			List<String> tt = stack.getTooltip(Minecraft.getMinecraft().thePlayer,
-				Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+			List<String> tt = stack.getTooltip(Minecraft.getInstance().player,
+				Minecraft.getInstance().gameSettings.advancedItemTooltips);
 			if (shouldShowEquipmentTooltip(tt))
 				tooltip.addAll(tt);
 			if (NotEnoughUpdates.INSTANCE.config.customArmour.sendWardrobeCommand
@@ -368,7 +368,7 @@ public class EquipmentOverlay {
 		List<String> tooltipToDisplay;
 		if (Utils.isWithinRect(mouseX, mouseY, overlayLeft + 8, overlayTop + 8, 16, 16)) {
 			if (NotEnoughUpdates.INSTANCE.config.petOverlay.sendPetsCommand
-				&& Minecraft.getMinecraft().thePlayer.inventory.getItemStack() == null
+				&& Minecraft.getInstance().player.inventory.getItemStack() == null
 				&& Mouse.getEventButtonState()) {
 				NotEnoughUpdates.INSTANCE.trySendCommand("/pets");
 			}
@@ -376,8 +376,8 @@ public class EquipmentOverlay {
 			// draw the slot overlay
 			drawHoverOverlay(overlayLeft + 8, overlayTop + 8);
 
-			tooltipToDisplay = petInfo.getTooltip(Minecraft.getMinecraft().thePlayer,
-				Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+			tooltipToDisplay = petInfo.getTooltip(Minecraft.getInstance().player,
+				Minecraft.getInstance().gameSettings.advancedItemTooltips);
 			Utils.drawHoveringText(
 				tooltipToDisplay,
 				mouseX - calculateTooltipXOffset(tooltipToDisplay),
@@ -390,9 +390,9 @@ public class EquipmentOverlay {
 
 	@SubscribeEvent
 	public void onClickItem(PlayerInteractEvent event) {
-		if ((event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && event.action != PlayerInteractEvent.Action.RIGHT_CLICK_AIR) || Minecraft.getMinecraft().thePlayer.getHeldItem() == null) return;
+		if ((event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && event.action != PlayerInteractEvent.Action.RIGHT_CLICK_AIR) || Minecraft.getInstance().player.getHeldItem() == null) return;
 
-		ItemStack heldItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		ItemStack heldItem = Minecraft.getInstance().player.getHeldItem();
 		List<String> heldItemLore = ItemUtils.getLore(heldItem);
 		if (heldItemLore.isEmpty()) {
 			return;
@@ -502,9 +502,9 @@ public class EquipmentOverlay {
 	private boolean wardrobeOpen = false;
 
 	private boolean isInNamedGui(String guiName) {
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest container = (ContainerChest) chest.inventorySlots;
 			IInventory lower = container.getLowerChestInventory();
 			String containerName = lower.getDisplayName().getUnformattedText();
@@ -517,9 +517,9 @@ public class EquipmentOverlay {
 	}
 
 	private ItemStack getChestSlotsAsItemStack(int slot) {
-		GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof GuiChest) {
-			GuiChest chest = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			GuiChest chest = (GuiChest) Minecraft.getInstance().currentScreen;
 			return chest.inventorySlots.getSlot(slot).getStack();
 		} else {
 			return null;
@@ -548,7 +548,7 @@ public class EquipmentOverlay {
 		int offset = 0;
 		if (tooltipToDisplay != null) {
 			for (String line : tooltipToDisplay) {
-				int lineWidth = Minecraft.getMinecraft().fontRendererObj.getStringWidth(line);
+				int lineWidth = Minecraft.getInstance().font.getStringWidth(line);
 				if (lineWidth > offset) {
 					offset = lineWidth;
 				}
@@ -559,27 +559,27 @@ public class EquipmentOverlay {
 
 	public void renderPreviewArmorHud() {
 		if (!NotEnoughUpdates.INSTANCE.config.customArmour.enableArmourHud ||
-			!(Minecraft.getMinecraft().currentScreen instanceof GuiInvButtonEditor)) return;
-		GuiInvButtonEditor container = (GuiInvButtonEditor) Minecraft.getMinecraft().currentScreen;
+			!(Minecraft.getInstance().currentScreen instanceof GuiInvButtonEditor)) return;
+		GuiInvButtonEditor container = (GuiInvButtonEditor) Minecraft.getInstance().currentScreen;
 
 		int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
 		int overlayTop = container.getGuiTop();
 
 		ResourceLocation equipmentTexture = getCustomEquipmentTexture(shouldRenderPets);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(equipmentTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(equipmentTexture);
 
 		Utils.drawTexturedRect(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 	}
 
 	public void renderPreviewPetInvHud() {
 		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petInvDisplay ||
-			!(Minecraft.getMinecraft().currentScreen instanceof GuiInvButtonEditor)) return;
-		GuiInvButtonEditor container = (GuiInvButtonEditor) Minecraft.getMinecraft().currentScreen;
+			!(Minecraft.getInstance().currentScreen instanceof GuiInvButtonEditor)) return;
+		GuiInvButtonEditor container = (GuiInvButtonEditor) Minecraft.getInstance().currentScreen;
 		int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
 		int overlayTop = container.getGuiTop() + PET_OVERLAY_OFFSET_Y;
 
 		ResourceLocation petHudTexture = getCustomPetTexture(shouldRenderArmorHud);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(petHudTexture);
+		Minecraft.getInstance().getTextureManager().bindTexture(petHudTexture);
 
 		Utils.drawTexturedRect(overlayLeft, overlayTop, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 	}

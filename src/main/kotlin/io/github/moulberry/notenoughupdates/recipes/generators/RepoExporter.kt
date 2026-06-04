@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.recipes.generators
 
-import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.screens.Screen
 
 interface RepoExporter {
     suspend fun export(context: RepoExportingContext)

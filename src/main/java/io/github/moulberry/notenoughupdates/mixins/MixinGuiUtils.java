@@ -49,13 +49,13 @@ public class MixinGuiUtils {
 
 	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 0, argsOnly = true)
 	private static int drawHoveringText_modifyMouseX(int mouseX) {
-		return Mouse.getX() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+		return Mouse.getX() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth() / Minecraft.getInstance().displayWidth;
 	}
 
 	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 1, argsOnly = true)
 	private static int drawHoveringText_modifyMouseY(int mouseY) {
 		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() -
-			Mouse.getY() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+			Mouse.getY() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() / Minecraft.getInstance().displayHeight;
 	}
 
 

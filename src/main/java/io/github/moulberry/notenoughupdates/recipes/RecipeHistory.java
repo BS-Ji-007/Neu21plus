@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.recipes;
 
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 
 import java.util.ArrayList;
 

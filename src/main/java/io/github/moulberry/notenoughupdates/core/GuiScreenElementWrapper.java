@@ -19,7 +19,7 @@
 
 package io.github.moulberry.notenoughupdates.core;
 
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;

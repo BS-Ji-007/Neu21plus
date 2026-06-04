@@ -24,9 +24,9 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.GuiElementTextField;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,14 +78,14 @@ public class GuiNavigation extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		textField.render(guiLeft + SEARCH_BAR_X, guiTop + SEARCH_BAR_Y);
 
 		refreshResults();
 		for (int i = 0; i < LIST_COUNT; i++) {
 			if (i < searchResults.size()) {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+				Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 				String name = searchResults.get(i);
 				JsonObject json = NotEnoughUpdates.INSTANCE.navigation.getWaypoints().get(name);
 
@@ -106,7 +106,7 @@ public class GuiNavigation extends GuiScreen {
 				Utils.drawStringF(
 					json.get("displayname").getAsString(),
 					baseX + TEXT_OFFSET_X,
-					baseY + LIST_OFFSET_Y / 2F - Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT / 2F,
+					baseY + LIST_OFFSET_Y / 2F - Minecraft.getInstance().font.FONT_HEIGHT / 2F,
 					false,
 					0x000000
 				);

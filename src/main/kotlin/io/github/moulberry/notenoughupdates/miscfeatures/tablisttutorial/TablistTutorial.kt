@@ -39,7 +39,7 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.inventory.ContainerChest
 import net.minecraft.inventory.Slot
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -68,11 +68,11 @@ object TablistTutorial {
             GlStateManager.pushMatrix()
             GlStateManager.translate(0f, 0f, 300f)
             GlStateManager.color(1f, 1f, 1f, 1f)
-            Minecraft.getMinecraft().textureManager.bindTexture(imageLocation)
+            Minecraft.getInstance().textureManager.bindTexture(imageLocation)
             RenderUtils.drawTexturedRect(imgX.toFloat(), imgY.toFloat(), textureSize.toFloat(), textureSize.toFloat())
             GlStateManager.translate(textX.toFloat(), textY.toFloat(), 0F)
             GlStateManager.scale(textScale, textScale, 1F)
-            val fr = Minecraft.getMinecraft().fontRendererObj
+            val fr = Minecraft.getInstance().font
             fr.drawString(label, 0, -fr.FONT_HEIGHT / 2, -1)
             GlStateManager.popMatrix()
         }

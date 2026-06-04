@@ -29,7 +29,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -64,7 +64,7 @@ public class FrozenTreasuresHighlighter extends GenericBlockHighlighter {
 
 	@Override
 	protected boolean isValidHighlightSpot(BlockPos key) {
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return false;
 		Block b = w.getBlockState(key).getBlock();
 		return b == Blocks.ice;
@@ -73,7 +73,7 @@ public class FrozenTreasuresHighlighter extends GenericBlockHighlighter {
 	@SubscribeEvent
 	public void onTickNew(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END || !isEnabled()) return;
-		World w = Minecraft.getMinecraft().theWorld;
+		World w = Minecraft.getInstance().level;
 		if (w == null) return;
 		List<Entity> entities = w.getLoadedEntityList();
 		for (Entity entity : entities) {

@@ -32,7 +32,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
@@ -172,7 +172,7 @@ public class NEUCape {
 					displayFrame = currentFrame;
 				}
 			}
-			Minecraft.getMinecraft().getTextureManager().bindTexture(capeTextures[displayFrame]);
+			Minecraft.getInstance().getTextureManager().bindTexture(capeTextures[displayFrame]);
 		}
 	}
 
@@ -346,14 +346,14 @@ public class NEUCape {
 			shaderManager.loadData(shaderId, "eventMillis", (int) (System.currentTimeMillis() - eventMillis));
 		} else if (shaderName.equalsIgnoreCase("negative")) {
 			shaderManager.loadData(shaderId, "screensize", new Vector2f(
-				Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight
+				Minecraft.getInstance().displayWidth,
+				Minecraft.getInstance().displayHeight
 			));
 		} else if (shaderName.equalsIgnoreCase("void")) {
 			shaderManager.loadData(shaderId, "millis", (int) (System.currentTimeMillis() - startTime));
 			shaderManager.loadData(shaderId, "screensize", new Vector2f(
-				Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight
+				Minecraft.getInstance().displayWidth,
+				Minecraft.getInstance().displayHeight
 			));
 		} else if (shaderName.equalsIgnoreCase("screensaver")) {
 			shaderManager.loadData(shaderId, "something", (int) ((System.currentTimeMillis() / 4) % 256));
@@ -373,7 +373,7 @@ public class NEUCape {
 
 		ensureCapeNodesCreated(player);
 
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Entity viewer = Minecraft.getInstance().getRenderViewEntity();
 		double viewerX = (viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * e.partialRenderTick) % 7789;
 		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * e.partialRenderTick;
 		double viewerZ = (viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * e.partialRenderTick) % 7789;
@@ -422,7 +422,7 @@ public class NEUCape {
 
 	public void onTick(EntityPlayer player) {
 		if (player == null) return;
-		if (Minecraft.getMinecraft().isGamePaused()) return;
+		if (Minecraft.getInstance().isGamePaused()) return;
 
 		if (System.currentTimeMillis() - lastRender < 500) {
 			if (currentPlayer == null || !keepCurrentPlayer) {
@@ -882,8 +882,8 @@ public class NEUCape {
 			}
 		}
 
-		if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled())
-			Minecraft.getMinecraft().getFramebuffer().enableStencil();
+		if (!Minecraft.getInstance().getFramebuffer().isStencilEnabled())
+			Minecraft.getInstance().getFramebuffer().enableStencil();
 
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
 		GL11.glStencilFunc(GL11.GL_ALWAYS, 1, 0xFF);
@@ -1094,7 +1094,7 @@ public class NEUCape {
 			orbitals.put(earthDist, 1);
 			orbitals.put(mercuryDist, 2);
 
-			double delta = Minecraft.getMinecraft().getRenderViewEntity().getRotationYawHead() % 360;
+			double delta = Minecraft.getInstance().getRenderViewEntity().getRotationYawHead() % 360;
 			while (delta < 0) delta += 360;
 
 			double jupDelta = (delta + Math.toDegrees(jupiterAngle)) % 360;
@@ -1383,7 +1383,7 @@ public class NEUCape {
 					node.renderPosition = accum;
 				}
 
-				if (!Minecraft.getMinecraft().isGamePaused()) {
+				if (!Minecraft.getInstance().isGamePaused()) {
 					for (int i = node.oldRenderPosition.length - 1; i >= 0; i--) {
 						if (i > 0) {
 							node.oldRenderPosition[i] = node.oldRenderPosition[i - 1];

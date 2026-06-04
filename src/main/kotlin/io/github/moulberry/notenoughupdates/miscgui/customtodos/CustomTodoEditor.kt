@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.loadResourceLocation
 import net.minecraft.client.Minecraft
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 
 class CustomTodoEditor(
     val from: CustomTodo,
@@ -292,7 +292,7 @@ class CustomTodoEditor(
 
     @Bind
     fun close() {
-        Minecraft.getMinecraft().displayGuiScreen(
+        Minecraft.getInstance().displayGuiScreen(
             CustomTodoList(
                 todos, xmlUniverse
             ).open()
@@ -301,7 +301,7 @@ class CustomTodoEditor(
 
     @Bind
     fun edit() {
-        Minecraft.getMinecraft().displayGuiScreen(
+        Minecraft.getInstance().displayGuiScreen(
             xmlUniverse.loadResourceLocation(this, ResourceLocation("notenoughupdates:gui/customtodos/edit.xml"))
         )
     }

@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.core.config;
 import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper;
 import io.github.moulberry.notenoughupdates.commands.help.SettingsCommand;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.fml.client.IModGuiFactory;
 import org.lwjgl.input.Keyboard;
 
@@ -60,7 +60,7 @@ public class MoulConfigGuiForgeInterop implements IModGuiFactory {
 		@Override
 		public void handleKeyboardInput() throws IOException {
 			if (Keyboard.getEventKeyState() && Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-				Minecraft.getMinecraft().displayGuiScreen(parent);
+				Minecraft.getInstance().displayGuiScreen(parent);
 				return;
 			}
 			super.handleKeyboardInput();

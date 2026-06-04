@@ -26,7 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.text.DateFormat;
@@ -137,7 +137,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 			return;
 		}
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(CRIMSON_ISLE);
+		Minecraft.getInstance().getTextureManager().bindTexture(CRIMSON_ISLE);
 		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		JsonObject netherIslandPlayerData = profileInfo.getAsJsonObject("nether_island_player_data");
@@ -184,7 +184,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 			int highestWaveCompleted = kuudraCompletedTiers.has("highest_wave_" + KUUDRA_TIERS[i]) ?
 				kuudraCompletedTiers.get("highest_wave_" + KUUDRA_TIERS[i]).getAsInt() : 0;
 
-			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
+			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(
 				KUUDRA_KEYS[i],
 				guiLeft + 8,
 				guiTop + 30 + (i * 30)

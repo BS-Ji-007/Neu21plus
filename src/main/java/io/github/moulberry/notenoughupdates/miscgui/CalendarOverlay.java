@@ -47,7 +47,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -199,17 +199,17 @@ public class CalendarOverlay {
 	public void handleJinglePlayer() {
 		if (jingleIndex == 0) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
-				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(
+				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
 					new ResourceLocation("notenoughupdates:calendar_notif_jingle")
 				));
-				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(
+				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
 					new ResourceLocation("notenoughupdates:calendar_notif_in")
 				));
 			}
 			jingleIndex = -15 * 20;
 		} else if (jingleIndex >= 1) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
-				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(
+				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
 					new ResourceLocation("notenoughupdates:calendar_notif_in")
 				));
 			}
@@ -219,7 +219,7 @@ public class CalendarOverlay {
 		}
 		if (jingleIndex == -20 * 6 - 10) {
 			if (NotEnoughUpdates.INSTANCE.config.calendar.eventNotificationSounds) {
-				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(
+				Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(
 					new ResourceLocation("notenoughupdates:calendar_notif_out")
 				));
 			}
@@ -422,13 +422,13 @@ public class CalendarOverlay {
 
 		getFarmingEventTypes();
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			jfFavouriteSelect = null;
 			populateDefaultEvents();
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 
@@ -597,7 +597,7 @@ public class CalendarOverlay {
 
 	@SubscribeEvent
 	public void onGuiDraw(GuiScreenEvent.DrawScreenEvent.Pre event) {
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			return;
 		}
 
@@ -605,7 +605,7 @@ public class CalendarOverlay {
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
@@ -623,7 +623,7 @@ public class CalendarOverlay {
 		xSize = 168;
 		ySize = 170;
 
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 		guiLeft = (width - xSize) / 2;
@@ -636,12 +636,12 @@ public class CalendarOverlay {
 		renderBlurredBackground(10, width, height, guiLeft + 151, guiTop + 26, 14, 141);
 		renderBlurredBackground(10, width, height, guiLeft + 26, guiTop + 26, 116, 141);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(BACKGROUND);
+		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, GL11.GL_NEAREST);
 
 		GlStateManager.translate(0, 0, 10);
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+		FontRenderer fr = Minecraft.getInstance().font;
 
 		fr.drawString("Daily", guiLeft + 29, guiTop + 30, 0xffffaa00);
 		int specialLen = fr.getStringWidth("Special");
@@ -671,19 +671,19 @@ public class CalendarOverlay {
 		if (mouseY >= guiTop + 26 && mouseY <= guiTop + 26 + 141) {
 			if (mouseX >= guiLeft + 3 && mouseX <= guiLeft + 3 + 14) {
 				if (mayorStack != null)
-					tooltipToDisplay = mayorStack.getTooltip(Minecraft.getMinecraft().thePlayer,
-						Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+					tooltipToDisplay = mayorStack.getTooltip(Minecraft.getInstance().player,
+						Minecraft.getInstance().gameSettings.advancedItemTooltips);
 			} else if (mouseX >= guiLeft + 151 && mouseX <= guiLeft + 151 + 14) {
 				if (mouseY <= guiTop + 26 + 70) {
 					ItemStack calendarStack = cc.getLowerChestInventory().getStackInSlot(41);
 					if (calendarStack != null)
-						tooltipToDisplay = calendarStack.getTooltip(Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+						tooltipToDisplay = calendarStack.getTooltip(Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips);
 				} else {
 					ItemStack rewardsStack = cc.getLowerChestInventory().getStackInSlot(36);
 					if (rewardsStack != null)
-						tooltipToDisplay = rewardsStack.getTooltip(Minecraft.getMinecraft().thePlayer,
-							Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+						tooltipToDisplay = rewardsStack.getTooltip(Minecraft.getInstance().player,
+							Minecraft.getInstance().gameSettings.advancedItemTooltips);
 				}
 			}
 		}
@@ -859,7 +859,7 @@ public class CalendarOverlay {
 					(guiLeft + 8 + nextSLen) * scaledResolution.getScaleFactor(),
 					0,
 					eventTitleLen * scaledResolution.getScaleFactor(),
-					Minecraft.getMinecraft().displayHeight
+					Minecraft.getInstance().displayHeight
 				);
 				fr.drawString(nextEvent.display + " " + nextEvent.display,
 					guiLeft + 8 + nextSLen - (float) (currentTime / 50.0 % (displayWidth + spaceLen)), guiTop + 6, -1, false
@@ -902,7 +902,7 @@ public class CalendarOverlay {
 		}
 
 		GlStateManager.color(1, 1, 1, 1);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(help);
+		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.drawTexturedRect(guiLeft + xSize - 18, guiTop + ySize + 2, 16, 16, GL11.GL_LINEAR);
 
 		if (mouseX >= guiLeft + xSize - 18 && mouseX < guiLeft + xSize - 2) {
@@ -1010,15 +1010,15 @@ public class CalendarOverlay {
 
 	@SubscribeEvent
 	public void onGuiScreenMouse(GuiScreenEvent.MouseInputEvent.Pre event) {
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-		int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+		int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+		int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 
 		if (!enabled) {
 			if (Mouse.getEventButtonState() && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory &&
-				Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
+				Minecraft.getInstance().currentScreen instanceof GuiContainer) {
 				xSize = 168;
 				ySize = 20;
 
@@ -1026,7 +1026,7 @@ public class CalendarOverlay {
 				guiTop = 5;
 				if (mouseX >= guiLeft && mouseX <= guiLeft + xSize && isTimerRendered) {
 					if (mouseY >= guiTop && mouseY <= guiTop + ySize) {
-						ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/neucalendar");
+						ClientCommandHandler.instance.executeCommand(Minecraft.getInstance().player, "/neucalendar");
 					}
 				}
 			}
@@ -1034,11 +1034,11 @@ public class CalendarOverlay {
 			return;
 		}
 
-		if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+		if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 			return;
 		}
 
-		GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+		GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 		ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 		String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 		if (!containerName.trim().equals("Calendar and Events")) {
@@ -1055,7 +1055,7 @@ public class CalendarOverlay {
 
 		if (Mouse.getEventButtonState()) {
 			if (jfFavouriteSelect != null) {
-				FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+				FontRenderer fr = Minecraft.getInstance().font;
 				int arrowLen = fr.getStringWidth("> ");
 				int selectSizeX = 0;
 				int selectStringIndex = 0;
@@ -1094,12 +1094,12 @@ public class CalendarOverlay {
 			if (mouseY >= guiTop + 26 && mouseY <= guiTop + 26 + 141) {
 				if (mouseX >= guiLeft + 151 && mouseX <= guiLeft + 151 + 14) {
 					if (mouseY <= guiTop + 26 + 70) {
-						Minecraft.getMinecraft().playerController.windowClick(cc.windowId,
-							41, 2, 3, Minecraft.getMinecraft().thePlayer
+						Minecraft.getInstance().playerController.windowClick(cc.windowId,
+							41, 2, 3, Minecraft.getInstance().player
 						);
 					} else {
-						Minecraft.getMinecraft().playerController.windowClick(cc.windowId,
-							36, 2, 3, Minecraft.getMinecraft().thePlayer
+						Minecraft.getInstance().playerController.windowClick(cc.windowId,
+							36, 2, 3, Minecraft.getInstance().player
 						);
 					}
 				}
@@ -1119,11 +1119,11 @@ public class CalendarOverlay {
 				return;
 			}
 
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
+			if (!(Minecraft.getInstance().currentScreen instanceof GuiChest)) {
 				return;
 			}
 
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+			GuiChest eventGui = (GuiChest) Minecraft.getInstance().currentScreen;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
 			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
 			if (!containerName.trim().equals("Calendar and Events")) {
@@ -1135,11 +1135,11 @@ public class CalendarOverlay {
 			xSize = 168;
 			ySize = 170;
 
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
-			int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-			int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+			int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 			guiLeft = (width - xSize) / 2;
 			guiTop = (height - ySize) / 2;
 
@@ -1225,7 +1225,7 @@ public class CalendarOverlay {
 						}
 					}
 				} else {
-					Minecraft.getMinecraft().dispatchKeypresses();
+					Minecraft.getInstance().dispatchKeypresses();
 				}
 			}
 		}
@@ -1274,7 +1274,7 @@ public class CalendarOverlay {
 			event.type == RenderGameOverlayEvent.ElementType.ALL) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0, 0, 10);
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiContainer) &&
+			if (!(Minecraft.getInstance().currentScreen instanceof GuiContainer) &&
 				NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
 				var nextFavouriteEvent = getNextFavouriteEvent(false);
 				nextFavouriteEvent.ifPresent((nextEvent) -> {
@@ -1305,8 +1305,8 @@ public class CalendarOverlay {
 			timeUntil -= 30 * 1000;
 		}
 
-		FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
-		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		FontRenderer fr = Minecraft.getInstance().font;
+		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 
@@ -1344,7 +1344,7 @@ public class CalendarOverlay {
 			float y = guiTop + offset;
 
 			GlStateManager.color(1, 1, 1, 1);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TOAST);
+			Minecraft.getInstance().getTextureManager().bindTexture(TOAST);
 			Utils.drawTexturedRect(guiLeft, y, xSize, ySize, GL11.GL_NEAREST);
 
 			GlStateManager.translate(0, y, 0);
@@ -1388,12 +1388,12 @@ public class CalendarOverlay {
 	public void drawTimer() {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, 10);
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer && NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+		if (Minecraft.getInstance().currentScreen instanceof GuiContainer && NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			int width = scaledResolution.getScaledWidth();
 			int height = scaledResolution.getScaledHeight();
-			int mouseX = Mouse.getX() * width / Minecraft.getMinecraft().displayWidth;
-			int mouseY = height - Mouse.getY() * height / Minecraft.getMinecraft().displayHeight - 1;
+			int mouseX = Mouse.getX() * width / Minecraft.getInstance().displayWidth;
+			int mouseY = height - Mouse.getY() * height / Minecraft.getInstance().displayHeight - 1;
 			long currentTime = System.currentTimeMillis();
 
 			xSize = 168;
@@ -1473,7 +1473,7 @@ public class CalendarOverlay {
 				if (!toastRendered && !enabled && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory) {
 					isTimerRendered = true;
 					List<String> tooltipToDisplay = null;
-					FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+					FontRenderer fr = Minecraft.getInstance().font;
 
 					GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 					GlStateManager.disableFog();
@@ -1482,7 +1482,7 @@ public class CalendarOverlay {
 
 					renderBlurredBackground(10, width, height, guiLeft + 3, guiTop + 3, xSize - 6, ySize - 6);
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(DISPLAYBAR);
+					Minecraft.getInstance().getTextureManager().bindTexture(DISPLAYBAR);
 					Utils.drawTexturedRect(guiLeft, guiTop, xSize, 20, GL11.GL_NEAREST);
 
 					String nextS = EnumChatFormatting.YELLOW + "Next: ";
@@ -1503,7 +1503,7 @@ public class CalendarOverlay {
 							(guiLeft + 8 + nextSLen) * scaledResolution.getScaleFactor(),
 							0,
 							eventTitleLen * scaledResolution.getScaleFactor(),
-							Minecraft.getMinecraft().displayHeight
+							Minecraft.getInstance().displayHeight
 						);
 						fr.drawString(nextEvent.display + " " + nextEvent.display,
 							guiLeft + 8 + nextSLen - (float) (currentTime / 50.0 % (displayWidth + spaceLen)), guiTop + 6, -1, false
@@ -1576,7 +1576,7 @@ public class CalendarOverlay {
 					}
 				}
 			} else if (!enabled && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory) {
-				FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+				FontRenderer fr = Minecraft.getInstance().font;
 
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.disableFog();
@@ -1585,7 +1585,7 @@ public class CalendarOverlay {
 
 				renderBlurredBackground(10, width, height, guiLeft + 3, guiTop + 3, xSize - 6, ySize - 6);
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(DISPLAYBAR);
+				Minecraft.getInstance().getTextureManager().bindTexture(DISPLAYBAR);
 				Utils.drawTexturedRect(guiLeft, guiTop, xSize, 20, GL11.GL_NEAREST);
 
 				String nextS = EnumChatFormatting.RED + "Open calendar to see events";

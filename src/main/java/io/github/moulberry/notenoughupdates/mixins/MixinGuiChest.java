@@ -23,7 +23,7 @@ import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin({GuiChest.class})
 public class MixinGuiChest {
 	private static final String TARGET = "Lnet/minecraft/client/renderer/texture/TextureManager;" +
-		"bindTexture(Lnet/minecraft/util/ResourceLocation;)V";
+		"bindTexture(Lnet.minecraft.resources.ResourceLocation;)V";
 
 	@Redirect(method = "drawGuiContainerBackgroundLayer", at = @At(value = "INVOKE", target = TARGET))
 	public void drawGuiContainerBackgroundLayer_bindTexture(TextureManager textureManager, ResourceLocation location) {

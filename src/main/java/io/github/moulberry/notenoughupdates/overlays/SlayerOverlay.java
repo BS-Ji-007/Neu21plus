@@ -119,7 +119,7 @@ public class SlayerOverlay extends TextOverlay {
 			return;
 		}
 
-		if (Minecraft.getMinecraft().thePlayer == null) return;
+		if (Minecraft.getInstance().player == null) return;
 
 		if (!slayerQuest) {
 			slayerTier = 0;

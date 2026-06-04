@@ -34,14 +34,14 @@ import io.github.moulberry.notenoughupdates.overlays.EquipmentOverlay;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -184,7 +184,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 		try (
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-				Minecraft.getMinecraft().getResourceManager().getResource(EXTRA_ICONS_JSON).getInputStream(),
+				Minecraft.getInstance().getResourceManager().getResource(EXTRA_ICONS_JSON).getInputStream(),
 				StandardCharsets.UTF_8
 			))
 		) {
@@ -204,7 +204,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 		try (
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-				Minecraft.getMinecraft().getResourceManager().getResource(PRESETS_JSON).getInputStream(),
+				Minecraft.getInstance().getResourceManager().getResource(PRESETS_JSON).getInputStream(),
 				StandardCharsets.UTF_8
 			))
 		) {
@@ -256,7 +256,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			String name = icon.substring("extra:".length());
 			ResourceLocation resourceLocation = new ResourceLocation(
 				"notenoughupdates:invbuttons/extraicons/" + name + ".png");
-			Minecraft.getMinecraft().getTextureManager().bindTexture(resourceLocation);
+			Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
 			GlStateManager.color(1, 1, 1, 1);
 			Utils.drawTexturedRect(x, y, 16, 16, GL11.GL_NEAREST);
 		} else {
@@ -324,7 +324,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 		GlStateManager.enableDepth();
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(INVENTORY);
+		Minecraft.getInstance().getTextureManager().bindTexture(INVENTORY);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, xSize / 256f, 0, ySize / 256f, GL11.GL_NEAREST);
 
@@ -362,7 +362,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 				GlStateManager.color(1, 1, 1, 0.5f);
 			}
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			Utils.drawTexturedRect(
 				x,
 				y,
@@ -382,10 +382,10 @@ public class GuiInvButtonEditor extends GuiScreen {
 					renderIcon(button.icon, x + 1, y + 1);
 				}
 			} else {
-				fontRendererObj.drawString("+", x + 6, y + 5, 0xffcccccc);
+				font.drawString("+", x + 6, y + 5, 0xffcccccc);
 			}
 		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(custom_ench_colour);
+		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		GlStateManager.color(1, 1, 1, 1);
 		Utils.drawTexturedRect(
 			guiLeft - 88 - 2 - 22 - (NotEnoughUpdates.INSTANCE.config.customArmour.enableArmourHud ? 25 : 0),
@@ -449,7 +449,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 		GlStateManager.color(1, 1, 1, 1);
 
 		if (presets != null) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			Utils.drawTexturedRect(guiLeft + xSize + 22, guiTop, 80, ySize,
 				editorXSize / 256f, (editorXSize + 80) / 256f, 41 / 256f, (41 + ySize) / 256f, GL11.GL_NEAREST
 			);
@@ -514,7 +514,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 				showArrow = false;
 			}
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			GlStateManager.color(1, 1, 1, 1f);
 			Utils.drawTexturedRect(
 				editorLeft,
@@ -531,7 +531,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			if (showArrow)
 				Utils.drawTexturedRect(x + 8 - 3, y + 18, 10, 5, 0, 6 / 256f, 36 / 256f, 41 / 256f, GL11.GL_NEAREST);
 
-			fontRendererObj.drawString("Command", editorLeft + 7, editorTop + 7, 0xffa0a0a0, false);
+			font.drawString("Command", editorLeft + 7, editorTop + 7, 0xffa0a0a0, false);
 
 			commandTextField.setSize(editorXSize - 14, 16);
 			commandTextField.setText(commandTextField.getText().replaceAll("^ +", ""));
@@ -542,7 +542,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			}
 			commandTextField.render(editorLeft + 7, editorTop + 19);
 
-			fontRendererObj.drawString("Background", editorLeft + 7, editorTop + 40, 0xffa0a0a0, false);
+			font.drawString("Background", editorLeft + 7, editorTop + 40, 0xffa0a0a0, false);
 
 			for (int i = 0; i < BACKGROUND_TYPES; i++) {
 				if (i == editingButton.backgroundIndex) {
@@ -554,16 +554,16 @@ public class GuiInvButtonEditor extends GuiScreen {
 						0xff0000ff
 					);
 				}
-				Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(editorLeft + 7 + 20 * i, editorTop + 50, 18, 18,
 					i * 18 / 256f, (i * 18 + 18) / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 				);
 			}
 
-			fontRendererObj.drawString("Icon Type", editorLeft + 7, editorTop + 50 + 24, 0xffa0a0a0, false);
+			font.drawString("Icon Type", editorLeft + 7, editorTop + 50 + 24, 0xffa0a0a0, false);
 
-			Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			GlStateManager.color(1, 1, 1, 1);
 			float uMin = 18 / 256f;
 			float uMax = 36 / 256f;
@@ -573,7 +573,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			for (int i = 0; i < ICON_TYPES; i++) {
 				boolean flip = iconTypeIndex == i;
 
-				Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				GlStateManager.color(1, 1, 1, 1);
 				Utils.drawTexturedRect(editorLeft + 7 + 20 * i, editorTop + 50 + 34, 18, 18,
 					flip ? uMax : uMin, flip ? uMin : uMax, flip ? vMax : vMin, flip ? vMin : vMax, GL11.GL_NEAREST
@@ -590,7 +590,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 				if (stack != null) Utils.drawItemStack(stack, editorLeft + 8 + 20 * i, editorTop + 50 + 35);
 			}
 
-			fontRendererObj.drawString("Icon Selector", editorLeft + 7, editorTop + 50 + 55, 0xffa0a0a0, false);
+			font.drawString("Icon Selector", editorLeft + 7, editorTop + 50 + 55, 0xffa0a0a0, false);
 
 			iconTextField.render(editorLeft + 7, editorTop + 50 + 65);
 
@@ -598,7 +598,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 			itemScroll.tick();
 
-			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+			ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getInstance());
 			GlScissorStack.push(0, editorTop + 136, width, editorTop + 196, scaledResolution);
 
 			synchronized (searchedIcons) {
@@ -636,7 +636,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 					int iconX = editorLeft + 12 + ((i - startIndex) % 6) * 20;
 					int iconY = editorTop + 137 + ((i - startIndex) / 6) * 20 - (itemScroll.getValue() % 20);
 
-					Minecraft.getMinecraft().getTextureManager().bindTexture(EDITOR);
+					Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 					GlStateManager.color(1, 1, 1, 1);
 					Utils.drawTexturedRect(iconX, iconY, 18, 18,
 						18 / 256f, 36 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
