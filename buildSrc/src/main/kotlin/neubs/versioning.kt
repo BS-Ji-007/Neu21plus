@@ -8,10 +8,10 @@ import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
     val baos = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "describe", "--tags", "--abbrev=0")
-        standardOutput = baos
-        isIgnoreExitValue = true
+    this.exec { spec ->
+        spec.commandLine("git", "describe", "--tags", "--abbrev=0")
+        spec.standardOutput = baos
+        spec.isIgnoreExitValue = true
     }
     val baseVersion = baos.toString().trim()
     
@@ -21,20 +21,20 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
-        isIgnoreExitValue = true
+    this.exec { spec ->
+        spec.commandLine("git", "rev-parse", "--short", "HEAD")
+        spec.standardOutput = stdout
+        spec.isIgnoreExitValue = true
     }
     if (stdout.toString().trim().isNotEmpty()) {
         buildExtra.add(stdout.toString().trim())
     }
 
     val gitDiffStdout = ByteArrayOutputStream()
-    project.exec {
-        commandLine("git", "status", "--porcelain")
-        standardOutput = gitDiffStdout
-        isIgnoreExitValue = true
+    this.exec { spec ->
+        spec.commandLine("git", "status", "--porcelain")
+        spec.standardOutput = gitDiffStdout
+        spec.isIgnoreExitValue = true
     }
     if (gitDiffStdout.toString().trim().isNotEmpty()) {
         buildExtra.add("dirty")
