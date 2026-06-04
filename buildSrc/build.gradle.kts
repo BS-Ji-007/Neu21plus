@@ -13,4 +13,5 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
+    implementation(kotlin("gradle-plugin"))
 }

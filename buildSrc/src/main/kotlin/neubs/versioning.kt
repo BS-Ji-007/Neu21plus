@@ -2,6 +2,7 @@ package neubs
 
 import org.gradle.api.Project
 import java.io.File
+import java.lang.ProcessBuilder
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
@@ -9,7 +10,7 @@ fun Project.setVersionFromEnvironment(): String {
 
     fun git(vararg args: String): String {
         return try {
-            val pb = java.lang.ProcessBuilder("git", *args)
+            val pb = ProcessBuilder("git", *args)
             pb.directory(root)
             val process = pb.start()
             val output = process.inputStream.bufferedReader().readText().trim()

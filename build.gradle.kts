@@ -15,7 +15,6 @@ plugins {
     java
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.shadow)
-    id("io.github.juuxel.loom-quiltflower") version "1.11.0"
     `maven-publish`
     kotlin("jvm") version libs.versions.kotlin.get()
     alias(libs.plugins.detekt)
@@ -89,7 +88,7 @@ dependencies {
 
 java {
     withSourcesJar()
-    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks.withType<JavaCompile> {
