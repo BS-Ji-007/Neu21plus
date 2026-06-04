@@ -9,3 +9,7 @@ plugins {
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    implementation(gradleApi())
+}

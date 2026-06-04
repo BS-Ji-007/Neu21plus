@@ -6,15 +6,13 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
-    val baseVersion = run {
-        val baos = ByteArrayOutputStream()
-        project.exec {
-            commandLine("git", "describe", "--tags", "--abbrev=0")
-            standardOutput = baos
-            isIgnoreExitValue = true
-        }
-        baos.toString().trim()
+    val baos = ByteArrayOutputStream()
+    project.exec {
+        commandLine("git", "describe", "--tags", "--abbrev=0")
+        standardOutput = baos
+        isIgnoreExitValue = true
     }
+    val baseVersion = baos.toString().trim()
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
