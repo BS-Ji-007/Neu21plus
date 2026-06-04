@@ -7,6 +7,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://maven.fabricmc.net")
+        maven("https://maven.fabricmc.net/snapshots")
         maven("https://repo.spongepowered.org/maven/")
         maven("https://maven.xpdustry.com/releases") {
             name = "xpdustry-releases"
