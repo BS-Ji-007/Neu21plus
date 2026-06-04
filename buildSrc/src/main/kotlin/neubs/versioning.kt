@@ -1,22 +1,25 @@
 package neubs
 
 import org.gradle.api.Project
-import java.io.InputStream
+import java.io.File
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
     fun git(vararg args: String): String {
         return try {
             val process = ProcessBuilder("git", *args)
+                .directory(project.rootDir)
                 .redirectError(ProcessBuilder.Redirect.PIPE)
                 .start()
-            process.inputStream.bufferedReader().readText().trim()
+            val output = process.inputStream.bufferedReader().readText().trim()
+            process.waitFor()
+            output
         } catch (e: Exception) {
             ""
         }
     }
 
-    val baseVersion = git("describe", "--tags", "--abbrev=0")
+    val baseVersion = git("describe", "--tags", "--abbrev=0").ifEmpty { "1.0.0" }
     
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
@@ -24,14 +27,9 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true" && System.getenv("NEU_RELEASE") != "true") buildExtra.add("ci")
 
     val shortHash = git("rev-parse", "--short", "HEAD")
-    if (shortHash.isNotEmpty()) {
-        buildExtra.add(shortHash)
-    }
+    if (shortHash.isNotEmpty()) buildExtra.add(shortHash)
 
-    val status = git("status", "--porcelain")
-    if (status.isNotEmpty()) {
-        buildExtra.add("dirty")
-    }
+    if (git("status", "--porcelain").isNotEmpty()) buildExtra.add("dirty")
 
     version = baseVersion + (if (buildExtra.isEmpty()) "" else buildExtra.joinToString(prefix = "+", separator = "."))
     return baseVersion

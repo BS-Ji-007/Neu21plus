@@ -9,7 +9,6 @@ import neubs.DownloadBackupRepo
 import neubs.NEUBuildFlags
 import neubs.applyPublishingInformation
 import neubs.setVersionFromEnvironment
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     idea
@@ -29,11 +28,6 @@ apply<NEUBuildFlags>()
 
 group = "io.github.moulberry"
 val baseVersion = setVersionFromEnvironment()
-
-// Minecraft configuration
-loom {
-    // unobfuscated 26.1+
-}
 
 repositories {
     mavenCentral()
@@ -61,17 +55,14 @@ val kotlinDependencies: Configuration by configurations.creating {
 }
 
 dependencies {
-    // Core Minecraft & Fabric
     minecraft(libs.minecraft)
-    "modImplementation"(libs.fabric.loader)
-    "modImplementation"(libs.fabric.api)
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
 
-    // Kotlin
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}"))
     kotlinDependencies(kotlin("stdlib"))
     kotlinDependencies(kotlin("reflect"))
 
-    // KSP & Annotation Processing
     ksp("dev.zacsweers.autoservice:auto-service-ksp:1.2.0")
     implementation("com.google.auto.service:auto-service-annotations:1.1.1")
 
@@ -79,7 +70,6 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 
-    // Libraries
     shadowImplementation("com.mojang:brigadier:1.2.9")
     shadowImplementation("moe.nea:libautoupdate:1.3.1")
     shadowImplementation(libs.nealisp) {
@@ -88,7 +78,6 @@ dependencies {
 
     compileOnly("org.jetbrains:annotations:24.1.0")
 
-    // MoulConfig
     implementation(libs.moulconfig)
     shadowOnly(libs.moulconfig)
 
@@ -127,17 +116,18 @@ val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     mergeServiceFiles()
 }
 
-val remapJar = tasks.named<RemapJarTask>("remapJar") {
-    archiveClassifier.set("")
-    inputFile.set(shadowJar.flatMap { it.archiveFile })
+afterEvaluate {
+    val remapJarTask = tasks.named<RemapJarTask>("remapJar") {
+        archiveClassifier.set("")
+        inputFile.set(shadowJar.flatMap { it.archiveFile })
+    }
+    tasks.assemble {
+        dependsOn(remapJarTask)
+    }
 }
 
 val sourcesJar = tasks.named<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-}
-
-tasks.assemble {
-    dependsOn(remapJar)
 }
 
 val includeBackupRepo = tasks.register<DownloadBackupRepo>("includeBackupRepo") {
@@ -156,6 +146,6 @@ tasks.register("signRelease", neubs.CustomSignTask::class)
 
 applyPublishingInformation(
     "deobf" to tasks.jar,
-    "all" to remapJar,
+    "all" to tasks.named("remapJar"),
     "sources" to sourcesJar,
 )
