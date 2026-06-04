@@ -6,13 +6,11 @@ import org.gradle.api.tasks.WriteProperties
 import org.gradle.kotlin.dsl.*
 import java.nio.charset.StandardCharsets
 
-const val NEU_BUILDFLAGS_PREFIX = "neu.buildflags."
-
 class NEUBuildFlags : Plugin<Project> {
-
     override fun apply(target: Project) {
+        val prefix = "neu.buildflags."
         val props = target.properties
-            .filterKeys { it.startsWith(NEU_BUILDFLAGS_PREFIX) }
+            .filterKeys { it.startsWith(prefix) }
             .mapValues { it.value as String }
 
         target.extensions.add("buildflags", Extension(props))
@@ -21,15 +19,12 @@ class NEUBuildFlags : Plugin<Project> {
             encoding = StandardCharsets.UTF_8.name()
             setProperties(props)
             comment = "Store build time configuration for NEU"
-            // Gradle 9 standard
+            // Gradle 9: Property<RegularFile>
             destinationFile.set(target.layout.buildDirectory.file("buildflags.properties"))
         }
     }
 
     class Extension(val props: Map<String, String>) {
-        fun bool(name: String) = props["$NEU_BUILDFLAGS_PREFIX$name"] == "true"
+        fun bool(name: String) = props["neu.buildflags.$name"] == "true"
     }
 }
-
-val Project.buildFlags: NEUBuildFlags.Extension
-    get() = the<NEUBuildFlags.Extension>()
