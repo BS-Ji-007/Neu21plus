@@ -319,7 +319,7 @@ public class GuiProfileViewer extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
-		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		if (page != ProfileViewerPage.LOADING) {
 			playerNameTextField.render(guiLeft + sizeX - 100, guiTop + sizeY + 5);
@@ -329,7 +329,7 @@ public class GuiProfileViewer extends GuiScreen {
 				//Render Profile chooser button
 				renderBlurredBackground(width, height, guiLeft + 2, guiTop + sizeY + 3 + 2, 100 - 4, 20 - 4);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
-				Utils.drawTexturedRect(guiLeft, guiTop + sizeY + 3, 100, 20, 0, 100 / 200f, 0, 20 / 185f, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft, guiTop + sizeY + 3, 100, 20, 0, 100 / 200f, 0, 20 / 185f, GL11.GL_NEAREST);
 				Utils.drawStringCenteredScaledMaxWidth(
 					profileName,
 					guiLeft + 50,
@@ -346,13 +346,13 @@ public class GuiProfileViewer extends GuiScreen {
 						gamemodeIconUnknown
 					);
 					Minecraft.getInstance().getTextureManager().bindTexture(gamemodeIcon);
-					Utils.drawTexturedRect(guiLeft - 16 - 5, guiTop + sizeY + 5, 16, 16, GL11.GL_NEAREST);
+					Utils.graphics.blit(guiLeft - 16 - 5, guiTop + sizeY + 5, 16, 16, GL11.GL_NEAREST);
 				}
 
 				// Render Open In SkyCrypt button
 				renderBlurredBackground(width, height, guiLeft + 100 + 6 + 2, guiTop + sizeY + 3 + 2, 100 - 4, 20 - 4);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + 100 + 6,
 					guiTop + sizeY + 3,
 					100,
@@ -377,8 +377,8 @@ public class GuiProfileViewer extends GuiScreen {
 					int sizeYDropdown = profile.getProfileNames().size() * dropdownOptionSize;
 					renderBlurredBackground(width, height, guiLeft + 2, guiTop + sizeY + 23, 100 - 4, sizeYDropdown - 2);
 					Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
-					Utils.drawTexturedRect(guiLeft, guiTop + sizeY + 23 - 3, 100, 3, 100 / 200f, 1, 0, 3 / 185f, GL11.GL_NEAREST);
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(guiLeft, guiTop + sizeY + 23 - 3, 100, 3, 100 / 200f, 1, 0, 3 / 185f, GL11.GL_NEAREST);
+					Utils.graphics.blit(
 						guiLeft,
 						guiTop + sizeY + 23 + sizeYDropdown - 4,
 						100,
@@ -389,7 +389,7 @@ public class GuiProfileViewer extends GuiScreen {
 						1,
 						GL11.GL_NEAREST
 					);
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft,
 						guiTop + sizeY + 23,
 						100,
@@ -421,7 +421,7 @@ public class GuiProfileViewer extends GuiScreen {
 								gamemodeIconUnknown
 							);
 							Minecraft.getInstance().getTextureManager().bindTexture(gamemodeIcon);
-							Utils.drawTexturedRect(
+							Utils.graphics.blit(
 								guiLeft - 16 - 5,
 								guiTop + sizeY + 2 + 23 + dropdownOptionSize * yIndex,
 								16,
@@ -705,10 +705,10 @@ public class GuiProfileViewer extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+		Utils.graphics.blit(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-		Utils.drawItemStack(stack, x + 6, y + 9);
+		Utils.graphics.renderItem(stack, x + 6, y + 9);
 	}
 
 	public static String getName().getString() {
@@ -773,13 +773,13 @@ public class GuiProfileViewer extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-		Utils.drawTexturedRect(x - 3, y, 32, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+		Utils.graphics.blit(x - 3, y, 32, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 		ItemStack playerHead = ProfileViewerUtils.getPlayerData(name);
 
-		Utils.drawItemStack(playerHead, x + 3, y + 6);
+		Utils.graphics.renderItem(playerHead, x + 3, y + 6);
 	}
 
 	@Override
@@ -1074,8 +1074,8 @@ public class GuiProfileViewer extends GuiScreen {
 		shaderManager.loadShader("make_gold");
 		shaderManager.loadData("make_gold", "amount", (startTime - System.currentTimeMillis()) / 10000f);
 
-		Utils.drawTexturedRect(x, y, xSize / 2f, 5, 0 / 256f, (xSize / 2f) / 256f, 79 / 256f, 84 / 256f, GL11.GL_NEAREST);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(x, y, xSize / 2f, 5, 0 / 256f, (xSize / 2f) / 256f, 79 / 256f, 84 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(
 			x + xSize / 2f,
 			y,
 			xSize / 2f,
@@ -1100,7 +1100,7 @@ public class GuiProfileViewer extends GuiScreen {
 
 		if (completed < 0.5f) {
 			width = (0.5f - completed) * xSize;
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x + xSize * completed,
 				y,
 				width,
@@ -1114,7 +1114,7 @@ public class GuiProfileViewer extends GuiScreen {
 		}
 		if (completed < 1f) {
 			width = Math.min(xSize * notCompleted, xSize / 2f);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x + (xSize / 2f) + Math.max(xSize * (completed - 0.5f), 0),
 				y,
 				width,
@@ -1129,11 +1129,11 @@ public class GuiProfileViewer extends GuiScreen {
 
 		if (completed > 0f) {
 			width = Math.min(xSize * completed, xSize / 2f);
-			Utils.drawTexturedRect(x, y, width, 5, 0 / 256f, width / 256f, 79 / 256f, 84 / 256f, GL11.GL_NEAREST);
+			Utils.graphics.blit(x, y, width, 5, 0 / 256f, width / 256f, 79 / 256f, 84 / 256f, GL11.GL_NEAREST);
 		}
 		if (completed > 0.5f) {
 			width = Math.min(xSize * (completed - 0.5f), xSize / 2f);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x + (xSize / 2f),
 				y,
 				width,
@@ -1277,7 +1277,7 @@ public class GuiProfileViewer extends GuiScreen {
 		blurOutputVert.bindFramebufferTexture();
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		//Utils.setScreen(width*f, height*f, f);
-		Utils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
+		Utils.graphics.blit(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		//Utils.setScreen(width, height, f);
 		blurOutputVert.unbindFramebufferTexture();
 	}

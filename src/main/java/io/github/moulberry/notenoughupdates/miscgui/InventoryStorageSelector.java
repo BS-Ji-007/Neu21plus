@@ -74,7 +74,6 @@ public class InventoryStorageSelector {
 		return isOverridingSlot;
 	}
 
-	@SubscribeEvent
 	public void onMousePress(MouseEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard() ||
 			!NotEnoughUpdates.INSTANCE.config.storageGUI.showInvBackpack) {
@@ -109,7 +108,6 @@ public class InventoryStorageSelector {
 		}
 	}
 
-	@SubscribeEvent
 	public void onKeyPress(InputEvent.KeyInputEvent event) {
 		if (Minecraft.getInstance().gameSettings.keyBindsHotbar[0].isKeyDown()) {
 			isOverridingSlot = false;
@@ -297,11 +295,11 @@ public class InventoryStorageSelector {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1,
 					NotEnoughUpdates.INSTANCE.config.storageGUI.backpackOpacity / 100f
 				);
-				Utils.drawTexturedRect(startX, startY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
+				Utils.graphics.blit(startX, startY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
 				for (int i = 0; i < rows; i++) {
-					Utils.drawTexturedRect(startX, startY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
+					Utils.graphics.blit(startX, startY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
 				}
-				Utils.drawTexturedRect(startX, startY + 7 + 18 * rows, 176, 7, 0, 1, 25 / 32f, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(startX, startY + 7 + 18 * rows, 176, 7, 0, 1, 25 / 32f, 1, GL11.GL_NEAREST);
 
 				GL11.glDepthMask(true);
 
@@ -335,7 +333,7 @@ public class InventoryStorageSelector {
 									int b = rgb & 0xFF;
 									Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 									com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
-									Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
+									Utils.graphics.blit(itemX - 1, itemY - 1, 18, 18,
 										startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 									);
 								}
@@ -407,11 +405,11 @@ public class InventoryStorageSelector {
 											vertFlip = true;
 										}
 
-										Utils.drawTexturedRect(0, -9, 8, 18,
+										Utils.graphics.blit(0, -9, 8, 18,
 											!horzFlip ? 209 / 227f : 219 / 227f, horzFlip ? 227 / 227f : 217 / 227f,
 											!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 										);
-										Utils.drawTexturedRect(8, -9, 10, 18,
+										Utils.graphics.blit(8, -9, 10, 18,
 											!horzFlip ? 217 / 227f : 209 / 227f, horzFlip ? 219 / 227f : 227 / 227f,
 											!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 										);
@@ -423,7 +421,7 @@ public class InventoryStorageSelector {
 						}
 
 						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 20);
-						Utils.drawItemStack(stack, itemX, itemY);
+						Utils.graphics.renderItem(stack, itemX, itemY);
 						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -20);
 					}
 				}
@@ -435,7 +433,7 @@ public class InventoryStorageSelector {
 					pageTitle = getNamedHeldItemOverride().getName().getString();
 				}
 
-				Utils.drawItemStack(held, centerX - 8, startY - 8);
+				Utils.graphics.renderItem(held, centerX - 8, startY - 8);
 
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
 				Utils.drawStringCentered(pageTitle, centerX, height - 76, true, 0xffff0000);
@@ -455,11 +453,11 @@ public class InventoryStorageSelector {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(ICONS);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(left + 1, top,
+		Utils.graphics.blit(left + 1, top,
 			22, 22, 0, 22 / 64f, 0, 22 / 64f, GL11.GL_NEAREST
 		);
 		if (isSlotSelected()) {
-			Utils.drawTexturedRect(left, top - 1,
+			Utils.graphics.blit(left, top - 1,
 				24, 22, 0, 24 / 64f, 22 / 64f, 44 / 64f, GL11.GL_NEAREST
 			);
 		}

@@ -57,12 +57,10 @@ public class MinionHelperInventoryLoader {
 		this.manager = manager;
 	}
 
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event) {
 		manager.setLocalPelts(-1);
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;

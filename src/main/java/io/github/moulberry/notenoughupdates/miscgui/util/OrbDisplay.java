@@ -124,7 +124,7 @@ public class OrbDisplay {
 			int orbU = (orb.type % 3) * 16;
 			int orbV = (orb.type / 3) * 16 + 217;
 
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				-8, -8, 16, 16,
 				orbU / 512f,
 				(orbU + 16) / 512f,

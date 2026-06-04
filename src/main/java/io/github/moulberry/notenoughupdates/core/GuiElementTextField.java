@@ -559,14 +559,14 @@ public class GuiElementTextField {
 			} else {
 				if ((options & SCISSOR_TEXT) != 0) {
 					GlScissorStack.push(x + 5, 0, x + searchBarXSize, scaledresolution.getScaledHeight(), scaledresolution);
-					Minecraft.getInstance().font.drawString(Utils.chromaStringByColourCode(texts[yOffI]), x + 5,
+					Minecraft.getInstance().font.graphics.drawString(Utils.chromaStringByColourCode(texts[yOffI]), x + 5,
 						y + (searchBarYSize - 8) / 2 + yOff, customTextColour
 					);
 					GlScissorStack.pop(scaledresolution);
 				} else {
 					String toRender = Minecraft.getInstance().font.trimStringToWidth(Utils.chromaStringByColourCode(
 						texts[yOffI]), searchBarXSize - 10);
-					Minecraft.getInstance().font.drawString(toRender, x + 5,
+					Minecraft.getInstance().font.graphics.drawString(toRender, x + 5,
 						y + (searchBarYSize - 8) / 2 + yOff, customTextColour
 					);
 				}

@@ -84,7 +84,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		guiTop = GuiProfileViewer.getGuiTop();
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_rift);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
 		if (selectedProfile == null) {
@@ -120,7 +120,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		// pet
 		com.mojang.blaze3d.systems.RenderSystem.color(1,1,1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
-		Utils.drawTexturedRect(guiLeft + 35, guiTop + 156, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + 35, guiTop + 156, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
 		APIDataJson.Rift.RiftDeadCats deadCats = rift.dead_cats;
 		if (deadCats != null && deadCats.found_cats != null) {
@@ -139,7 +139,7 @@ public class RiftPage extends GuiProfileViewerPage {
 				pet.petType = montezuma.type;
 				pet.candyUsed = montezuma.candyUsed;
 				ItemStack petItemStackFromPetInfo = ItemUtils.createPetItemstackFromPetInfo(pet);
-				Utils.drawItemStack(petItemStackFromPetInfo, guiLeft + 37, guiTop + 158, true);
+				Utils.graphics.renderItem(petItemStackFromPetInfo, guiLeft + 37, guiTop + 158, true);
 
 				if ((mouseX > guiLeft + 37 && mouseX < guiLeft + 37 + 20) &&
 					(mouseY > guiTop + 158 && mouseY < guiTop + 158 + 20)) {
@@ -486,12 +486,12 @@ public class RiftPage extends GuiProfileViewerPage {
 	) {
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 		if (internalNameForItem.equals("CHEST") && inInventory) {
-			Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
+			Utils.graphics.blit(guiLeft + x, guiTop + y, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
 		} else if (internalNameForItem.equals("ENDER_CHEST") && !inInventory) {
-			Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
+			Utils.graphics.blit(guiLeft + x, guiTop + y, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
 		} else {
 			// should never happen
-			Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+			Utils.graphics.blit(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 		}
 		renderItem(internalNameForItem, x + 2, y + 2, guiLeft, guiTop);
 
@@ -510,7 +510,7 @@ public class RiftPage extends GuiProfileViewerPage {
 	public void renderItem(ItemStack itemStack, int x, int y, int guiLeft, int guiTop) {
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.enableGUIStandardItemLighting();
-		Utils.drawItemStack(itemStack, guiLeft + x, guiTop + y);
+		Utils.graphics.renderItem(itemStack, guiLeft + x, guiTop + y);
 		com.mojang.blaze3d.systems.RenderSystem.enableLighting();
 		RenderHelper.disableStandardItemLighting();
 	}
@@ -539,7 +539,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		for (int i = 0; i < itemStacks.length; i++) {
 			ItemStack stack = itemStacks[i];
 			if (stack == null) continue;
-			Utils.drawItemStack(stack, guiLeft + x, guiTop + y + (i * 18), true);
+			Utils.graphics.renderItem(stack, guiLeft + x, guiTop + y + (i * 18), true);
 			if (stack == fillerStack) continue;
 			if ((mouseX >= guiLeft + x - 1 && mouseX <= guiLeft + x + 16 + 1) &&
 				(mouseY >= guiTop + y + (i * 18) && mouseY <= guiTop + y + (i * 18) + 16)) {

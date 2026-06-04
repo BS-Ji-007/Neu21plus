@@ -84,21 +84,21 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 
 		drawTitle();
 
-		drawString("§cLooks like your profile viewer crashed.");
-		drawString("§cPlease immediately send a screenshot of this screen into #neu-support.");
-		drawString("§cJoin our support server at §a" + Utils.getDiscordInvite() + "§c.");
+		graphics.drawString("§cLooks like your profile viewer crashed.");
+		graphics.drawString("§cPlease immediately send a screenshot of this screen into #neu-support.");
+		graphics.drawString("§cJoin our support server at §a" + Utils.getDiscordInvite() + "§c.");
 
 		val profile = GuiProfileViewer.getProfile();
-		drawString("Viewed Player: " + getInstance().getEntityPlayer().getName());
-		drawString("Viewed Player UUID: " + (profile == null ? "null" : profile.getUuid()));
-		drawString("Viewed Profile: " + GuiProfileViewer.getProfileName());
-		drawString("Timestamp: " + timestamp);
+		graphics.drawString("Viewed Player: " + getInstance().getEntityPlayer().getName());
+		graphics.drawString("Viewed Player UUID: " + (profile == null ? "null" : profile.getUuid()));
+		graphics.drawString("Viewed Profile: " + GuiProfileViewer.getProfileName());
+		graphics.drawString("Timestamp: " + timestamp);
 
-		drawString("");
-		drawString(exception.toString());
+		graphics.drawString("");
+		graphics.drawString(exception.toString());
 		for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
 			if (offset >= getInstance().sizeY - 50) break;
-			drawString(stackTraceElement.toString());
+			graphics.drawString(stackTraceElement.toString());
 		}
 
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
@@ -136,7 +136,7 @@ public class CrashRecoveryPage extends GuiProfileViewerPage {
 		);
 	}
 
-	private void drawString(String text) {
+	private void graphics.drawString(String text) {
 		Utils.drawStringCenteredScaledMaxWidth(text, 0, 0, false, getInstance().sizeX - 20, -1);
 		val spacing = Minecraft.getInstance().font.FONT_HEIGHT + 2;
 		com.mojang.blaze3d.systems.RenderSystem.translate(0, spacing, 0);

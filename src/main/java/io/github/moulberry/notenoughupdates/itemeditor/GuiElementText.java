@@ -54,6 +54,6 @@ public class GuiElementText extends GuiElement {
 	public void render(int x, int y) {
 		FontRenderer fr = Minecraft.getInstance().font;
 
-		fr.drawString(text, x, y + 6, colour);
+		fr.graphics.drawString(text, x, y + 6, colour);
 	}
 }

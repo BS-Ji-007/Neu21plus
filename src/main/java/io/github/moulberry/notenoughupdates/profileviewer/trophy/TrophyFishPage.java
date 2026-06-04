@@ -158,7 +158,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		loadTrophyInformation(trophyObject);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(TROPHY_FISH_TEXTURE);
-		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
@@ -224,7 +224,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			if (highestRarity == TrophyFish.TrophyFishRarity.DIAMOND) {
 				com.mojang.blaze3d.systems.RenderSystem.color(31 / 255f, 216 / 255f, 241 / 255f, 1);
 			}
-			Utils.drawTexturedRect(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+			Utils.graphics.blit(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(getItem(value.getName(), highestRarity), x, y);
 
@@ -254,7 +254,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 					}
 				}
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-				Utils.drawTexturedRect(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+				Utils.graphics.blit(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 			}
 		}
 

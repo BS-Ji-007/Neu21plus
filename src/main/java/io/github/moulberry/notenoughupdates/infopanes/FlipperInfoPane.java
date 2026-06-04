@@ -72,7 +72,7 @@ public class FlipperInfoPane extends InfoPane {
 		int leftSide = rightSide - paneWidth;
 
 		int titleLen = fr.getStringWidth(title);
-		fr.drawString(title, (leftSide + rightSide - titleLen) / 2, overlay.getBoxPadding() + 5,
+		fr.graphics.drawString(title, (leftSide + rightSide - titleLen) / 2, overlay.getBoxPadding() + 5,
 			Color.WHITE.getRGB()
 		);
 
@@ -91,16 +91,16 @@ public class FlipperInfoPane extends InfoPane {
 
 		y += 10;
 		int x = 10;
-		fr.drawString("Min Price: ", x, y, Color.WHITE.getRGB());
+		fr.graphics.drawString("Min Price: ", x, y, Color.WHITE.getRGB());
 		minPrice.render(x, y + 10);
 		x += 70;
-		fr.drawString("Max Price: ", x, y, Color.WHITE.getRGB());
+		fr.graphics.drawString("Max Price: ", x, y, Color.WHITE.getRGB());
 		maxPrice.render(x, y + 10);
 		x += 70;
-		fr.drawString("Price Diff: ", x, y, Color.WHITE.getRGB());
+		fr.graphics.drawString("Price Diff: ", x, y, Color.WHITE.getRGB());
 		priceDiff.render(x, y + 10);
 		x += 70;
-		fr.drawString("Incl. Stackables: ", x, y, Color.WHITE.getRGB());
+		fr.graphics.drawString("Incl. Stackables: ", x, y, Color.WHITE.getRGB());
 		drawButton(x, y, false);
 
 		drawRect(leftSide + overlay.getBoxPadding() - 5, overlay.getBoxPadding() - 5,
@@ -111,7 +111,7 @@ public class FlipperInfoPane extends InfoPane {
 	private void drawButton(int x, int y, boolean enabled) {
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture((enabled) ? on : off);
-		Utils.drawTexturedRect(x, y, 48, 16);
+		Utils.graphics.blit(x, y, 48, 16);
 	}
 
 	public void mouseInput(int width, int height, int mouseX, int mouseY, boolean mouseDown) {}

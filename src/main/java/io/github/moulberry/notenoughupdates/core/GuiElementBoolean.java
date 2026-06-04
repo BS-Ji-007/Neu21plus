@@ -64,7 +64,7 @@ public class GuiElementBoolean extends GuiElement {
 	public void render() {
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.BAR);
-		RenderUtils.drawTexturedRect(x, y, xSize, ySize);
+		RenderUtils.graphics.blit(x, y, xSize, ySize);
 
 		ResourceLocation buttonLoc = GuiTextures.ON;
 		long currentMillis = System.currentTimeMillis();
@@ -112,7 +112,7 @@ public class GuiElementBoolean extends GuiElement {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(buttonLoc);
-		RenderUtils.drawTexturedRect(x + animation, y, 12, 14);
+		RenderUtils.graphics.blit(x + animation, y, 12, 14);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class GuiItemCustomize extends GuiScreen {
+public class GuiItemCustomize extends Screen {
 	private static final ResourceLocation PLUS = new ResourceLocation("notenoughupdates", "notenoughupdates:itemcustomize/plus.png");
 
 	private final ItemStack stack;
@@ -313,7 +313,7 @@ public class GuiItemCustomize extends GuiScreen {
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		int helpX = xCenter + textFieldRename.getWidth() / 2 - 5 + 10;
-		Utils.drawTexturedRect(helpX, yTop, 20, 20, GL11.GL_LINEAR);
+		Utils.graphics.blit(helpX, yTop, 20, 20, GL11.GL_LINEAR);
 
 		if (mouseX >= helpX && mouseX <= helpX + 20 && mouseY >= yTop && mouseY <= yTop + 20) {
 			ItemCustomizationUtils.customizeColourGuide.set(7, Utils.chromaString("¶z = Chroma"));
@@ -323,7 +323,7 @@ public class GuiItemCustomize extends GuiScreen {
 		Minecraft.getInstance().getTextureManager().bindTexture(ItemCustomizationUtils.RESET);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		int resetX = xCenter + textFieldRename.getWidth() / 2 - 15;
-		Utils.drawTexturedRect(resetX, yTop + 5, 10, 11, GL11.GL_LINEAR);
+		Utils.graphics.blit(resetX, yTop + 5, 10, 11, GL11.GL_LINEAR);
 
 		if (mouseX >= resetX && mouseX <= resetX + 10 && mouseY >= yTop && mouseY <= yTop + 20) {
 			tooltipToDisplay = ItemCustomizationUtils.resetGuide;
@@ -344,7 +344,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		RenderUtils.drawFloatingRectDark(xCenter - 90, yTop, 180, 20);
 
-		Minecraft.getInstance().font.drawString("Enchant Glint", xCenter - 85, yTop + 6, 0xff8040cc);
+		Minecraft.getInstance().font.graphics.drawString("Enchant Glint", xCenter - 85, yTop + 6, 0xff8040cc);
 
 		enchantGlintButton.x = xCenter + 90 - 5 - 48;
 		enchantGlintButton.y = yTop + 3;
@@ -409,7 +409,7 @@ public class GuiItemCustomize extends GuiScreen {
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			int skullHelpX = xCenter + textFieldRename.getWidth() / 2;
-			Utils.drawTexturedRect(skullHelpX, yTop -1, 20, 20, GL11.GL_LINEAR);
+			Utils.graphics.blit(skullHelpX, yTop -1, 20, 20, GL11.GL_LINEAR);
 
 			if (mouseX >= helpX && mouseX <= skullHelpX + 20 && mouseY >= yTop && mouseY <= yTop + 20) {
 				tooltipToDisplay = animatedSkullHelp;
@@ -481,7 +481,7 @@ public class GuiItemCustomize extends GuiScreen {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(PLUS);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 4, 10, 10, GL11.GL_NEAREST);
+		RenderUtils.graphics.blit(xCenter + 90 - 12, yTop + 4, 10, 10, GL11.GL_NEAREST);
 
 		int xOffset = xCenter - textFieldCustomItem.getWidth() / 2 - 10 + 11;
 		ItemCustomizationUtils.renderTextBox(textFieldTickSpeed,
@@ -592,12 +592,12 @@ public class GuiItemCustomize extends GuiScreen {
 			}
 			if (itemStack != null) {
 				if (displayName == null) displayName = itemStack.getName().getString();
-				//Utils.drawItemStack(itemStack, xCenter - 90, yTop);
+				//Utils.graphics.renderItem(itemStack, xCenter - 90, yTop);
 				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				com.mojang.blaze3d.systems.RenderSystem.translate(xCenter - 89, yTop, 0);
 				com.mojang.blaze3d.systems.RenderSystem.scale(.9, .9, 1);
-				Utils.drawItemStack(itemStack, 0, 0);
+				Utils.graphics.renderItem(itemStack, 0, 0);
 				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
 			if (color == null && colours == null) {
@@ -767,8 +767,8 @@ public class GuiItemCustomize extends GuiScreen {
 		}
 
 		if (guiType != GuiType.DEFAULT) {
-			if (!Mouse.getEventButtonState() && Mouse.getEventDWheel() != 0) {
-				lastMouseScroll = Mouse.getEventDWheel();
+			if (!Mouse.getEventButtonState() && 0 != 0) {
+				lastMouseScroll = 0;
 				noMouseScrollFrames = 0;
 			}
 		}
@@ -1111,7 +1111,7 @@ public class GuiItemCustomize extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.translate(xCenter - 48, yTop + 7, 0);
 		com.mojang.blaze3d.systems.RenderSystem.scale(6, 6, 1);
 		this.customItemStack = ItemCustomizationUtils.copy(stack, this);
-		Utils.drawItemStack(customItemStack, 0, 0);
+		Utils.graphics.renderItem(customItemStack, 0, 0);
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 

@@ -86,7 +86,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 		int guiTop = GuiProfileViewer.getGuiTop();
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_cols);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
 		if (selectedProfile == null) {
@@ -115,7 +115,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				if (selectedCollectionCategory == null) selectedCollectionCategory = stack;
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				if (stack == selectedCollectionCategory) {
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 7,
 						guiTop + 10 + collectionCatYSize * yIndex,
 						20,
@@ -128,7 +128,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					);
 					Utils.drawItemStackWithText(stack, guiLeft + 10, guiTop + 13 + collectionCatYSize * yIndex, "" + (yIndex + 1));
 				} else {
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 7,
 						guiTop + 10 + collectionCatYSize * yIndex,
 						20,
@@ -165,7 +165,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 			if (page > 0) {
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + 100 - 15 - 12,
 					guiTop + 6,
 					12,
@@ -178,7 +178,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				);
 			}
 			if (page < 1) {
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + 100 + 15 + 250,
 					guiTop + 6,
 					12,
@@ -243,7 +243,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + x,
 					guiTop + y,
 					20,
@@ -256,7 +256,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + x,
 					guiTop + y + 20 * (1 - completedness),
 					20,
@@ -267,7 +267,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					20 / 256f,
 					GL11.GL_NEAREST
 				);
-				Utils.drawItemStack(collectionItem, guiLeft + (int) x + 2, guiTop + (int) y + 2);
+				Utils.graphics.renderItem(collectionItem, guiLeft + (int) x + 2, guiTop + (int) y + 2);
 
 				if (mouseX > guiLeft + (int) x + 2 && mouseX < guiLeft + (int) x + 18) {
 					if (mouseY > guiTop + (int) y + 2 && mouseY < guiTop + (int) y + 18) {
@@ -341,7 +341,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + x,
 					guiTop + y,
 					20,
@@ -354,7 +354,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 				);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + x,
 					guiTop + y + 20 * (1 - completedness),
 					20,
@@ -366,7 +366,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					GL11.GL_NEAREST
 				);
 
-				Utils.drawItemStack(
+				Utils.graphics.renderItem(
 					NotEnoughUpdates.INSTANCE.manager.jsonToStack(minionJson),
 					guiLeft + (int) x + 2,
 					guiTop + (int) y + 2

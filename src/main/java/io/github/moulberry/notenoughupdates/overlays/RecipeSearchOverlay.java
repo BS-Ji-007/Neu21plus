@@ -47,7 +47,6 @@ public class RecipeSearchOverlay extends SearchOverlayScreen {
 		return Minecraft.getInstance().currentScreen instanceof RecipeSearchOverlay;
 	}
 
-	@SubscribeEvent
 	public void onSlotClick(SlotClickEvent event) {
 		ItemStack stack = event.slot.getStack();
 		if (enableSearchOverlay() && (event.slot.slotNumber == 50 || event.slot.slotNumber == 51) && stack != null && stack.hasDisplayName() && stack.getItem() == Items.sign && stack.getName().getString().equals("§aSearch Recipes")) {
@@ -66,7 +65,6 @@ public class RecipeSearchOverlay extends SearchOverlayScreen {
 		ChatFormatting.YELLOW + "Click to open Recipe Search!"
 	);
 
-	@SubscribeEvent
 	public void slotReplace(ReplaceItemEvent event) {
 		if (event.getInventory() instanceof InventoryPlayer) return;
 		if (!shouldAddPickaxe()) return;

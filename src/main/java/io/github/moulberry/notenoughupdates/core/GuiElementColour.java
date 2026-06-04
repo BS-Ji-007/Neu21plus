@@ -182,7 +182,7 @@ public class GuiElementColour extends GuiElement {
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarValueLocation);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
 		int opacityOffset = 0;
@@ -191,7 +191,7 @@ public class GuiElementColour extends GuiElement {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar_alpha);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().loadTexture(
 				colourPickerBarOpacityLocation,
@@ -199,7 +199,7 @@ public class GuiElementColour extends GuiElement {
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarOpacityLocation);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
 		int chromaSpeed = ChromaColour.getSpeed(colour.get());
@@ -221,14 +221,14 @@ public class GuiElementColour extends GuiElement {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		if (valueSlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
-		if (opacitySlider) RenderUtils.drawTexturedRect(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
+		if (valueSlider) RenderUtils.graphics.blit(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
+		if (opacitySlider) RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
 		if (chromaSpeed > 0) {
-			RenderUtils.drawTexturedRect(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5, 10, 64, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		} else {
 			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_chroma);
-			RenderUtils.drawTexturedRect(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5 + 27, 10, 10, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(x + 5 + 64 + valueOffset + opacityOffset + 5, y + 5 + 27, 10, 10, GL11.GL_NEAREST);
 		}
 
 		if (valueSlider) Gui.drawRect(x + 5 + 64 + 5, y + 5 + 64 - (int) (64 * hsv[2]),
@@ -248,11 +248,11 @@ public class GuiElementColour extends GuiElement {
 		Minecraft.getInstance().getTextureManager().loadTexture(colourPickerLocation, new DynamicTexture(bufferedImage));
 		Minecraft.getInstance().getTextureManager().bindTexture(colourPickerLocation);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		RenderUtils.drawTexturedRect(x + 1, y + 1, 72, 72, GL11.GL_LINEAR);
+		RenderUtils.graphics.blit(x + 1, y + 1, 72, 72, GL11.GL_LINEAR);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_dot);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		RenderUtils.drawTexturedRect(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
+		RenderUtils.graphics.blit(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(ChatFormatting.GRAY.toString() + Math.round(hsv[2] * 100) + "",
 			x + 5 + 64 + 5 + 5 - (Math.round(hsv[2] * 100) == 100 ? 1 : 0), y + 5 + 64 + 5 + 5, true, 13, -1

@@ -46,7 +46,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -161,7 +161,6 @@ public class EquipmentOverlay {
 	private Map<String, Map<Integer, ItemStack>> profileCache = new HashMap<>();
 
 	//<editor-fold desc="events">
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (isRenderingArmorHud()) {
 			event.blockArea(
@@ -185,18 +184,15 @@ public class EquipmentOverlay {
 		}
 	}
 
-	@SubscribeEvent
 	public void onGuiTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.START || event.side != Side.CLIENT) return;
 		updateGuiInfo(Minecraft.getInstance().currentScreen);
 	}
 
-	@SubscribeEvent
-	public void onGuiInit(GuiScreenEvent.InitGuiEvent event) {
+	public void onGuiInit(ScreenEvent.InitGuiEvent event) {
 		updateGuiInfo(event.gui);
 	}
 
-	@SubscribeEvent
 	public void onRenderGuiPost(GuiInventoryBackgroundDrawnEvent event) {
 		if (!(event.getContainer() instanceof GuiInventory)) return;
 		GuiInventory inventory = ((GuiInventory) event.getContainer());
@@ -225,7 +221,7 @@ public class EquipmentOverlay {
 	}
 
 	// Draws Backgrounds
-	public void renderHudBackground(GuiScreen inventory) {
+	public void renderHudBackground(Screen inventory) {
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		AccessorContainerScreen container = ((AccessorContainerScreen) inventory);
 		final int overlayLeft = container.getGuiLeft() - ARMOR_OVERLAY_OVERHAND_WIDTH;
@@ -234,7 +230,7 @@ public class EquipmentOverlay {
 			ResourceLocation equipmentTexture = getCustomEquipmentTexture(shouldRenderPets);
 			Minecraft.getInstance().getTextureManager().bindTexture(equipmentTexture);
 
-			Utils.drawTexturedRect(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
+			Utils.graphics.blit(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 		}
 
 		if (shouldRenderPets) {
@@ -242,7 +238,7 @@ public class EquipmentOverlay {
 			Minecraft.getInstance().getTextureManager().bindTexture(customPetTexture);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
-			Utils.drawTexturedRect(overlayLeft, overlayTop + PET_OVERLAY_OFFSET_Y, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
+			Utils.graphics.blit(overlayLeft, overlayTop + PET_OVERLAY_OFFSET_Y, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 		}
 		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 	}
@@ -263,7 +259,7 @@ public class EquipmentOverlay {
 			Minecraft.getInstance().getTextureManager().bindTexture(QUESTION_MARK);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			for (int i = 0; i < 4; i++) {
-				Utils.drawTexturedRect(overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 18 * i, 16, 16, GL11.GL_NEAREST);
+				Utils.graphics.blit(overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 18 * i, 16, 16, GL11.GL_NEAREST);
 			}
 
 			tooltipToDisplay = Lists.newArrayList(
@@ -308,7 +304,7 @@ public class EquipmentOverlay {
 		return item;
 	}
 
-	private void updateGuiInfo(GuiScreen screen) {
+	private void updateGuiInfo(Screen screen) {
 		if (getWardrobeSlot(10) != null) {
 			slot1 = getWardrobeSlot(10);
 			slot2 = getWardrobeSlot(19);
@@ -333,7 +329,7 @@ public class EquipmentOverlay {
 	private void drawSlot(ItemStack stack, int x, int y, int mouseX, int mouseY, List<String> tooltip) {
 		if (stack == null) return;
 
-		Utils.drawItemStack(stack, x, y, true);
+		Utils.graphics.renderItem(stack, x, y, true);
 		if (Utils.isWithinRect(mouseX, mouseY, x, y, 16, 16)) {
 			// draw the slot overlay
 			drawHoverOverlay(x, y);
@@ -363,7 +359,7 @@ public class EquipmentOverlay {
 
 		com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
-		Utils.drawItemStack(petInfo, overlayLeft + 8, overlayTop + 8, true);
+		Utils.graphics.renderItem(petInfo, overlayLeft + 8, overlayTop + 8, true);
 
 		List<String> tooltipToDisplay;
 		if (Utils.isWithinRect(mouseX, mouseY, overlayLeft + 8, overlayTop + 8, 16, 16)) {
@@ -388,7 +384,6 @@ public class EquipmentOverlay {
 
 	private final Map<ItemStack, Integer> itemsToAdd = new HashMap<>();
 
-	@SubscribeEvent
 	public void onClickItem(PlayerInteractEvent event) {
 		if ((event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && event.action != PlayerInteractEvent.Action.RIGHT_CLICK_AIR) || Minecraft.getInstance().player.getHeldItem() == null) return;
 
@@ -430,7 +425,6 @@ public class EquipmentOverlay {
 		if (itemInSlot != null && itemInSlot.getName().getString().contains("Empty")) itemsToAdd.put(heldItem, slot);
 	}
 
-	@SubscribeEvent
 	public void onReceiveChatMessage(ClientChatReceivedEvent event) {
 		if (event.type == 2 || !event.message.getString().startsWith("You equipped a ") || itemsToAdd.isEmpty()) return;
 
@@ -502,7 +496,7 @@ public class EquipmentOverlay {
 	private boolean wardrobeOpen = false;
 
 	private boolean isInNamedGui(String guiName) {
-		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
+		Screen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			ChestMenu container = (ChestMenu) chest.menu;
@@ -517,7 +511,7 @@ public class EquipmentOverlay {
 	}
 
 	private ItemStack getChestSlotsAsItemStack(int slot) {
-		GuiScreen guiScreen = Minecraft.getInstance().currentScreen;
+		Screen guiScreen = Minecraft.getInstance().currentScreen;
 		if (guiScreen instanceof ChestScreen) {
 			ChestScreen chest = (ChestScreen) Minecraft.getInstance().currentScreen;
 			return chest.menu.getSlot(slot).getStack();
@@ -568,7 +562,7 @@ public class EquipmentOverlay {
 		ResourceLocation equipmentTexture = getCustomEquipmentTexture(shouldRenderPets);
 		Minecraft.getInstance().getTextureManager().bindTexture(equipmentTexture);
 
-		Utils.drawTexturedRect(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(overlayLeft, overlayTop, ARMOR_OVERLAY_WIDTH, ARMOR_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 	}
 
 	public void renderPreviewPetInvHud() {
@@ -581,7 +575,7 @@ public class EquipmentOverlay {
 		ResourceLocation petHudTexture = getCustomPetTexture(shouldRenderArmorHud);
 		Minecraft.getInstance().getTextureManager().bindTexture(petHudTexture);
 
-		Utils.drawTexturedRect(overlayLeft, overlayTop, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(overlayLeft, overlayTop, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 	}
 
 	public ItemStack slot1 = null;

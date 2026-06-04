@@ -483,7 +483,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		int leftSide = rightSide - paneWidth;
 
 		int titleLen = fr.getStringWidth(title);
-		fr.drawString(title, (leftSide + rightSide - titleLen) / 2, overlay.getBoxPadding() + 5, Color.WHITE.getRGB());
+		fr.graphics.drawString(title, (leftSide + rightSide - titleLen) / 2, overlay.getBoxPadding() + 5, Color.WHITE.getRGB());
 
 		drawRect(
 			leftSide + overlay.getBoxPadding() - 5,
@@ -509,7 +509,7 @@ public class HTMLInfoPane extends TextInfoPane {
 
 			float vMin = yScroll / (imageHeight / scaleF);
 			float vMax = (yScroll + height - overlay.getBoxPadding() * 3) / (imageHeight / scaleF);
-			Utils.drawTexturedRect(leftSide + overlay.getBoxPadding(), overlay.getBoxPadding() * 2, imageW,
+			Utils.graphics.blit(leftSide + overlay.getBoxPadding(), overlay.getBoxPadding() * 2, imageW,
 				(height - overlay.getBoxPadding() * 3),
 				xMin, xMax, vMin, vMax
 			);
@@ -524,7 +524,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		} else {
 			scrollHeight.setValue(0);
 
-			Utils.drawTexturedRect(leftSide + overlay.getBoxPadding(), overlay.getBoxPadding() * 2, imageW,
+			Utils.graphics.blit(leftSide + overlay.getBoxPadding(), overlay.getBoxPadding() * 2, imageW,
 				(int) (imageHeight / scaleF)
 			);
 		}

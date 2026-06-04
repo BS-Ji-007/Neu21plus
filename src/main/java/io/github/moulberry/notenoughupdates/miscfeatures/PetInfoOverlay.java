@@ -592,7 +592,7 @@ public class PetInfoOverlay extends TextOverlay {
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
 			com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
-			Utils.drawItemStack(stack, 0, 0);
+			Utils.graphics.renderItem(stack, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
@@ -637,7 +637,7 @@ public class PetInfoOverlay extends TextOverlay {
 
 				com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
 				com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
-				Utils.drawItemStack(stack, 0, 0);
+				Utils.graphics.renderItem(stack, 0, 0);
 				Utils.pushGuiScale(0);
 				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 			}
@@ -662,7 +662,7 @@ public class PetInfoOverlay extends TextOverlay {
 
 					com.mojang.blaze3d.systems.RenderSystem.translate(x - 2, y - 2, 0);
 					com.mojang.blaze3d.systems.RenderSystem.scale(2, 2, 1);
-					Utils.drawItemStack(stack, 0, 0);
+					Utils.graphics.renderItem(stack, 0, 0);
 					Utils.pushGuiScale(0);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
@@ -697,7 +697,7 @@ public class PetInfoOverlay extends TextOverlay {
 					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 					com.mojang.blaze3d.systems.RenderSystem.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
-					Utils.drawItemStack(stack, 0, 0);
+					Utils.graphics.renderItem(stack, 0, 0);
 					Utils.pushGuiScale(0);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
@@ -729,7 +729,7 @@ public class PetInfoOverlay extends TextOverlay {
 					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 					com.mojang.blaze3d.systems.RenderSystem.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
-					Utils.drawItemStack(stack, 0, 0);
+					Utils.graphics.renderItem(stack, 0, 0);
 					Utils.pushGuiScale(0);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}

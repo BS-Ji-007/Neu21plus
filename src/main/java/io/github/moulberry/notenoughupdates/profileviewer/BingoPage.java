@@ -83,7 +83,7 @@ public class BingoPage extends GuiProfileViewerPage {
 
 		List<String> completedGoals = jsonArrayToStringList(lastEvent.get("completed_goals").getAsJsonArray());
 		Minecraft.getInstance().getTextureManager().bindTexture(BINGO_GUI_TEXTURE);
-		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();

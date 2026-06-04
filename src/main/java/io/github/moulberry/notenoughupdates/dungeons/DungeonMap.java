@@ -260,7 +260,7 @@ public class DungeonMap {
 					com.mojang.blaze3d.systems.RenderSystem.scale(NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale,
 						NotEnoughUpdates.INSTANCE.config.dungeonMap.dmIconScale, 1
 					);
-					Utils.drawTexturedRect(-5, -5, 10, 10, GL11.GL_NEAREST);
+					Utils.graphics.blit(-5, -5, 10, 10, GL11.GL_NEAREST);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 					if (!NotEnoughUpdates.INSTANCE.config.dungeonMap.dmOrientCheck) {
@@ -294,7 +294,7 @@ public class DungeonMap {
 			if (roomTex != null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(roomTex);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(0, 0, roomSize, roomSize, GL11.GL_LINEAR);
+				Utils.graphics.blit(0, 0, roomSize, roomSize, GL11.GL_LINEAR);
 			} else {
 				Gui.drawRect(0, 0, roomSize, roomSize, colour.getRGB());
 			}
@@ -302,7 +302,7 @@ public class DungeonMap {
 			if (fillCorner) {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(CORNER_BROWN);
-				Utils.drawTexturedRect(roomSize, roomSize, connectorSize, connectorSize, GL11.GL_NEAREST);
+				Utils.graphics.blit(roomSize, roomSize, connectorSize, connectorSize, GL11.GL_NEAREST);
 			}
 
 			for (int k = 0; k < 2; k++) {
@@ -374,7 +374,7 @@ public class DungeonMap {
 						com.mojang.blaze3d.systems.RenderSystem.rotate(-90, 0, 0, 1);
 						com.mojang.blaze3d.systems.RenderSystem.translate(-roomSize / 2f, -roomSize / 2f, 0);
 					}
-					Utils.drawTexturedRect(0, roomSize, roomSize, connectorSize, GL11.GL_NEAREST);
+					Utils.graphics.blit(0, roomSize, roomSize, connectorSize, GL11.GL_NEAREST);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
@@ -852,7 +852,7 @@ public class DungeonMap {
 				com.mojang.blaze3d.systems.RenderSystem.translate(centerX, centerY, 100);
 
 				renderFromBuffer.bindFramebufferTexture();
-				Utils.drawTexturedRect(-mapSizeX / 2, -mapSizeY / 2, mapSizeX, mapSizeY,
+				Utils.graphics.blit(-mapSizeX / 2, -mapSizeY / 2, mapSizeX, mapSizeY,
 					0, 1, 1, 0, GL11.GL_NEAREST
 				);
 				com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
@@ -926,7 +926,7 @@ public class DungeonMap {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
 				int size = borderSizeOption == 0 ? 165 : borderSizeOption == 1 ? 220 : borderSizeOption == 2 ? 300 : 440;
-				Utils.drawTexturedRect(-size / 2, -size / 2, size, size, GL11.GL_NEAREST);
+				Utils.graphics.blit(-size / 2, -size / 2, size, size, GL11.GL_NEAREST);
 			}
 
 			com.mojang.blaze3d.systems.RenderSystem.translate(-centerX, -centerY, -100);

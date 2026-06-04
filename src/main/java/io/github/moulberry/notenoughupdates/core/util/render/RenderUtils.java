@@ -43,11 +43,11 @@ public class RenderUtils {
         }
     }
 
-    public static void drawTexturedRect(float x, float y, float width, float height) {
-        drawTexturedRect(x, y, width, height, 0, 1, 0, 1);
+    public static void graphics.blit(float x, float y, float width, float height) {
+        graphics.blit(x, y, width, height, 0, 1, 0, 1);
     }
 
-    public static void drawTexturedRect(float x, float y, float width, float height, float uMin, float uMax, float vMin, float vMax) {
+    public static void graphics.blit(float x, float y, float width, float height, float uMin, float uMax, float vMin, float vMax) {
         if (currentGraphics == null) return;
         // In 26.1, we use GuiGraphics.blit with float parameters if available, or fallback to BufferBuilder
         RenderSystem.setShaderTexture(0, RenderSystem.getShaderTexture(0));

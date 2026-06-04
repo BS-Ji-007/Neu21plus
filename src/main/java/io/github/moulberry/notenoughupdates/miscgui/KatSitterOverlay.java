@@ -35,7 +35,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -44,8 +44,7 @@ public class KatSitterOverlay {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SubscribeEvent
-	public void onGuiDrawn(GuiScreenEvent.DrawScreenEvent.Post event) {
+	public void onGuiDrawn(ScreenEvent.DrawScreenEvent.Post event) {
 		if (!(event.gui instanceof ChestScreen)) return;
 		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.showKatSitting) return;
 		ChestScreen gui = (ChestScreen) event.gui;

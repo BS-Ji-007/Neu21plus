@@ -57,12 +57,10 @@ public class MinionHelperRepoLoader {
 	/**
 	 * This adds support for the /neureloadrepo command
 	 */
-	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onRepoReload(RepositoryReloadEvent event) {
 		setDirty();
 	}
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		if (Minecraft.getInstance().player == null) return;
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;

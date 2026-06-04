@@ -89,29 +89,29 @@ public class GuiElementSlider extends GuiElement {
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_cap);
-		Utils.drawTexturedRect(x, y, 4, HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(x, y, 4, HEIGHT, GL11.GL_NEAREST);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_off_cap);
-		Utils.drawTexturedRect(x + width - 4, y, 4, HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(x + width - 4, y, 4, HEIGHT, GL11.GL_NEAREST);
 
 		if (sliderAmountI > 5) {
 			Minecraft.getInstance().getTextureManager().bindTexture(slider_on_segment);
-			Utils.drawTexturedRect(x + 4, y, sliderAmountI - 4, HEIGHT, GL11.GL_NEAREST);
+			Utils.graphics.blit(x + 4, y, sliderAmountI - 4, HEIGHT, GL11.GL_NEAREST);
 		}
 
 		if (sliderAmountI < width - 5) {
 			Minecraft.getInstance().getTextureManager().bindTexture(slider_off_segment);
-			Utils.drawTexturedRect(x + sliderAmountI, y, width - 4 - sliderAmountI, HEIGHT, GL11.GL_NEAREST);
+			Utils.graphics.blit(x + sliderAmountI, y, width - 4 - sliderAmountI, HEIGHT, GL11.GL_NEAREST);
 		}
 
 		for (int i = 1; i < 4; i++) {
 			int notchX = x + width * i / 4 - 1;
 			Minecraft.getInstance().getTextureManager().bindTexture(
 				notchX > x + sliderAmountI ? slider_off_notch : slider_on_notch);
-			Utils.drawTexturedRect(notchX, y + (HEIGHT - 4) / 2, 2, 4, GL11.GL_NEAREST);
+			Utils.graphics.blit(notchX, y + (HEIGHT - 4) / 2, 2, 4, GL11.GL_NEAREST);
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_button_new);
-		Utils.drawTexturedRect(x + sliderAmountI - 4, y, 8, HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(x + sliderAmountI - 4, y, 8, HEIGHT, GL11.GL_NEAREST);
 	}
 
 	@Override

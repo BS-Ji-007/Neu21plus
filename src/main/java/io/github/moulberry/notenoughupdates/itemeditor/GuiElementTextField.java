@@ -487,7 +487,7 @@ public class GuiElementTextField extends GuiElement {
 					Color.WHITE.getRGB()
 				);
 			} else {
-				Minecraft.getInstance().font.drawString(Utils.trimToWidth(texts[yOffI], searchBarXSize - 10), x + 5,
+				Minecraft.getInstance().font.graphics.drawString(Utils.trimToWidth(texts[yOffI], searchBarXSize - 10), x + 5,
 					y + (searchBarYSize - 8) / 2 + yOff, Color.WHITE.getRGB()
 				);
 			}

@@ -555,7 +555,7 @@ public class TradeWindow {
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
-		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
 
 		Utils.drawStringF(new ChatComponentTranslation("container.inventory").getString(),
 			guiLeft + 8, guiTop + 111, false, 4210752
@@ -615,7 +615,7 @@ public class TradeWindow {
 			ItemStack stack = null;
 			if (containerIndex >= 0) {
 				stack = chest.menu.getInventory().get(containerIndex);
-				Utils.drawItemStack(stack, guiLeft + 10 + x * 18, guiTop + 15 + y * 18);
+				Utils.graphics.renderItem(stack, guiLeft + 10 + x * 18, guiTop + 15 + y * 18);
 			}
 
 			if (mouseX > guiLeft + 10 + x * 18 - 1 && mouseX < guiLeft + 10 + x * 18 + 18) {
@@ -637,7 +637,7 @@ public class TradeWindow {
 
 		ItemStack bidStack = chest.menu.getInventory().get(36);
 		if (bidStack != null) {
-			Utils.drawItemStack(bidStack, guiLeft + 10, guiTop + 90);
+			Utils.graphics.renderItem(bidStack, guiLeft + 10, guiTop + 90);
 			if (mouseX > guiLeft + 10 - 1 && mouseX < guiLeft + 10 + 18) {
 				if (mouseY > guiTop + 90 - 1 && mouseY < guiTop + 90 + 18) {
 					tooltipToDisplay = bidStack.getTooltip(
@@ -662,7 +662,7 @@ public class TradeWindow {
 				}
 
 				Minecraft.getInstance().getTextureManager().bindTexture(location);
-				Utils.drawTexturedRect(guiLeft + 81 - 51, guiTop + 91, 51, 14,
+				Utils.graphics.blit(guiLeft + 81 - 51, guiTop + 91, 51, 14,
 					0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
 				);
 
@@ -734,7 +734,7 @@ public class TradeWindow {
 
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
-			Utils.drawTexturedRect(guiLeft + 95, guiTop + 91, 51, 14,
+			Utils.graphics.blit(guiLeft + 95, guiTop + 91, 51, 14,
 				0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
 			);
 
@@ -756,14 +756,14 @@ public class TradeWindow {
 			ItemStack stack = null;
 			if (containerIndex >= 0) {
 				stack = chest.menu.getInventory().get(containerIndex);
-				Utils.drawItemStack(stack, guiLeft + 96 + x * 18, guiTop + 15 + y * 18);
+				Utils.graphics.renderItem(stack, guiLeft + 96 + x * 18, guiTop + 15 + y * 18);
 			}
 
 			if (currentTime % 400 > 200 && theirTradeChangesMillis[i] != null && theirTradeChangesMillis[i] > 0) {
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 200);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(location);
-				Utils.drawTexturedRect(guiLeft + 96 + x * 18, guiTop + 15 + y * 18, 16, 16,
+				Utils.graphics.blit(guiLeft + 96 + x * 18, guiTop + 15 + y * 18, 16, 16,
 					51 / 256f, 67 / 256f, 204 / 256f, 220 / 256f, GL11.GL_NEAREST
 				);
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -200);
@@ -819,7 +819,7 @@ public class TradeWindow {
 			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
-			Utils.drawTexturedRect(guiLeft - 80 - 3, guiTop, 80, 106,
+			Utils.graphics.blit(guiLeft - 80 - 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
 			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + "Total Value",
@@ -882,7 +882,7 @@ public class TradeWindow {
 
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
-			Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop, 80, 106,
+			Utils.graphics.blit(guiLeft + xSize + 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
 			);
 			drawStringShadow(ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + "Total Value",
@@ -947,13 +947,13 @@ public class TradeWindow {
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
-		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop + ySize - 19, 17, 17,
+		Utils.graphics.blit(guiLeft + xSize + 3, guiTop + ySize - 19, 17, 17,
 			(button3 ? 17 : 0) / 256f, (button3 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop + ySize - 38, 17, 17,
+		Utils.graphics.blit(guiLeft + xSize + 3, guiTop + ySize - 38, 17, 17,
 			(button2 ? 17 : 0) / 256f, (button2 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTop + ySize - 57, 17, 17,
+		Utils.graphics.blit(guiLeft + xSize + 3, guiTop + ySize - 57, 17, 17,
 			(button1 ? 17 : 0) / 256f, (button1 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST
 		);
 

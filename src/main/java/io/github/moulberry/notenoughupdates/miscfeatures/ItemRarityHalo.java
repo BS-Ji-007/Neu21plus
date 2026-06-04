@@ -240,7 +240,7 @@ public class ItemRarityHalo {
 			Color color = Utils.getPrimaryColour(stack.getName().getString());
 			//com.mojang.blaze3d.systems.RenderSystem.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f,
 			//        NotEnoughUpdates.INSTANCE.manager.config.itemHighlightOpacity.value.floatValue()/255f);
-			Utils.drawTexturedRect(x, y, 16, 16,
+			Utils.graphics.blit(x, y, 16, 16,
 				0, 1, 1, 0, GL11.GL_NEAREST
 			);
 			com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);

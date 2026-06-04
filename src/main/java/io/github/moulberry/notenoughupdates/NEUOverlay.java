@@ -339,12 +339,12 @@ public class NEUOverlay extends Gui {
 							vMax = 20 / 20f;
 						}
 
-						Utils.drawTexturedRect(partX, partY, partW, partH, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+						Utils.graphics.blit(partX, partY, partW, partH, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 					}
 				}
 
 				//Search bar text
-				fr.drawString(NeuSearchCalculator.format(textField.getText()), (int) x + 5,
+				fr.graphics.drawString(NeuSearchCalculator.format(textField.getText()), (int) x + 5,
 					(int) y - 4 + getHeight() / 2, Color.WHITE.getRGB()
 				);
 
@@ -373,7 +373,7 @@ public class NEUOverlay extends Gui {
 						(int) y - 4 + 9 + getHeight() / 2, Color.LIGHT_GRAY.getRGB()
 					);
 
-					fr.drawString(selectedText,
+					fr.graphics.drawString(selectedText,
 						(int) x + 5 + textBeforeSelectionWidth,
 						(int) y - 4 + getHeight() / 2, Color.BLACK.getRGB()
 					);
@@ -424,13 +424,13 @@ public class NEUOverlay extends Gui {
 				}
 				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(x, y,
+				Utils.graphics.blit(x, y,
 					searchYSize + paddingUnscaled * 2, searchYSize + paddingUnscaled * 2, GL11.GL_NEAREST
 				);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.settings);
 				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-				Utils.drawTexturedRect((int) x + paddingUnscaled, (int) y + paddingUnscaled,
+				Utils.graphics.blit((int) x + paddingUnscaled, (int) y + paddingUnscaled,
 					searchYSize, searchYSize
 				);
 
@@ -480,13 +480,13 @@ public class NEUOverlay extends Gui {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(x, y,
+				Utils.graphics.blit(x, y,
 					searchYSize + paddingUnscaled * 2, searchYSize + paddingUnscaled * 2, GL11.GL_NEAREST
 				);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_MODE_BUTTON);
 				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-				Utils.drawTexturedRect((int) x + paddingUnscaled, (int) y + paddingUnscaled,
+				Utils.graphics.blit((int) x + paddingUnscaled, (int) y + paddingUnscaled,
 					getSearchBarYSize(), getSearchBarYSize()
 				);
 				com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
@@ -584,7 +584,7 @@ public class NEUOverlay extends Gui {
 
 					Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.quickcommand_background);
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-					Utils.drawTexturedRect(x, y,
+					Utils.graphics.blit(x, y,
 						bigItemSize + paddingUnscaled * 2, bigItemSize + paddingUnscaled * 2, GL11.GL_NEAREST
 					);
 
@@ -606,7 +606,7 @@ public class NEUOverlay extends Gui {
 					com.mojang.blaze3d.systems.RenderSystem.translate((x - (extraScale - 1) * bigItemSize / 2 + paddingUnscaled) / itemScale,
 						(y - (extraScale - 1) * bigItemSize / 2 + paddingUnscaled) / itemScale, 0f
 					);
-					Utils.drawItemStack(render, 0, 0);
+					Utils.graphics.renderItem(render, 0, 0);
 					com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 				}
 			}
@@ -1728,12 +1728,12 @@ public class NEUOverlay extends Gui {
 		drawRect(leftSide - 1, top, leftSide - 1 + buttonXSize, top + ySize, fg.getRGB());
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow);
-		Utils.drawTexturedRect(leftSide - 1 + leftPressed,
+		Utils.graphics.blit(leftSide - 1 + leftPressed,
 			top + leftPressed,
 			buttonXSize, ySize, 1, 0, 0, 1
 		);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
-		Utils.drawTexturedRect(leftSide - 1,
+		Utils.graphics.blit(leftSide - 1,
 			top,
 			buttonXSize, ySize, 1 - leftPressed, leftPressed, 1 - leftPressed, leftPressed
 		);
@@ -1747,12 +1747,12 @@ public class NEUOverlay extends Gui {
 		drawRect(rightSide + 1 - buttonXSize, top, rightSide + 1, top + ySize, fg.getRGB());
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow);
-		Utils.drawTexturedRect(rightSide + 1 - buttonXSize + rightPressed,
+		Utils.graphics.blit(rightSide + 1 - buttonXSize + rightPressed,
 			top + rightPressed,
 			buttonXSize, ySize
 		);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.rightarrow_overlay);
-		Utils.drawTexturedRect(rightSide + 1 - buttonXSize,
+		Utils.graphics.blit(rightSide + 1 - buttonXSize,
 			top,
 			buttonXSize, ySize, 1 - rightPressed, rightPressed, 1 - rightPressed, rightPressed
 		);
@@ -1935,7 +1935,7 @@ public class NEUOverlay extends Gui {
 		if (textField.getText().toLowerCase(Locale.ROOT).contains("bald")) {
 			Minecraft.getInstance().getTextureManager().bindTexture(SUPERGEHEIMNISVERMOGEN);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect((width - 64) / 2f, (height - 64) / 2f - 114, 64, 64, GL11.GL_LINEAR);
+			Utils.graphics.blit((width - 64) / 2f, (height - 64) / 2f - 114, 64, 64, GL11.GL_LINEAR);
 			com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 		}
 
@@ -1943,7 +1943,7 @@ public class NEUOverlay extends Gui {
 			Minecraft.getInstance().getTextureManager().bindTexture(ATMOULBERRYWHYISMYLUNARCLIENTBUGGING);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 100);
-			Utils.drawTexturedRect((width + 410) / 2f, (height + 450) / 2f - 114, 113, 64, GL11.GL_LINEAR);
+			Utils.graphics.blit((width + 410) / 2f, (height + 450) / 2f - 114, 113, 64, GL11.GL_LINEAR);
 			com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 		}
 
@@ -2028,7 +2028,7 @@ public class NEUOverlay extends Gui {
 		if (NotEnoughUpdates.INSTANCE.config.itemlist.tabOpen) {
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.itemPaneTabArrow);
 			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 0.3f);
-			Utils.drawTexturedRect(width - itemPaneTabOffset.getValue() * 64 / 20f, height / 2f - 32, 64, 64);
+			Utils.graphics.blit(width - itemPaneTabOffset.getValue() * 64 / 20f, height / 2f - 32, 64, 64);
 			com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
 			if (!itemPaneOpen && mouseX > width - itemPaneTabOffset.getValue() && mouseY > height / 2 - 32
@@ -2085,13 +2085,13 @@ public class NEUOverlay extends Gui {
 				Minecraft.getInstance().getTextureManager().bindTexture(
 					getCompareMode() == i ? orderIconsActive[i] : orderIcons[i]);
 				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-				Utils.drawTexturedRect(orderIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(orderIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(getCompareAscending().get(i)
 					? GuiTextures.ascending_overlay
 					: GuiTextures.descending_overlay);
 				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-				Utils.drawTexturedRect(orderIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(orderIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
 				if (mouseY > iconTop && mouseY < iconTop + scaledITEM_SIZE) {
@@ -2115,7 +2115,7 @@ public class NEUOverlay extends Gui {
 				Minecraft.getInstance().getTextureManager().bindTexture(
 					getSortMode() == i ? sortIconsActive[i] : sortIcons[i]);
 				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-				Utils.drawTexturedRect(sortIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(sortIconX, iconTop, scaledITEM_SIZE, scaledITEM_SIZE, 0, 1, 0, 1, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.bindTexture(0);
 
 				if (mouseY > iconTop && mouseY < iconTop + scaledITEM_SIZE) {
@@ -2237,7 +2237,7 @@ public class NEUOverlay extends Gui {
 				}
 				for (int i = 0; i < selectedItemGroup.size(); i++) {
 					JsonObject item = selectedItemGroup.get(i);
-					Utils.drawItemStack(manager.jsonToStack(item), selectedX + 18 * i, selectedItemGroupY + 18);
+					Utils.graphics.renderItem(manager.jsonToStack(item), selectedX + 18 * i, selectedItemGroupY + 18);
 				}
 
 				GL11.glTranslatef(0, 0, -20);
@@ -2274,7 +2274,7 @@ public class NEUOverlay extends Gui {
 
 			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.close);
-			Utils.drawTexturedRect(rightSide - getBoxPadding() - 8, getBoxPadding() - 8, 16, 16);
+			Utils.graphics.blit(rightSide - getBoxPadding() - 8, getBoxPadding() - 8, 16, 16);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		}
 
@@ -2420,13 +2420,13 @@ public class NEUOverlay extends Gui {
 		if (itemFramebuffers[0] != null && itemFramebuffers[1] != null) {
 			itemFramebuffers[1].bindFramebufferTexture();
 			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-			Utils.drawTexturedRect(xOffset - 10, 0, width, height, 0, 1, 1, 0);
+			Utils.graphics.blit(xOffset - 10, 0, width, height, 0, 1, 1, 0);
 			itemFramebuffers[1].unbindFramebufferTexture();
 
 			GL11.glTranslatef(0, 0, itemRenderOffset);
 			itemFramebuffers[0].bindFramebufferTexture();
 			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-			Utils.drawTexturedRect(xOffset - 10, 0, width, height, 0, 1, 1, 0);
+			Utils.graphics.blit(xOffset - 10, 0, width, height, 0, 1, 1, 0);
 			itemFramebuffers[0].unbindFramebufferTexture();
 			GL11.glTranslatef(0, 0, -itemRenderOffset);
 		}
@@ -2555,12 +2555,12 @@ public class NEUOverlay extends Gui {
 						com.mojang.blaze3d.systems.RenderSystem.color(fgFavourite2.getRed() / 255f, fgFavourite2.getGreen() / 255f,
 							fgFavourite2.getBlue() / 255f, fgFavourite2.getAlpha() / 255f
 						);
-						Utils.drawTexturedRect(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
+						Utils.graphics.blit(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
 
 						com.mojang.blaze3d.systems.RenderSystem.color(fgFavourite.getRed() / 255f, fgFavourite.getGreen() / 255f,
 							fgFavourite.getBlue() / 255f, fgFavourite.getAlpha() / 255f
 						);
-						Utils.drawTexturedRect(x, y, ITEM_SIZE, ITEM_SIZE, GL11.GL_NEAREST);
+						Utils.graphics.blit(x, y, ITEM_SIZE, ITEM_SIZE, GL11.GL_NEAREST);
 					} else {
 						drawRect(x - 1, y - 1, x + ITEM_SIZE + 1, y + ITEM_SIZE + 1, fgFavourite2.getRGB());
 						drawRect(x, y, x + ITEM_SIZE, y + ITEM_SIZE, fgFavourite.getRGB());
@@ -2570,7 +2570,7 @@ public class NEUOverlay extends Gui {
 						com.mojang.blaze3d.systems.RenderSystem.color(fgCustomOpacity.getRed() / 255f, fgCustomOpacity.getGreen() / 255f,
 							fgCustomOpacity.getBlue() / 255f, fgCustomOpacity.getAlpha() / 255f
 						);
-						Utils.drawTexturedRect(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
+						Utils.graphics.blit(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
 					} else {
 						drawRect(x - 1, y - 1, x + ITEM_SIZE + 1, y + ITEM_SIZE + 1, fgCustomOpacity.getRGB());
 					}
@@ -2622,7 +2622,7 @@ public class NEUOverlay extends Gui {
 					ItemStack stack = manager.jsonToStack(json, true, false, false);
 					if (stack != null) {
 						if (glint) {
-							Utils.drawItemStack(stack, x, y);
+							Utils.graphics.renderItem(stack, x, y);
 						} else {
 							Utils.drawItemStackWithoutGlint(stack, x, y);
 						}
@@ -2633,7 +2633,7 @@ public class NEUOverlay extends Gui {
 				if (searchedItemsSubgroup.containsKey(json.get("internalname").getAsString())) {
 					Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.item_haschild);
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-					Utils.drawTexturedRect(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
+					Utils.graphics.blit(x - 1, y - 1, ITEM_SIZE + 2, ITEM_SIZE + 2, GL11.GL_NEAREST);
 				}
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -50);
 			}

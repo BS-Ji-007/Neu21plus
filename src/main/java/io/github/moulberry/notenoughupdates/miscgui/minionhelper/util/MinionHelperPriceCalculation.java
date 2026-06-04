@@ -44,7 +44,6 @@ public class MinionHelperPriceCalculation {
 		this.manager = manager;
 	}
 
-	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		resetCache();
 	}

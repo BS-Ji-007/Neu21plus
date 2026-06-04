@@ -42,7 +42,6 @@ public class MinionHelperTooltips {
 		this.manager = manager;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!manager.inCraftedMinionsInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.tooltip) return;

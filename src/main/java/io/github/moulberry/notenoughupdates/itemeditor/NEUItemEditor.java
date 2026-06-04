@@ -373,7 +373,7 @@ public class NEUItemEditor extends Screen {
 			int scaleFactor = itemSize / 16;
 			GL11.glPushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.scale(scaleFactor, scaleFactor, 1);
-			drawItemStack(stack, itemX / scaleFactor, itemY / scaleFactor);
+			graphics.renderItem(stack, itemX / scaleFactor, itemY / scaleFactor);
 			GL11.glPopMatrix();
 		}
 
@@ -437,7 +437,7 @@ public class NEUItemEditor extends Screen {
 		}
 
 		if (Mouse.getX() < maxWidth * scaledresolution.getScaleFactor()) {
-			int dWheel = Mouse.getEventDWheel();
+			int dWheel = 0;
 
 			if (dWheel < 0) {
 				scrollHeight.setTarget(scrollHeight.getTarget() - SCROLL_AMOUNT);
@@ -498,7 +498,7 @@ public class NEUItemEditor extends Screen {
 		}
 	}
 
-	private void drawItemStack(ItemStack stack, int x, int y) {
+	private void graphics.renderItem(ItemStack stack, int x, int y) {
 		RenderItem itemRender = Minecraft.getInstance().getRenderItem();
 		FontRenderer font = Minecraft.getInstance().font;
 

@@ -81,7 +81,7 @@ public class LevelPage extends GuiProfileViewerPage {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_levels);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
 		if (selectedProfile == null) {

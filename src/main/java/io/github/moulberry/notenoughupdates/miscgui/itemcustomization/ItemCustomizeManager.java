@@ -369,7 +369,6 @@ public class ItemCustomizeManager {
 		}
 	}
 
-	@SubscribeEvent
 	public void onWorldUnload(WorldEvent.Unload event) {
 		damageMap.clear();
 		lastUpdate.clear();
@@ -492,7 +491,6 @@ public class ItemCustomizeManager {
 
 	public static HashMap<String, AnimatedSkull> customSkulls = new HashMap<>();
 
-	@SubscribeEvent
 	public void onRepoReload(RepositoryReloadEvent event) {
 		customSkulls.clear();
 	}

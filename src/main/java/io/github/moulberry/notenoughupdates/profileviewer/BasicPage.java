@@ -202,7 +202,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_basic);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 		String profileName = GuiProfileViewer.getProfileName();
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
 		if (selectedProfile == null) {
@@ -285,7 +285,7 @@ public class BasicPage extends GuiProfileViewerPage {
 					new Color(0, 0, 0, 64).getRGB()
 				);
 
-				fr.drawString(playerName, x - halfRankPrefixLen, y, 0, true);
+				fr.graphics.drawString(playerName, x - halfRankPrefixLen, y, 0, true);
 			}
 		}
 
@@ -322,7 +322,7 @@ public class BasicPage extends GuiProfileViewerPage {
 			int offset = (fontWidth >= 117 ? 63 + (fontWidth - 117) : 63);
 
 			if (fontWidth >= 117) {
-				fr.drawString(ChatFormatting.GREEN + "Net Worth: " + ChatFormatting.GOLD +
+				fr.graphics.drawString(ChatFormatting.GREEN + "Net Worth: " + ChatFormatting.GOLD +
 					StringUtils.formatNumber(networth), guiLeft + 8, guiTop + 38 - fr.FONT_HEIGHT / 2f, 0, true);
 			} else {
 				Utils.drawStringCentered(
@@ -392,7 +392,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		} else {
 			int errFontWidth = fr.getStringWidth("Net Worth: " + stateStr);
 			if (errFontWidth >= 117) {
-				fr.drawString(ChatFormatting.GREEN + "Net Worth: " + stateStr,
+				fr.graphics.drawString(ChatFormatting.GREEN + "Net Worth: " + stateStr,
 					guiLeft + 8, guiTop + 38 - fr.FONT_HEIGHT / 2f, 0, true
 				);
 			} else {
@@ -624,7 +624,7 @@ public class BasicPage extends GuiProfileViewerPage {
 
 						com.mojang.blaze3d.systems.RenderSystem.scale(1.5f, 1.5f, 1);
 						com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-						Utils.drawItemStack(stack, 0, 0);
+						Utils.graphics.renderItem(stack, 0, 0);
 						com.mojang.blaze3d.systems.RenderSystem.scale(1 / 1.5f, 1 / 1.5f, 1);
 						com.mojang.blaze3d.systems.RenderSystem.translate(-x, -y, 0);
 						break;
@@ -654,7 +654,7 @@ public class BasicPage extends GuiProfileViewerPage {
 		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		com.mojang.blaze3d.systems.RenderSystem.translate(sbLevelX, sbLevelY, 0);
 		com.mojang.blaze3d.systems.RenderSystem.scale(1.5f, 1.5f, 1);
-		Utils.drawItemStack(skull, 0, 0);
+		Utils.graphics.renderItem(skull, 0, 0);
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		Utils.drawStringCenteredScaled(skyblockLevelColour.toString() + (int) skyblockLevel,
 			sbLevelX + 9, sbLevelY - 12, true, 1.5f

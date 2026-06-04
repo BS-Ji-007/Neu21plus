@@ -308,7 +308,7 @@ public class DungeonWin {
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			if (c.life >= 15) {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,
 					8,
@@ -374,9 +374,9 @@ public class DungeonWin {
 
 		com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
-		Utils.drawTexturedRect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
 		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -SCALE_FACTOR * 2);
-		Utils.drawTexturedRect(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
+		Utils.graphics.blit(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, GL11.GL_NEAREST);
 		com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, SCALE_FACTOR * 2);
 
 		if (deltaTime < 1600) {
@@ -481,7 +481,7 @@ public class DungeonWin {
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			if (c.life > 0 && c.life < 15) {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,
 					8,

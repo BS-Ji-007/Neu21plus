@@ -431,12 +431,12 @@ public class CustomItemEffects {
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
 			if (usingDirtWand) {
-				Utils.drawItemStack(
+				Utils.graphics.renderItem(
 					new ItemStack(Items.gold_nugget),
 					scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 11,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -444,10 +444,10 @@ public class CustomItemEffects {
 					true
 				);
 			} else {
-				Utils.drawItemStack(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
+				Utils.graphics.renderItem(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 16,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -534,12 +534,12 @@ public class CustomItemEffects {
 
 		if (NotEnoughUpdates.INSTANCE.config.itemOverlays.wandBlockCount) {
 			if (usingDirtWand) {
-				Utils.drawItemStack(
+				Utils.graphics.renderItem(
 					new ItemStack(Items.gold_nugget),
 					scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 11,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,
@@ -547,10 +547,10 @@ public class CustomItemEffects {
 					true
 				);
 			} else {
-				Utils.drawItemStack(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
+				Utils.graphics.renderItem(matchStack, scaledResolution.getScaledWidth() / 2 - (itemCountLen + 16) / 2,
 					scaledResolution.getScaledHeight() / 2 + 10 + 4
 				);
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					itemCountS,
 					scaledResolution.getScaledWidth() / 2f - (itemCountLen + 16) / 2f + 16,
 					scaledResolution.getScaledHeight() / 2f + 10 + 8,

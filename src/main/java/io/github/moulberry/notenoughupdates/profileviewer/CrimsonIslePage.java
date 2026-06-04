@@ -138,7 +138,7 @@ public class CrimsonIslePage extends GuiProfileViewerPage {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(CRIMSON_ISLE);
-		Utils.drawTexturedRect(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
 		JsonObject netherIslandPlayerData = profileInfo.getAsJsonObject("nether_island_player_data");
 

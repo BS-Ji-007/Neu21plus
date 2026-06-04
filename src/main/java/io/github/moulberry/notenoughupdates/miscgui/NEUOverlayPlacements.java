@@ -36,7 +36,7 @@ import org.lwjgl.util.vector.Vector2f;
 import java.awt.*;
 import java.io.IOException;
 
-public class NEUOverlayPlacements extends GuiScreen {
+public class NEUOverlayPlacements extends Screen {
 	private int clickedX;
 	private int clickedY;
 	private int clickedAnchorX;

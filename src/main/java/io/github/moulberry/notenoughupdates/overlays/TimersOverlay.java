@@ -88,7 +88,6 @@ public class TimersOverlay extends TextTabOverlay {
 		"\u00a7r\u00a7cYou may only buy up to 6,?400? of this item each day!\u00a7r");
 	private static final Pattern GOD_POTION_TIME = Pattern.compile(" God Potion: ([1-5][0-9]|[0-9])([dhms])(:? ([1-5][0-9]|[0-9])([dhms]))?");
 
-	@SubscribeEvent
 	public void onClickItem(SlotClickEvent event) {
 		NEUConfig.HiddenProfileSpecific hidden = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 		if (hidden == null) return;
@@ -101,7 +100,6 @@ public class TimersOverlay extends TextTabOverlay {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
 	public void onChatMessageReceived(ClientChatReceivedEvent event) {
 		NEUConfig.HiddenProfileSpecific hidden = NotEnoughUpdates.INSTANCE.config.getProfileSpecific();
 		if (hidden == null) return;
@@ -286,7 +284,7 @@ public class TimersOverlay extends TextTabOverlay {
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(position.x, position.y, 0);
 			com.mojang.blaze3d.systems.RenderSystem.scale(0.5f, 0.5f, 1f);
-			Utils.drawItemStack(icon, 0, 0);
+			Utils.graphics.renderItem(icon, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			position.x += 12;
@@ -1103,7 +1101,6 @@ public class TimersOverlay extends TextTabOverlay {
 
 	AxisAlignedBB matriarchArea = new AxisAlignedBB(-555, 36, -904, -520, 52, -870);
 
-	@SubscribeEvent
 	public void onMatriarchTick(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
 		if (!"crimson_isle".equals(SBInfo.getInstance().getLocation())) return;

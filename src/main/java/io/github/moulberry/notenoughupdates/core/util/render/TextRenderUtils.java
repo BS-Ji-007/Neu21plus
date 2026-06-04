@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 public class TextRenderUtils {
-    public static void drawCenteredString(GuiGraphics graphics, String text, int x, int y, int color) {
-        graphics.drawCenteredString(Minecraft.getInstance().font, text, x, y, color);
+    public static void graphics.drawCenteredString(GuiGraphics graphics, String text, int x, int y, int color) {
+        graphics.graphics.drawCenteredString(Minecraft.getInstance().font, text, x, y, color);
     }
 }

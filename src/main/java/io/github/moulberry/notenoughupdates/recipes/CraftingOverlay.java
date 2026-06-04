@@ -154,20 +154,20 @@ public class CraftingOverlay {
 			if (actualItem != null && (recipeIngredient == null ||
 				!recipeIngredient.getInternalItemId().equals(manager.getInternalNameForItem(actualItem)) ||
 				actualItem.getCount() < recipeIngredient.getCount())) {
-				drawItemStack(guiChest, slot, actualItem);
+				graphics.renderItem(guiChest, slot, actualItem);
 			}
 			if (recipeIngredient != null && actualItem == null) {
-				drawItemStack(guiChest, slot, recipeIngredient.getItemStack());
+				graphics.renderItem(guiChest, slot, recipeIngredient.getItemStack());
 			}
 		});
 	}
 
-	private void drawItemStack(ChestScreen gui, Slot slot, ItemStack item) {
+	private void graphics.renderItem(ChestScreen gui, Slot slot, ItemStack item) {
 		int slotX = slot.xDisplayPosition + ((AccessorContainerScreen) gui).getGuiLeft();
 		int slotY = slot.yDisplayPosition + ((AccessorContainerScreen) gui).getGuiTop();
 		Gui.drawRect(slotX, slotY, slotX + 16, slotY + 16, 0x64ff0000);
 		if (item != null)
-			Utils.drawItemStack(item, slotX, slotY);
+			Utils.graphics.renderItem(item, slotX, slotY);
 	}
 
 }

@@ -125,7 +125,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_pets);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		Utils.drawStringCentered(ChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
@@ -155,7 +155,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (petsPage > 0) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 100 - 15 - 12,
 				guiTop + 6,
 				12,
@@ -168,7 +168,7 @@ public class PetsPage extends GuiProfileViewerPage {
 			);
 		}
 		if (petsPage < Math.ceil(pets.size() / 20f) - 1) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 100 + 15,
 				guiTop + 6,
 				12,
@@ -207,9 +207,9 @@ public class PetsPage extends GuiProfileViewerPage {
 				} else {
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				}
-				Utils.drawTexturedRect(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
-				Utils.drawItemStack(stack, guiLeft + (int) x + 2, guiTop + (int) y + 2, true);
+				Utils.graphics.renderItem(stack, guiLeft + (int) x + 2, guiTop + (int) y + 2, true);
 
 				if (mouseX > guiLeft + x && mouseX < guiLeft + x + 20) {
 					if (mouseY > guiTop + y && mouseY < guiTop + y + 20) {
@@ -241,12 +241,12 @@ public class PetsPage extends GuiProfileViewerPage {
 
 			GuiScreen.drawRect(-halfDisplayLen - 1 - 28, -1, halfDisplayLen + 1 - 28, 8, new Color(0, 0, 0, 100).getRGB());
 
-			Minecraft.getInstance().font.drawString(display, -halfDisplayLen - 28, 0, 0, true);
+			Minecraft.getInstance().font.graphics.drawString(display, -halfDisplayLen - 28, 0, 0, true);
 
 			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			com.mojang.blaze3d.systems.RenderSystem.translate(-55, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.scale(3.5f, 3.5f, 1);
-			Utils.drawItemStack(petStack, 0, 0);
+			Utils.graphics.renderItem(petStack, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			float level = pet.get("level").getAsFloat();
@@ -314,7 +314,7 @@ public class PetsPage extends GuiProfileViewerPage {
 
 	private void renderSortingButton(int guiLeft, int guiTop) {
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			switchSortingMethodButton.getX() + guiLeft - 2,
 			switchSortingMethodButton.getY() + guiTop - 2,
 			20,

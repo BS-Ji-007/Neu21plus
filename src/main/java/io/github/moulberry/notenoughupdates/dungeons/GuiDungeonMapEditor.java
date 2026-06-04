@@ -136,10 +136,10 @@ public class GuiDungeonMapEditor extends GuiScreen {
 				com.mojang.blaze3d.systems.RenderSystem.color(colour.getRed() * 0.85f / 255f, colour.getGreen() * 0.85f / 255f,
 					colour.getBlue() * 0.85f / 255f, 1
 				);
-				Utils.drawTexturedRect(guiLeft + x, guiTop + y, 48, 16, 1, 0, 1, 0, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft + x, guiTop + y, 48, 16, 1, 0, 1, 0, GL11.GL_NEAREST);
 			} else {
 				com.mojang.blaze3d.systems.RenderSystem.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, 1);
-				Utils.drawTexturedRect(guiLeft + x, guiTop + y, 48, 16, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft + x, guiTop + y, 48, 16, GL11.GL_NEAREST);
 			}
 
 			if (text.length() > 0) {
@@ -374,9 +374,9 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
-		Minecraft.getInstance().font.drawString("NEU Dungeon Map Editor", guiLeft + 8, guiTop + 6, 0xFFB4B4B4);
+		Minecraft.getInstance().font.graphics.drawString("NEU Dungeon Map Editor", guiLeft + 8, guiTop + 6, 0xFFB4B4B4);
 
 		Utils.drawStringCenteredScaledMaxWidth("Border Size", guiLeft + 76, guiTop + 30, false, 137, 0xFFB4B4B4);
 		Utils.drawStringCenteredScaledMaxWidth("Rooms Size", guiLeft + 76, guiTop + 60, false, 137, 0xFFB4B4B4);
@@ -432,7 +432,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(button_tex);
-		RenderUtils.drawTexturedRect(guiLeft + 52, guiTop + 215, 48, 16);
+		RenderUtils.graphics.blit(guiLeft + 52, guiTop + 215, 48, 16);
 		TextRenderUtils.drawStringCenteredScaledMaxWidth("Edit", guiLeft + 76, guiTop + 223, false, 48, 0xFF303030);
 
 		Map<String, Vec4b> decorations = new HashMap<>();
@@ -489,17 +489,17 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_large);
-		Utils.drawTexturedRect(centerX - 48, centerY - 8, sliderAmountI, 16,
+		Utils.graphics.blit(centerX - 48, centerY - 8, sliderAmountI, 16,
 			0, sliderAmount, 0, 1, GL11.GL_NEAREST
 		);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_off_large);
-		Utils.drawTexturedRect(centerX - 48 + sliderAmountI, centerY - 8, 96 - sliderAmountI, 16,
+		Utils.graphics.blit(centerX - 48 + sliderAmountI, centerY - 8, 96 - sliderAmountI, 16,
 			sliderAmount, 1, 0, 1, GL11.GL_NEAREST
 		);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_button);
-		Utils.drawTexturedRect(centerX - 48 + sliderAmountI - 4, centerY - 8, 8, 16,
+		Utils.graphics.blit(centerX - 48 + sliderAmountI - 4, centerY - 8, 8, 16,
 			0, 1, 0, 1, GL11.GL_NEAREST
 		);
 	}
@@ -850,7 +850,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		blurOutputVert.bindFramebufferTexture();
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
-		Utils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
+		Utils.graphics.blit(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		blurOutputVert.unbindFramebufferTexture();
 	}
 

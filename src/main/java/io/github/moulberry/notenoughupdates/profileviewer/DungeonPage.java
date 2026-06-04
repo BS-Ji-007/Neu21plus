@@ -115,7 +115,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 		int guiTop = GuiProfileViewer.getGuiTop();
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_dung);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		JsonObject leveling = Constants.LEVELING;
 		if (leveling == null) return;
@@ -507,7 +507,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 				com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 				com.mojang.blaze3d.systems.RenderSystem.translate(x - 4, y + 10 + 20 * (i - 1), 0);
 				com.mojang.blaze3d.systems.RenderSystem.scale(1.3f, 1.3f, 1);
-				Utils.drawItemStack(BOSS_HEADS[i - 1], 0, 0);
+				Utils.graphics.renderItem(BOSS_HEADS[i - 1], 0, 0);
 				com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 				Utils.renderAlignedString(

@@ -29,7 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.math.BigDecimal;
@@ -47,8 +47,7 @@ public class SignCalculator {
 		return NotEnoughUpdates.INSTANCE.config.misc.calculationMode != 0;
 	}
 
-	@SubscribeEvent
-	public void onSignDrawn(GuiScreenEvent.DrawScreenEvent.Post event) {
+	public void onSignDrawn(ScreenEvent.DrawScreenEvent.Post event) {
 		if (!(event.gui instanceof GuiEditSign))
 			return;
 		if (!isEnabled()) return;
@@ -65,7 +64,6 @@ public class SignCalculator {
 		Utils.drawStringCentered(getRenderedString(), guiEditSign.width / 2F, 58, false, 0x808080FF);
 	}
 
-	@SubscribeEvent
 	public void onSignSubmitted(SignSubmitEvent event) {
 		if (!isEnabled()) return;
 		if (Objects.equals(event.lines[1], "^^^^^^^^^^^^^^^") || Objects.equals(event.lines[1], "^^^^^^")) {

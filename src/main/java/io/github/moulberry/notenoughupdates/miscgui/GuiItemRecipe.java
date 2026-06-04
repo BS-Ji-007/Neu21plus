@@ -55,7 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GuiItemRecipe extends GuiScreen {
+public class GuiItemRecipe extends Screen {
 	public static final ResourceLocation tabsTexture = new ResourceLocation("notenoughupdates", "textures/gui/tab.png");
 
 	public static final int SLOT_SIZE = 16;
@@ -153,7 +153,7 @@ public class GuiItemRecipe extends GuiScreen {
 			if (slot.getStackSize() != -1) {
 				slot.getItemStack().getCount() = 1;
 			}
-			Utils.drawItemStack(slot.getItemStack(), slot.getX(this), slot.getY(this), true);
+			Utils.graphics.renderItem(slot.getItemStack(), slot.getX(this), slot.getY(this), true);
 			if (slot.getStackSize() != -1) {
 				String stackSize;
 				if (slot.getStackSize() > 10000) {
@@ -202,10 +202,10 @@ public class GuiItemRecipe extends GuiScreen {
 				int y = guiTop + 105;
 				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(x - 1, y - 1, 18, 18,
+				Utils.graphics.blit(x - 1, y - 1, 18, 18,
 					0 / 256f, 18 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 				);
-				Utils.drawItemStack(new ItemStack(Items.golden_pickaxe), x, y);
+				Utils.graphics.renderItem(new ItemStack(Items.golden_pickaxe), x, y);
 
 				if (isWithinRect(mouseX, mouseY, x, y, SLOT_SIZE, SLOT_SIZE)) {
 					tooltipToDisplay = Collections.singletonList("§aClick for Supercraft");
@@ -257,7 +257,7 @@ public class GuiItemRecipe extends GuiScreen {
 				0, textureOffset,
 				TAB_TEXTURE_SIZE_X, TAB_SIZE_Y
 			);
-			Utils.drawItemStack(recipeType.getIcon(), tabPosX + 7, tabPosY + 7);
+			Utils.graphics.renderItem(recipeType.getIcon(), tabPosX + 7, tabPosY + 7);
 		}
 	}
 
@@ -405,7 +405,7 @@ public class GuiItemRecipe extends GuiScreen {
 		// Block scrolling while Tooltip is displayed
 		if (TooltipTextScrolling.didRenderTooltip) return;
 
-		if (Mouse.getEventDWheel() != 0) {
+		if (0 != 0) {
 			ArrowPagesUtils.onPageSwitchScroll(currentIndex, getCurrentRecipeList().size(), pageChange -> changeRecipe(currentTab, pageChange));
 		}
 	}

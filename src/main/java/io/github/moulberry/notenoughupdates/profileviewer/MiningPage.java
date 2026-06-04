@@ -84,7 +84,7 @@ public class MiningPage extends GuiProfileViewerPage {
 		int guiTop = GuiProfileViewer.getGuiTop();
 
 		Minecraft.getInstance().getTextureManager().bindTexture(miningPageTexture);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
 		if (selectedProfile == null) {
@@ -285,13 +285,13 @@ public class MiningPage extends GuiProfileViewerPage {
 		int forgeY = guiTop + 20;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(FORGE_SLOT_BACKGROUND);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			forgeX, forgeY,
 			16, 16, 0F, 1f, 0f, 1f
 		);
 
 		ItemStack anvil = new ItemStack(Item.getItemFromBlock(Blocks.anvil));
-		Utils.drawItemStack(anvil, forgeX, forgeY);
+		Utils.graphics.renderItem(anvil, forgeX, forgeY);
 
 		if (mouseX >= forgeX && mouseX < forgeX + 16 && mouseY >= forgeY && mouseY < forgeY + 16) {
 			if (data.forge == null) return;

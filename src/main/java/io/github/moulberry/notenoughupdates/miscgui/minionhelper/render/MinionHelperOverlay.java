@@ -49,7 +49,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -85,7 +85,6 @@ public class MinionHelperOverlay {
 		hover = new MinionHelperOverlayHover(this, manager);
 	}
 
-	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		resetCache();
 	}
@@ -95,7 +94,6 @@ public class MinionHelperOverlay {
 		cacheTotalPages = -1;
 	}
 
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (manager.inCraftedMinionsInventory() && NotEnoughUpdates.INSTANCE.config.minionHelper.gui) {
 			event.blockArea(
@@ -109,8 +107,7 @@ public class MinionHelperOverlay {
 		}
 	}
 
-	@SubscribeEvent
-	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
+	public void onDrawBackground(ScreenEvent.BackgroundDrawnEvent event) {
 		if (!manager.inCraftedMinionsInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 		if (manager.isInvalidApiKey()) {
@@ -145,7 +142,7 @@ public class MinionHelperOverlay {
 	}
 
 	private void renderArrows() {
-		GuiScreen gui = Minecraft.getInstance().currentScreen;
+		Screen gui = Minecraft.getInstance().currentScreen;
 		if (gui instanceof AccessorContainerScreen) {
 			AccessorContainerScreen container = (AccessorContainerScreen) gui;
 			int guiLeft = container.getGuiLeft();
@@ -155,8 +152,7 @@ public class MinionHelperOverlay {
 		}
 	}
 
-	@SubscribeEvent
-	public void onMouseClick(GuiScreenEvent.MouseInputEvent.Pre event) {
+	public void onMouseClick(ScreenEvent.MouseInputEvent.Pre event) {
 		if (!manager.inCraftedMinionsInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 		if (manager.notReady()) return;
@@ -183,7 +179,7 @@ public class MinionHelperOverlay {
 	}
 
 	private void checkButtonClick() {
-		GuiScreen gui = Minecraft.getInstance().currentScreen;
+		Screen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof ChestScreen)) return;
 
 		int xSize = ((AccessorContainerScreen) gui).getXSize();
@@ -211,8 +207,7 @@ public class MinionHelperOverlay {
 		}
 	}
 
-	@SubscribeEvent
-	public void onMouseClick(GuiScreenEvent.KeyboardInputEvent.Pre event) {
+	public void onMouseClick(ScreenEvent.KeyboardInputEvent.Pre event) {
 		if (!manager.inCraftedMinionsInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 		if (manager.notReady()) return;
@@ -249,14 +244,14 @@ public class MinionHelperOverlay {
 		minecraft.getTextureManager().bindTexture(minionOverlayImage);
 		GL11.glColor4f(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 1f, 0, 1f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 168, 128, 0, 1f, 0, 1f, GL11.GL_NEAREST);
 
 		if (filterEnabled) {
 			minecraft.getTextureManager().bindTexture(greenCheckImage);
 		} else {
 			minecraft.getTextureManager().bindTexture(whiteCheckImage);
 		}
-		Utils.drawTexturedRect(guiLeft + xSize + 4 + 149, guiTop + 109, 10, 10, 0, 1f, 0, 1f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 4 + 149, guiTop + 109, 10, 10, 0, 1f, 0, 1f, GL11.GL_NEAREST);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		RenderHelper.enableGUIStandardItemLighting();
@@ -298,14 +293,14 @@ public class MinionHelperOverlay {
 					String stuffBehindPricePart = "§8" + price.substring(newPrice.length() + 2);
 					price = newPrice;
 					int lineLen = Minecraft.getInstance().font.getStringWidth(line + price);
-					font.drawString(stuffBehindPricePart, x + lineLen, y, -1, false);
+					font.graphics.drawString(stuffBehindPricePart, x + lineLen, y, -1, false);
 				}
 
 				int lineLen = Minecraft.getInstance().font.getStringWidth(line);
-				font.drawString(price, x + lineLen, y, -1, true);
+				font.graphics.drawString(price, x + lineLen, y, -1, true);
 			}
 
-			font.drawString(line, x, y, -1, false);
+			font.graphics.drawString(line, x, y, -1, false);
 			i++;
 			if (i == 3) {
 				y += 13;
@@ -460,7 +455,7 @@ public class MinionHelperOverlay {
 	}
 
 	OverviewLine getObjectOverMouse(LinkedHashMap<String, OverviewLine> renderMap) {
-		GuiScreen gui = Minecraft.getInstance().currentScreen;
+		Screen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof ChestScreen)) return null;
 
 		int xSize = ((AccessorContainerScreen) gui).getXSize();

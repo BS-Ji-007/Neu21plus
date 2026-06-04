@@ -69,7 +69,6 @@ public class MinionHelperApiLoader {
 		return thePlayer.getUniqueID().toString().replace("-", "");
 	}
 
-	@SubscribeEvent
 	public void onApiDataLoaded(ProfileDataLoadedEvent event) {
 		if (!NotEnoughUpdates.INSTANCE.config.minionHelper.gui) return;
 		JsonObject data = event.getData();

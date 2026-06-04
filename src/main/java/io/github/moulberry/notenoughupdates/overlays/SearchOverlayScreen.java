@@ -334,11 +334,11 @@ public class SearchOverlayScreen extends GuiEditSign {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(width / 2 - 100, topY - 1, 203, 145, 0, 203 / 512f, 0, 145 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(width / 2 - 100, topY - 1, 203, 145, 0, 203 / 512f, 0, 145 / 256f, GL11.GL_NEAREST);
 
 		if (currentGuiType() == GuiType.AUCTION_HOUSE) {
 			Minecraft.getInstance().getTextureManager().bindTexture(STAR_BOARD);
-			Utils.drawTexturedRect(width / 2 + 105, topY + 27, 105, 13, GL11.GL_NEAREST);
+			Utils.graphics.blit(width / 2 + 105, topY + 27, 105, 13, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().bindTexture(STAR);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
@@ -351,13 +351,13 @@ public class SearchOverlayScreen extends GuiEditSign {
 				if (i >= selectedStars) {
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.3f);
 				}
-				Utils.drawTexturedRect(width / 2 + 108 + 10 * i, topY + 29, 9, 10, GL11.GL_NEAREST);
+				Utils.graphics.blit(width / 2 + 108 + 10 * i, topY + 29, 9, 10, GL11.GL_NEAREST);
 			}
 
 			if (selectedStars < 6) {
 				Gui.drawRect(width / 2 + 106, topY + 42, width / 2 + 115, topY + 51, 0xffffffff);
 				Gui.drawRect(width / 2 + 107, topY + 43, width / 2 + 114, topY + 50, 0xff000000);
-				Minecraft.getInstance().font.drawString("At Least?", width / 2 + 117, topY + 43, 0xffffff);
+				Minecraft.getInstance().font.graphics.drawString("At Least?", width / 2 + 117, topY + 43, 0xffffff);
 
 				if (atLeast) {
 					Gui.drawRect(width / 2 + 108, topY + 44, width / 2 + 113, topY + 49, 0xffffffff);
@@ -369,10 +369,10 @@ public class SearchOverlayScreen extends GuiEditSign {
 			if (onlyLevel100) {
 				Gui.drawRect(width / 2 + 108, topY + 55, width / 2 + 113, topY + 60, 0xffffffff);
 			}
-			Minecraft.getInstance().font.drawString("Level 100 pets only?", width / 2 + 117, topY + 54, 0xffffff);
+			Minecraft.getInstance().font.graphics.drawString("Level 100 pets only?", width / 2 + 117, topY + 54, 0xffffff);
 		}
 
-		Minecraft.getInstance().font.drawString("Enter Query:", width / 2 - 100, topY - 10, 0xdddddd, true);
+		Minecraft.getInstance().font.graphics.drawString("Enter Query:", width / 2 - 100, topY - 10, 0xdddddd, true);
 
 		textField.setFocus(true);
 		textField.setText(searchString);
@@ -395,7 +395,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 					if (i == tabCompletionIndex) {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE_TAB_COMPLETED);
 						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-						Utils.drawTexturedRect(
+						Utils.graphics.blit(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,
 							193,
@@ -409,7 +409,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 					} else {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
 						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-						Utils.drawTexturedRect(
+						Utils.graphics.blit(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,
 							193,
@@ -428,7 +428,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 						itemName = lore[0].trim();
 					}
 
-					Minecraft.getInstance().font.drawString(Minecraft.getInstance().font.trimStringToWidth(
+					Minecraft.getInstance().font.graphics.drawString(Minecraft.getInstance().font.trimStringToWidth(
 							itemName,
 							165
 						),
@@ -436,7 +436,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 					);
 
 					com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-					Utils.drawItemStack(stack, width / 2 - 94 + 2, topY + 32 + num * 22 + 1);
+					Utils.graphics.renderItem(stack, width / 2 - 94 + 2, topY + 32 + num * 22 + 1);
 
 					if (mouseX > width / 2 - 96 && mouseX < width / 2 + 96 && mouseY > topY + 30 + num * 22 &&
 						mouseY < topY + 30 + num * 22 + 20) {
@@ -449,7 +449,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 		}
 
 		if (showPastSearches()) {
-			Minecraft.getInstance().font.drawString(
+			Minecraft.getInstance().font.graphics.drawString(
 				"Past Searches:",
 				width / 2 - 100,
 				topY + 25 + AUTOCOMPLETE_HEIGHT + 5,
@@ -457,15 +457,15 @@ public class SearchOverlayScreen extends GuiEditSign {
 				true
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-			Utils.drawTexturedRect(width / 2 - 100, topY - 1 + 160, 203, 4, 0, 203 / 512f, 160 / 256f, 163 / 256f, GL11.GL_NEAREST);
+			Utils.graphics.blit(width / 2 - 100, topY - 1 + 160, 203, 4, 0, 203 / 512f, 160 / 256f, 163 / 256f, GL11.GL_NEAREST);
 
 			for (int i = 0; i < searchHistorySize(); i++) {
 				Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-				Utils.drawTexturedRect(width / 2 - 100, topY - 1 + 160 + 4 + i * 10, 203, 10, 0, 203 / 512f, 164 / 256f, 174 / 256f, GL11.GL_NEAREST);
+				Utils.graphics.blit(width / 2 - 100, topY - 1 + 160 + 4 + i * 10, 203, 10, 0, 203 / 512f, 164 / 256f, 174 / 256f, GL11.GL_NEAREST);
 				if (i >= previousSearches().size()) continue;
 
 				String s = previousSearches().get(i);
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					s,
 					width / 2 - 95 + 1,
 					topY + 45 + AUTOCOMPLETE_HEIGHT + i * 10 + 2,
@@ -476,7 +476,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 
 			int size = searchHistorySize();
 			Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-			Utils.drawTexturedRect(width / 2 - 100, topY - 1 + 160 + 4 + size * 10, 203, 4, 0, 203 / 512f, 215 / 256f, 219 / 256f, GL11.GL_NEAREST);
+			Utils.graphics.blit(width / 2 - 100, topY - 1 + 160 + 4 + size * 10, 203, 4, 0, 203 / 512f, 215 / 256f, 219 / 256f, GL11.GL_NEAREST);
 
 
 			if (tooltipToDisplay != null) {

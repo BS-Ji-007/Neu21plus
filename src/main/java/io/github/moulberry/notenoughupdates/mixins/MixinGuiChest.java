@@ -39,17 +39,17 @@ public class MixinChestScreen {
 	}
 
 	private static final String TARGET_DRAWSTRING =
-		"Lnet/minecraft/client/gui/FontRenderer;drawString(Ljava/lang/String;III)I";
+		"Lnet/minecraft/client/gui/FontRenderer;graphics.drawString(Ljava/lang/String;III)I";
 
 	@Redirect(method = "drawContainerScreenForegroundLayer", at = @At(value = "INVOKE", target = TARGET_DRAWSTRING))
-	public int drawContainerScreenForegroundLayer_drawString(
+	public int drawContainerScreenForegroundLayer_graphics.drawString(
 		FontRenderer fontRenderer,
 		String text,
 		int x,
 		int y,
 		int color
 	) {
-		return fontRenderer.drawString(
+		return fontRenderer.graphics.drawString(
 			text,
 			x,
 			y,
@@ -58,10 +58,10 @@ public class MixinChestScreen {
 	}
 
 	private static final String TARGET_SBADRAWSTRING = "Lcodes/biscuit/skyblockaddons/asm/hooks/ChestScreenHook;" +
-		"drawString(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;III)I";
+		"graphics.drawString(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;III)I";
 
 	@Redirect(method = "drawContainerScreenForegroundLayer", at = @At(value = "INVOKE", target = TARGET_SBADRAWSTRING, remap = false), expect = 0)
-	public int drawContainerScreenForegroundLayer_SBA_drawString(
+	public int drawContainerScreenForegroundLayer_SBA_graphics.drawString(
 		FontRenderer fontRenderer,
 		String text,
 		int x,
@@ -88,7 +88,7 @@ public class MixinChestScreen {
 												);
 		} catch (Exception ignored) {
 		}
-		return fontRenderer.drawString(
+		return fontRenderer.graphics.drawString(
 			text,
 			x,
 			y,

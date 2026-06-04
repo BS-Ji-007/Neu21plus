@@ -266,7 +266,7 @@ public class EnchantingSolvers {
 										meta = NotEnoughUpdates.INSTANCE.config.enchantingSolvers.seqUpcoming;
 									}
 									if (meta > 0) {
-										Utils.drawItemStack(
+										Utils.graphics.renderItem(
 											new ItemStack(Item.getItemFromBlock(Blocks.stained_glass_pane), 1, meta - 1),
 											x,
 											y
@@ -304,7 +304,7 @@ public class EnchantingSolvers {
 						}
 					}
 					if (meta > 0) {
-						Utils.drawItemStack(new ItemStack(Item.getItemFromBlock(Blocks.stained_glass_pane), 1, meta - 1), x, y);
+						Utils.graphics.renderItem(new ItemStack(Item.getItemFromBlock(Blocks.stained_glass_pane), 1, meta - 1), x, y);
 					}
 				}
 			}

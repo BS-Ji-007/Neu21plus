@@ -39,7 +39,7 @@ public abstract class ScrollableInfoPane extends InfoPane {
 
 	@Override
 	public void mouseInput(int width, int height, int mouseX, int mouseY, boolean mouseDown) {
-		int dWheel = Mouse.getEventDWheel();
+		int dWheel = 0;
 
 		if (dWheel < 0) {
 			scrollHeight.setTarget(scrollHeight.getTarget() + SCROLL_AMOUNT);

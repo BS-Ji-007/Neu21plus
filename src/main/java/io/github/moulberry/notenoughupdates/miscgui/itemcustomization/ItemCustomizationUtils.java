@@ -241,13 +241,13 @@ public class ItemCustomizationUtils {
 		if (renderReset) {
 			Minecraft.getInstance().getTextureManager().bindTexture(RESET);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 2, 10, 11, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(xCenter + 90 - 12, yTop + 2, 10, 11, GL11.GL_NEAREST);
 		}
 
 		if (renderCross) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CROSS);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			RenderUtils.drawTexturedRect(xCenter + 90 - 12, yTop + 3, 9, 9, GL11.GL_NEAREST);
+			RenderUtils.graphics.blit(xCenter + 90 - 12, yTop + 3, 9, 9, GL11.GL_NEAREST);
 		}
 	}
 
@@ -289,7 +289,7 @@ public class ItemCustomizationUtils {
 	public static void renderPresetButtons(int x, int y, boolean valid, boolean secondValid, String preset) {
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			x - 88 + 198,
 			y + 2,
 			88,
@@ -300,7 +300,7 @@ public class ItemCustomizationUtils {
 			68 / 78f,
 			GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			x - 88 + 198,
 			y + 2 + 24,
 			88,

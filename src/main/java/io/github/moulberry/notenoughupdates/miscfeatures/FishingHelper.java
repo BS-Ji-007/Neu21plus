@@ -114,7 +114,7 @@ public class FishingHelper {
 
 		float centerOffset = 0.5f / 8f;
 		Minecraft.getInstance().getTextureManager().bindTexture(FISHING_WARNING_EXCLAM);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			centerOffset - 4f / 8f,
 			-20 / 8f,
 			1f,

@@ -78,13 +78,13 @@ public class ArrowPagesUtils {
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 
 		if (currentPage != 0)
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + buttonPositionLeftX, guiTop + buttonPositionY, BUTTON_WIDTH, BUTTON_HEIGHT,
 				34 / 256f, 48 / 256f,
 				leftSelected ? 37 / 256f : 5 / 256f, leftSelected ? 59 / 256f : 27 / 256f
 			);
 		if (currentPage != totalPages - 1)
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + buttonPositionRightX, guiTop + buttonPositionY, BUTTON_WIDTH, BUTTON_HEIGHT,
 				10 / 256f, 24 / 256f,
 				rightSelected ? 37 / 256f : 5 / 256f, rightSelected ? 59 / 256f : 27 / 256f
@@ -188,11 +188,11 @@ public class ArrowPagesUtils {
 		int totalPages,
 		Consumer<Integer> pageChange
 	) {
-		if (Mouse.getEventDWheel() > 0) {
+		if (0 > 0) {
 			int newPage = currentPage - 1;
 			pageChange.accept(MathHelper.clamp_int(newPage, 0, totalPages - 1));
 			return true;
-		} else if (Mouse.getEventDWheel() < 0) {
+		} else if (0 < 0) {
 			int newPage = currentPage + 1;
 			pageChange.accept(MathHelper.clamp_int(newPage, 0, totalPages - 1));
 			return true;

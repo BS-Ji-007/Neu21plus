@@ -87,7 +87,7 @@ public class Panorama {
 			Minecraft.getInstance().getTextureManager().bindTexture(panoramas[0]);
 
 			float aspect = width / (float) height;
-			Utils.drawTexturedRect(x, y, width, height, 0.5f - aspect / 2, 0.5f + aspect / 2, 0, 1);
+			Utils.graphics.blit(x, y, width, height, 0.5f - aspect / 2, 0.5f + aspect / 2, 0, 1);
 
 			return;
 		}

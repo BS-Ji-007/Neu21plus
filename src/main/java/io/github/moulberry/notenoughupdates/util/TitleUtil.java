@@ -67,7 +67,7 @@ public class TitleUtil {
 			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, scale);
-			mc.font.drawString(
+			mc.font.graphics.drawString(
 				this.title,
 				((float)-mc.font.getStringWidth(this.title) / 2),
 				-20.0f,

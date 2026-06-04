@@ -311,7 +311,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	private void drawSlot(int x, int y) {
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			x,
 			y,
 			18,
@@ -332,7 +332,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	 */
 	private void drawButton(int x, int y, boolean selected) {
 		if (selected) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x,
 				y,
 				16,
@@ -343,7 +343,7 @@ public class EssenceUpgrades implements NeuRecipe {
 				50 / 256f
 			);
 		} else {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x,
 				y,
 				16,

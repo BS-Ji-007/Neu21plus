@@ -438,9 +438,9 @@ public class StorageOverlay extends GuiElement {
 		//Gui
 		Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(0, 0, sizeX, 10, 0, sizeX / 600f, 0, 10 / 400f, GL11.GL_NEAREST);
-		Utils.drawTexturedRect(0, 10, sizeX, storageViewSize - 20, 0, sizeX / 600f, 10 / 400f, 94 / 400f, GL11.GL_NEAREST);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(0, 0, sizeX, 10, 0, sizeX / 600f, 0, 10 / 400f, GL11.GL_NEAREST);
+		Utils.graphics.blit(0, 10, sizeX, storageViewSize - 20, 0, sizeX / 600f, 10 / 400f, 94 / 400f, GL11.GL_NEAREST);
+		Utils.graphics.blit(
 			0,
 			storageViewSize - 10,
 			sizeX,
@@ -463,7 +463,7 @@ public class StorageOverlay extends GuiElement {
 		//Scroll bar
 		int scrollBarY = Math.round(getScrollBarHeight() * scroll.getValue() / (float) maxScroll);
 		float uMin = scrollGrabOffset >= 0 ? 12 / 600f : 0;
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			520,
 			8 + scrollBarY,
 			12,
@@ -504,7 +504,7 @@ public class StorageOverlay extends GuiElement {
 
 				com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 				com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0F);
-				Utils.drawTexturedRect(0, 0, w, h, 0, 1, 1, 0, GL11.GL_NEAREST);
+				Utils.graphics.blit(0, 0, w, h, 0, 1, 1, 0, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 
 				renderEnchOverlay(enchantGlintRenderLocations);
@@ -599,7 +599,7 @@ public class StorageOverlay extends GuiElement {
 										int b = rgb & 0xFF;
 										Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 										com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
-										Utils.drawTexturedRect(
+										Utils.graphics.blit(
 											itemX - 1,
 											itemY - 1,
 											18,
@@ -757,7 +757,7 @@ public class StorageOverlay extends GuiElement {
 							com.mojang.blaze3d.systems.RenderSystem.translate(-storageX + 7, -storageY + 17 + 18, 0);
 							Utils.hasEffectOverride = false;
 						} else {
-							Utils.drawItemStack(stack, itemX, itemY);
+							Utils.graphics.renderItem(stack, itemX, itemY);
 						}
 						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 						com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -20);
@@ -813,7 +813,7 @@ public class StorageOverlay extends GuiElement {
 					mouseY >= guiTop + storageY - 14 && mouseY <= guiTop + storageY + 1) {
 					pageTitle += " \u270E";
 				}
-				font.drawString(pageTitle, storageX, storageY - 11, textColour);
+				font.graphics.drawString(pageTitle, storageX, storageY - 11, textColour);
 			}
 
 			if (page == null) {
@@ -821,7 +821,7 @@ public class StorageOverlay extends GuiElement {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					storageX,
 					storageY,
 					162,
@@ -849,7 +849,7 @@ public class StorageOverlay extends GuiElement {
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 				int h = 18 * 3;
 
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					storageX,
 					storageY,
 					162,
@@ -904,7 +904,7 @@ public class StorageOverlay extends GuiElement {
 								Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
 								com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
 								com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 110);
-								Utils.drawTexturedRect(itemX - 1, itemY - 1, 18, 18,
+								Utils.graphics.blit(itemX - 1, itemY - 1, 18, 18,
 									startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 								);
 								com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -110);
@@ -970,12 +970,12 @@ public class StorageOverlay extends GuiElement {
 											}
 
 											com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-											Utils.drawTexturedRect(0, -9, 8, 18,
+											Utils.graphics.blit(0, -9, 8, 18,
 												!horzFlip ? 209 / 227f : 219 / 227f, horzFlip ? 227 / 227f : 217 / 227f,
 												!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 											);
 											com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 120);
-											Utils.drawTexturedRect(8, -9, 10, 18,
+											Utils.graphics.blit(8, -9, 10, 18,
 												!horzFlip ? 217 / 227f : 209 / 227f, horzFlip ? 219 / 227f : 227 / 227f,
 												!vertFlip ? 57 / 75f : 75f / 75f, vertFlip ? 57 / 75f : 75f / 75f, GL11.GL_NEAREST
 											);
@@ -1002,7 +1002,7 @@ public class StorageOverlay extends GuiElement {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					storageX,
 					storageY,
 					storageW,
@@ -1156,7 +1156,7 @@ public class StorageOverlay extends GuiElement {
 							}
 							Minecraft.getInstance().getTextureManager().bindTexture(loc);
 							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-							Utils.drawTexturedRect(storageX, storageY, storageW, storageH, GL11.GL_LINEAR);
+							Utils.graphics.blit(storageX, storageY, storageW, storageH, GL11.GL_LINEAR);
 						}
 					} else {
 						int borderColour =
@@ -1200,7 +1200,7 @@ public class StorageOverlay extends GuiElement {
 		GlScissorStack.pop(scaledResolution);
 
 		if (fastRender) {
-			font.drawString(
+			font.graphics.drawString(
 				"Fast render and antialiasing do not work with Storage overlay.",
 				sizeX / 2 -
 					font.getStringWidth("Fast render and antialiasing do not work with Storage overlay.") / 2,
@@ -1221,7 +1221,7 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		//Inventory Text
-		font.drawString("Inventory", 180, storageViewSize + 6, textColour);
+		font.graphics.drawString("Inventory", 180, storageViewSize + 6, textColour);
 		searchBar.setCustomTextColour(searchTextColour);
 		searchBar.render(252, storageViewSize + 5);
 
@@ -1266,7 +1266,7 @@ public class StorageOverlay extends GuiElement {
 			int itemX = 181 + 18 * (i % 9);
 			int itemY = storageViewSize + 18 + 18 * (i / 9);
 
-			//Utils.drawItemStack(playerItems[i+9], itemX, itemY);
+			//Utils.graphics.renderItem(playerItems[i+9], itemX, itemY);
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(181 - 8, storageViewSize + 18 - (inventoryStartIndex / 9 * 18 + 31), 0);
 			((AccessorContainerScreen) guiChest).doDrawSlot(containerChest.menu.get(inventoryStartIndex + 9 + i));
@@ -1298,14 +1298,14 @@ public class StorageOverlay extends GuiElement {
 		}
 
 		//Backpack Selector
-		font.drawString("Ender Chest Pages", 9, storageViewSize + 12, textColour);
-		font.drawString("Storage Pages", 9, storageViewSize + 44, textColour);
+		font.graphics.drawString("Ender Chest Pages", 9, storageViewSize + 12, textColour);
+		font.graphics.drawString("Storage Pages", 9, storageViewSize + 44, textColour);
 		if (StorageManager.getInstance().onStorageMenu) {
 			for (int i = 0; i < 9; i++) {
 				int itemX = 10 + i * 18;
 				int itemY = storageViewSize + 24;
 				ItemStack stack = containerChest.getLowerChestInventory().getStackInSlot(i + 9);
-				Utils.drawItemStack(stack, itemX, itemY);
+				Utils.graphics.renderItem(stack, itemX, itemY);
 
 				if (mouseX >= guiLeft + itemX && mouseX < guiLeft + itemX + 18 && mouseY >= guiTop + itemY &&
 					mouseY < guiTop + itemY + 18) {
@@ -1325,7 +1325,7 @@ public class StorageOverlay extends GuiElement {
 				int itemX = 10 + 18 * (i % 9);
 				int itemY = storageViewSize + 56 + 18 * (i / 9);
 				ItemStack stack = containerChest.getLowerChestInventory().getStackInSlot(i + 27);
-				Utils.drawItemStack(stack, itemX, itemY);
+				Utils.graphics.renderItem(stack, itemX, itemY);
 
 				if (mouseX >= guiLeft + itemX && mouseX < guiLeft + itemX + 18 && mouseY >= guiTop + itemY &&
 					mouseY < guiTop + itemY + 18) {
@@ -1356,7 +1356,7 @@ public class StorageOverlay extends GuiElement {
 				}
 
 				if (stack != null) {
-					Utils.drawItemStack(stack, itemX, itemY);
+					Utils.graphics.renderItem(stack, itemX, itemY);
 
 					if (mouseX >= guiLeft + itemX && mouseX < guiLeft + itemX + 18 && mouseY >= guiTop + itemY &&
 						mouseY < guiTop + itemY + 18) {
@@ -1386,7 +1386,7 @@ public class StorageOverlay extends GuiElement {
 				}
 
 				if (stack != null) {
-					Utils.drawItemStack(stack, itemX, itemY);
+					Utils.graphics.renderItem(stack, itemX, itemY);
 
 					if (mouseX >= guiLeft + itemX && mouseX < guiLeft + itemX + 18 && mouseY >= guiTop + itemY &&
 						mouseY < guiTop + itemY + 18) {
@@ -1461,7 +1461,7 @@ public class StorageOverlay extends GuiElement {
 					break;
 			}
 
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				buttonX,
 				buttonY,
 				16,
@@ -1580,7 +1580,7 @@ public class StorageOverlay extends GuiElement {
 		if (!StorageManager.getInstance().onStorageMenu) {
 			Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				171 - 36,
 				41 + storageViewSize,
 				36,
@@ -1607,9 +1607,9 @@ public class StorageOverlay extends GuiElement {
 		if (stackOnMouse != null) {
 			com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			if (hoveringOtherBackpack) {
-				Utils.drawItemStack(new ItemStack(Item.getItemFromBlock(Blocks.barrier)), mouseX - 8, mouseY - 8);
+				Utils.graphics.renderItem(new ItemStack(Item.getItemFromBlock(Blocks.barrier)), mouseX - 8, mouseY - 8);
 			} else {
-				Utils.drawItemStack(stackOnMouse, mouseX - 8, mouseY - 8);
+				Utils.graphics.renderItem(stackOnMouse, mouseX - 8, mouseY - 8);
 			}
 		} else if (slotPreview >= 0) {
 			StorageManager.StoragePage page = StorageManager.getInstance().getPage(slotPreview, false);
@@ -1623,18 +1623,18 @@ public class StorageOverlay extends GuiElement {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(mouseX, mouseY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
+				Utils.graphics.blit(mouseX, mouseY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
 				for (int i = 0; i < rows; i++) {
-					Utils.drawTexturedRect(mouseX, mouseY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
+					Utils.graphics.blit(mouseX, mouseY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
 				}
-				Utils.drawTexturedRect(mouseX, mouseY + 7 + 18 * rows, 176, 7, 0, 1, 25 / 32f, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(mouseX, mouseY + 7 + 18 * rows, 176, 7, 0, 1, 25 / 32f, 1, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 
 				for (int i = 0; i < rows * 9; i++) {
 					ItemStack stack = page.items[i];
 					if (stack != null) {
 						com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-						Utils.drawItemStack(stack, mouseX + 8 + 18 * (i % 9), mouseY + 8 + 18 * (i / 9));
+						Utils.graphics.renderItem(stack, mouseX + 8 + 18 * (i % 9), mouseY + 8 + 18 * (i / 9));
 						com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 					}
 				}
@@ -1703,7 +1703,7 @@ public class StorageOverlay extends GuiElement {
 	public boolean mouseInput(int mouseX, int mouseY) {
 		if (!(Minecraft.getInstance().currentScreen instanceof ChestScreen)) return false;
 
-		int dWheel = Mouse.getEventDWheel();
+		int dWheel = 0;
 		if (!(NotEnoughUpdates.INSTANCE.config.storageGUI.cancelScrollKey != 0 &&
 			KeybindHelper.isKeyDown(NotEnoughUpdates.INSTANCE.config.storageGUI.cancelScrollKey)) && dWheel != 0) {
 			if (dWheel < 0) {
@@ -1880,7 +1880,7 @@ public class StorageOverlay extends GuiElement {
 					vIndex = */
 			}
 
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				buttonX,
 				buttonY,
 				16,

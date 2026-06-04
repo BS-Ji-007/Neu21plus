@@ -41,7 +41,7 @@ import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -74,12 +74,10 @@ public class TrophyRewardOverlay {
 	/**
 	 * This adds support for the /neureloadrepo command
 	 */
-	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onRepoReload(RepositoryReloadEvent event) {
 		reloadNeeded = true;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onItemTooltipLow(ItemTooltipEvent event) {
 		if (!inTrophyFishingInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.fishing.trophyRewardTooltips) return;
@@ -102,7 +100,6 @@ public class TrophyRewardOverlay {
 		return line.get(1);
 	}
 
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (inTrophyFishingInventory() && NotEnoughUpdates.INSTANCE.config.fishing.trophyRewardOverlay) {
 			event.blockArea(
@@ -117,12 +114,11 @@ public class TrophyRewardOverlay {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onDrawBackground(GuiScreenEvent.BackgroundDrawnEvent event) {
+	public void onDrawBackground(ScreenEvent.BackgroundDrawnEvent event) {
 		if (!inTrophyFishingInventory()) return;
 		if (!NotEnoughUpdates.INSTANCE.config.fishing.trophyRewardOverlay) return;
 
-		GuiScreen screen = Minecraft.getInstance().currentScreen;
+		Screen screen = Minecraft.getInstance().currentScreen;
 		if (!(screen instanceof ChestScreen)) return;
 		Gui gui = event.gui;
 		int xSize = ((AccessorContainerScreen) gui).getXSize();
@@ -253,7 +249,7 @@ public class TrophyRewardOverlay {
 	}
 
 	private void renderBasicOverlay(
-		GuiScreenEvent.BackgroundDrawnEvent event,
+		ScreenEvent.BackgroundDrawnEvent event,
 		int x,
 		int y,
 		List<String> texts
@@ -268,7 +264,7 @@ public class TrophyRewardOverlay {
 		GL11.glColor4f(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
-		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 158, 128, 0, 1, 0, 1, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 158, 128, 0, 1, 0, 1, GL11.GL_NEAREST);
 
 		int a = guiLeft + xSize + 4;
 		FontRenderer font = minecraft.font;
@@ -276,7 +272,7 @@ public class TrophyRewardOverlay {
 		//Render first two header lines
 		int i = 0;
 		for (String text : texts) {
-			font.drawString("§8" + text, a + 10, guiTop + 6 + i, -1, false);
+			font.graphics.drawString("§8" + text, a + 10, guiTop + 6 + i, -1, false);
 			i += 10;
 			if (i == 20) break;
 		}
@@ -286,7 +282,7 @@ public class TrophyRewardOverlay {
 		int index = 0;
 		for (String text : texts) {
 			if (index > 1) {
-				font.drawString(text, a + 10, guiTop + 6 + i, -1, false);
+				font.graphics.drawString(text, a + 10, guiTop + 6 + i, -1, false);
 				i += 10;
 			} else {
 				index++;

@@ -291,11 +291,11 @@ public class Utils {
 		disableCustomDungColours = false;
 	}
 
-	public static void drawItemStack(ItemStack stack, int x, int y) {
+	public static void graphics.renderItem(ItemStack stack, int x, int y) {
 		drawItemStackWithText(stack, x, y, null);
 	}
 
-	public static void drawItemStack(ItemStack stack, int x, int y, boolean skytilsRarity) {
+	public static void graphics.renderItem(ItemStack stack, int x, int y, boolean skytilsRarity) {
 		drawItemStackWithText(stack, x, y, null, skytilsRarity);
 	}
 
@@ -584,8 +584,8 @@ public class Utils {
 		return slot;
 	}
 
-	public static void drawTexturedRect(float x, float y, float width, float height) {
-		drawTexturedRect(x, y, width, height, 0, 1, 0, 1);
+	public static void graphics.blit(float x, float y, float width, float height) {
+		graphics.blit(x, y, width, height, 0, 1, 0, 1);
 	}
 
 	public static void drawPvSideButton(
@@ -648,20 +648,20 @@ public class Utils {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 
-		drawTexturedRect(x, y, pressed ? 32 : 28, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+		graphics.blit(x, y, pressed ? 32 : 28, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-		drawItemStack(itemStack, x + 8, y + 7);
+		graphics.renderItem(itemStack, x + 8, y + 7);
 		if (mouseY > y && mouseX > x && mouseY < y + 28 && mouseX < x + 28) {
 			guiProfileViewer.tooltipToDisplay = Collections.singletonList(itemStack.getName().getString());
 		}
 	}
 
-	public static void drawTexturedRect(float x, float y, float width, float height, int filter) {
-		drawTexturedRect(x, y, width, height, 0, 1, 0, 1, filter);
+	public static void graphics.blit(float x, float y, float width, float height, int filter) {
+		graphics.blit(x, y, width, height, 0, 1, 0, 1, filter);
 	}
 
-	public static void drawTexturedRect(
+	public static void graphics.blit(
 		float x,
 		float y,
 		float width,
@@ -671,7 +671,7 @@ public class Utils {
 		float vMin,
 		float vMax
 	) {
-		drawTexturedRect(x, y, width, height, uMin, uMax, vMin, vMax, GL11.GL_LINEAR);
+		graphics.blit(x, y, width, height, uMin, uMax, vMin, vMax, GL11.GL_LINEAR);
 	}
 
 	public static String cleanColour(String in) {
@@ -860,7 +860,7 @@ public class Utils {
 		return sb.toString();
 	}
 
-	public static void drawTexturedRect(
+	public static void graphics.blit(
 		float x,
 		float y,
 		float width,
@@ -1050,7 +1050,7 @@ public class Utils {
 
 	@Deprecated
 	public static void drawStringF(String str, FontRenderer fr, float x, float y, boolean shadow, int colour) {
-		fr.drawString(str, x, y, colour, shadow);
+		fr.graphics.drawString(str, x, y, colour, shadow);
 	}
 
 	public static int getCharVertLen(char c) {
@@ -1085,7 +1085,7 @@ public class Utils {
 
 			int charHeight = getCharVertLen(c);
 			int charWidth = fr.getCharWidth(c);
-			fr.drawString(format + c, x + (5 - charWidth) / 2f, y - 7 + charHeight, colour, shadow);
+			fr.graphics.drawString(format + c, x + (5 - charWidth) / 2f, y - 7 + charHeight, colour, shadow);
 
 			y += charHeight + 1.5f;
 		}
@@ -1132,7 +1132,7 @@ public class Utils {
 			for (int xOff = -2; xOff <= 2; xOff++) {
 				for (int yOff = -2; yOff <= 2; yOff++) {
 					if (Math.abs(xOff) != Math.abs(yOff)) {
-						font.drawString(cleanColourNotModifiers(first),
+						font.graphics.drawString(cleanColourNotModifiers(first),
 							x + xOff / 2f, y + yOff / 2f,
 							new Color(0, 0, 0, 200 / Math.max(Math.abs(xOff), Math.abs(yOff))).getRGB(), false
 						);
@@ -1142,11 +1142,11 @@ public class Utils {
 
 			int secondLen = font.getStringWidth(second);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			font.drawString(first, x, y, 4210752, false);
+			font.graphics.drawString(first, x, y, 4210752, false);
 			for (int xOff = -2; xOff <= 2; xOff++) {
 				for (int yOff = -2; yOff <= 2; yOff++) {
 					if (Math.abs(xOff) != Math.abs(yOff)) {
-						font.drawString(cleanColourNotModifiers(second),
+						font.graphics.drawString(cleanColourNotModifiers(second),
 							x + length - secondLen + xOff / 2f, y + yOff / 2f,
 							new Color(0, 0, 0, 200 / Math.max(Math.abs(xOff), Math.abs(yOff))).getRGB(), false
 						);
@@ -1155,7 +1155,7 @@ public class Utils {
 			}
 
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			font.drawString(second, x + length - secondLen, y, 4210752, false);
+			font.graphics.drawString(second, x + length - secondLen, y, 4210752, false);
 		}
 	}
 
@@ -1203,7 +1203,7 @@ public class Utils {
 		float y2 = y - fr.FONT_HEIGHT / 2f;
 
 		GL11.glTranslatef(x2, y2, 0);
-		fr.drawString(str, 0, 0, colour, shadow);
+		fr.graphics.drawString(str, 0, 0, colour, shadow);
 		GL11.glTranslatef(-x2, -y2, 0);
 	}
 
@@ -1229,7 +1229,7 @@ public class Utils {
 		float factor
 	) {
 		com.mojang.blaze3d.systems.RenderSystem.scale(factor, factor, 1);
-		fr.drawString(str, x / factor, y / factor, colour, shadow);
+		fr.graphics.drawString(str, x / factor, y / factor, colour, shadow);
 		com.mojang.blaze3d.systems.RenderSystem.scale(1 / factor, 1 / factor, 1);
 	}
 
@@ -1258,7 +1258,7 @@ public class Utils {
 		var width = fr.getStringWidth(str);
 		float scale = ((float) availableSpace) / width;
 		com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, 1f);
-		fr.drawString(str, -width / 2F, 0, colour, shadow);
+		fr.graphics.drawString(str, -width / 2F, 0, colour, shadow);
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
 
@@ -1290,7 +1290,7 @@ public class Utils {
 		factor = Math.min(factor, f);
 
 		com.mojang.blaze3d.systems.RenderSystem.scale(factor, factor, 1);
-		fr.drawString(str, x / factor, y / factor, colour, shadow);
+		fr.graphics.drawString(str, x / factor, y / factor, colour, shadow);
 		com.mojang.blaze3d.systems.RenderSystem.scale(1 / factor, 1 / factor, 1);
 	}
 

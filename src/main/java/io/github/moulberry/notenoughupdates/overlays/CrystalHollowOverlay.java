@@ -487,7 +487,7 @@ public class CrystalHollowOverlay extends TextOverlay {
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.translate(position.x, position.y, 0);
 			com.mojang.blaze3d.systems.RenderSystem.scale(0.5f, 0.5f, 1f);
-			Utils.drawItemStack(icon, 0, 0);
+			Utils.graphics.renderItem(icon, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 
 			position.x += 12;

@@ -55,7 +55,7 @@ public class TextInfoPane extends ScrollableInfoPane {
 
 		int titleLen = fr.getStringWidth(title);
 		int yScroll = -scrollHeight.getValue();
-		fr.drawString(title, (leftSide + rightSide - titleLen) / 2, yScroll + overlay.getBoxPadding() + 5,
+		fr.graphics.drawString(title, (leftSide + rightSide - titleLen) / 2, yScroll + overlay.getBoxPadding() + 5,
 			Color.WHITE.getRGB()
 		);
 

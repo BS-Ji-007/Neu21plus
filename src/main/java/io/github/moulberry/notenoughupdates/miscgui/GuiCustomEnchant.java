@@ -612,13 +612,13 @@ public class GuiCustomEnchant extends Gui {
 		//Base Texture
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(guiLeft, guiTop, X_SIZE, Y_SIZE,
+		Utils.graphics.blit(guiLeft, guiTop, X_SIZE, Y_SIZE,
 			0, X_SIZE / 512f, 0, Y_SIZE / 512f, GL11.GL_NEAREST
 		);
 
 		FontRenderer fr = Minecraft.getInstance().font;
-		fr.drawString("Applicable", guiLeft + 7, guiTop + 7, 0x404040, false);
-		fr.drawString("Removable", guiLeft + 247, guiTop + 7, 0x404040, false);
+		fr.graphics.drawString("Applicable", guiLeft + 7, guiTop + 7, 0x404040, false);
+		fr.graphics.drawString("Removable", guiLeft + 247, guiTop + 7, 0x404040, false);
 
 		//Page Text
 		if (currentState == EnchantState.HAS_ITEM || currentState == EnchantState.ADDING_ENCHANT) {
@@ -629,10 +629,10 @@ public class GuiCustomEnchant extends Gui {
 			//Page Arrows
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
+			Utils.graphics.blit(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
-			Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + pageStrLen / 2 + 2, guiTop + 6, 15, 15,
+			Utils.graphics.blit(guiLeft + X_SIZE / 2 + pageStrLen / 2 + 2, guiTop + 6, 15, 15,
 				15 / 512f, 30 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
 		}
@@ -641,21 +641,21 @@ public class GuiCustomEnchant extends Gui {
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		//On Settings Button
-		Utils.drawTexturedRect(guiLeft + 295, guiTop + 147, 16, 16,
+		Utils.graphics.blit(guiLeft + 295, guiTop + 147, 16, 16,
 			0, 16 / 512f, 387 / 512f, (387 + 16) / 512f, GL11.GL_NEAREST
 		);
 		//Incompatible Settings Button
         /*float incompatibleMinU = NotEnoughUpdates.INSTANCE.config.enchantingSolvers.incompatibleEnchants * 16 / 512f;
-        Utils.drawTexturedRect(guiLeft + 295 + 18, guiTop + 147, 16, 16,
+        Utils.graphics.blit(guiLeft + 295 + 18, guiTop + 147, 16, 16,
                 incompatibleMinU, incompatibleMinU + 16 / 512f, 403 / 512f, (403 + 16) / 512f, GL11.GL_NEAREST);*/
 		//Sorting Settings Button
 		float sortingMinU = NotEnoughUpdates.INSTANCE.config.enchantingSolvers.enchantSorting * 16 / 512f;
-		Utils.drawTexturedRect(guiLeft + 295, guiTop + 147 + 18, 16, 16,
+		Utils.graphics.blit(guiLeft + 295, guiTop + 147 + 18, 16, 16,
 			sortingMinU, sortingMinU + 16 / 512f, 419 / 512f, (419 + 16) / 512f, GL11.GL_NEAREST
 		);
 		//Ordering Settings Button
 		float orderingMinU = NotEnoughUpdates.INSTANCE.config.enchantingSolvers.enchantOrdering * 16 / 512f;
-		Utils.drawTexturedRect(guiLeft + 295 + 18, guiTop + 147 + 18, 16, 16,
+		Utils.graphics.blit(guiLeft + 295 + 18, guiTop + 147 + 18, 16, 16,
 			orderingMinU, orderingMinU + 16 / 512f, 435 / 512f, (435 + 16) / 512f, GL11.GL_NEAREST
 		);
 
@@ -713,7 +713,7 @@ public class GuiCustomEnchant extends Gui {
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + 104, guiTop + 18 + offset, 12, 15,
+			Utils.graphics.blit(guiLeft + 104, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
 		}
@@ -731,7 +731,7 @@ public class GuiCustomEnchant extends Gui {
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + 344, guiTop + 18 + offset, 12, 15,
+			Utils.graphics.blit(guiLeft + 344, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
 		}
@@ -753,11 +753,11 @@ public class GuiCustomEnchant extends Gui {
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			float w = 22 * arrowAmount.getValue();
 			if (removingEnchantPlayerLevel < 0) {
-				Utils.drawTexturedRect(guiLeft + 134, guiTop + 58, w, 16,
+				Utils.graphics.blit(guiLeft + 134, guiTop + 58, w, 16,
 					0, w / 512f, 297 / 512f, (297 + 16) / 512f, GL11.GL_NEAREST
 				);
 			} else {
-				Utils.drawTexturedRect(guiLeft + 230 - w, guiTop + 58, w, 16,
+				Utils.graphics.blit(guiLeft + 230 - w, guiTop + 58, w, 16,
 					(44 - w) / 512f, 44 / 512f, 297 / 512f, (297 + 16) / 512f, GL11.GL_NEAREST
 				);
 			}
@@ -801,7 +801,7 @@ public class GuiCustomEnchant extends Gui {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + 8, top, 96, 16,
+			Utils.graphics.blit(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
 
@@ -820,13 +820,13 @@ public class GuiCustomEnchant extends Gui {
 			}
 
 			int levelWidth = fr.getStringWidth(levelStr);
-			fr.drawString(levelStr, guiLeft + 16 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 16 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4, colour, false);
+			fr.graphics.drawString(levelStr, guiLeft + 16 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 16 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 16 - levelWidth / 2, top + 4, colour, false);
 
-			fr.drawString(ench.enchantName, guiLeft + 8 + 16 + 2 + textOffset, top + 4 + textOffset, 0xffffffdd, true);
+			fr.graphics.drawString(ench.enchantName, guiLeft + 8 + 16 + 2 + textOffset, top + 4 + textOffset, 0xffffffdd, true);
 		}
 		GlScissorStack.pop(scaledResolution);
 
@@ -844,7 +844,7 @@ public class GuiCustomEnchant extends Gui {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + 248, top, 96, 16,
+			Utils.graphics.blit(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
 
@@ -864,24 +864,24 @@ public class GuiCustomEnchant extends Gui {
 			}
 
 			int levelWidth = fr.getStringWidth(levelStr);
-			fr.drawString(levelStr, guiLeft + 256 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
-			fr.drawString(
+			fr.graphics.drawString(levelStr, guiLeft + 256 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(
 				levelStr,
 				guiLeft + 256 - levelWidth / 2 + 1,
 				top + 4,
 				0x2d2102,
 				false
 			);
-			fr.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
-			fr.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4, colour, false);
+			fr.graphics.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, guiLeft + 256 - levelWidth / 2, top + 4, colour, false);
 
-			fr.drawString(ench.enchantName, guiLeft + 248 + 16 + 2 + textOffset, top + 4 + textOffset, 0xffffffdd, true);
+			fr.graphics.drawString(ench.enchantName, guiLeft + 248 + 16 + 2 + textOffset, top + 4 + textOffset, 0xffffffdd, true);
 		}
 		GlScissorStack.pop(scaledResolution);
 
 		//Player Inventory Items
-		fr.drawString(
+		fr.graphics.drawString(
 			Minecraft.getInstance().player.inventory.getName().getString().getString(),
 			guiLeft + 102, guiTop + Y_SIZE - 96 + 2, 0x404040
 		);
@@ -940,7 +940,7 @@ public class GuiCustomEnchant extends Gui {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(left, top, 112, 16,
+			Utils.graphics.blit(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
 
@@ -962,11 +962,11 @@ public class GuiCustomEnchant extends Gui {
 			}
 
 			int levelWidth = fr.getStringWidth(levelStr);
-			fr.drawString(levelStr, left + 8 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, left + 8 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, left + 8 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
-			fr.drawString(levelStr, left + 8 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
-			fr.drawString(levelStr, left + 8 - levelWidth / 2, top + 4, colour, false);
+			fr.graphics.drawString(levelStr, left + 8 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 8 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 8 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 8 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 8 - levelWidth / 2, top + 4, colour, false);
 
 			//Enchant name
 			String name = WordUtils.capitalizeFully(ItemUtils
@@ -986,7 +986,7 @@ public class GuiCustomEnchant extends Gui {
 			if (isChangingEnchLevel) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(left + 96, top, 16, 16,
+				Utils.graphics.blit(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
 				);
 			}
@@ -995,11 +995,11 @@ public class GuiCustomEnchant extends Gui {
 			levelStr = "" + enchanterCurrentEnch.level;
 			if (enchanterCurrentEnch.xpCost < 0) levelStr = "?";
 			levelWidth = fr.getStringWidth(levelStr);
-			fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
-			fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
-			fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
-			fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4, 0xea82ff, false);
+			fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2 - 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2 + 1, top + 4, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4 - 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4 + 1, 0x2d2102, false);
+			fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 4, 0xea82ff, false);
 
 			//Confirm button
 
@@ -1016,14 +1016,14 @@ public class GuiCustomEnchant extends Gui {
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentEnch.xpCost)) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered(confirmText, guiLeft + X_SIZE / 2 - 1 - 23, top + 18 + 9, false, 0x408040);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered(confirmText, guiLeft + X_SIZE / 2 - 1 - 24, top + 18 + 8, false, 0x408040);
@@ -1037,14 +1037,14 @@ public class GuiCustomEnchant extends Gui {
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered("Cancel", guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered("Cancel", guiLeft + X_SIZE / 2 + 1 + 24, top + 18 + 8, false, 0xa04040);
@@ -1115,17 +1115,17 @@ public class GuiCustomEnchant extends Gui {
 						itemHoverY = -1;
 					}
 
-					Utils.drawTexturedRect(left + 96, top + 16 * yIndex, 16, 16,
+					Utils.graphics.blit(left + 96, top + 16 * yIndex, 16, 16,
 						16 * type / 512f, (16 + 16 * type) / 512f, 356 / 512f, (356 + 16) / 512f, GL11.GL_NEAREST
 					);
 
 					levelStr = "" + ench.level;
 					levelWidth = fr.getStringWidth(levelStr);
-					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2 - 1, top + 16 * yIndex + 4, 0x2d2102, false);
-					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2 + 1, top + 16 * yIndex + 4, 0x2d2102, false);
-					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4 - 1, 0x2d2102, false);
-					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4 + 1, 0x2d2102, false);
-					fr.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4, 0xea82ff, false);
+					fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2 - 1, top + 16 * yIndex + 4, 0x2d2102, false);
+					fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2 + 1, top + 16 * yIndex + 4, 0x2d2102, false);
+					fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4 - 1, 0x2d2102, false);
+					fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4 + 1, 0x2d2102, false);
+					fr.graphics.drawString(levelStr, left + 96 + 8 - levelWidth / 2, top + 16 * yIndex + 4, 0xea82ff, false);
 				}
 				com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 			}
@@ -1152,11 +1152,11 @@ public class GuiCustomEnchant extends Gui {
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(itemX, itemY, 16, 16,
+				Utils.graphics.blit(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
 			} else {
-				Utils.drawItemStack(itemEnchantInput, itemX, itemY);
+				Utils.graphics.renderItem(itemEnchantInput, itemX, itemY);
 			}
 
 			if (mouseX >= itemX && mouseX < itemX + 18 &&
@@ -1196,9 +1196,9 @@ public class GuiCustomEnchant extends Gui {
 
 		if (stackOnMouse != null) {
 			if (disallowClick) {
-				Utils.drawItemStack(new ItemStack(Item.getItemFromBlock(Blocks.barrier)), mouseX - 8, mouseY - 8);
+				Utils.graphics.renderItem(new ItemStack(Item.getItemFromBlock(Blocks.barrier)), mouseX - 8, mouseY - 8);
 			} else {
-				Utils.drawItemStack(stackOnMouse, mouseX - 8, mouseY - 8);
+				Utils.graphics.renderItem(stackOnMouse, mouseX - 8, mouseY - 8);
 			}
 		} else if (tooltipToDisplay != null) {
 			Utils.drawHoveringText(tooltipToDisplay, mouseX, mouseY, width, height, -1);
@@ -1350,10 +1350,10 @@ public class GuiCustomEnchant extends Gui {
 				int left = guiLeft + X_SIZE / 2 - 56;
 				int top = guiTop + 83;
 
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
-				Utils.drawTexturedRect(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
+				Utils.graphics.blit(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
 
@@ -1616,8 +1616,8 @@ public class GuiCustomEnchant extends Gui {
 				isScrollingLeft = false;
 			}
 		}
-		if (Mouse.getEventDWheel() != 0) {
-			int scroll = Mouse.getEventDWheel();
+		if (0 != 0) {
+			int scroll = 0;
 			if (scroll > 0) {
 				scroll = -16;
 			} else {

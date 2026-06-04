@@ -95,7 +95,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_museum);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		SkyblockProfiles.SkyblockProfile.MuseumData museumData = selectedProfile.getMuseumData();
 		long value = museumData.getValue();
@@ -123,7 +123,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 
 			if (entry.getKey().equals(selectedMuseumCategory)) {
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + 16 + 34 * xIndex,
 					guiTop + 172,
 					20,
@@ -136,7 +136,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				);
 				Utils.drawItemStackWithText(entry.getValue(), guiLeft + 19 + 34 * xIndex, guiTop + 175, "" + (xIndex + 1));
 			} else {
-				Utils.drawTexturedRect(
+				Utils.graphics.blit(
 					guiLeft + 16 + 34 * xIndex,
 					guiTop + 172,
 					20,
@@ -239,7 +239,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (onPage > 1) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 251 - 12,
 				guiTop + pageArrowsHeight,
 				12,
@@ -252,7 +252,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			);
 		}
 		if (onPage < pages && pages != 1) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 251,
 				guiTop + pageArrowsHeight,
 				12,
@@ -325,7 +325,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 							currentItemSelected = itemID;
 						}
 					}
-					Utils.drawItemStack(stack, x, y);
+					Utils.graphics.renderItem(stack, x, y);
 					highlightMatchingItem(stack, x, y);
 				}
 				break;
@@ -377,7 +377,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 					}
 					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player, false);
 				}
-				Utils.drawItemStack(stack, x, y);
+				Utils.graphics.renderItem(stack, x, y);
 				highlightMatchingItem(stack, x, y);
 			}
 		}
@@ -388,7 +388,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_inventories);
 			switch (size) {
 				case 1:
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 375,
 						guiTop + 100,
 						26,
@@ -401,7 +401,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 					);
 					break;
 				case 3:
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 375,
 						guiTop + 100,
 						26,
@@ -414,7 +414,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 					);
 					break;
 				case 4:
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 375,
 						guiTop + 100,
 						26,
@@ -427,7 +427,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 					);
 					break;
 				default:
-					Utils.drawTexturedRect(
+					Utils.graphics.blit(
 						guiLeft + 365,
 						guiTop + 100,
 						45,
@@ -464,7 +464,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 				int x = startX + (column * 19);
 				int y = startY + (row * 18);
 
-				Utils.drawItemStack(stack, x, y);
+				Utils.graphics.renderItem(stack, x, y);
 
 				if ((mouseX >= x && mouseX <= x + 16) &&
 					(mouseY >= y && mouseY <= y + 16)) {

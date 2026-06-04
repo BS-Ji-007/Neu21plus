@@ -176,7 +176,7 @@ public class AuctionBINWarning extends GuiElement {
 		RenderUtils.drawFloatingRectDark(width / 2 - 90, height / 2 - 45, 180, 90);
 
 		int neuLength = Minecraft.getInstance().font.getStringWidth("\u00a7lNEU");
-		Minecraft.getInstance().font.drawString(
+		Minecraft.getInstance().font.graphics.drawString(
 			"\u00a7lNEU",
 			width / 2 + 90 - neuLength - 3,
 			height / 2 - 45 + 4,

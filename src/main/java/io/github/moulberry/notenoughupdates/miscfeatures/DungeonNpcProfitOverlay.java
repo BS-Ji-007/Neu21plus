@@ -248,7 +248,7 @@ public class DungeonNpcProfitOverlay {
 		Minecraft.getInstance().getTextureManager().bindTexture(dungeonProfitResource);
 		GL11.glColor4f(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
 
 		for (int i = 0; i < orderedChestProfits.size(); i++) {
 			DungeonChest chestProfit = orderedChestProfits.get(i);

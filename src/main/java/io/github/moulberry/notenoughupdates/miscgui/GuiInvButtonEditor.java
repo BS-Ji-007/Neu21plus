@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.github.moulberry.notenoughupdates.miscgui.GuiEnchantColour.custom_ench_colour;
 
-public class GuiInvButtonEditor extends GuiScreen {
+public class GuiInvButtonEditor extends Screen {
 	private static final ResourceLocation INVENTORY = new ResourceLocation(
 		"minecraft:textures/gui/container/inventory.png");
 	private static final ResourceLocation EDITOR = new ResourceLocation("notenoughupdates", "notenoughupdates:invbuttons/editor.png");
@@ -258,7 +258,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 				"notenoughupdates:invbuttons/extraicons/" + name + ".png");
 			Minecraft.getInstance().getTextureManager().bindTexture(resourceLocation);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(x, y, 16, 16, GL11.GL_NEAREST);
+			Utils.graphics.blit(x, y, 16, 16, GL11.GL_NEAREST);
 		} else {
 			ItemStack stack = getStack(icon);
 
@@ -270,7 +270,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			com.mojang.blaze3d.systems.RenderSystem.translate(x + 8, y + 8, 0);
 			com.mojang.blaze3d.systems.RenderSystem.scale(scale, scale, 1);
 			com.mojang.blaze3d.systems.RenderSystem.translate(-8, -8, 0);
-			Utils.drawItemStack(stack, 0, 0);
+			Utils.graphics.renderItem(stack, 0, 0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
 	}
@@ -326,7 +326,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(INVENTORY);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(guiLeft, guiTop, xSize, ySize, 0, xSize / 256f, 0, ySize / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, xSize, ySize, 0, xSize / 256f, 0, ySize / 256f, GL11.GL_NEAREST);
 
 		if (NotEnoughUpdates.INSTANCE.config.customArmour.enableArmourHud) {
 			EquipmentOverlay.INSTANCE.renderPreviewArmorHud();
@@ -363,7 +363,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			}
 
 			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				x,
 				y,
 				18,
@@ -382,12 +382,12 @@ public class GuiInvButtonEditor extends GuiScreen {
 					renderIcon(button.icon, x + 1, y + 1);
 				}
 			} else {
-				font.drawString("+", x + 6, y + 5, 0xffcccccc);
+				font.graphics.drawString("+", x + 6, y + 5, 0xffcccccc);
 			}
 		}
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			guiLeft - 88 - 2 - 22 - (NotEnoughUpdates.INSTANCE.config.customArmour.enableArmourHud ? 25 : 0),
 			guiTop + 2,
 			88,
@@ -398,7 +398,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			68 / 78f,
 			GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			guiLeft - 88 - 2 - 22 - (NotEnoughUpdates.INSTANCE.config.customArmour.enableArmourHud ? 25 : 0),
 			guiTop + 2 + 24,
 			88,
@@ -450,7 +450,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 		if (presets != null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
-			Utils.drawTexturedRect(guiLeft + xSize + 22, guiTop, 80, ySize,
+			Utils.graphics.blit(guiLeft + xSize + 22, guiTop, 80, ySize,
 				editorXSize / 256f, (editorXSize + 80) / 256f, 41 / 256f, (41 + ySize) / 256f, GL11.GL_NEAREST
 			);
 			Utils.drawStringCenteredScaledMaxWidth(
@@ -516,7 +516,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1f);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				editorLeft,
 				editorTop,
 				editorXSize,
@@ -529,9 +529,9 @@ public class GuiInvButtonEditor extends GuiScreen {
 			);
 
 			if (showArrow)
-				Utils.drawTexturedRect(x + 8 - 3, y + 18, 10, 5, 0, 6 / 256f, 36 / 256f, 41 / 256f, GL11.GL_NEAREST);
+				Utils.graphics.blit(x + 8 - 3, y + 18, 10, 5, 0, 6 / 256f, 36 / 256f, 41 / 256f, GL11.GL_NEAREST);
 
-			font.drawString("Command", editorLeft + 7, editorTop + 7, 0xffa0a0a0, false);
+			font.graphics.drawString("Command", editorLeft + 7, editorTop + 7, 0xffa0a0a0, false);
 
 			commandTextField.setSize(editorXSize - 14, 16);
 			commandTextField.setText(commandTextField.getText().replaceAll("^ +", ""));
@@ -542,7 +542,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 			}
 			commandTextField.render(editorLeft + 7, editorTop + 19);
 
-			font.drawString("Background", editorLeft + 7, editorTop + 40, 0xffa0a0a0, false);
+			font.graphics.drawString("Background", editorLeft + 7, editorTop + 40, 0xffa0a0a0, false);
 
 			for (int i = 0; i < BACKGROUND_TYPES; i++) {
 				if (i == editingButton.backgroundIndex) {
@@ -556,12 +556,12 @@ public class GuiInvButtonEditor extends GuiScreen {
 				}
 				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(editorLeft + 7 + 20 * i, editorTop + 50, 18, 18,
+				Utils.graphics.blit(editorLeft + 7 + 20 * i, editorTop + 50, 18, 18,
 					i * 18 / 256f, (i * 18 + 18) / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 				);
 			}
 
-			font.drawString("Icon Type", editorLeft + 7, editorTop + 50 + 24, 0xffa0a0a0, false);
+			font.graphics.drawString("Icon Type", editorLeft + 7, editorTop + 50 + 24, 0xffa0a0a0, false);
 
 			Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
@@ -575,7 +575,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-				Utils.drawTexturedRect(editorLeft + 7 + 20 * i, editorTop + 50 + 34, 18, 18,
+				Utils.graphics.blit(editorLeft + 7 + 20 * i, editorTop + 50 + 34, 18, 18,
 					flip ? uMax : uMin, flip ? uMin : uMax, flip ? vMax : vMin, flip ? vMin : vMax, GL11.GL_NEAREST
 				);
 
@@ -587,10 +587,10 @@ public class GuiInvButtonEditor extends GuiScreen {
 				} else if (i == 2) {
 					stack = new ItemStack(Items.lead);
 				}
-				if (stack != null) Utils.drawItemStack(stack, editorLeft + 8 + 20 * i, editorTop + 50 + 35);
+				if (stack != null) Utils.graphics.renderItem(stack, editorLeft + 8 + 20 * i, editorTop + 50 + 35);
 			}
 
-			font.drawString("Icon Selector", editorLeft + 7, editorTop + 50 + 55, 0xffa0a0a0, false);
+			font.graphics.drawString("Icon Selector", editorLeft + 7, editorTop + 50 + 55, 0xffa0a0a0, false);
 
 			iconTextField.render(editorLeft + 7, editorTop + 50 + 65);
 
@@ -638,7 +638,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 					Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-					Utils.drawTexturedRect(iconX, iconY, 18, 18,
+					Utils.graphics.blit(iconX, iconY, 18, 18,
 						18 / 256f, 36 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 					);
 
@@ -654,7 +654,7 @@ public class GuiInvButtonEditor extends GuiScreen {
 
 	@Override
 	public void handleMouseInput() throws IOException {
-		int scroll = Mouse.getEventDWheel();
+		int scroll = 0;
 		if (scroll != 0) {
 			scroll = -scroll;
 			if (scroll > 1) scroll = 8;

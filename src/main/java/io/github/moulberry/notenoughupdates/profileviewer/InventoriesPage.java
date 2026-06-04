@@ -175,7 +175,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_invs);
-		Utils.drawTexturedRect(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 		getInstance().inventoryTextField.setSize(88, 20);
 
 		SkyblockProfiles.SkyblockProfile selectedProfile = getSelectedProfile();
@@ -195,11 +195,11 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 			if (entry.getKey().equals(selectedInventory)) {
-				Utils.drawTexturedRect(guiLeft + x - 2, guiTop + y - 2, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft + x - 2, guiTop + y - 2, 20, 20, 20 / 256f, 0, 20 / 256f, 0, GL11.GL_NEAREST);
 				x++;
 				y++;
 			} else {
-				Utils.drawTexturedRect(guiLeft + x - 2, guiTop + y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
+				Utils.graphics.blit(guiLeft + x - 2, guiTop + y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 			}
 
 			Utils.drawItemStackWithText(entry.getValue(), guiLeft + x, guiTop + y, String.valueOf(invNameIndex + 1), true);
@@ -266,7 +266,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		for (int i = 0; i < armorItems.length; i++) {
 			ItemStack stack = armorItems[i];
 			if (stack != null) {
-				Utils.drawItemStack(stack, guiLeft + 173, guiTop + 67 - 18 * i, true);
+				Utils.graphics.renderItem(stack, guiLeft + 173, guiTop + 67 - 18 * i, true);
 				if (stack != fillerStack) {
 					if (mouseX >= guiLeft + 173 - 1 && mouseX <= guiLeft + 173 + 16 + 1) {
 						if (mouseY >= guiTop + 67 - 18 * i - 1 && mouseY <= guiTop + 67 - 18 * i + 16 + 1) {
@@ -294,7 +294,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		for (int i = 0; i < equipmentItems.length; i++) {
 			ItemStack stack = equipmentItems[i];
 			if (stack != null) {
-				Utils.drawItemStack(stack, guiLeft + 192, guiTop + 13 + 18 * i, true);
+				Utils.graphics.renderItem(stack, guiLeft + 192, guiTop + 13 + 18 * i, true);
 				if (stack != fillerStack) {
 					if (mouseX >= guiLeft + 192 - 1 && mouseX <= guiLeft + 192 + 16 + 1) {
 						if (mouseY >= guiTop + 13 + 18 * i - 1 && mouseY <= guiTop + 13 + 18 * i + 16 + 1) {
@@ -338,7 +338,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		for (int i = 0; i < bestWeapons.length; i++) {
 			if (bestWeapons[i] == null) continue;
 			ItemStack stack = bestWeapons[i];
-			Utils.drawItemStack(stack, guiLeft + 143, guiTop + 13 + 18 * i, true);
+			Utils.graphics.renderItem(stack, guiLeft + 143, guiTop + 13 + 18 * i, true);
 			if (mouseX >= guiLeft + 143 - 1 && mouseX <= guiLeft + 143 + 16 + 1) {
 				if (mouseY >= guiTop + 13 + 18 * i - 1 && mouseY <= guiTop + 13 + 18 * i + 16 + 1) {
 					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player,
@@ -350,7 +350,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		for (int i = 0; i < bestRods.length; i++) {
 			if (bestRods[i] == null) continue;
 			ItemStack stack = bestRods[i];
-			Utils.drawItemStack(stack, guiLeft + 143, guiTop + 137 + 18 * i, true);
+			Utils.graphics.renderItem(stack, guiLeft + 143, guiTop + 137 + 18 * i, true);
 			if (mouseX >= guiLeft + 143 - 1 && mouseX <= guiLeft + 143 + 16 + 1) {
 				if (mouseY >= guiTop + 137 + 18 * i - 1 && mouseY <= guiTop + 137 + 18 * i + 16 + 1) {
 					getInstance().tooltipToDisplay = stack.getTooltip(Minecraft.getInstance().player,
@@ -463,7 +463,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.resource_packs);
 
 		if (currentInventoryIndex > 0) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 320 - 12,
 				staticSelectorHeight,
 				12,
@@ -476,7 +476,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			);
 		}
 		if (currentInventoryIndex < inventories.length - 1) {
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 320,
 				staticSelectorHeight,
 				12,
@@ -491,7 +491,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		if (inventories.length > 1) {
 			String text = "Page " + (currentInventoryIndex + 1) + "/" + inventories.length;
-			Minecraft.getInstance().font.drawString(
+			Minecraft.getInstance().font.graphics.drawString(
 				text,
 				guiLeft + 320 - Minecraft.getInstance().font.getStringWidth(text) / 2,
 				staticSelectorHeight - 10,
@@ -501,7 +501,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		Minecraft
 			.getMinecraft()
-			.font.drawString(
+			.font.graphics.drawString(
 				Utils.cleanColour(invNameToDisplayMap.get(selectedInventory).getName().getString()),
 				x + 8,
 				y + 6,
@@ -516,7 +516,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 			for (int xIndex = 0; xIndex < inventory[yIndex].length; xIndex++) {
 				ItemStack stack = inventory[yIndex][xIndex];
 
-				if (stack != null) Utils.drawItemStack(stack, x + 8 + xIndex * 18, y + 18 + yIndex * 18, true);
+				if (stack != null) Utils.graphics.renderItem(stack, x + 8 + xIndex * 18, y + 18 + yIndex * 18, true);
 
 				if (
 					getInstance().inventoryTextField.getText() != null &&

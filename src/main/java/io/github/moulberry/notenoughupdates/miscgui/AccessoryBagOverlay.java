@@ -101,7 +101,6 @@ public class AccessoryBagOverlay {
 	private static List<String> tooltipToDisplay = null;
 	private static boolean offsetButtons = false;
 
-	@SubscribeEvent
 	public void onButtonExclusionZones(ButtonExclusionZoneEvent event) {
 		if (isInAccessoryBag()) {
 			event.blockArea(
@@ -644,7 +643,7 @@ public class AccessoryBagOverlay {
 							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-							Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
+							Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
 							renderVisitOverlay(guiLeft + xSize + 3, guiTop);
 							return;
@@ -675,17 +674,17 @@ public class AccessoryBagOverlay {
 						if (i != currentTab.ordinal()) {
 							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
-							Utils.drawTexturedRect(guiLeft + xSize + 168, guiTop + 20 * i, 25, 22,
+							Utils.graphics.blit(guiLeft + xSize + 168, guiTop + 20 * i, 25, 22,
 								168 / 196f, 193f / 196f, 0f, 22 / 128f, GL11.GL_NEAREST
 							);
 							RenderHelper.enableGUIStandardItemLighting();
-							Utils.drawItemStack(TAB_STACKS[i], guiLeft + xSize + 168 + 5, guiTop + 20 * i + 3);
+							Utils.graphics.renderItem(TAB_STACKS[i], guiLeft + xSize + 168 + 5, guiTop + 20 * i + 3);
 						}
 					}
 
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
-					Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
+					Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
 					if (pagesVisited.isEmpty()) {
 						renderVisitOverlay(guiLeft + xSize + 3, guiTop);
@@ -693,11 +692,11 @@ public class AccessoryBagOverlay {
 					}
 
 					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
-					Utils.drawTexturedRect(guiLeft + xSize + 168, guiTop + 20 * currentTab.ordinal(), 28, 22,
+					Utils.graphics.blit(guiLeft + xSize + 168, guiTop + 20 * currentTab.ordinal(), 28, 22,
 						168 / 196f, 1f, 22 / 128f, 44 / 128f, GL11.GL_NEAREST
 					);
 					RenderHelper.enableGUIStandardItemLighting();
-					Utils.drawItemStack(
+					Utils.graphics.renderItem(
 						TAB_STACKS[currentTab.ordinal()],
 						guiLeft + xSize + 168 + 8,
 						guiTop + 20 * currentTab.ordinal() + 3
@@ -921,7 +920,7 @@ public class AccessoryBagOverlay {
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		Utils.drawTexturedRect(x, y, 17, 17, 168f / 196f, 184f / 196f, 112f / 128f, 1f, GL11.GL_NEAREST); // slot
+		Utils.graphics.blit(x, y, 17, 17, 168f / 196f, 184f / 196f, 112f / 128f, 1f, GL11.GL_NEAREST); // slot
 		RenderHelper.enableGUIStandardItemLighting();
 		Minecraft.getInstance().getRenderItem().renderItemIntoGUI(stack, x, y); // item
 		if (new Rectangle(x, y, 16, 16).contains(mouseX(), mouseY())) {
@@ -954,7 +953,7 @@ public class AccessoryBagOverlay {
 					.collect(Collectors.toList())
 					.contains(stack.getName().getString())) {
 					com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 50);
-					GuiScreen.drawRect(
+					Screen.drawRect(
 						guiLeft + slot.xDisplayPosition,
 						guiTop + slot.yDisplayPosition,
 						guiLeft + slot.xDisplayPosition + 16,

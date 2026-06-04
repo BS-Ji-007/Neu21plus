@@ -50,7 +50,6 @@ public class FuelBar {
 	private int currentFuel = -1;
 	private int maxFuel = -1;
 
-	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
 		currentFuel = -1;
 
@@ -85,7 +84,6 @@ public class FuelBar {
 		}
 	}
 
-	@SubscribeEvent
 	public void onRenderScreen(RenderGameOverlayEvent.Post event) {
 		if (!GuiPositionEditor.renderDrill) {
 			if (currentFuel < 0) return;
@@ -125,7 +123,7 @@ public class FuelBar {
 			for (int xO = -2; xO <= 2; xO++) {
 				for (int yO = -2; yO <= 2; yO++) {
 					if (Math.abs(xO) != Math.abs(yO)) {
-						Minecraft.getInstance().font.drawString(
+						Minecraft.getInstance().font.graphics.drawString(
 							clean,
 							x + 2 + xO / 2f,
 							y + yO / 2f,
@@ -135,7 +133,7 @@ public class FuelBar {
 					}
 				}
 			}
-			Minecraft.getInstance().font.drawString(str, x + 2, y, 0xffffff, false);
+			Minecraft.getInstance().font.graphics.drawString(str, x + 2, y, 0xffffff, false);
 			Utils.pushGuiScale(0);
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		}
@@ -155,12 +153,12 @@ public class FuelBar {
 		int w = (int) xSize;
 		int w_2 = w / 2;
 		int k = (int) Math.min(w, Math.ceil(completed * w));
-		Utils.drawTexturedRect(x, y, w_2, 5, 0, w_2 / 181f, 0, 0.5f, GL11.GL_NEAREST);
-		Utils.drawTexturedRect(x + w_2, y, w_2, 5, 1 - w_2 / 181f, 1f, 0, 0.5f, GL11.GL_NEAREST);
+		Utils.graphics.blit(x, y, w_2, 5, 0, w_2 / 181f, 0, 0.5f, GL11.GL_NEAREST);
+		Utils.graphics.blit(x + w_2, y, w_2, 5, 1 - w_2 / 181f, 1f, 0, 0.5f, GL11.GL_NEAREST);
 		if (k > 0) {
-			Utils.drawTexturedRect(x, y, Math.min(w_2, k), 5, 0, Math.min(w_2, k) / 181f, 0.5f, 1, GL11.GL_NEAREST);
+			Utils.graphics.blit(x, y, Math.min(w_2, k), 5, 0, Math.min(w_2, k) / 181f, 0.5f, 1, GL11.GL_NEAREST);
 			if (completed > 0.5f) {
-				Utils.drawTexturedRect(x + w_2, y, k - w_2, 5, 1 - w_2 / 181f, 1 + (k - w) / 181f, 0.5f, 1, GL11.GL_NEAREST);
+				Utils.graphics.blit(x + w_2, y, k - w_2, 5, 1 - w_2 / 181f, 1 + (k - w) / 181f, 0.5f, 1, GL11.GL_NEAREST);
 			}
 		}
 

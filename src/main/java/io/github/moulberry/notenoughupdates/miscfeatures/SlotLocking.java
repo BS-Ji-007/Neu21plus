@@ -549,7 +549,7 @@ public class SlotLocking {
 				Minecraft.getInstance().getTextureManager().bindTexture(LOCK);
 				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.5f);
 				com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
-				RenderUtils.drawTexturedRect(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, 0, 1, 0, 1, GL11.GL_NEAREST);
+				RenderUtils.graphics.blit(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, 0, 1, 0, 1, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
 				com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -400);
@@ -580,7 +580,7 @@ public class SlotLocking {
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
 					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
-					RenderUtils.drawTexturedRect(
+					RenderUtils.graphics.blit(
 						slot.xDisplayPosition,
 						slot.yDisplayPosition,
 						16,
@@ -631,7 +631,7 @@ public class SlotLocking {
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
 					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
 					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
-					RenderUtils.drawTexturedRect(
+					RenderUtils.graphics.blit(
 						boundSlot.xDisplayPosition,
 						boundSlot.yDisplayPosition,
 						16,

@@ -120,7 +120,7 @@ public class GuiCosmetics extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_bg);
-		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		switch (currentPage) {
@@ -151,7 +151,7 @@ public class GuiCosmetics extends GuiScreen {
 			statusMsg.append(60 - (System.currentTimeMillis() - CapeManager.INSTANCE.lastCapeUpdate) / 1000).append("s");
 		}
 
-		Minecraft.getInstance().font.drawString(
+		Minecraft.getInstance().font.graphics.drawString(
 			ChatFormatting.AQUA + statusMsg.toString(),
 			guiLeft + sizeX - Minecraft.getInstance().font.getStringWidth(statusMsg.toString()) - 20,
 			guiTop - 12,
@@ -162,7 +162,7 @@ public class GuiCosmetics extends GuiScreen {
 		if (currentPage == CosmeticsPage.CAPES) {
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + sizeX / 2f - 50,
 				guiTop + sizeY + 5,
 				100,
@@ -198,7 +198,7 @@ public class GuiCosmetics extends GuiScreen {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(helpX, guiTop - 20, 20, 20, GL11.GL_LINEAR);
+		Utils.graphics.blit(helpX, guiTop - 20, 20, 20, GL11.GL_LINEAR);
 
 	}
 
@@ -252,10 +252,10 @@ public class GuiCosmetics extends GuiScreen {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(516, 0.1F);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-		Utils.drawTexturedRect(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+		Utils.graphics.blit(x, y, 28, pressed ? 32 : 31, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-		Utils.drawItemStack(stack, x + 6, y + 9);
+		Utils.graphics.renderItem(stack, x + 6, y + 9);
 	}
 
 	@Override
@@ -322,7 +322,7 @@ public class GuiCosmetics extends GuiScreen {
 			if (!cape.canShow() && !equipable) continue;
 
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
+			Utils.graphics.blit(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
 				0, 81 / 256f, 216 / 256f, 236 / 256f, GL11.GL_NEAREST
 			);
 
@@ -356,7 +356,7 @@ public class GuiCosmetics extends GuiScreen {
 
 		if (currentPage == CosmeticsPage.CAPES) {
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_dropdown);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + sizeX / 2f - 50,
 				guiTop + sizeY + 5,
 				100,
@@ -434,10 +434,10 @@ public class GuiCosmetics extends GuiScreen {
 
 	private void drawCapesPage(int mouseX, int mouseY, float partialTicks) {
 		Minecraft.getInstance().getTextureManager().bindTexture(cosmetics_fg);
-		Utils.drawTexturedRect(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-		Utils.drawTexturedRect(guiLeft + 15 + 371 * scroll, guiTop + 177, 32, 12,
+		Utils.graphics.blit(guiLeft + 15 + 371 * scroll, guiTop + 177, 32, 12,
 			0, 32 / 256f, 192 / 256f, 204 / 256f, GL11.GL_NEAREST
 		);
 
@@ -489,18 +489,18 @@ public class GuiCosmetics extends GuiScreen {
 				);
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
-			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 10, 81, 108,
+			Utils.graphics.blit(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 10, 81, 108,
 				0, 81 / 256f, 84 / 256f, 192 / 256f, GL11.GL_NEAREST
 			);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 
-			Utils.drawTexturedRect(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
+			Utils.graphics.blit(guiLeft + 20 + 91 * displayIndex - xOffset, guiTop + 123, 81, 20,
 				0, 81 / 256f, 216 / 256f, 236 / 256f, GL11.GL_NEAREST
 			);
 
 			boolean equipPressed = capeData.capeName.equals(wantToEquipCape);
 			if (!equipable) com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.5f);
-			Utils.drawTexturedRect(
+			Utils.graphics.blit(
 				guiLeft + 20 + 91 * displayIndex - xOffset,
 				guiTop + 149,
 				81,
@@ -546,7 +546,7 @@ public class GuiCosmetics extends GuiScreen {
 				k -> new ResourceLocation("notenoughupdates", "capes/" + capeData.capeName + "_preview.png")
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(capeTexture);
-			Utils.drawTexturedRect(guiLeft + 31 + 91 * displayIndex - xOffset, guiTop + 24, 59, 84, GL11.GL_NEAREST);
+			Utils.graphics.blit(guiLeft + 31 + 91 * displayIndex - xOffset, guiTop + 24, 59, 84, GL11.GL_NEAREST);
 
 			displayIndex++;
 		}
@@ -662,7 +662,7 @@ public class GuiCosmetics extends GuiScreen {
 		blurOutputVert.bindFramebufferTexture();
 		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
 		//Utils.setScreen(width*f, height*f, f);
-		Utils.drawTexturedRect(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
+		Utils.graphics.blit(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		//Utils.setScreen(width, height, f);
 		blurOutputVert.unbindFramebufferTexture();
 	}

@@ -105,7 +105,7 @@ public class SunTzu {
 			);
 			String sunTzu = "- Sun Tzu, The Art of War";
 			int sunTzuLength = Minecraft.getInstance().font.getStringWidth(sunTzu);
-			Minecraft.getInstance().font.drawString(ChatFormatting.GOLD + sunTzu,
+			Minecraft.getInstance().font.graphics.drawString(ChatFormatting.GOLD + sunTzu,
 				sr.getScaledWidth() / 2f + 100 - sunTzuLength, 15 + height, 0, true
 			);
 

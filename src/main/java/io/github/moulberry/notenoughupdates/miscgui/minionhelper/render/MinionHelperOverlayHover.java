@@ -76,7 +76,7 @@ public class MinionHelperOverlayHover {
 	}
 
 	private void renderButtons() {
-		GuiScreen gui = Minecraft.getInstance().currentScreen;
+		Screen gui = Minecraft.getInstance().currentScreen;
 		if (!(gui instanceof ChestScreen)) return;
 
 		int xSize = ((AccessorContainerScreen) gui).getXSize();

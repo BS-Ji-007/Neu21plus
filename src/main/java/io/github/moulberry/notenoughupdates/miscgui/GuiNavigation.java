@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class GuiNavigation extends GuiScreen {
+public class GuiNavigation extends Screen {
 
 	public static ResourceLocation BACKGROUND = new ResourceLocation(
 		"notenoughupdates",
@@ -137,7 +137,7 @@ public class GuiNavigation extends GuiScreen {
 	}
 
 	@Override
-	protected void keyTyped(char p_keyTyped_1_, int p_keyTyped_2_) throws IOException {
+	public boolean keyPressed(char p_keyTyped_1_, int p_keyTyped_2_) throws IOException {
 		super.keyTyped(p_keyTyped_1_, p_keyTyped_2_);
 		textField.keyTyped(p_keyTyped_1_, p_keyTyped_2_);
 	}

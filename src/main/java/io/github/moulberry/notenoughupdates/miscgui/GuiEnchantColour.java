@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
 
 import static io.github.moulberry.notenoughupdates.util.GuiTextures.help;
 
-public class GuiEnchantColour extends GuiScreen {
+public class GuiEnchantColour extends Screen {
 	public static final ResourceLocation custom_ench_colour = new ResourceLocation(
 		"notenoughupdates:custom_ench_colour.png");
 
@@ -115,14 +115,14 @@ public class GuiEnchantColour extends GuiScreen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-		Utils.drawTexturedRect(guiLeft, guiTop, xSize, 21, 0, 1, 0, 21 / 78f, GL11.GL_NEAREST);
-		Utils.drawTexturedRect(guiLeft, guiTop + ySize - 32, xSize, 32, 0, 1, 46 / 78f, 1, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop, xSize, 21, 0, 1, 0, 21 / 78f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft, guiTop + ySize - 32, xSize, 32, 0, 1, 46 / 78f, 1, GL11.GL_NEAREST);
 
-		font.drawString("Ench Name", guiLeft + 10, guiTop + 7, 4210752);
-		font.drawString("CMP", guiLeft + 86, guiTop + 7, 4210752);
-		font.drawString("LVL", guiLeft + 111, guiTop + 7, 4210752);
-		font.drawString("COL", guiLeft + 136, guiTop + 7, 4210752);
-		font.drawString("DEL", guiLeft + 161, guiTop + 7, 4210752);
+		font.graphics.drawString("Ench Name", guiLeft + 10, guiTop + 7, 4210752);
+		font.graphics.drawString("CMP", guiLeft + 86, guiTop + 7, 4210752);
+		font.graphics.drawString("LVL", guiLeft + 111, guiTop + 7, 4210752);
+		font.graphics.drawString("COL", guiLeft + 136, guiTop + 7, 4210752);
+		font.graphics.drawString("DEL", guiLeft + 161, guiTop + 7, 4210752);
 
 		Utils.drawStringCentered(
 			"Add Ench Colour",
@@ -136,7 +136,7 @@ public class GuiEnchantColour extends GuiScreen {
 		for (String str : enchantColours) {
 			Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-			Utils.drawTexturedRect(guiLeft, guiTop + 21 + yIndex * 25, xSize, 25, 0, 1, 21 / 78f, 46 / 78f, GL11.GL_NEAREST);
+			Utils.graphics.blit(guiLeft, guiTop + 21 + yIndex * 25, xSize, 25, 0, 1, 21 / 78f, 46 / 78f, GL11.GL_NEAREST);
 
 			List<String> colourOps = splitter.splitToList(str);
 			String enchantName = getColourOpIndex(colourOps, 0);
@@ -180,7 +180,7 @@ public class GuiEnchantColour extends GuiScreen {
 
 			int modifierI = getIntModifier(modifier);
 			if ((modifierI & GuiEnchantColour.BOLD_MODIFIER) != 0) {
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 181,
 					guiTop + 23 + 25 * yIndex - 2,
@@ -189,7 +189,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.ITALIC_MODIFIER) != 0) {
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 181,
 					guiTop + 23 + 25 * yIndex + 10,
@@ -198,7 +198,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.UNDERLINE_MODIFIER) != 0) {
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 196,
 					guiTop + 23 + 25 * yIndex - 2,
@@ -207,7 +207,7 @@ public class GuiEnchantColour extends GuiScreen {
 				);
 			}
 			if ((modifierI & GuiEnchantColour.STRIKETHROUGH_MODIFIER) != 0) {
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					"\u00a7l\u2713",
 					guiLeft + 196,
 					guiTop + 23 + 25 * yIndex + 10,
@@ -222,7 +222,7 @@ public class GuiEnchantColour extends GuiScreen {
 		List<String> tooltipToDisplay = null;
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(help);
-		Utils.drawTexturedRect(guiLeft + xSize + 3, guiTopSidebar - 18, 16, 16, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 3, guiTopSidebar - 18, 16, 16, GL11.GL_NEAREST);
 		if (maxedBookFound == 0) {
 			try {
 				if (NotEnoughUpdates.INSTANCE.manager.jsonToStack(
@@ -240,7 +240,7 @@ public class GuiEnchantColour extends GuiScreen {
 			}
 		}
 		if (maxedBookFound == 1) {
-			Utils.drawItemStack(maxedBook, guiLeft + xSize + 3, guiTopSidebar - 34);
+			Utils.graphics.renderItem(maxedBook, guiLeft + xSize + 3, guiTopSidebar - 34);
 		}
 		if (maxedAttBookFound == 0) {
 			try {
@@ -259,7 +259,7 @@ public class GuiEnchantColour extends GuiScreen {
 			}
 		}
 		if (maxedAttBookFound == 1) {
-			Utils.drawItemStack(maxedAttBook, guiLeft + xSize + 3, guiTopSidebar - 52);
+			Utils.graphics.renderItem(maxedAttBook, guiLeft + xSize + 3, guiTopSidebar - 52);
 		}
 
 		if (mouseX >= guiLeft + xSize + 3 && mouseX < guiLeft + xSize + 39) {
@@ -347,7 +347,7 @@ public class GuiEnchantColour extends GuiScreen {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
 		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			guiLeft + xSize + 3,
 			guiTopSidebar + 2,
 			88,
@@ -358,7 +358,7 @@ public class GuiEnchantColour extends GuiScreen {
 			68 / 78f,
 			GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			guiLeft + xSize + 3,
 			guiTopSidebar + 2 + 24,
 			88,
@@ -369,7 +369,7 @@ public class GuiEnchantColour extends GuiScreen {
 			68 / 78f,
 			GL11.GL_NEAREST
 		);
-		Utils.drawTexturedRect(
+		Utils.graphics.blit(
 			guiLeft + xSize + 3,
 			guiTopSidebar + 2 + 24 * 2,
 			88,
@@ -489,7 +489,7 @@ public class GuiEnchantColour extends GuiScreen {
 	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
 
-		int dWheel = Mouse.getEventDWheel();
+		int dWheel = 0;
 		int mouseX = Mouse.getEventX() * graphics.guiWidth() / this.mc.displayWidth;
 		if (mouseX > guiLeft && mouseX < guiLeft + xSize) {
 			if (dWheel < 0) {

@@ -52,7 +52,7 @@ public class GuiOptionEditorBlocked extends GuiOptionEditor {
 		mc.getTextureManager().bindTexture(blockedTexture);
 
 		float iconWidth = getHeight() * 96F / 64;
-		RenderUtils.drawTexturedRect(x, y, iconWidth, getHeight());
+		RenderUtils.graphics.blit(x, y, iconWidth, getHeight());
 
 		TextRenderUtils.drawStringScaledMaxWidth(
 			"This option is currently not available.",

@@ -77,7 +77,7 @@ public class AuctionProfit {
 		minecraft.getTextureManager().bindTexture(auctionProfitImage);
 		GL11.glColor4f(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		Utils.drawTexturedRect(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
+		Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 180, 101, 0, 180 / 256f, 0, 101 / 256f, GL11.GL_NEAREST);
 
 		double coinsToCollect = 0;
 		double coinsIfAllSold = 0;
@@ -153,8 +153,8 @@ public class AuctionProfit {
 				" Expired auctions";
 
 		FontRenderer font = minecraft.font;
-		font.drawString(unclaimedAuctionsStr, a + 6, guiTop + 6, -1, false);
-		font.drawString(expiredAuctionsStr, a + 6, guiTop + 16, -1, false);
+		font.graphics.drawString(unclaimedAuctionsStr, a + 6, guiTop + 6, -1, false);
+		font.graphics.drawString(expiredAuctionsStr, a + 6, guiTop + 16, -1, false);
 
 		String coinsToCollectStr =
 			ChatFormatting.BOLD + ChatFormatting.DARK_GRAY.toString() + "Coins to collect: " +
@@ -164,8 +164,8 @@ public class AuctionProfit {
 			ChatFormatting.RESET + ChatFormatting.DARK_GREEN + "" +
 			StringUtils.shortNumberFormat(coinsIfAllSold);
 
-		font.drawString(coinsToCollectStr, a + 6, guiTop + 32, -1, false);
-		font.drawString(valueIfSoldStr, a + 6, guiTop + 42, -1, false);
+		font.graphics.drawString(coinsToCollectStr, a + 6, guiTop + 32, -1, false);
+		font.graphics.drawString(valueIfSoldStr, a + 6, guiTop + 42, -1, false);
 	}
 
 	private double removeTax(double coins) {

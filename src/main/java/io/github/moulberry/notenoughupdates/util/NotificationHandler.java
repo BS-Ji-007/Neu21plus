@@ -81,13 +81,13 @@ public class NotificationHandler {
                     midX+width/2-2, sr.getScaledHeight()*3/4+height/2-2, 0xFFC8C8C8);*/
 
 			int xLen = Minecraft.getInstance().font.getStringWidth("[X] Close");
-			Minecraft.getInstance().font.drawString(
+			Minecraft.getInstance().font.graphics.drawString(
 				"[X] Close",
 				midX + width / 2f - 3 - xLen, topY + 3, 0xFFFF5555, false
 			);
 
 			if (notificationDisplayMillis > 0) {
-				Minecraft.getInstance().font.drawString(
+				Minecraft.getInstance().font.graphics.drawString(
 					(timeRemaining / 1000) + "s",
 					midX - width / 2f + 3,
 					topY + 3,

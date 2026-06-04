@@ -48,7 +48,6 @@ public class MinionHelperChatLoader {
 		this.manager = manager;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void onChat(ClientChatReceivedEvent event) {
 		if (event.type != 0) return;
 		String message = event.message.getString();
