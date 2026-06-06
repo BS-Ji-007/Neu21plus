@@ -27,7 +27,7 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils
 import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.player.inventory.ContainerLocalMenu
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.text.DecimalFormat

@@ -33,7 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.core.BlockPos;

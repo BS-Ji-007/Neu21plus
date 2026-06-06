@@ -39,7 +39,7 @@ import io.github.moulberry.notenoughupdates.util.hypixelapi.ProfileCollectionInf
 import io.github.moulberry.notenoughupdates.util.kotlin.KotlinTypeAdapterFactory;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.CompoundTag;

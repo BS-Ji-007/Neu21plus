@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.ChestScreen;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;

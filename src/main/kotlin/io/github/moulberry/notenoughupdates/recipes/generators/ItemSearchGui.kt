@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.GuiTextField
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.ItemStack
 
 class ItemSearchGui(initialText: String, val onSelect: (String?) -> Unit) : GuiScreen() {

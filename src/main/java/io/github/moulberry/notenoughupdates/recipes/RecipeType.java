@@ -21,8 +21,8 @@ package io.github.moulberry.notenoughupdates.recipes;
 
 import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.NEUManager;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 
 public enum RecipeType {

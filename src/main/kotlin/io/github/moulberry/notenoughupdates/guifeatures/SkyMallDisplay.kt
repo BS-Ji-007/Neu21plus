@@ -24,7 +24,7 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.util.SBInfo
 import io.github.moulberry.notenoughupdates.util.SkyBlockTime
 import io.github.moulberry.notenoughupdates.util.Utils
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.ItemStack
 import java.time.Duration
 import java.time.Instant

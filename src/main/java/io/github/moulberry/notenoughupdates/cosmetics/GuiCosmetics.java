@@ -32,7 +32,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.Shader;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.Matrix4f;

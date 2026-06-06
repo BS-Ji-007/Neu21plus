@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemArmor;
 import net.minecraft.world.item.ItemStack;
 

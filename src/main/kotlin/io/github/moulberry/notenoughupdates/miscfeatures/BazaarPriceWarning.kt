@@ -27,8 +27,8 @@ import io.github.moulberry.notenoughupdates.util.ItemUtils
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.ChestScreen
-import net.minecraft.init.Blocks
-import net.minecraft.init.Items
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.item.Items
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 

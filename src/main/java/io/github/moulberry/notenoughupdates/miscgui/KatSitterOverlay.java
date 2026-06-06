@@ -29,7 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.inventory.ChestScreen;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.init.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;

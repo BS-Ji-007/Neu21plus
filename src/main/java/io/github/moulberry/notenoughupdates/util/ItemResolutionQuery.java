@@ -28,7 +28,7 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.ChestScreen;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.inventory.AbstractContainerMenuChest;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;

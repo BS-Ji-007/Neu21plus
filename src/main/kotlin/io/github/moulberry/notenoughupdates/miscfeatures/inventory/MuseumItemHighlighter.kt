@@ -31,9 +31,9 @@ import io.github.moulberry.notenoughupdates.util.LRUCache
 import io.github.moulberry.notenoughupdates.util.MuseumUtil
 import io.github.moulberry.notenoughupdates.util.MuseumUtil.isMuseumInventory
 import net.minecraft.client.gui.Gui
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import net.minecraft.world.inventory.AbstractContainerMenuChest
-import net.minecraft.item.EnumDyeColor
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 
 @NEUAutoSubscribe
@@ -69,7 +69,7 @@ object MuseumItemHighlighter {
     }
 
     fun isCompletedRetrievedItem(itemStack: ItemStack): Boolean {
-        return itemStack.hasDisplayName() && itemStack.item == Items.dye && EnumDyeColor.byDyeDamage(itemStack.itemDamage) == EnumDyeColor.LIME
+        return itemStack.hasDisplayName() && itemStack.item == Items.LIME_DYE
     }
 
     fun onBackgroundDrawn(event: ContainerScreenBackgroundDrawnEvent) {

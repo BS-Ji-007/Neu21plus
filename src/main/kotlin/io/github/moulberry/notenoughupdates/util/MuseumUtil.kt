@@ -22,7 +22,7 @@ package io.github.moulberry.notenoughupdates.util
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
 import net.minecraft.world.Container
-import net.minecraft.item.EnumDyeColor
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemDye
 import net.minecraft.world.item.ItemStack
 
@@ -53,11 +53,11 @@ object MuseumUtil {
         val item = stack.item ?: return null
         val items by lazy { findItemsByName(stack.displayName, isOnArmorPage)}
         if (item is ItemDye) {
-            val dyeColor = EnumDyeColor.byDyeDamage(stack.itemDamage)
-            if (dyeColor == EnumDyeColor.LIME) {
+            val dyeColor = DyeColor.byId(stack.itemDamage)
+            if (dyeColor == DyeColor.LIME) {
                 // Item is donated, but not present in the museum
                 return MuseumItem(items, DonationState.DONATED_VACANT)
-            } else if (dyeColor == EnumDyeColor.GRAY) {
+            } else if (dyeColor == DyeColor.GRAY) {
                 // Item is not donated
                 return MuseumItem(items, DonationState.MISSING)
             }

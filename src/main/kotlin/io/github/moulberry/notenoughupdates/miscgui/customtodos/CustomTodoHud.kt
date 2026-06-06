@@ -26,7 +26,7 @@ import io.github.moulberry.notenoughupdates.events.SidebarChangeEvent
 import io.github.moulberry.notenoughupdates.events.TabListChangeEvent
 import io.github.moulberry.notenoughupdates.miscgui.GuiInvButtonEditor
 import io.github.moulberry.notenoughupdates.util.Utils
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting
 import java.util.*

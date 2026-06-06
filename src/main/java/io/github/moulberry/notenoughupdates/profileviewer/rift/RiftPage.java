@@ -38,7 +38,7 @@ import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.init.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;

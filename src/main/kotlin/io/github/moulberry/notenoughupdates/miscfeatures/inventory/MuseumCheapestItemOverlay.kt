@@ -39,8 +39,8 @@ import net.minecraft.client.MainWindow
 import net.minecraft.client.gui.inventory.ChestScreen
 import net.minecraft.client.renderer.com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.init.Blocks
-import net.minecraft.init.Items
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.item.Items
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.ChatFormatting

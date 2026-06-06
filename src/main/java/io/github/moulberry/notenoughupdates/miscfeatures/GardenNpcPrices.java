@@ -29,7 +29,7 @@ import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minecraft.init.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;

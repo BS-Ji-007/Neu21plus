@@ -25,7 +25,7 @@ import io.github.moulberry.notenoughupdates.options.NEUConfig
 import io.github.moulberry.notenoughupdates.util.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.ChestScreen
-import net.minecraft.init.Items
+import net.minecraft.world.item.Items
 import com.mojang.blaze3d.platform.InputConstants
 
 @NEUAutoSubscribe
