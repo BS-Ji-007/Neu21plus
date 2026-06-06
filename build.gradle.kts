@@ -115,7 +115,7 @@ val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     mergeServiceFiles()
 }
 
-val remapJar = tasks.named<RemapJarTask>("remapJar") {
+val remapJar = tasks.register<RemapJarTask>("remapJar") {
     archiveClassifier.set("")
     input.set(shadowJar.flatMap { it.archiveFile })
 }
