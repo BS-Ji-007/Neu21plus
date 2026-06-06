@@ -291,11 +291,11 @@ public class Utils {
 		disableCustomDungColours = false;
 	}
 
-	public static void graphics.renderItem(ItemStack stack, int x, int y) {
+	public static void renderItem(ItemStack stack, int x, int y) {
 		drawItemStackWithText(stack, x, y, null);
 	}
 
-	public static void graphics.renderItem(ItemStack stack, int x, int y, boolean skytilsRarity) {
+	public static void renderItem(ItemStack stack, int x, int y, boolean skytilsRarity) {
 		drawItemStackWithText(stack, x, y, null, skytilsRarity);
 	}
 
@@ -580,8 +580,8 @@ public class Utils {
 		return slot;
 	}
 
-	public static void graphics.blit(float x, float y, float width, float height) {
-		graphics.blit(x, y, width, height, 0, 1, 0, 1);
+	public static void blit(float x, float y, float width, float height) {
+		blit(x, y, width, height, 0, 1, 0, 1);
 	}
 
 	public static void drawPvSideButton(
@@ -644,20 +644,20 @@ public class Utils {
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 
-		graphics.blit(x, y, pressed ? 32 : 28, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
+		blit(x, y, pressed ? 32 : 28, 28, uMin, uMax, vMin, vMax, GL11.GL_NEAREST);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
-		graphics.renderItem(itemStack, x + 8, y + 7);
+		renderItem(itemStack, x + 8, y + 7);
 		if (mouseY > y && mouseX > x && mouseY < y + 28 && mouseX < x + 28) {
 			guiProfileViewer.tooltipToDisplay = Collections.singletonList(itemStack.getName().getString());
 		}
 	}
 
-	public static void graphics.blit(float x, float y, float width, float height, int filter) {
-		graphics.blit(x, y, width, height, 0, 1, 0, 1, filter);
+	public static void blit(float x, float y, float width, float height, int filter) {
+		blit(x, y, width, height, 0, 1, 0, 1, filter);
 	}
 
-	public static void graphics.blit(
+	public static void blit(
 		float x,
 		float y,
 		float width,
@@ -667,7 +667,7 @@ public class Utils {
 		float vMin,
 		float vMax
 	) {
-		graphics.blit(x, y, width, height, uMin, uMax, vMin, vMax, GL11.GL_LINEAR);
+		blit(x, y, width, height, uMin, uMax, vMin, vMax, GL11.GL_LINEAR);
 	}
 
 	public static String cleanColour(String in) {
@@ -856,7 +856,7 @@ public class Utils {
 		return sb.toString();
 	}
 
-	public static void graphics.blit(
+	public static void blit(
 		float x,
 		float y,
 		float width,
