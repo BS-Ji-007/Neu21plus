@@ -512,10 +512,6 @@ public class Utils {
 		com.mojang.blaze3d.systems.RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
 		setupGuiTransform(x, y, ibakedmodel.isGui3d());
-		ibakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(
-			ibakedmodel,
-			ItemCameraTransforms.TransformType.GUI
-		);
 		itemRender.renderItem(stack, ibakedmodel);
 		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
 		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();

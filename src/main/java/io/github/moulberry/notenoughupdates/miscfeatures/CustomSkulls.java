@@ -225,7 +225,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 
 	protected IBakedModel bakeModel(
 		ModelBlock modelBlockIn,
-		net.minecraftforge.client.model.ITransformation modelRotationIn,
+		ModelRotation modelRotationIn,
 		boolean uvLocked
 	) {
 		TextureAtlasSprite textureatlassprite = this.sprites.get(new ResourceLocation(
@@ -243,8 +243,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 					modelBlockIn.resolveTextureName(blockpartface.texture)
 				));
 
-				if (blockpartface.cullFace == null || !net.minecraftforge.client.model.TRSRTransformation.isInteger(
-					modelRotationIn.getMatrix())) {
+				if (blockpartface.cullFace == null) {
 					simplebakedmodel$builder.addGeneralQuad(this.makeBakedQuad(
 						blockpart,
 						blockpartface,
@@ -265,30 +264,12 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 		return simplebakedmodel$builder.makeBakedModel();
 	}
 
-	private BakedQuad makeBakedQuad(
-		BlockPart p_177589_1_,
-		BlockPartFace p_177589_2_,
-		TextureAtlasSprite p_177589_3_,
-		EnumFacing p_177589_4_,
-		ModelRotation p_177589_5_,
-		boolean p_177589_6_
-	) {
-		return makeBakedQuad(
-			p_177589_1_,
-			p_177589_2_,
-			p_177589_3_,
-			p_177589_4_,
-			(net.minecraftforge.client.model.ITransformation) p_177589_5_,
-			p_177589_6_
-		);
-	}
-
 	protected BakedQuad makeBakedQuad(
 		BlockPart p_177589_1_,
 		BlockPartFace p_177589_2_,
 		TextureAtlasSprite p_177589_3_,
 		EnumFacing p_177589_4_,
-		net.minecraftforge.client.model.ITransformation p_177589_5_,
+		ModelRotation p_177589_5_,
 		boolean p_177589_6_
 	) {
 		return this.faceBakery.makeBakedQuad(
@@ -319,7 +300,7 @@ public class CustomSkulls implements IResourceManagerReloadListener {
 
 	private void renderQuads(WorldRenderer renderer, List<BakedQuad> quads, int color) {
 		for (BakedQuad quad : quads) {
-			net.minecraftforge.client.model.pipeline.LightUtil.renderQuadColor(renderer, quad, color);
+			renderer.putBulkData(null, null, quad);
 		}
 	}
 
