@@ -1,35 +1,34 @@
 package neubs
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.*
-import org.gradle.api.tasks.Exec
 import java.io.ByteArrayOutputStream
-import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun Project.setVersionFromEnvironment(): String {
-    val baos = ByteArrayOutputStream()
-    this@setVersionFromEnvironment.exec {
-        commandLine("git", "describe", "--tags", "--abbrev=0")
-        standardOutput = baos
-        isIgnoreExitValue = true
+    fun runCmd(timeoutSeconds: Long = 5, vararg cmd: String): String {
+        return try {
+            val pb = ProcessBuilder(*cmd).redirectErrorStream(true)
+            val proc = pb.start()
+            val output = proc.inputStream.bufferedReader().use { it.readText() }
+            proc.waitFor(timeoutSeconds, TimeUnit.SECONDS)
+            output.trim()
+        } catch (t: Throwable) {
+            ""
+        }
     }
-    val baseVersion = baos.toString().trim().ifEmpty { "2.1.1" }
-    
+
+    val baseVersion = runCmd(5, "git", "describe", "--tags", "--abbrev=0").ifEmpty { "2.1.1" }
+
     val buildExtra = mutableListOf<String>()
     val buildVersion = properties["BUILD_VERSION"] as? String
-    if (buildVersion != null) buildExtra.add(buildVersion)
+    if (!buildVersion.isNullOrEmpty()) buildExtra.add(buildVersion)
     if (System.getenv("CI") == "true") buildExtra.add("ci")
 
-    val stdout = ByteArrayOutputStream()
-    this.exec {
-        commandLine("git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
-        isIgnoreExitValue = true
-    }
-    val shortHash = stdout.toString().trim()
-    if (shortHash.isNotEmpty()) {
-        buildExtra.add(shortHash)
-    }
+    val shortHash = runCmd(5, "git", "rev-parse", "--short", "HEAD")
+    if (shortHash.isNotEmpty()) buildExtra.add(shortHash)
+
+    val gitStatus = runCmd(5, "git", "status", "--porcelain")
+    if (gitStatus.isNotEmpty()) buildExtra.add("dirty")
 
     version = baseVersion + (if (buildExtra.isEmpty()) "" else buildExtra.joinToString(prefix = "+", separator = "."))
     return baseVersion
