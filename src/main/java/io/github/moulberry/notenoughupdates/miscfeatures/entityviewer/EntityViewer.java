@@ -221,7 +221,7 @@ public class EntityViewer extends GuiScreen {
 	}
 
 	public static void renderEntity(EntityLivingBase entity, int posX, int posY, int mouseX, int mouseY) {
-		com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F, 1F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
 		int scale = 30;
 		float bottomOffset = 0F;

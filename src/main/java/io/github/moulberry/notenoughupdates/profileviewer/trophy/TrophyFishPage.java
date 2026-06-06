@@ -160,7 +160,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(TROPHY_FISH_TEXTURE);
 		Utils.graphics.blit(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.enableGUIStandardItemLighting();
 
@@ -213,19 +213,19 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 			TrophyFish.TrophyFishRarity highestRarity = getHighestRarity(trophyFishRarityIntegerMap).orElse(null);
 
 			if (highestRarity == TrophyFish.TrophyFishRarity.BRONZE) {
-				com.mojang.blaze3d.systems.RenderSystem.color(255 / 255f, 130 / 255f, 0 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(255 / 255f, 130 / 255f, 0 / 255f, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.SILVER) {
-				com.mojang.blaze3d.systems.RenderSystem.color(192 / 255f, 192 / 255f, 192 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(192 / 255f, 192 / 255f, 192 / 255f, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.GOLD) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 0.82F, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 0.82F, 0, 1);
 			}
 			if (highestRarity == TrophyFish.TrophyFishRarity.DIAMOND) {
-				com.mojang.blaze3d.systems.RenderSystem.color(31 / 255f, 216 / 255f, 241 / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(31 / 255f, 216 / 255f, 241 / 255f, 1);
 			}
 			Utils.graphics.blit(x - 2, y - 2, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Minecraft.getInstance().getRenderItem().renderItemIntoGUI(getItem(value.getName(), highestRarity), x, y);
 
 			if (mouseX >= x && mouseX < x + 24) {
@@ -250,7 +250,7 @@ public class TrophyFishPage extends GuiProfileViewerPage {
 					if (mouseY >= y && mouseY <= y + 24) {
 						tooltipToDisplay = new ArrayList<>();
 						tooltipToDisplay.addAll(getTooltip(difference, null));
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					}
 				}
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);

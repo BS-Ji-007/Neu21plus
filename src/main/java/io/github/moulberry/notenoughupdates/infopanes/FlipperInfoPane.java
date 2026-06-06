@@ -109,7 +109,7 @@ public class FlipperInfoPane extends InfoPane {
 	}
 
 	private void drawButton(int x, int y, boolean enabled) {
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture((enabled) ? on : off);
 		Utils.graphics.blit(x, y, 48, 16);
 	}

@@ -75,7 +75,7 @@ public class ArrowPagesUtils {
 			BUTTON_HEIGHT
 		);
 		Minecraft.getInstance().getTextureManager().bindTexture(resourcePacksTexture);
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 
 		if (currentPage != 0)
 			Utils.graphics.blit(

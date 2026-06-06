@@ -110,13 +110,13 @@ public class Panorama {
 			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
 			com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
-			com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			com.mojang.blaze3d.systems.RenderSystem.rotate(180F, 1.0F, 0.0F, 0.0F);
 			com.mojang.blaze3d.systems.RenderSystem.rotate(90, 0.0F, 0.0F, 1.0F);
 			com.mojang.blaze3d.systems.RenderSystem.rotate(19, 1.0F, 0.0F, 0.0F);
 			//com.mojang.blaze3d.systems.RenderSystem.rotate(tl.x, 0.0F, 0.0F, 1.0F);
 			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-			com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+			com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 			com.mojang.blaze3d.systems.RenderSystem.disableCull();
 			com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);

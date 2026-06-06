@@ -110,7 +110,7 @@ public abstract class MixinRenderItem {
 					float blue = (color & 0xFF) / 255f;
 					float alpha = ((color >> 24) & 0xFF) / 255f;
 
-					com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(red, green, blue, alpha);
 
 					com.mojang.blaze3d.systems.RenderSystem.scale(1 / 8f, 1 / 8f, 1 / 8f);
 					com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);
@@ -247,7 +247,7 @@ public abstract class MixinRenderItem {
 				float barX = 13.0f - damageOverride * 13.0f;
 				int col = (int) Math.round(255.0D - damageOverride * 255.0D);
 				com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
-				com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+				com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				Tessellator tessellator = Tessellator.getInstance();
 				WorldRenderer worldrenderer = tessellator.getWorldRenderer();

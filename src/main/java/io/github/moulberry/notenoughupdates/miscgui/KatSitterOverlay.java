@@ -90,7 +90,7 @@ public class KatSitterOverlay {
 			currentWidth
 		) : currentWidth);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F, 1F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		Utils.drawStringScaled(currentText, left, ((AccessorContainerScreen) gui).getGuiTop() + 25, false, 0xFFD700, 1F);
 		if (upgradedLevel != null)
 			Utils.drawStringScaled(

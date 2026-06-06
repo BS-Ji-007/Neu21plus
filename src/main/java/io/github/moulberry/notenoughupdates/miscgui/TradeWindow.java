@@ -553,7 +553,7 @@ public class TradeWindow {
 			}
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.graphics.blit(guiLeft, guiTop, xSize, ySize, 0, 176 / 256f, 0, 204 / 256f, GL11.GL_NEAREST);
 
@@ -732,7 +732,7 @@ public class TradeWindow {
 				}
 			}
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.graphics.blit(guiLeft + 95, guiTop + 91, 51, 14,
 				0, 51 / 256f, ySize / 256f, (ySize + 14) / 256f, GL11.GL_NEAREST
@@ -761,7 +761,7 @@ public class TradeWindow {
 
 			if (currentTime % 400 > 200 && theirTradeChangesMillis[i] != null && theirTradeChangesMillis[i] > 0) {
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 200);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(location);
 				Utils.graphics.blit(guiLeft + 96 + x * 18, guiTop + 15 + y * 18, 16, 16,
 					51 / 256f, 67 / 256f, 204 / 256f, 220 / 256f, GL11.GL_NEAREST
@@ -817,7 +817,7 @@ public class TradeWindow {
 			}
 
 			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.graphics.blit(guiLeft - 80 - 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
@@ -853,7 +853,7 @@ public class TradeWindow {
 
 						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 						drawStringShadow(
 							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft - 29 - 3,
@@ -880,7 +880,7 @@ public class TradeWindow {
 				}
 			}
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
 			Utils.graphics.blit(guiLeft + xSize + 3, guiTop, 80, 106,
 				176 / 256f, 1, 0, 106 / 256f, GL11.GL_NEAREST
@@ -916,7 +916,7 @@ public class TradeWindow {
 
 						com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 						com.mojang.blaze3d.systems.RenderSystem.disableBlend();
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 						drawStringShadow(
 							ChatFormatting.GOLD.toString() + ChatFormatting.BOLD + StringUtils.formatNumber(entry.getKey()),
 							guiLeft + xSize + 3 + 51,
@@ -945,7 +945,7 @@ public class TradeWindow {
 		boolean button2 = NotEnoughUpdates.INSTANCE.config.tradeMenu.customTradePrices;
 		boolean button3 = NotEnoughUpdates.INSTANCE.config.tradeMenu.enableCustomTrade;
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(location);
 		Utils.graphics.blit(guiLeft + xSize + 3, guiTop + ySize - 19, 17, 17,
 			(button3 ? 17 : 0) / 256f, (button3 ? 34 : 17) / 256f, 218 / 256f, 235 / 256f, GL11.GL_NEAREST

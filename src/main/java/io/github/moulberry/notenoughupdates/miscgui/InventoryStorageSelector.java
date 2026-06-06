@@ -289,7 +289,7 @@ public class InventoryStorageSelector {
 				GL11.glDepthMask(false);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1,
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1,
 					NotEnoughUpdates.INSTANCE.config.storageGUI.backpackOpacity / 100f
 				);
 				Utils.graphics.blit(startX, startY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
@@ -311,7 +311,7 @@ public class InventoryStorageSelector {
 
 						int paneType = StorageOverlay.getPaneType(stack, i, isPaneCache);
 						if (paneType > 0) {
-							com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+							com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 							Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
 							com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
@@ -329,7 +329,7 @@ public class InventoryStorageSelector {
 									int g = (rgb >> 8) & 0xFF;
 									int b = rgb & 0xFF;
 									Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-									com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+									com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r / 255f, g / 255f, b / 255f, a / 255f);
 									Utils.graphics.blit(itemX - 1, itemY - 1, 18, 18,
 										startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
 									);
@@ -385,7 +385,7 @@ public class InventoryStorageSelector {
 										int r = (rgb >> 16) & 0xFF;
 										int g = (rgb >> 8) & 0xFF;
 										int b = rgb & 0xFF;
-										com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+										com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r / 255f, g / 255f, b / 255f, a / 255f);
 
 										com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 										com.mojang.blaze3d.systems.RenderSystem.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
@@ -449,7 +449,7 @@ public class InventoryStorageSelector {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(ICONS);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(left + 1, top,
 			22, 22, 0, 22 / 64f, 0, 22 / 64f, GL11.GL_NEAREST
 		);

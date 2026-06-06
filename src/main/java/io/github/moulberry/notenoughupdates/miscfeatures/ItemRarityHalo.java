@@ -238,7 +238,7 @@ public class ItemRarityHalo {
 
 			com.mojang.blaze3d.systems.RenderSystem.bindTexture(itemHaloTexMap.get(stack));
 			Color color = Utils.getPrimaryColour(stack.getName().getString());
-			//com.mojang.blaze3d.systems.RenderSystem.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f,
+			//com.mojang.blaze3d.systems.RenderSystem.setShaderColor(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f,
 			//        NotEnoughUpdates.INSTANCE.manager.config.itemHighlightOpacity.value.floatValue()/255f);
 			Utils.graphics.blit(x, y, 16, 16,
 				0, 1, 1, 0, GL11.GL_NEAREST
@@ -294,10 +294,10 @@ public class ItemRarityHalo {
 	}
 
 	private static void executeShader(Shader shader) {
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.disableDepth();
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.disableFog();
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();

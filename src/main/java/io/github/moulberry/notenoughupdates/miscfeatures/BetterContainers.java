@@ -104,13 +104,13 @@ public class BetterContainers {
 			if (texture != null && loaded) {
 				lastRenderMillis = currentMillis;
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				textureManager.loadTexture(rl, texture);
 				textureManager.bindTexture(rl);
 				return;
 			}
 		} else if (currentMillis - lastRenderMillis < 200 && texture != null) {
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			textureManager.loadTexture(rl, texture);
 			textureManager.bindTexture(rl);
 			return;

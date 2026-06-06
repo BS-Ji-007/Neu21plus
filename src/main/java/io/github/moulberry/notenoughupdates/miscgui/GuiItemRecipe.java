@@ -137,7 +137,7 @@ public class GuiItemRecipe extends Screen {
 	public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
 		NeuRecipe currentRecipe = getCurrentRecipe();
 
@@ -201,7 +201,7 @@ public class GuiItemRecipe extends Screen {
 				int x = guiLeft + 123;
 				int y = guiTop + 105;
 				Minecraft.getInstance().getTextureManager().bindTexture(EDITOR);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(x - 1, y - 1, 18, 18,
 					0 / 256f, 18 / 256f, 0 / 256f, 18 / 256f, GL11.GL_NEAREST
 				);

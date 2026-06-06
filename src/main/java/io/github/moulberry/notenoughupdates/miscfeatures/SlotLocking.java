@@ -430,7 +430,7 @@ public class SlotLocking {
 	}
 
 	private void drawLinkArrow(int x1, int y1, int x2, int y2) {
-		com.mojang.blaze3d.systems.RenderSystem.color(0x33 / 255f, 0xee / 255f, 0xdd / 255f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(0x33 / 255f, 0xee / 255f, 0xdd / 255f, 1f);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		RenderHelper.disableStandardItemLighting();
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
@@ -540,7 +540,7 @@ public class SlotLocking {
 			if (locked.locked) {
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 400);
 				Minecraft.getInstance().getTextureManager().bindTexture(LOCK);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.5f);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 0.5f);
 				com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 				RenderUtils.graphics.blit(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, 0, 1, 0, 1, GL11.GL_NEAREST);
 				com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
@@ -571,7 +571,7 @@ public class SlotLocking {
 
 				if (hoverOverSlot || slot.getSlotIndex() >= 9) {
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 0.7f);
 					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 					RenderUtils.graphics.blit(
 						slot.xDisplayPosition,
@@ -622,7 +622,7 @@ public class SlotLocking {
 					}
 
 					Minecraft.getInstance().getTextureManager().bindTexture(BOUND);
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.7f);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 0.7f);
 					com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 					RenderUtils.graphics.blit(
 						boundSlot.xDisplayPosition,

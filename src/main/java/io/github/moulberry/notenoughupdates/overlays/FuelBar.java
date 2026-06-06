@@ -143,7 +143,7 @@ public class FuelBar {
 		com.mojang.blaze3d.systems.RenderSystem.translate(x, y, 0);
 
 		Color c = Color.getHSBColor(148 / 360f * completed - 20 / 360f, 0.9f, 1 - 0.5f * completed);
-		com.mojang.blaze3d.systems.RenderSystem.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, 1);
 
 		Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 

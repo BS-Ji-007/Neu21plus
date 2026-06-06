@@ -437,7 +437,7 @@ public class StorageOverlay extends GuiElement {
 
 		//Gui
 		Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(0, 0, sizeX, 10, 0, sizeX / 600f, 0, 10 / 400f, GL11.GL_NEAREST);
 		Utils.graphics.blit(0, 10, sizeX, storageViewSize - 20, 0, sizeX / 600f, 10 / 400f, 94 / 400f, GL11.GL_NEAREST);
 		Utils.graphics.blit(
@@ -500,7 +500,7 @@ public class StorageOverlay extends GuiElement {
 				com.mojang.blaze3d.systems.RenderSystem.translate(0, startY, 107.0001f);
 				framebuffer.bindFramebufferTexture();
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 				com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 				com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0F);
@@ -580,7 +580,7 @@ public class StorageOverlay extends GuiElement {
 						if (stack != null) {
 							int paneType = getPaneType(stack, k, isPaneCache);
 							if (paneType > 0) {
-								com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+								com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 								Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
 								com.mojang.blaze3d.systems.RenderSystem.enableAlpha();
 
@@ -598,7 +598,7 @@ public class StorageOverlay extends GuiElement {
 										int g = (rgb >> 8) & 0xFF;
 										int b = rgb & 0xFF;
 										Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-										com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+										com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r / 255f, g / 255f, b / 255f, a / 255f);
 										Utils.graphics.blit(
 											itemX - 1,
 											itemY - 1,
@@ -705,7 +705,7 @@ public class StorageOverlay extends GuiElement {
 										}
 									}
 									com.mojang.blaze3d.systems.RenderSystem.disableDepth();
-									com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+									com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 									com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_SMOOTH);
 									tessellator.draw();
 									com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_FLAT);
@@ -818,7 +818,7 @@ public class StorageOverlay extends GuiElement {
 
 			if (page == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				int h = 18 * 3;
 
 				Utils.graphics.blit(
@@ -846,7 +846,7 @@ public class StorageOverlay extends GuiElement {
 				}
 			} else if (page.rows <= 0) {
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				int h = 18 * 3;
 
 				Utils.graphics.blit(
@@ -902,7 +902,7 @@ public class StorageOverlay extends GuiElement {
 								int g = (rgb >> 8) & 0xFF;
 								int b = rgb & 0xFF;
 								Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_PANE_CTM_TEXTURE);
-								com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+								com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r / 255f, g / 255f, b / 255f, a / 255f);
 								com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 110);
 								Utils.graphics.blit(itemX - 1, itemY - 1, 18, 18,
 									startCTMX / 227f, (startCTMX + 18) / 227f, startCTMY / 75f, (startCTMY + 18) / 75f, GL11.GL_NEAREST
@@ -952,7 +952,7 @@ public class StorageOverlay extends GuiElement {
 											int r = (rgb >> 16) & 0xFF;
 											int g = (rgb >> 8) & 0xFF;
 											int b = rgb & 0xFF;
-											com.mojang.blaze3d.systems.RenderSystem.color(r / 255f, g / 255f, b / 255f, a / 255f);
+											com.mojang.blaze3d.systems.RenderSystem.setShaderColor(r / 255f, g / 255f, b / 255f, a / 255f);
 
 											com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 											com.mojang.blaze3d.systems.RenderSystem.translate(itemX - 1 + 9, itemY - 1 + 9, 10);
@@ -989,7 +989,7 @@ public class StorageOverlay extends GuiElement {
 								if (hasConnection) {
 									page.shouldDarkenIfNotSelected[k] = false;
 
-									com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+									com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 									com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, 10);
 									Gui.drawRect(itemX - 1, itemY - 1, itemX + 17, itemY + 17, 0x01000000);
 									com.mojang.blaze3d.systems.RenderSystem.translate(0, 0, -10);
@@ -1001,7 +1001,7 @@ public class StorageOverlay extends GuiElement {
 				}
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(
 					storageX,
 					storageY,
@@ -1155,7 +1155,7 @@ public class StorageOverlay extends GuiElement {
 								loc = NOT_RICKROLL_SEQ[NOT_RICKROLL_SEQ.length * 2 - rollIndex - 1];
 							}
 							Minecraft.getInstance().getTextureManager().bindTexture(loc);
-							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 							Utils.graphics.blit(storageX, storageY, storageW, storageH, GL11.GL_LINEAR);
 						}
 					} else {
@@ -1413,7 +1413,7 @@ public class StorageOverlay extends GuiElement {
 
 		//Buttons
 		Minecraft.getInstance().getTextureManager().bindTexture(STORAGE_ICONS_TEXTURE);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		for (int i = 0; i < 10; i++) {
 			int buttonX = 388 + (i % 5) * 18;
 			int buttonY = getStorageViewSize() + 35 + (i / 5) * 18;
@@ -1579,7 +1579,7 @@ public class StorageOverlay extends GuiElement {
 
 		if (!StorageManager.getInstance().onStorageMenu) {
 			Minecraft.getInstance().getTextureManager().bindTexture(storageTexture);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(
 				171 - 36,
 				41 + storageViewSize,
@@ -1622,7 +1622,7 @@ public class StorageOverlay extends GuiElement {
 				Utils.drawGradientRect(mouseX + 2, mouseY + 2, mouseX + 174, mouseY + 12 + 18 * rows, 0xc0101010, 0xd0101010);
 
 				Minecraft.getInstance().getTextureManager().bindTexture(storagePreviewTexture);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(mouseX, mouseY, 176, 7, 0, 1, 0, 7 / 32f, GL11.GL_NEAREST);
 				for (int i = 0; i < rows; i++) {
 					Utils.graphics.blit(mouseX, mouseY + 7 + 18 * i, 176, 18, 0, 1, 7 / 32f, 25 / 32f, GL11.GL_NEAREST);
@@ -2262,7 +2262,7 @@ public class StorageOverlay extends GuiElement {
 			com.mojang.blaze3d.systems.RenderSystem.translate(f, 0.0F, 0.0F);
 			com.mojang.blaze3d.systems.RenderSystem.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
 
-			com.mojang.blaze3d.systems.RenderSystem.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, 16, 16, 0, 1 / 16f, 0, 1 / 16f, GL11.GL_NEAREST);
 
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();
@@ -2271,7 +2271,7 @@ public class StorageOverlay extends GuiElement {
 			com.mojang.blaze3d.systems.RenderSystem.translate(-f1, 0.0F, 0.0F);
 			com.mojang.blaze3d.systems.RenderSystem.rotate(10.0F, 0.0F, 0.0F, 1.0F);
 
-			com.mojang.blaze3d.systems.RenderSystem.color(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(0x80 / 255f, 0x40 / 255f, 0xCC / 255f, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, 16, 16, 0, 1 / 16f, 0, 1 / 16f, GL11.GL_NEAREST);
 
 			com.mojang.blaze3d.systems.RenderSystem.popMatrix();

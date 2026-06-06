@@ -87,7 +87,7 @@ public class GuiElementSlider extends GuiElement {
 		float sliderAmount = Math.max(0, Math.min(1, (value - minValue) / (maxValue - minValue)));
 		int sliderAmountI = (int) (width * sliderAmount);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_cap);
 		Utils.graphics.blit(x, y, 4, HEIGHT, GL11.GL_NEAREST);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_off_cap);

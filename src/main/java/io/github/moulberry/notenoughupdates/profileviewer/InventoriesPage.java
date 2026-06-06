@@ -435,7 +435,7 @@ public class InventoriesPage extends GuiProfileViewerPage {
 
 		int inventoryRows = inventory.length;
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int invSizeY = inventoryRows * 18 + 17 + 7;

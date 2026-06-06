@@ -333,7 +333,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(width / 2 - 100, topY - 1, 203, 145, 0, 203 / 512f, 0, 145 / 256f, GL11.GL_NEAREST);
 
 		if (currentGuiType() == GuiType.AUCTION_HOUSE) {
@@ -341,15 +341,15 @@ public class SearchOverlayScreen extends GuiEditSign {
 			Utils.graphics.blit(width / 2 + 105, topY + 27, 105, 13, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().bindTexture(STAR);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			int stars = atLeast && selectedStars > 0 ? 10 : selectedStars;
 			for (int i = 0; i < stars; i++) {
 				if (i >= 5) {
 					Minecraft.getInstance().getTextureManager().bindTexture(MASTER_STAR);
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				}
 				if (i >= selectedStars) {
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 0.3f);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 0.3f);
 				}
 				Utils.graphics.blit(width / 2 + 108 + 10 * i, topY + 29, 9, 10, GL11.GL_NEAREST);
 			}
@@ -394,7 +394,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(obj, false, true);
 					if (i == tabCompletionIndex) {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE_TAB_COMPLETED);
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 						Utils.graphics.blit(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,
@@ -408,7 +408,7 @@ public class SearchOverlayScreen extends GuiEditSign {
 						);
 					} else {
 						Minecraft.getInstance().getTextureManager().bindTexture(SEARCH_OVERLAY_TEXTURE);
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 						Utils.graphics.blit(
 							width / 2 - 96 + 1,
 							topY + 30 + num * 22 + 1,

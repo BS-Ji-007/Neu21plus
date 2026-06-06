@@ -48,7 +48,7 @@ public class GuiOptionEditorBlocked extends GuiOptionEditor {
 		// Depress original option
 		Gui.drawRect(x, y, x + width, y + getHeight(), 0x80000000);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		mc.getTextureManager().bindTexture(blockedTexture);
 
 		float iconWidth = getHeight() * 96F / 64;
@@ -59,7 +59,7 @@ public class GuiOptionEditorBlocked extends GuiOptionEditor {
 			x + iconWidth,y + getHeight() / 2F - mc.font.FONT_HEIGHT / 2F,
 			true, (int) (width - iconWidth), 0xFFFF4444
 		);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 
 	@Override

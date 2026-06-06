@@ -82,7 +82,7 @@ public class MixinLayerCustomHead {
 				float blue = (color & 0xFF) / 255f;
 				float alpha = ((color >> 24) & 0xFF) / 255f;
 
-				com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(red, green, blue, alpha);
 
 				com.mojang.blaze3d.systems.RenderSystem.scale(1 / 8f, 1 / 8f, 1 / 8f);
 				com.mojang.blaze3d.systems.RenderSystem.matrixMode(GL11.GL_MODELVIEW);

@@ -330,7 +330,7 @@ public class CustomItemEffects {
 							Minecraft.getInstance().font,
 							scaledResolution.getScaledWidth() / 2f, scaledResolution.getScaledHeight() / 2f + 10, true, 0
 						);
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					}
 				}
 			}
@@ -448,7 +448,7 @@ public class CustomItemEffects {
 
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 
 	public void buildersRulerText(RenderGameOverlayEvent.Post event, WorldClient world) {
@@ -551,7 +551,7 @@ public class CustomItemEffects {
 
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 	//ethermerge
 
@@ -1202,7 +1202,7 @@ public class CustomItemEffects {
 		if (event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 			com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
-			com.mojang.blaze3d.systems.RenderSystem.color(0.0F, 0.0F, 0.0F, 0.4F);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.4F);
 			com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 			com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 
@@ -1767,7 +1767,7 @@ public class CustomItemEffects {
 			renderModelBrightnessColorQuads(colour, ibakedmodel.getGeneralQuads());
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		com.mojang.blaze3d.systems.RenderSystem.translate(-x + d0, -y + d1, -z + d2);
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 	}
@@ -1798,7 +1798,7 @@ public class CustomItemEffects {
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-		com.mojang.blaze3d.systems.RenderSystem.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * alpha);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * alpha);
 
 		//vertical
 		worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
@@ -1814,7 +1814,7 @@ public class CustomItemEffects {
 		worldrenderer.pos(p_181561_0_.minX, p_181561_0_.maxY, p_181561_0_.minZ).endVertex();
 		tessellator.draw();
 
-		com.mojang.blaze3d.systems.RenderSystem.color(
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(
 			c.getRed() / 255f * 0.8f,
 			c.getGreen() / 255f * 0.8f,
 			c.getBlue() / 255f * 0.8f,
@@ -1835,7 +1835,7 @@ public class CustomItemEffects {
 		worldrenderer.pos(p_181561_0_.maxX, p_181561_0_.minY, p_181561_0_.maxZ).endVertex();
 		tessellator.draw();
 
-		com.mojang.blaze3d.systems.RenderSystem.color(
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(
 			c.getRed() / 255f * 0.9f,
 			c.getGreen() / 255f * 0.9f,
 			c.getBlue() / 255f * 0.9f,
@@ -1863,7 +1863,7 @@ public class CustomItemEffects {
 		String special
 	) {
 		Color c = new Color(SpecialColour.specialToChromaRGB(special), true);
-		com.mojang.blaze3d.systems.RenderSystem.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * alpha);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f * alpha);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -1917,7 +1917,7 @@ public class CustomItemEffects {
 		Color c = new Color(SpecialColour.specialToChromaRGB(special), true);
 		float newAlpha = c.getAlpha() / 255f * alpha;
 		if (newAlpha > 1) newAlpha = 1;
-		com.mojang.blaze3d.systems.RenderSystem.color(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, newAlpha);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, newAlpha);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(770, 771, 1, 0);

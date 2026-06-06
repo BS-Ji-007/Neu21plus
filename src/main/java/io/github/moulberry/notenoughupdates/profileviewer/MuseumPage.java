@@ -265,7 +265,7 @@ public class MuseumPage extends GuiProfileViewerPage {
 			);
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 		int inventoryRows = 4;

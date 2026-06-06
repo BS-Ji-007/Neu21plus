@@ -135,7 +135,7 @@ public class GuiEnchantColour extends Screen {
 		int yIndex = 0;
 		for (String str : enchantColours) {
 			Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft, guiTop + 21 + yIndex * 25, xSize, 25, 0, 1, 21 / 78f, 46 / 78f, GL11.GL_NEAREST);
 
 			List<String> colourOps = splitter.splitToList(str);
@@ -220,7 +220,7 @@ public class GuiEnchantColour extends Screen {
 		}
 		renderSideBar(mouseX, mouseY, partialTicks);
 		List<String> tooltipToDisplay = null;
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.graphics.blit(guiLeft + xSize + 3, guiTopSidebar - 18, 16, 16, GL11.GL_NEAREST);
 		if (maxedBookFound == 0) {
@@ -346,7 +346,7 @@ public class GuiEnchantColour extends Screen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(custom_ench_colour);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(
 			guiLeft + xSize + 3,
 			guiTopSidebar + 2,

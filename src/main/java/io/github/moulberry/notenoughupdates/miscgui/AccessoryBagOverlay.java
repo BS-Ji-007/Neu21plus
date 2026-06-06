@@ -308,7 +308,7 @@ public class AccessoryBagOverlay {
 
 		statsPagesTotal = (int) Math.ceil(statPairs.size() / 8.0);
 		if (statPairs.size() > 9) {
-			com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 			ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, statsPageActive, statsPagesTotal);
 		}
 	}
@@ -342,7 +342,7 @@ public class AccessoryBagOverlay {
 
 			dupePagesTotal = (int) Math.ceil(sortedDupes.size() / 8.0);
 			if (sortedDupes.size() > 9) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 				ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, dupePageActive, dupePagesTotal);
 			}
 		}
@@ -511,7 +511,7 @@ public class AccessoryBagOverlay {
 
 			missingPagesTotal = (int) Math.ceil(missing.size() / 8.0);
 			if (missing.size() > 9) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 				ArrowPagesUtils.onDraw(x, y, new int[]{60, 110}, missingPageActive, missingPagesTotal);
 			}
 
@@ -639,7 +639,7 @@ public class AccessoryBagOverlay {
 						}
 
 						if (secondInt > pagesVisited.size()) {
-							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 							Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
@@ -671,7 +671,7 @@ public class AccessoryBagOverlay {
 
 					for (int i = 0; i <= Tabs.values().length - 1; i++) {
 						if (i != currentTab.ordinal()) {
-							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 							Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 							Utils.graphics.blit(guiLeft + xSize + 168, guiTop + 20 * i, 25, 22,
 								168 / 196f, 193f / 196f, 0f, 22 / 128f, GL11.GL_NEAREST
@@ -681,7 +681,7 @@ public class AccessoryBagOverlay {
 						}
 					}
 
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 					Utils.graphics.blit(guiLeft + xSize + 4, guiTop, 168, 128, 0, 168 / 196f, 0, 1f, GL11.GL_NEAREST);
 
@@ -916,7 +916,7 @@ public class AccessoryBagOverlay {
 	}
 
 	public static void renderButton(ItemStack stack, int x, int y, List<String> tooltip) {
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(accessory_bag_overlay);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		Utils.graphics.blit(x, y, 17, 17, 168f / 196f, 184f / 196f, 112f / 128f, 1f, GL11.GL_NEAREST); // slot

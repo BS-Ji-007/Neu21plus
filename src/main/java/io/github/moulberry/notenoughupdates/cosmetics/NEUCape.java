@@ -387,7 +387,7 @@ public class NEUCape {
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 		com.mojang.blaze3d.systems.RenderSystem.disableCull();
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 		if (shaderName.equals("mcworld_cape")) {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
@@ -1186,7 +1186,7 @@ public class NEUCape {
 			com.mojang.blaze3d.systems.RenderSystem.disableDepth();
 			com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 			Tessellator tessellator = Tessellator.getInstance();
 			WorldRenderer worldrenderer = tessellator.getWorldRenderer();

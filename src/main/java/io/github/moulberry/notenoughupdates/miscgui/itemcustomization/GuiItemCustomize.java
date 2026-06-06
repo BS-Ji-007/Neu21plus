@@ -311,7 +311,7 @@ public class GuiItemCustomize extends Screen {
 		int yTopText = yTop;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		int helpX = xCenter + textFieldRename.getWidth() / 2 - 5 + 10;
 		Utils.graphics.blit(helpX, yTop, 20, 20, GL11.GL_LINEAR);
 
@@ -321,7 +321,7 @@ public class GuiItemCustomize extends Screen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(ItemCustomizationUtils.RESET);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		int resetX = xCenter + textFieldRename.getWidth() / 2 - 15;
 		Utils.graphics.blit(resetX, yTop + 5, 10, 11, GL11.GL_LINEAR);
 
@@ -407,7 +407,7 @@ public class GuiItemCustomize extends Screen {
 		List<String> animatedSkullHelp = ItemCustomizeManager.getAnimatedSkullHelp(textFieldCustomItem.getText());
 		if (animatedSkullHelp != null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.help);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			int skullHelpX = xCenter + textFieldRename.getWidth() / 2;
 			Utils.graphics.blit(skullHelpX, yTop -1, 20, 20, GL11.GL_LINEAR);
 
@@ -480,7 +480,7 @@ public class GuiItemCustomize extends Screen {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(PLUS);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderUtils.graphics.blit(xCenter + 90 - 12, yTop + 4, 10, 10, GL11.GL_NEAREST);
 
 		int xOffset = xCenter - textFieldCustomItem.getWidth() / 2 - 10 + 11;

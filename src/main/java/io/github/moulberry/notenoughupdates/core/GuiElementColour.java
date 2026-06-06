@@ -181,7 +181,7 @@ public class GuiElementColour extends GuiElement {
 				new DynamicTexture(bufferedImageValue)
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarValueLocation);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderUtils.graphics.blit(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
@@ -190,7 +190,7 @@ public class GuiElementColour extends GuiElement {
 			opacityOffset = 15;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar_alpha);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
 			Minecraft.getInstance().getTextureManager().loadTexture(
@@ -198,7 +198,7 @@ public class GuiElementColour extends GuiElement {
 				new DynamicTexture(bufferedImageOpacity)
 			);
 			Minecraft.getInstance().getTextureManager().bindTexture(colourPickerBarOpacityLocation);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 		}
 
@@ -220,7 +220,7 @@ public class GuiElementColour extends GuiElement {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_bar);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		if (valueSlider) RenderUtils.graphics.blit(x + 5 + 64 + 5, y + 5, 10, 64, GL11.GL_NEAREST);
 		if (opacitySlider) RenderUtils.graphics.blit(x + 5 + 64 + 5 + valueOffset, y + 5, 10, 64, GL11.GL_NEAREST);
 
@@ -247,11 +247,11 @@ public class GuiElementColour extends GuiElement {
 
 		Minecraft.getInstance().getTextureManager().loadTexture(colourPickerLocation, new DynamicTexture(bufferedImage));
 		Minecraft.getInstance().getTextureManager().bindTexture(colourPickerLocation);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderUtils.graphics.blit(x + 1, y + 1, 72, 72, GL11.GL_LINEAR);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(colour_selector_dot);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderUtils.graphics.blit(x + 5 + 32 + selx - 4, y + 5 + 32 + sely - 4, 8, 8, GL11.GL_NEAREST);
 
 		TextRenderUtils.drawStringCenteredScaledMaxWidth(ChatFormatting.GRAY.toString() + Math.round(hsv[2] * 100) + "",

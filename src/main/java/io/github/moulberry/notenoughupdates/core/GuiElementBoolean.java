@@ -62,7 +62,7 @@ public class GuiElementBoolean extends GuiElement {
 
 	@Override
 	public void render() {
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiTextures.BAR);
 		RenderUtils.graphics.blit(x, y, xSize, ySize);
 

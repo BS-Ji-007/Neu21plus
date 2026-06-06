@@ -250,7 +250,7 @@ public abstract class MixinContainerScreen extends GuiScreen {
 		}
 	}
 
-	@Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/com.mojang.blaze3d.systems.RenderSystem;color(FFFF)V", ordinal = 1))
+	@Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/com.mojang.blaze3d.systems.RenderSystem.setShaderColor(FFFF)V", ordinal = 1))
 	private void drawBackground(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
 		new ContainerScreenBackgroundDrawnEvent(((ContainerScreen) (Object) this), partialTicks).post();
 	}

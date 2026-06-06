@@ -85,7 +85,7 @@ public class BingoPage extends GuiProfileViewerPage {
 		Minecraft.getInstance().getTextureManager().bindTexture(BINGO_GUI_TEXTURE);
 		Utils.graphics.blit(guiLeft, guiTop, 431, 202, GL11.GL_NEAREST);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 
 		int row = 0;

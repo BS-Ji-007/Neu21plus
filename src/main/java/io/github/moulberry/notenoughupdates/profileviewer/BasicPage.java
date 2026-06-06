@@ -560,7 +560,7 @@ public class BasicPage extends GuiProfileViewerPage {
 			}
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		SkyblockProfiles.SkyblockProfile currentProfile = profile.getProfile(profileName);
 		JsonObject petsInfo = currentProfile.getPetsInfo();
 		if (petsInfo != null) {

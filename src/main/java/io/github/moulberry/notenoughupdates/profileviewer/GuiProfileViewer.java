@@ -340,7 +340,7 @@ public class GuiProfileViewer extends GuiScreen {
 				);
 
 				if (selectedProfile != null && selectedProfile.getGamemode() != null) {
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					ResourceLocation gamemodeIcon = gamemodeToIcon.getOrDefault(
 						selectedProfile.getGamemode(),
 						gamemodeIconUnknown
@@ -415,7 +415,7 @@ public class GuiProfileViewer extends GuiScreen {
 						);
 
 						if (selectedProfile != null && selectedProfile.getGamemode() != null) {
-							com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+							com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 							ResourceLocation gamemodeIcon = gamemodeToIcon.getOrDefault(
 								selectedProfile.getGamemode(),
 								gamemodeIconUnknown
@@ -434,7 +434,7 @@ public class GuiProfileViewer extends GuiScreen {
 			}
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 		if (pages.containsKey(page)) {
 			try {
@@ -1095,7 +1095,7 @@ public class GuiProfileViewer extends GuiScreen {
 
 		completed = Math.round(completed / 0.05f) * 0.05f;
 		float notCompleted = 1 - completed;
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		float width;
 
 		if (completed < 0.5f) {
@@ -1275,7 +1275,7 @@ public class GuiProfileViewer extends GuiScreen {
 		float vMax = (height - y - blurHeight) / (float) height;
 
 		blurOutputVert.bindFramebufferTexture();
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		//Utils.setScreen(width*f, height*f, f);
 		Utils.graphics.blit(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		//Utils.setScreen(width, height, f);

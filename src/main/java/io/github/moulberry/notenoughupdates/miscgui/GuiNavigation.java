@@ -96,7 +96,7 @@ public class GuiNavigation extends Screen {
 				int baseX = guiLeft + LIST_START_X;
 				int baseY = guiTop + LIST_START_Y + LIST_OFFSET_Y * i;
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1F, 1F, 1F);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1F, 1F, 1F);
 				blit(
 					baseX,
 					baseY,

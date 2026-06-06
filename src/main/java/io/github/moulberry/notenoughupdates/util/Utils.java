@@ -510,10 +510,10 @@ public class Utils {
 		com.mojang.blaze3d.systems.RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		setupGuiTransform(x, y, ibakedmodel.isGui3d());
 		itemRender.renderItem(stack, ibakedmodel);
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.disableRescaleNormal();
 		com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
@@ -1112,7 +1112,7 @@ public class Utils {
 			}
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		drawStringCenteredScaledMaxWidth(str, x, y + 4, false, maxLength, 421075);
 	}
 
@@ -1137,7 +1137,7 @@ public class Utils {
 			}
 
 			int secondLen = font.getStringWidth(second);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			font.graphics.drawString(first, x, y, 4210752, false);
 			for (int xOff = -2; xOff <= 2; xOff++) {
 				for (int yOff = -2; yOff <= 2; yOff++) {
@@ -1150,7 +1150,7 @@ public class Utils {
 				}
 			}
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			font.graphics.drawString(second, x + length - secondLen, y, 4210752, false);
 		}
 	}
@@ -1507,7 +1507,7 @@ public class Utils {
 		float f7 = (float) (endColor & 255) / 255.0F;
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_SMOOTH);
 		Tessellator tessellator = Tessellator.getInstance();
@@ -1535,7 +1535,7 @@ public class Utils {
 		float f7 = (float) (endColor & 255) / 255.0F;
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_SMOOTH);
 		Tessellator tessellator = Tessellator.getInstance();
@@ -1969,7 +1969,7 @@ public class Utils {
 
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		com.mojang.blaze3d.systems.RenderSystem.shadeModel(GL11.GL_SMOOTH);
 
@@ -2008,7 +2008,7 @@ public class Utils {
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
-		com.mojang.blaze3d.systems.RenderSystem.color(f, f1, f2, f3);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(f, f1, f2, f3);
 		worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 		worldrenderer.pos(left, bottom, 0.0D).endVertex();
 		worldrenderer.pos(right, bottom, 0.0D).endVertex();
@@ -2044,7 +2044,7 @@ public class Utils {
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-		com.mojang.blaze3d.systems.RenderSystem.color(g, h, j, f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(g, h, j, f);
 		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 		worldRenderer.pos(left, bottom, 0.0).endVertex();
 		worldRenderer.pos(right, bottom, 0.0).endVertex();
@@ -2121,9 +2121,9 @@ public class Utils {
 		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		com.mojang.blaze3d.systems.RenderSystem.disableTexture2D();
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-		com.mojang.blaze3d.systems.RenderSystem.disableAlpha();
+		com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 		com.mojang.blaze3d.systems.RenderSystem.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-		com.mojang.blaze3d.systems.RenderSystem.color(f1, f2, f3, f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(f1, f2, f3, f);
 		GL11.glLineWidth(width);
 		GL11.glBegin(GL11.GL_LINES);
 		GL11.glVertex2d(sx, sy);

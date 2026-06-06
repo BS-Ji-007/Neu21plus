@@ -309,7 +309,7 @@ public class EssenceUpgrades implements NeuRecipe {
 	 * @param y     y location
 	 */
 	private void drawSlot(int x, int y) {
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
 		Utils.graphics.blit(
 			x,
@@ -380,7 +380,7 @@ public class EssenceUpgrades implements NeuRecipe {
 			}
 
 			Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			drawButton(x, y, i + 1 == selectedTier);
 			Utils.drawStringCentered(String.valueOf(i + 1), x + 8, y + 9, false, 0x2d4ffc);
 		}

@@ -611,7 +611,7 @@ public class GuiCustomEnchant extends Gui {
 
 		//Base Texture
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(guiLeft, guiTop, X_SIZE, Y_SIZE,
 			0, X_SIZE / 512f, 0, Y_SIZE / 512f, GL11.GL_NEAREST
 		);
@@ -628,7 +628,7 @@ public class GuiCustomEnchant extends Gui {
 
 			//Page Arrows
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft + X_SIZE / 2 - pageStrLen / 2 - 2 - 15, guiTop + 6, 15, 15,
 				0, 15 / 512f, 372 / 512f, 387 / 512f, GL11.GL_NEAREST
 			);
@@ -639,7 +639,7 @@ public class GuiCustomEnchant extends Gui {
 
 		//Settings Buttons
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		//On Settings Button
 		Utils.graphics.blit(guiLeft + 295, guiTop + 147, 16, 16,
 			0, 16 / 512f, 387 / 512f, (387 + 16) / 512f, GL11.GL_NEAREST
@@ -712,7 +712,7 @@ public class GuiCustomEnchant extends Gui {
 				offset = Math.round((96 - 15) * (leftScroll.getValue() / (float) ((applicable.size() - 6) * 16)));
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft + 104, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
@@ -730,7 +730,7 @@ public class GuiCustomEnchant extends Gui {
 				offset = Math.round((96 - 15) * (rightScroll.getValue() / (float) ((removable.size() - 6) * 16)));
 			}
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft + 344, guiTop + 18 + offset, 12, 15,
 				0, 12 / 512f, 313 / 512f, (313 + 15) / 512f, GL11.GL_NEAREST
 			);
@@ -750,7 +750,7 @@ public class GuiCustomEnchant extends Gui {
 		//Enchant arrow
 		if (arrowAmount.getValue() > 0) {
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			float w = 22 * arrowAmount.getValue();
 			if (removingEnchantPlayerLevel < 0) {
 				Utils.graphics.blit(guiLeft + 134, guiTop + 58, w, 16,
@@ -800,7 +800,7 @@ public class GuiCustomEnchant extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft + 8, top, 96, 16,
 				uOffset / 512f, (96 + uOffset) / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -843,7 +843,7 @@ public class GuiCustomEnchant extends Gui {
 			int textOffset = vOffset / 16;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(guiLeft + 248, top, 96, 16,
 				0, 96 / 512f, (249 + vOffset) / 512f, (249 + 16 + vOffset) / 512f, GL11.GL_NEAREST
 			);
@@ -939,7 +939,7 @@ public class GuiCustomEnchant extends Gui {
 			int uOffset = enchanterCurrentEnch.conflicts ? 112 : 0;
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.graphics.blit(left, top, 112, 16,
 				uOffset / 512f, (112 + uOffset) / 512f, 249 / 512f, (249 + 16) / 512f, GL11.GL_NEAREST
 			);
@@ -985,7 +985,7 @@ public class GuiCustomEnchant extends Gui {
 
 			if (isChangingEnchLevel) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(left + 96, top, 16, 16,
 					96 / 512f, 112 / 512f, 265 / 512f, (265 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -1015,14 +1015,14 @@ public class GuiCustomEnchant extends Gui {
 			}
 			if (System.currentTimeMillis() - confirmButtonAnimTime < 500 && !(playerXpLevel < enchanterCurrentEnch.xpCost)) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered(confirmText, guiLeft + X_SIZE / 2 - 1 - 23, top + 18 + 9, false, 0x408040);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(guiLeft + X_SIZE / 2 - 1 - 48, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1036,14 +1036,14 @@ public class GuiCustomEnchant extends Gui {
 			//Cancel button
 			if (System.currentTimeMillis() - cancelButtonAnimTime < 500) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 342 / 512f, (342 + 14) / 512f, GL11.GL_NEAREST
 				);
 				Utils.drawStringCentered("Cancel", guiLeft + X_SIZE / 2 + 1 + 25, top + 18 + 9, false, 0xa04040);
 			} else {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(guiLeft + X_SIZE / 2 + 1, top + 18, 48, 14,
 					0, 48 / 512f, 328 / 512f, (328 + 14) / 512f, GL11.GL_NEAREST
 				);
@@ -1095,7 +1095,7 @@ public class GuiCustomEnchant extends Gui {
 					}
 
 					Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 					int type = 0;
 					if (i == bSize) {
@@ -1151,7 +1151,7 @@ public class GuiCustomEnchant extends Gui {
 
 			if (itemEnchantInput == null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(itemX, itemY, 16, 16,
 					0, 16 / 512f, 281 / 512f, (281 + 16) / 512f, GL11.GL_NEAREST
 				);
@@ -1255,7 +1255,7 @@ public class GuiCustomEnchant extends Gui {
 		com.mojang.blaze3d.systems.RenderSystem.matrixMode(5888);
 		com.mojang.blaze3d.systems.RenderSystem.popMatrix();
 		RenderHelper.disableStandardItemLighting();
-		com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
 		com.mojang.blaze3d.systems.RenderSystem.enableDepth();
 	}

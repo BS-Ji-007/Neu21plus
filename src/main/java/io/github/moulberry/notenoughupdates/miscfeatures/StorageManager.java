@@ -100,7 +100,7 @@ public class StorageManager {
 
 				Item item;
 				if (tag.hasKey("id", 8)) {
-					item = Item.getByNameOrId(tag.getString("id"));
+					item = BuiltInRegistries.ITEM.get(tag.getString("id"));
 				} else {
 					item = Item.getItemById(tag.getShort("id"));
 				}

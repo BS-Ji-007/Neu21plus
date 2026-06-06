@@ -118,7 +118,7 @@ public class RiftPage extends GuiProfileViewerPage {
 		}
 
 		// pet
-		com.mojang.blaze3d.systems.RenderSystem.color(1,1,1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1,1,1);
 		Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 		Utils.graphics.blit(guiLeft + 35, guiTop + 156, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 
@@ -289,7 +289,7 @@ public class RiftPage extends GuiProfileViewerPage {
 			addInventoryButton(156, 16, guiLeft, guiTop, mouseX, mouseY, "§7Inventory", "CHEST");
 			addInventoryButton(222, 16, guiLeft, guiTop, mouseX, mouseY, "§7Ender Chest", "ENDER_CHEST");
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			Minecraft.getInstance().getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 
 			int inventoryRows = inInventory ? 4 : 5;

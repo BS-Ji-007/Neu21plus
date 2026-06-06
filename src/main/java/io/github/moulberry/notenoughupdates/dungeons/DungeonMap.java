@@ -290,14 +290,14 @@ public class DungeonMap {
 
 			if (roomTex != null) {
 				Minecraft.getInstance().getTextureManager().bindTexture(roomTex);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.graphics.blit(0, 0, roomSize, roomSize, GL11.GL_LINEAR);
 			} else {
 				Gui.drawRect(0, 0, roomSize, roomSize, colour.getRGB());
 			}
 
 			if (fillCorner) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(CORNER_BROWN);
 				Utils.graphics.blit(roomSize, roomSize, connectorSize, connectorSize, GL11.GL_NEAREST);
 			}
@@ -363,7 +363,7 @@ public class DungeonMap {
 
 					Gui.drawRect(xOffset, yOffset, xOffset + width, yOffset + height, connection.colour.getRGB());
 				} else {
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					Minecraft.getInstance().getTextureManager().bindTexture(corridorTex);
 					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					if (connection == right) {
@@ -556,7 +556,7 @@ public class DungeonMap {
 					com.mojang.blaze3d.systems.RenderSystem.scale(scaleFactor, scaleFactor, 1);
 					mapFramebuffer1.bindFramebuffer(true);
 
-					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 					com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 				} else {
 					GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -647,7 +647,7 @@ public class DungeonMap {
 					com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 					com.mojang.blaze3d.systems.RenderSystem.translate(x2, y2, 0);
 
-					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 					room.renderNoRotate(renderRoomSize, renderConnSize, rotation);
 
 					com.mojang.blaze3d.systems.RenderSystem.translate(-x2, -y2, 0);
@@ -726,7 +726,7 @@ public class DungeonMap {
 					if (renderRoomSize >= 24) {
 						pixelWidth = pixelHeight = 12;
 					}
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					if ((!NotEnoughUpdates.INSTANCE.config.dungeons.showOwnHeadAsMarker ||
 						playerMarkerMapPositions.size() < 1 || minU != 1 / 4f) &&
 						NotEnoughUpdates.INSTANCE.config.dungeonMap.dmPlayerHeads >= 1 &&
@@ -775,7 +775,7 @@ public class DungeonMap {
 							pixelHeight / 2 + 1,
 							0xff111111
 						);
-						com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+						com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 					}
 
 					worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -920,7 +920,7 @@ public class DungeonMap {
 				NotEnoughUpdates.INSTANCE.config.dungeonMap.dmBorderStyle + ".png");
 			if (Minecraft.getInstance().getTextureManager().getTexture(rl) != TextureUtil.missingTexture) {
 				Minecraft.getInstance().getTextureManager().bindTexture(rl);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 				int size = borderSizeOption == 0 ? 165 : borderSizeOption == 1 ? 220 : borderSizeOption == 2 ? 300 : 440;
 				Utils.graphics.blit(-size / 2, -size / 2, size, size, GL11.GL_NEAREST);

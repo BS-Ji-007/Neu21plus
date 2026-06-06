@@ -165,7 +165,7 @@ public class ItemCustomizeManager {
 		com.mojang.blaze3d.systems.RenderSystem.depthFunc(514);
 		com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
 		float f1 = 0.5F;
-		com.mojang.blaze3d.systems.RenderSystem.color(f1, f1, f1, 1.0F);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(f1, f1, f1, 1.0F);
 
 		for (int i = 0; i < 2; ++i) {
 			com.mojang.blaze3d.systems.RenderSystem.disableLighting();
@@ -175,7 +175,7 @@ public class ItemCustomizeManager {
 			float blue = (color & 0xFF) / 255f;
 			float alpha = ((color >> 24) & 0xFF) / 255f;
 
-			com.mojang.blaze3d.systems.RenderSystem.color(red, green, blue, alpha);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(red, green, blue, alpha);
 			com.mojang.blaze3d.systems.RenderSystem.matrixMode(5890);
 			com.mojang.blaze3d.systems.RenderSystem.loadIdentity();
 			float f3 = 0.33333334F;
@@ -319,14 +319,14 @@ public class ItemCustomizeManager {
 		ItemData data = getDataForItem(stack);
 		if (data == null || data.customItem == null || data.customItem.length() == 0 ||
 			data.customItem.split(":").length == 0) return stack.getItem();
-		Item newItem = Item.getByNameOrId(data.customItem.split(":")[0]);
+		Item newItem = BuiltInRegistries.ITEM.get(data.customItem.split(":")[0]);
 		if (newItem == null) return stack.getItem();
 		return newItem;
 	}
 
 	public static Item getCustomItem(ItemStack stack, String newItemString) {
 		if (newItemString.split(":").length == 0) return stack.getItem();
-		Item newItem = Item.getByNameOrId(newItemString.split(":")[0]);
+		Item newItem = BuiltInRegistries.ITEM.get(newItemString.split(":")[0]);
 		if (newItem == null) return stack.getItem();
 		return newItem;
 	}
@@ -362,7 +362,7 @@ public class ItemCustomizeManager {
 			}
 			return Integer.parseInt(data.customItem.split(":")[1]);
 		} catch (Exception e) {
-			if (Item.getByNameOrId(data.defaultItem) == Items.PLAYER_HEAD && getCustomItem(stack) != Items.PLAYER_HEAD) return 0;
+			if (BuiltInRegistries.ITEM.get(data.defaultItem) == Items.PLAYER_HEAD && getCustomItem(stack) != Items.PLAYER_HEAD) return 0;
 			return stack.getMetadata();
 		}
 	}
@@ -377,7 +377,7 @@ public class ItemCustomizeManager {
 		if (data == null || data.customItem == null || data.customItem.length() == 0)
 			return stack.getItem() instanceof ItemArmor &&
 				((ItemArmor) stack.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER;
-		Item item = Item.getByNameOrId(data.customItem);
+		Item item = BuiltInRegistries.ITEM.get(data.customItem);
 		if (item == null) return stack.getItem() instanceof ItemArmor &&
 			((ItemArmor) stack.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER;
 		return item instanceof ItemArmor &&
@@ -388,8 +388,8 @@ public class ItemCustomizeManager {
 		ItemData data = getDataForItem(stack);
 		if (data == null || data.customItem == null || data.customItem.length() == 0 || data.defaultItem == null ||
 			data.customItem.equals(data.defaultItem) || data.customItem.split(":").length == 0) return false;
-		Item item = Item.getByNameOrId(data.customItem.split(":")[0]);
-		Item defaultItem = Item.getByNameOrId(data.defaultItem);
+		Item item = BuiltInRegistries.ITEM.get(data.customItem.split(":")[0]);
+		Item defaultItem = BuiltInRegistries.ITEM.get(data.defaultItem);
 		if (item == null) {
 			data.customItem = null;
 			return false;

@@ -128,7 +128,7 @@ public class PetsPage extends GuiProfileViewerPage {
 		Utils.graphics.blit(guiLeft, guiTop, getInstance().sizeX, getInstance().sizeY, GL11.GL_NEAREST);
 
 		Utils.drawStringCentered(ChatFormatting.DARK_PURPLE + "Pets", guiLeft + 100, guiTop + 14, true, 4210752);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 		JsonElement activePetElement = petsInfo.get("active_pet");
 		if (selectedPet == -1 && activePetElement != null && activePetElement.isJsonObject()) {
@@ -203,9 +203,9 @@ public class PetsPage extends GuiProfileViewerPage {
 
 				Minecraft.getInstance().getTextureManager().bindTexture(GuiProfileViewer.pv_elements);
 				if (i == selectedPet) {
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 185 / 255f, 0, 1);
 				} else {
-					com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				}
 				Utils.graphics.blit(guiLeft + x, guiTop + y, 20, 20, 0, 20 / 256f, 0, 20 / 256f, GL11.GL_NEAREST);
 

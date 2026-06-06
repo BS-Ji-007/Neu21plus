@@ -118,7 +118,7 @@ public class DungeonBlocks {
 			com.mojang.blaze3d.systems.RenderSystem.disableFog();
 
 			Minecraft.getInstance().getTextureManager().bindTexture(location);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
 			com.mojang.blaze3d.systems.RenderSystem.enableBlend();
@@ -228,7 +228,7 @@ public class DungeonBlocks {
 			com.mojang.blaze3d.systems.RenderSystem.disableFog();
 
 			Minecraft.getInstance().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Utils.drawTexturedRectNoBlend(0, 0, w, h, 0, 1, 1, 0, GL11.GL_LINEAR);
 
 			HashMap<TextureAtlasSprite, Integer> spriteMap = new HashMap<TextureAtlasSprite, Integer>() {{

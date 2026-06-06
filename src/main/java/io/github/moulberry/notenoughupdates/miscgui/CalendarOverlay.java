@@ -892,7 +892,7 @@ public class CalendarOverlay {
 			}
 		}
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(help);
 		Utils.graphics.blit(guiLeft + xSize - 18, guiTop + ySize + 2, 16, 16, GL11.GL_LINEAR);
 
@@ -1331,7 +1331,7 @@ public class CalendarOverlay {
 			offset = -(ySize + 5) * factor;
 			float y = guiTop + offset;
 
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(TOAST);
 			Utils.graphics.blit(guiLeft, y, xSize, ySize, GL11.GL_NEAREST);
 
@@ -1360,7 +1360,7 @@ public class CalendarOverlay {
 		if (!drawTimerForeground) {
 			drawTimer();
 		}
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 	}
 
@@ -1461,7 +1461,7 @@ public class CalendarOverlay {
 					List<String> tooltipToDisplay = null;
 					FontRenderer fr = Minecraft.getInstance().font;
 
-					com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+					com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 					com.mojang.blaze3d.systems.RenderSystem.disableFog();
 					com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 					com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();
@@ -1564,7 +1564,7 @@ public class CalendarOverlay {
 			} else if (!enabled && NotEnoughUpdates.INSTANCE.config.calendar.showEventTimerInInventory) {
 				FontRenderer fr = Minecraft.getInstance().font;
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 				com.mojang.blaze3d.systems.RenderSystem.disableFog();
 				com.mojang.blaze3d.systems.RenderSystem.disableLighting();
 				com.mojang.blaze3d.systems.RenderSystem.disableColorMaterial();
@@ -1593,7 +1593,7 @@ public class CalendarOverlay {
 	) {
 		BackgroundBlur.renderBlurredBackground(blurStrength, screenWidth, screenHeight, x, y, blurWidth, blurHeight);
 		Gui.drawRect(x, y, x + blurWidth, y + blurHeight, 0xc8101010);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 
 	private static class SBEvent implements Comparable<SBEvent> {

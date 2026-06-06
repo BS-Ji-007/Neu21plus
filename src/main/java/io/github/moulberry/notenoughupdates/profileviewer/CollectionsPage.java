@@ -241,7 +241,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					tierStringColour = new Color(255, 215, 0).getRGB();
 				}
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.graphics.blit(
 					guiLeft + x,
@@ -254,7 +254,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					20 * (1 - completedness) / 256f,
 					GL11.GL_NEAREST
 				);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.graphics.blit(
 					guiLeft + x,
@@ -285,7 +285,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					}
 				}
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.drawStringCentered(tierString, guiLeft + x + 10, guiTop + y - 4, true, tierStringColour);
 
 				Utils.drawStringCentered(
@@ -339,7 +339,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					tierStringColour = new Color(255, 215, 0).getRGB();
 				}
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.graphics.blit(
 					guiLeft + x,
@@ -352,7 +352,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					20 * (1 - completedness) / 256f,
 					GL11.GL_NEAREST
 				);
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 185 / 255f, 0, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 185 / 255f, 0, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(pv_elements);
 				Utils.graphics.blit(
 					guiLeft + x,
@@ -381,7 +381,7 @@ public class CollectionsPage extends GuiProfileViewerPage {
 					}
 				}
 
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				if (tier >= 0) {
 					Utils.drawStringCentered(tierString, guiLeft + x + 10, guiTop + y - 4, true, tierStringColour);
 				}

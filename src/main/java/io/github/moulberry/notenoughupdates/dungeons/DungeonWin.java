@@ -304,9 +304,9 @@ public class DungeonWin {
 
 		for (Confetti c : confetti) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			if (c.life >= 15) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, Math.min(1, c.life / 4f));
 				Utils.graphics.blit(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,
@@ -322,7 +322,7 @@ public class DungeonWin {
 		}
 
 		Minecraft.getInstance().getTextureManager().bindTexture(TEAM_SCORE);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, alpha);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, alpha);
 
 		com.mojang.blaze3d.systems.RenderSystem.pushMatrix();
 		if (deltaTime < 1600) {
@@ -477,9 +477,9 @@ public class DungeonWin {
 
 		for (Confetti c : confetti) {
 			Minecraft.getInstance().getTextureManager().bindTexture(CONFETTI);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			if (c.life > 0 && c.life < 15) {
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, Math.min(1, c.life / 4f));
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, Math.min(1, c.life / 4f));
 				Utils.graphics.blit(
 					c.xLast + (c.x - c.xLast) * partialTicks - 4,
 					c.yLast + (c.y - c.yLast) * partialTicks - 4,

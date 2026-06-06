@@ -51,7 +51,7 @@ public class NEUOverlayPlacements extends Screen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
 
-		/*com.mojang.blaze3d.systems.RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
+		/*com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getInstance().getTextureManager().bindTexture(icons);
 		com.mojang.blaze3d.systems.RenderSystem.enableBlend();
 

@@ -119,7 +119,7 @@ public class OrbDisplay {
 					Math.min(2, Math.max(0.5F, length / 16))
 						* Math.min(2, Math.max(0.5F, velocitySquared / 40))
 				));
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, opacity);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, opacity);
 
 			int orbU = (orb.type % 3) * 16;
 			int orbV = (orb.type / 3) * 16 + 217;

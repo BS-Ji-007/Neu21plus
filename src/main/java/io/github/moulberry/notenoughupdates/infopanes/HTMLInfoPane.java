@@ -497,7 +497,7 @@ public class HTMLInfoPane extends TextInfoPane {
 		float scaleF = IMAGE_WIDTH * ZOOM_FACTOR / (float) imageW;
 
 		Minecraft.getInstance().getTextureManager().bindTexture(imageTexture);
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		if (height - overlay.getBoxPadding() * 3 < imageHeight / scaleF) {
 			if (scrollHeight.getValue() > imageHeight / scaleF - height + overlay.getBoxPadding() * 3) {
 				scrollHeight.setValue((int) (imageHeight / scaleF - height + overlay.getBoxPadding() * 3));

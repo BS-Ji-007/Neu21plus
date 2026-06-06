@@ -322,7 +322,7 @@ public class NEUManager {
 			if (json.get("itemid") == null) return;
 
 			String itemid = json.get("itemid").getAsString();
-			Item mcitem = Item.getByNameOrId(itemid);
+			Item mcitem = BuiltInRegistries.ITEM.get(itemid);
 			if (mcitem != null) {
 				itemid = mcitem.getRegistryName();
 			}

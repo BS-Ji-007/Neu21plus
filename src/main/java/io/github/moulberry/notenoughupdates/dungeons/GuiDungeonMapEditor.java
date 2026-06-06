@@ -133,12 +133,12 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 			Minecraft.getInstance().getTextureManager().bindTexture(BUTTON);
 			if (isButtonPressed(id)) {
-				com.mojang.blaze3d.systems.RenderSystem.color(colour.getRed() * 0.85f / 255f, colour.getGreen() * 0.85f / 255f,
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(colour.getRed() * 0.85f / 255f, colour.getGreen() * 0.85f / 255f,
 					colour.getBlue() * 0.85f / 255f, 1
 				);
 				Utils.graphics.blit(guiLeft + x, guiTop + y, 48, 16, 1, 0, 1, 0, GL11.GL_NEAREST);
 			} else {
-				com.mojang.blaze3d.systems.RenderSystem.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, 1);
 				Utils.graphics.blit(guiLeft + x, guiTop + y, 48, 16, GL11.GL_NEAREST);
 			}
 
@@ -373,7 +373,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 		renderBlurredBackground(width, height, guiLeft + 2, guiTop + 2, sizeX - 4, sizeY - 4);
 
 		Minecraft.getInstance().getTextureManager().bindTexture(BACKGROUND);
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Utils.graphics.blit(guiLeft, guiTop, sizeX, sizeY, GL11.GL_NEAREST);
 
 		Minecraft.getInstance().font.graphics.drawString("NEU Dungeon Map Editor", guiLeft + 8, guiTop + 6, 0xFFB4B4B4);
@@ -430,7 +430,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 		blurField.setSize(48, 16);
 		blurField.render(guiLeft + 20 + 139, guiTop + 181);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 		Minecraft.getInstance().getTextureManager().bindTexture(button_tex);
 		RenderUtils.graphics.blit(guiLeft + 52, guiTop + 215, 48, 16);
 		TextRenderUtils.drawStringCenteredScaledMaxWidth("Edit", guiLeft + 76, guiTop + 223, false, 48, 0xFF303030);
@@ -441,7 +441,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 		HashSet<String> players = new HashSet<>();
 		players.add(Minecraft.getInstance().player.getName());
-		com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 		demoMap.renderMap(guiLeft + 357, guiTop + 125, NotEnoughUpdates.INSTANCE.colourMap, decorations, 0,
 			players, false, partialTicks
@@ -487,7 +487,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 		float sliderAmount = Math.max(0, Math.min(1, (value - minValue) / (maxValue - minValue)));
 		int sliderAmountI = (int) (96 * sliderAmount);
 
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		Minecraft.getInstance().getTextureManager().bindTexture(slider_on_large);
 		Utils.graphics.blit(centerX - 48, centerY - 8, sliderAmountI, 16,
 			0, sliderAmount, 0, 1, GL11.GL_NEAREST
@@ -584,7 +584,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 
 				HashSet<String> players = new HashSet<>();
 				players.add(Minecraft.getInstance().player.getName());
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Runnable runnable = this.closedCallback;
 				this.closedCallback = null;
 				Minecraft.getInstance().setScreen(new GuiPositionEditorButForTheDungeonMap(
@@ -849,7 +849,7 @@ public class GuiDungeonMapEditor extends GuiScreen {
 		float vMax = (height - y - blurHeight) / (float) height;
 
 		blurOutputVert.bindFramebufferTexture();
-		com.mojang.blaze3d.systems.RenderSystem.color(1f, 1f, 1f, 1f);
+		com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		Utils.graphics.blit(x, y, blurWidth, blurHeight, uMin, uMax, vMin, vMax);
 		blurOutputVert.unbindFramebufferTexture();
 	}

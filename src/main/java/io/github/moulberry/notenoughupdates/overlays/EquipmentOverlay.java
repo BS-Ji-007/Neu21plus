@@ -230,7 +230,7 @@ public class EquipmentOverlay {
 		if (shouldRenderPets) {
 			ResourceLocation customPetTexture = getCustomPetTexture(shouldRenderArmorHud);
 			Minecraft.getInstance().getTextureManager().bindTexture(customPetTexture);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 
 			Utils.graphics.blit(overlayLeft, overlayTop + PET_OVERLAY_OFFSET_Y, PET_OVERLAY_WIDTH, PET_OVERLAY_HEIGHT, GL11.GL_NEAREST);
 		}
@@ -251,7 +251,7 @@ public class EquipmentOverlay {
 
 		if (slot1 == null) {
 			Minecraft.getInstance().getTextureManager().bindTexture(QUESTION_MARK);
-			com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+			com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 			for (int i = 0; i < 4; i++) {
 				Utils.graphics.blit(overlayLeft + 8, overlayTop + EQUIPMENT_SLOT_OFFSET_Y + 18 * i, 16, 16, GL11.GL_NEAREST);
 			}

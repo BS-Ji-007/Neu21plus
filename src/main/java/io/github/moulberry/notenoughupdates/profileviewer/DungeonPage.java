@@ -430,7 +430,7 @@ public class DungeonPage extends GuiProfileViewerPage {
 			for (int i = 1; i <= 7; i++) {
 				int w = font.getStringWidth(String.valueOf(i));
 				int bx = x + sectionWidth * i / 8 - w / 2;
-				com.mojang.blaze3d.systems.RenderSystem.color(1, 1, 1, 1);
+				com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
 				Utils.renderShadowedString(ChatFormatting.WHITE.toString() + i, bx + w / 2, y3, 10);
 			}
 
