@@ -2,12 +2,13 @@ package neubs
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.*
+import org.gradle.api.tasks.Exec
 import java.io.ByteArrayOutputStream
 import java.util.*
 
 fun Project.setVersionFromEnvironment(): String {
     val baos = ByteArrayOutputStream()
-    this.exec {
+    exec {
         commandLine("git", "describe", "--tags", "--abbrev=0")
         standardOutput = baos
         isIgnoreExitValue = true
@@ -20,7 +21,7 @@ fun Project.setVersionFromEnvironment(): String {
     if (System.getenv("CI") == "true") buildExtra.add("ci")
 
     val stdout = ByteArrayOutputStream()
-    this.exec {
+    exec {
         commandLine("git", "rev-parse", "--short", "HEAD")
         standardOutput = stdout
         isIgnoreExitValue = true
